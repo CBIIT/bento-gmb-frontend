@@ -175,6 +175,7 @@ type FileUUID {
 }
 
 type SubjectOverview {
+    subject_id: String
     race: String
     diseaseTerm: String
     registeringInstitution: String
@@ -217,7 +218,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '1.0.0'")
+    schemaVersion: String @cypher(statement: "RETURN '1.0.1'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -228,7 +229,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.PT_RACE_CD_1,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -237,7 +238,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.DZ_DX_NM,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -246,7 +247,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.REG_INST_ID_CD,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -255,7 +256,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.PT_SUBGRP_ASSIGN_TP,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -265,7 +266,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: e.DISEAS_STG,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -275,7 +276,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: srv.DEATH_CAUS_CD,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -285,7 +286,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: srv.ATPSY_DZ_SITE_NM,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -295,7 +296,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: l.LAB_DATA_SRCE_NM,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -305,7 +306,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: l.LAB_TEST_NM,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -315,7 +316,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: ae.MEDDRA_SOC_TRM_NM,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -325,7 +326,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: ae.SAE_RSN,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -335,7 +336,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: ae.AE_OUTCOME,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -345,7 +346,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: sv.SOMATIC_VAR_PTHGNC_CAT,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -355,7 +356,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: f.FILE_TYPE,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -365,7 +366,7 @@ type QueryType {
             WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
         RETURN {
             group: gv.GRMLN_VAR_PTHGNC_CAT,
-            subject: COUNT(s)
+            subjects: COUNT(s)
         }
     """, passThrough: true)
 
@@ -1304,4 +1305,3 @@ type QueryType {
             ELSE f.FILE_NAME END
     """, passThrough: true)
 }
-
