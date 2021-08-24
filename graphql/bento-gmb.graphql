@@ -218,7 +218,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '1.0.1'")
+    schemaVersion: String @cypher(statement: "RETURN '1.0.2'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -396,7 +396,7 @@ type QueryType {
             systemOrganClass: ae.MEDDRA_SOC_TRM_NM,
             serious: ae.SAE_RSN,
             outcome: ae.AE_OUTCOME,
-            pathogenicity: sv.GRMLN_VAR_PTHGNC_CAT,
+            pathogenicity: sv.SOMATIC_VAR_PTHGNC_CAT,
             germlinePathogenicity: gv.GRMLN_VAR_PTHGNC_CAT,
             files: files
         }
@@ -414,7 +414,7 @@ type QueryType {
             WHEN 'systemOrganClass' THEN ae.MEDDRA_SOC_TRM_NM
             WHEN 'serious' THEN ae.SAE_RSN
             WHEN 'outcome' THEN ae.AE_OUTCOME
-            WHEN 'pathogenicity' THEN sv.GRMLN_VAR_PTHGNC_CAT
+            WHEN 'pathogenicity' THEN sv.SOMATIC_VAR_PTHGNC_CAT
             WHEN 'germlinePathogenicity' THEN gv.GRMLN_VAR_PTHGNC_CAT
         ELSE s.PT_ID END
     """, passThrough: true)
@@ -445,7 +445,7 @@ type QueryType {
             systemOrganClass: ae.MEDDRA_SOC_TRM_NM,
             serious: ae.SAE_RSN,
             outcome: ae.AE_OUTCOME,
-            pathogenicity: sv.GRMLN_VAR_PTHGNC_CAT,
+            pathogenicity: sv.SOMATIC_VAR_PTHGNC_CAT,
             germlinePathogenicity: gv.GRMLN_VAR_PTHGNC_CAT,
             files: files
         }
@@ -463,7 +463,7 @@ type QueryType {
             WHEN 'systemOrganClass' THEN ae.MEDDRA_SOC_TRM_NM
             WHEN 'serious' THEN ae.SAE_RSN
             WHEN 'outcome' THEN ae.AE_OUTCOME
-            WHEN 'pathogenicity' THEN sv.GRMLN_VAR_PTHGNC_CAT
+            WHEN 'pathogenicity' THEN sv.SOMATIC_VAR_PTHGNC_CAT
             WHEN 'germlinePathogenicity' THEN gv.GRMLN_VAR_PTHGNC_CAT
         ELSE s.PT_ID END DESC
     """, passThrough: true)
