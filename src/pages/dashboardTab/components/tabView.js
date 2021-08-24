@@ -11,10 +11,8 @@ import _ from 'lodash';
 import SelectAllModal from './modal';
 import {
   GET_FILES_OVERVIEW_QUERY,
-  GET_SAMPLES_OVERVIEW_QUERY,
   GET_CASES_OVERVIEW_QUERY,
   GET_FILES_OVERVIEW_DESC_QUERY,
-  GET_SAMPLES_OVERVIEW_DESC_QUERY,
   GET_CASES_OVERVIEW_DESC_QUERY,
 } from '../../../bento/dashboardTabData';
 import CustomDataTable from '../../../components/serverPaginatedTable/serverPaginatedTable';
@@ -22,10 +20,10 @@ import { addToCart, getCart, cartWillFull } from '../../fileCentricCart/store/ca
 import AddToCartAlertDialog from '../../../components/AddToCartDialog';
 import DocumentDownload from '../../../components/DocumentDownload/DocumentDownloadView';
 
-const getOverviewQuery = (api) => (api === 'GET_SAMPLES_OVERVIEW_QUERY' ? GET_SAMPLES_OVERVIEW_QUERY : api === 'GET_FILES_OVERVIEW_QUERY' ? GET_FILES_OVERVIEW_QUERY : GET_CASES_OVERVIEW_QUERY);
+const getOverviewQuery = (api) => (api === 'GET_FILES_OVERVIEW_QUERY' ? GET_FILES_OVERVIEW_QUERY : GET_CASES_OVERVIEW_QUERY);
 
 // Due to cypher limitation we have to send seperate query get descending list
-const getOverviewDescQuery = (api) => (api === 'GET_SAMPLES_OVERVIEW_QUERY' ? GET_SAMPLES_OVERVIEW_DESC_QUERY : api === 'GET_FILES_OVERVIEW_QUERY' ? GET_FILES_OVERVIEW_DESC_QUERY : GET_CASES_OVERVIEW_DESC_QUERY);
+const getOverviewDescQuery = (api) => (api === 'GET_FILES_OVERVIEW_QUERY' ? GET_FILES_OVERVIEW_DESC_QUERY : GET_CASES_OVERVIEW_DESC_QUERY);
 
 const TabView = ({
   classes,
