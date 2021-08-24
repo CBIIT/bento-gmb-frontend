@@ -254,7 +254,7 @@ type QueryType {
 
     subjectCountByGermlinePathogenicity(subject_id: [String] = []): [GroupCount] 
 
-    subjectOverViewPaged(subject_id: [String] = [], order_by: String = ""): [SubjectOverview] 
+    subjectOverViewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] 
 
     subjectOverViewPagedDesc(subject_id: [String] = [], order_by: String = ""): [SubjectOverview] 
 

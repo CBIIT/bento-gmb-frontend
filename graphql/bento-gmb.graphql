@@ -370,9 +370,9 @@ type QueryType {
         }
     """, passThrough: true)
 
-    subjectOverViewPaged(subject_id: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
+    subjectOverViewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR s.PT_ID IN $subject_ids)
         OPTIONAL MATCH (e:ENROLLMENT)-->(s) 
         OPTIONAL MATCH (srv:SURVIVAL)-->(s)
         OPTIONAL MATCH (l:LABORATORY)-->(s)
