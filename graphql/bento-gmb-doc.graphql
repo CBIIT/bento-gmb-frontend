@@ -175,6 +175,7 @@ type FileUUID {
 }
 
 type SubjectOverview {
+    subject_id: String
     race: String
     diseaseTerm: String
     registeringInstitution: String
@@ -553,4 +554,3 @@ type QueryType {
 
     fileIdsFromFileNameDesc(file_name: [String] = [], order_by: [String] = []): [FileOverview] 
 }
-
