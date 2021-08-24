@@ -513,7 +513,7 @@ type QueryType {
             numberOfTrials: COUNT(DISTINCT ct),
             numberOfSubjects: COUNT(DISTINCT s),
             numberOfFiles: COUNT(DISTINCT f),
-            fields: COLLECT(DISTINCT f.UUID),
+            fileIds: COLLECT(DISTINCT f.UUID),
             subject_id: COLLECT(DISTINCT s.PT_ID)
         }
     """, passThrough: true)
