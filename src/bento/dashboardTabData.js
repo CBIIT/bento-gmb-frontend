@@ -490,6 +490,7 @@ export const DASHBOARD_QUERY = gql`{
         subjects
       }
   subjectOverViewPaged(first: 10) {
+      subject_id
       race
       diseaseTerm
       registeringInstitution
@@ -575,7 +576,6 @@ searchSubjects(
       fileType: $fileType
 ) {
   numberOfTrials
-  numberOfStudies
   numberOfSubjects
   numberOfFiles
   fileIds

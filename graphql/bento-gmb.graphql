@@ -209,7 +209,7 @@ type SearchResult {
     numberOfTrials: Int
     numberOfSubjects: Int
     numberOfFiles: Int
-    fields: [String]
+    fileIds: [String]
     subject_id: [String]
 }
 
