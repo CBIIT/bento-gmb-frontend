@@ -335,7 +335,7 @@ export function fetchDataForDashboardTab(
     .query({
       query: QUERY,
       variables: {
-        subject_ids: subjectIDsAfterFilter, sample_ids: sampleIDsAfterFilter, uuids: fileIDsAfterFilter, order_by: sortfield || '',
+        subject_ids: subjectIDsAfterFilter, sample_ids: sampleIDsAfterFilter, file_ids: fileIDsAfterFilter, order_by: sortfield || '',
       },
     })
     .then((result) => store.dispatch({ type: 'UPDATE_CURRRENT_TAB_DATA', payload: { currentTab: payload, sortDirection, ..._.cloneDeep(result) } }))
@@ -466,7 +466,7 @@ async function getFileIDs(
       variables: {
         subject_ids: caseIds,
         sample_ids: sampleIds,
-        uuids: [],
+        file_ids: [],
         first: fileCount,
       },
     })
