@@ -171,7 +171,7 @@ type GroupCount {
 }
 
 type FileUUID {
-    uuid: String
+    file_id: String
 }
 
 type SubjectOverview {
@@ -194,7 +194,7 @@ type SubjectOverview {
 }
 
 type FileOverview {
-    uuid: String
+    file_id: String
     file_name: String
     file_description: String
     file_format: String
@@ -209,7 +209,7 @@ type SearchResult {
     numberOfTrials: Int
     numberOfSubjects: Int
     numberOfFiles: Int
-    fields: [String]
+    fileIds: [String]
     subject_id: [String]
 }
 
@@ -254,7 +254,7 @@ type QueryType {
 
     subjectCountByGermlinePathogenicity(subject_id: [String] = []): [GroupCount] 
 
-    subjectOverViewPaged(subject_id: [String] = [], order_by: String = ""): [SubjectOverview] 
+    subjectOverViewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] 
 
     subjectOverViewPagedDesc(subject_id: [String] = [], order_by: String = ""): [SubjectOverview] 
 
@@ -546,11 +546,11 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] 
 
-    fileOverview(uuids: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileOverview(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] 
 
-    fileOverviewDesc(uuids: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileOverviewDesc(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] 
 
-    fileIdsFromFileName(file_name: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileIdsFromFileName(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] 
 
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] 
 }

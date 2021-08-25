@@ -171,7 +171,7 @@ type GroupCount {
 }
 
 type FileUUID {
-    uuid: String
+    file_id: String
 }
 
 type SubjectOverview {
@@ -194,7 +194,7 @@ type SubjectOverview {
 }
 
 type FileOverview {
-    uuid: String
+    file_id: String
     file_name: String
     file_description: String
     file_format: String
@@ -209,7 +209,7 @@ type SearchResult {
     numberOfTrials: Int
     numberOfSubjects: Int
     numberOfFiles: Int
-    fields: [String]
+    fileIds: [String]
     subject_id: [String]
 }
 
@@ -218,7 +218,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN 'Demo Schema'")
+    schemaVersion: String @cypher(statement: "RETURN 'Demo Schema 0.1.2'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -370,9 +370,9 @@ type QueryType {
         }
     """, passThrough: true)
 
-    subjectOverViewPaged(subject_id: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
+    subjectOverViewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR s.PT_ID IN $subject_ids)
         OPTIONAL MATCH (e:ENROLLMENT)-->(s) 
         OPTIONAL MATCH (srv:SURVIVAL)-->(s)
         OPTIONAL MATCH (l:LABORATORY)-->(s)
@@ -380,7 +380,7 @@ type QueryType {
         OPTIONAL MATCH (sv:SOMATIC_VARIANT)-->(s)
         OPTIONAL MATCH (gv:GERMLINE_VARIANT)-->(s)
         OPTIONAL MATCH (f:FILE)-->(s)
-        WITH COLLECT(DISTINCT f {uuid: f.UUID}) as files,
+        WITH COLLECT(DISTINCT f {file_id: f.UUID}) as files,
             s,e,srv,l,ae,sv,gv
         RETURN {
             subject_id: s.PT_ID,
@@ -429,7 +429,7 @@ type QueryType {
         OPTIONAL MATCH (sv:SOMATIC_VARIANT)-->(s)
         OPTIONAL MATCH (gv:GERMLINE_VARIANT)-->(s)
         OPTIONAL MATCH (f:FILE)-->(s)
-        WITH COLLECT(DISTINCT f {uuid: f.UUID}) as files,
+        WITH COLLECT(DISTINCT f {file_id: f.UUID}) as files,
             s,e,srv,l,ae,sv,gv
         RETURN {
             subject_id: s.PT_ID,
@@ -513,7 +513,7 @@ type QueryType {
             numberOfTrials: COUNT(DISTINCT ct),
             numberOfSubjects: COUNT(DISTINCT s),
             numberOfFiles: COUNT(DISTINCT f),
-            fields: COLLECT(DISTINCT f.UUID),
+            fileIds: COLLECT(DISTINCT f.UUID),
             subject_id: COLLECT(DISTINCT s.PT_ID)
         }
     """, passThrough: true)
@@ -1223,12 +1223,12 @@ type QueryType {
         }
     """, passThrough: true)
 
-    fileOverview(uuids: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileOverview(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
-            WHERE (size($uuids) = 0 OR f.UUID IN $uuids)
+            WHERE (size($file_ids) = 0 OR f.UUID IN $file_ids)
         OPTIONAL MATCH (f)-->(s:SUBJECT)-->(ct:CLINICALTRIAL)
         RETURN {
-            uuid: f.UUID,
+            file_id: f.UUID,
             file_name: f.FILE_NAME,
             file_description: f.FILE_DESCRIPTION,
             file_format: f.FILE_FORMAT,
@@ -1239,7 +1239,7 @@ type QueryType {
             subject_id: s.PT_ID
         }
         ORDER BY CASE $order_by
-            WHEN 'uuid' THEN f.UUID
+            WHEN 'file_id' THEN f.UUID
             WHEN 'file_name' THEN f.FILE_NAME
             WHEN 'file_description' THEN f.FILE_DESCRIPTION
             WHEN 'file_format' THEN f.FILE_FORMAT
@@ -1251,12 +1251,12 @@ type QueryType {
             ELSE f.UUID END
     """, passThrough: true)
 
-    fileOverviewDesc(uuids: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileOverviewDesc(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
-            WHERE (size($uuids) = 0 OR f.UUID IN $uuids)
+            WHERE (size($file_ids) = 0 OR f.UUID IN $file_ids)
         OPTIONAL MATCH (f)-->(s:SUBJECT)-->(ct:CLINICALTRIAL)
         RETURN {
-            uuid: f.UUID,
+            file_id: f.UUID,
             file_name: f.FILE_NAME,
             file_description: f.FILE_DESCRIPTION,
             file_format: f.FILE_FORMAT,
@@ -1267,7 +1267,7 @@ type QueryType {
             subject_id: s.PT_ID
         }
         ORDER BY CASE $order_by
-            WHEN 'uuid' THEN f.UUID
+            WHEN 'file_id' THEN f.UUID
             WHEN 'file_name' THEN f.FILE_NAME
             WHEN 'file_description' THEN f.FILE_DESCRIPTION
             WHEN 'file_format' THEN f.FILE_FORMAT
@@ -1279,29 +1279,29 @@ type QueryType {
             ELSE f.UUID END DESC
     """, passThrough: true)
 
-    fileIdsFromFileName(file_name: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileIdsFromFileName(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
             WHERE (size($file_name) = 0 OR f.FILE_NAME IN $file_name)
         RETURN {
-            uuid: f.UUID,
+            file_id: f.UUID,
             file_name: f.FILE_NAME
         }
         ORDER BY CASE $order_by
             WHEN 'file_name' THEN f.FILE_NAME
-            WHEN 'uuid' THEN f.UUID
+            WHEN 'file_id' THEN f.UUID
             ELSE f.FILE_NAME END
     """, passThrough: true)
 
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
             WHERE (size($file_name) = 0 OR f.FILE_NAME IN $file_name)
         RETURN {
-            uuid: f.UUID,
+            file_id: f.UUID,
             file_name: f.FILE_NAME
         }
         ORDER BY CASE $order_by
             WHEN 'file_name' THEN f.FILE_NAME
-            WHEN 'uuid' THEN f.UUID
+            WHEN 'file_id' THEN f.UUID
             ELSE f.FILE_NAME END
     """, passThrough: true)
 }
