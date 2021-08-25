@@ -218,7 +218,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN 'Demo Schema 0.1.2'")
+    schemaVersion: String @cypher(statement: "RETURN 'Demo Schema 0.1.3'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -226,7 +226,7 @@ type QueryType {
 
     subjectCountByRace(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.PT_RACE_CD_1,
             subjects: COUNT(s)
@@ -235,7 +235,7 @@ type QueryType {
 
     subjectCountByDiseaseTerm(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.DZ_DX_NM,
             subjects: COUNT(s)
@@ -244,7 +244,7 @@ type QueryType {
 
     subjectCountByRegisteringInstitution(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.REG_INST_ID_CD,
             subjects: COUNT(s)
@@ -253,7 +253,7 @@ type QueryType {
 
     subjectCountByPatientSubgroup(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: s.PT_SUBGRP_ASSIGN_TP,
             subjects: COUNT(s)
@@ -263,7 +263,7 @@ type QueryType {
     subjectCountByDiseaseStageAtEntry(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (e:ENROLLMENT)
         OPTIONAL MATCH (e)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: e.DISEAS_STG,
             subjects: COUNT(s)
@@ -273,7 +273,7 @@ type QueryType {
     subjectCountByCauseOfDeath(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (srv:SURVIVAL)
         OPTIONAL MATCH (srv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: srv.DEATH_CAUS_CD,
             subjects: COUNT(s)
@@ -283,7 +283,7 @@ type QueryType {
     subjectCountBySitesOfDiseaseAtAutopsy(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (srv:SURVIVAL)
         OPTIONAL MATCH (srv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: srv.ATPSY_DZ_SITE_NM,
             subjects: COUNT(s)
@@ -293,7 +293,7 @@ type QueryType {
     subjectCountBySourceOfTheLabData(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (l:LABORATORY)
         OPTIONAL MATCH (l)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: l.LAB_DATA_SRCE_NM,
             subjects: COUNT(s)
@@ -303,7 +303,7 @@ type QueryType {
     subjectCountByLabTest(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (l:LABORATORY)
         OPTIONAL MATCH (l)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: l.LAB_TEST_NM,
             subjects: COUNT(s)
@@ -313,7 +313,7 @@ type QueryType {
     subjectCountBySystemOrganClass(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (ae:ADVERSE_EVENTS)
         OPTIONAL MATCH (ae)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: ae.MEDDRA_SOC_TRM_NM,
             subjects: COUNT(s)
@@ -323,7 +323,7 @@ type QueryType {
     subjectCountBySerious(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (ae:ADVERSE_EVENTS)
         OPTIONAL MATCH (ae)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: ae.SAE_RSN,
             subjects: COUNT(s)
@@ -333,7 +333,7 @@ type QueryType {
     subjectCountByOutcome(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (ae:ADVERSE_EVENTS)
         OPTIONAL MATCH (ae)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: ae.AE_OUTCOME,
             subjects: COUNT(s)
@@ -343,7 +343,7 @@ type QueryType {
     subjectCountBySomaticPathogenicity(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (sv:SOMATIC_VARIANT)
         OPTIONAL MATCH (sv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: sv.SOMATIC_VAR_PTHGNC_CAT,
             subjects: COUNT(s)
@@ -353,7 +353,7 @@ type QueryType {
     subjectCountByFileType(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (f:FILE)
         OPTIONAL MATCH (f)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: f.FILE_TYPE,
             subjects: COUNT(s)
@@ -363,7 +363,7 @@ type QueryType {
     subjectCountByGermlinePathogenicity(subject_id: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (gv:GERMLINE_VARIANT)
         OPTIONAL MATCH (gv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
         RETURN {
             group: gv.GRMLN_VAR_PTHGNC_CAT,
             subjects: COUNT(s)
@@ -372,7 +372,7 @@ type QueryType {
 
     subjectOverViewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_ids) = 0 OR s.PT_ID IN $subject_ids)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         OPTIONAL MATCH (e:ENROLLMENT)-->(s) 
         OPTIONAL MATCH (srv:SURVIVAL)-->(s)
         OPTIONAL MATCH (l:LABORATORY)-->(s)
@@ -419,9 +419,9 @@ type QueryType {
         ELSE s.PT_ID END
     """, passThrough: true)
 
-    subjectOverViewPagedDesc(subject_id: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
+    subjectOverViewPagedDesc(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         OPTIONAL MATCH (e:ENROLLMENT)-->(s) 
         OPTIONAL MATCH (srv:SURVIVAL)-->(s)
         OPTIONAL MATCH (l:LABORATORY)-->(s)
@@ -486,28 +486,28 @@ type QueryType {
         fileType: [String] = []
     ): SearchResult @cypher(statement: """ 
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             numberOfTrials: COUNT(DISTINCT ct),
@@ -536,28 +536,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: s.PT_RACE_CD_1,
@@ -583,28 +583,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: s.DZ_DX_NM,
@@ -630,28 +630,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: s.REG_INST_ID_CD,
@@ -677,28 +677,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: s.PT_SUBGRP_ASSIGN_TP,
@@ -724,28 +724,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
-        OPTIONAL  MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
+        OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: e.DISEAS_STG,
@@ -771,28 +771,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: srv.DEATH_CAUS_CD,
@@ -818,28 +818,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: srv.ATPSY_DZ_SITE_NM,
@@ -865,28 +865,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: l.LAB_DATA_SRCE_NM,
@@ -912,28 +912,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: l.LAB_TEST_NM,
@@ -959,28 +959,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: ae.MEDDRA_SOC_TRM_NM,
@@ -1006,28 +1006,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: ae.SAE_RSN,
@@ -1053,28 +1053,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: ae.AE_OUTCOME,
@@ -1100,28 +1100,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: sv.SOMATIC_VAR_PTHGNC_CAT,
@@ -1147,28 +1147,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: f.FILE_TYPE,
@@ -1194,28 +1194,28 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($race) = 0 OR s.PT_RACE_CD_1 IN $race)
-            AND (size($diseaseTerm) = 0 OR s.DZ_DX_NM IN $diseaseTerm)
-            AND (size($registeringInstitution) = 0 OR s.REG_INST_ID_CD IN $registeringInstitution)
-            AND (size($patientSubgroup) = 0 OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
+            WHERE (size($race) = 0 OR $race IS NULL OR s.PT_RACE_CD_1 IN $race)
+            AND (size($diseaseTerm) = 0 OR $diseaseTerm IS NULL OR s.DZ_DX_NM IN $diseaseTerm)
+            AND (size($registeringInstitution) = 0 OR $registeringInstitution IS NULL OR s.REG_INST_ID_CD IN $registeringInstitution)
+            AND (size($patientSubgroup) = 0 OR $patientSubgroup IS NULL OR s.PT_SUBGRP_ASSIGN_TP IN $patientSubgroup)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
-            WHERE (size($stageAtEntry) = 0 OR e.DISEAS_STG IN $stageAtEntry)
+            WHERE (size($stageAtEntry) = 0 OR $stageAtEntry IS NULL OR e.DISEAS_STG IN $stageAtEntry)
         OPTIONAL MATCH (s)<--(srv:SURVIVAL)
-            WHERE (size($causeOfDeath) = 0 OR srv.DEATH_CAUS_CD IN $causeOfDeath)
-            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
+            WHERE (size($causeOfDeath) = 0 OR $causeOfDeath IS NULL OR srv.DEATH_CAUS_CD IN $causeOfDeath)
+            AND (size($sitesOfDiseaseAtAutopsy) = 0 OR $sitesOfDiseaseAtAutopsy IS NULL OR srv.ATPSY_DZ_SITE_NM IN $sitesOfDiseaseAtAutopsy)
         OPTIONAL MATCH (s)<--(l:LABORATORY)
-            WHERE (size($sourceOfTheLabData) = 0 OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
-            AND (size($labTest) = 0 OR l.LAB_TEST_NM IN $labTest)
+            WHERE (size($sourceOfTheLabData) = 0 OR $sourceOfTheLabData IS NULL OR l.LAB_DATA_SRCE_NM IN $sourceOfTheLabData)
+            AND (size($labTest) = 0 OR $labTest IS NULL OR l.LAB_TEST_NM IN $labTest)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
-            WHERE (size($systemOrganClass) = 0 OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
-            AND (size($serious) = 0 OR ae.SAE_RSN IN $serious)
-            AND (size($outcome) = 0 OR ae.AE_OUTCOME IN $outcome)
+            WHERE (size($systemOrganClass) = 0 OR $systemOrganClass IS NULL OR ae.MEDDRA_SOC_TRM_NM IN $systemOrganClass)
+            AND (size($serious) = 0 OR $serious IS NULL OR ae.SAE_RSN IN $serious)
+            AND (size($outcome) = 0 OR $outcome IS NULL OR ae.AE_OUTCOME IN $outcome)
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
-            WHERE (size($somaticPathogenicity) = 0 OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
+            WHERE (size($somaticPathogenicity) = 0 OR $somaticPathogenicity IS NULL OR sv.SOMATIC_VAR_PTHGNC_CAT IN $somaticPathogenicity)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
-            WHERE (size($germlinePathogenicity) = 0 OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
+            WHERE (size($germlinePathogenicity) = 0 OR $germlinePathogenicity IS NULL OR gv.GRMLN_VAR_PTHGNC_CAT IN $germlinePathogenicity)
         OPTIONAL MATCH (s)<--(f:FILE)
-            WHERE (size($fileType) = 0 OR f.FILE_TYPE IN $fileType)
+            WHERE (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (s)-->(ct:CLINICALTRIAL)
         RETURN {
             group: gv.GRMLN_VAR_PTHGNC_CAT,
@@ -1223,9 +1223,9 @@ type QueryType {
         }
     """, passThrough: true)
 
-    fileOverview(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] @cypher(statement: """
+    fileOverview(file_ids: [String] = [], order_by: String = ""): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
-            WHERE (size($file_ids) = 0 OR f.UUID IN $file_ids)
+            WHERE (size($file_ids) = 0 OR $file_ids IS NULL OR f.UUID IN $file_ids)
         OPTIONAL MATCH (f)-->(s:SUBJECT)-->(ct:CLINICALTRIAL)
         RETURN {
             file_id: f.UUID,
@@ -1248,40 +1248,53 @@ type QueryType {
             WHEN 'trial_short_name' THEN ct.CLINICAL_TRIAL_SHORT_NAME
             WHEN 'arm' THEN s.ARM
             WHEN 'subject_id' THEN s.PT_ID
+            ELSE f.FILE_NAME END
+    """, passThrough: true)
+
+    fileOverviewDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] @cypher(statement: """
+        MATCH (f:FILE)
+            WHERE (size($file_ids) = 0 OR $file_ids IS NULL OR f.UUID IN $file_ids)
+        OPTIONAL MATCH (f)-->(s:SUBJECT)-->(ct:CLINICALTRIAL)
+        RETURN {
+            file_id: f.UUID,
+            file_name: f.FILE_NAME,
+            file_description: f.FILE_DESCRIPTION,
+            file_format: f.FILE_FORMAT,
+            file_size: f.FILE_SIZE,
+            trial_id: ct.CLINICAL_TRIAL_ID,
+            trial_short_name: ct.CLINICAL_TRIAL_SHORT_NAME,
+            arm: s.ARM,
+            subject_id: s.PT_ID
+        }
+        ORDER BY CASE $order_by
+            WHEN 'file_id' THEN f.UUID
+            WHEN 'file_name' THEN f.FILE_NAME
+            WHEN 'file_description' THEN f.FILE_DESCRIPTION
+            WHEN 'file_format' THEN f.FILE_FORMAT
+            WHEN 'file_size' THEN f.FILE_SIZE
+            WHEN 'trial_id' THEN ct.CLINICAL_TRIAL_ID
+            WHEN 'trial_short_name' THEN ct.CLINICAL_TRIAL_SHORT_NAME
+            WHEN 'arm' THEN s.ARM
+            WHEN 'subject_id' THEN s.PT_ID
+            ELSE f.FILE_NAME END DESC
+    """, passThrough: true)
+
+    fileIdsFromFileName(file_name: [String] = [], order_by: String = ""): [FileOverview] @cypher(statement: """
+        MATCH (f:FILE)
+            WHERE (size($file_name) = 0 OR $file_name IS NULL OR f.FILE_NAME IN $file_name)
+        RETURN {
+            file_id: f.UUID,
+            file_name: f.FILE_NAME
+        }
+        ORDER BY CASE $order_by
+            WHEN 'file_name' THEN f.FILE_NAME
+            WHEN 'file_id' THEN f.UUID
             ELSE f.UUID END
     """, passThrough: true)
 
-    fileOverviewDesc(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] @cypher(statement: """
+    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = ""): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
-            WHERE (size($file_ids) = 0 OR f.UUID IN $file_ids)
-        OPTIONAL MATCH (f)-->(s:SUBJECT)-->(ct:CLINICALTRIAL)
-        RETURN {
-            file_id: f.UUID,
-            file_name: f.FILE_NAME,
-            file_description: f.FILE_DESCRIPTION,
-            file_format: f.FILE_FORMAT,
-            file_size: f.FILE_SIZE,
-            trial_id: ct.CLINICAL_TRIAL_ID,
-            trial_short_name: ct.CLINICAL_TRIAL_SHORT_NAME,
-            arm: s.ARM,
-            subject_id: s.PT_ID
-        }
-        ORDER BY CASE $order_by
-            WHEN 'file_id' THEN f.UUID
-            WHEN 'file_name' THEN f.FILE_NAME
-            WHEN 'file_description' THEN f.FILE_DESCRIPTION
-            WHEN 'file_format' THEN f.FILE_FORMAT
-            WHEN 'file_size' THEN f.FILE_SIZE
-            WHEN 'trial_id' THEN ct.CLINICAL_TRIAL_ID
-            WHEN 'trial_short_name' THEN ct.CLINICAL_TRIAL_SHORT_NAME
-            WHEN 'arm' THEN s.ARM
-            WHEN 'subject_id' THEN s.PT_ID
-            ELSE f.UUID END DESC
-    """, passThrough: true)
-
-    fileIdsFromFileName(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] @cypher(statement: """
-        MATCH (f:FILE)
-            WHERE (size($file_name) = 0 OR f.FILE_NAME IN $file_name)
+            WHERE (size($file_name) = 0 OR $file_name IS NULL OR f.FILE_NAME IN $file_name)
         RETURN {
             file_id: f.UUID,
             file_name: f.FILE_NAME
@@ -1289,19 +1302,6 @@ type QueryType {
         ORDER BY CASE $order_by
             WHEN 'file_name' THEN f.FILE_NAME
             WHEN 'file_id' THEN f.UUID
-            ELSE f.FILE_NAME END
-    """, passThrough: true)
-
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] @cypher(statement: """
-        MATCH (f:FILE)
-            WHERE (size($file_name) = 0 OR f.FILE_NAME IN $file_name)
-        RETURN {
-            file_id: f.UUID,
-            file_name: f.FILE_NAME
-        }
-        ORDER BY CASE $order_by
-            WHEN 'file_name' THEN f.FILE_NAME
-            WHEN 'file_id' THEN f.UUID
-            ELSE f.FILE_NAME END
+            ELSE f.UUID END
     """, passThrough: true)
 }
