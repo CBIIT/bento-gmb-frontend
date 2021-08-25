@@ -376,7 +376,7 @@ const GET_CASE_DETAIL_DATA_QUERY = gql`
         file_description
         file_format
         file_size
-        uuid
+        file_id
         md5sum
       }
       enrollments {

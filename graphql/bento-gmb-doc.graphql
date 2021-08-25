@@ -171,7 +171,7 @@ type GroupCount {
 }
 
 type FileUUID {
-    uuid: String
+    file_id: String
 }
 
 type SubjectOverview {
@@ -194,7 +194,7 @@ type SubjectOverview {
 }
 
 type FileOverview {
-    uuid: String
+    file_id: String
     file_name: String
     file_description: String
     file_format: String
@@ -546,11 +546,11 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] 
 
-    fileOverview(uuids: [String] = [], order_by: String = "file_name"): [FileOverview] 
+    fileOverview(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] 
 
-    fileOverviewDesc(uuids: [String] = [], order_by: String = "file_name"): [FileOverview] 
+    fileOverviewDesc(file_ids: [String] = [], order_by: String = "file_name"): [FileOverview] 
 
-    fileIdsFromFileName(file_name: [String] = [], order_by: String = "uuid"): [FileOverview] 
+    fileIdsFromFileName(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] 
 
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = "uuid"): [FileOverview] 
+    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = "file_id"): [FileOverview] 
 }

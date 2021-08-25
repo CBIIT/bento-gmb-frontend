@@ -379,7 +379,7 @@ export const DASHBOARD_QUERY = gql`{
       pathogenicity
       germlinePathogenicity
       files{
-        uuid
+        file_id
       }
   }
   }`;
@@ -775,9 +775,9 @@ filterSubjectCountByGermlinePathogenicity(
 
 // --------------- GraphQL query - Retrieve files tab details --------------
 export const GET_FILES_OVERVIEW_QUERY = gql`
-query fileOverview($uuids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
-  fileOverview(uuids: $uuids, offset: $offset,first: $first, order_by: $order_by) {
-    uuid
+query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
+  fileOverview(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
+    file_id
     file_name
     file_description
     file_format
@@ -791,9 +791,9 @@ query fileOverview($uuids: [String], $offset: Int = 0, $first: Int = 10, $order_
   `;
 
 export const GET_FILES_OVERVIEW_DESC_QUERY = gql`
-  query fileOverviewDesc($uuids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
-    fileOverviewDesc(uuids: $uuids, offset: $offset,first: $first, order_by: $order_by) {
-      uuids
+  query fileOverviewDesc($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
+    fileOverviewDesc(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
+      file_ids
       file_name
       file_description
       file_format
@@ -826,7 +826,7 @@ query subjectOverViewPaged($subject_ids: [String], $offset: Int = 0, $first: Int
       pathogenicity
       germlinePathogenicity
       files{
-        uuid
+        file_id
       }
   }
 }
@@ -853,7 +853,7 @@ export const GET_CASES_OVERVIEW_DESC_QUERY = gql`
       pathogenicity
       germlinePathogenicity
       files{
-        uuid
+        file_id
       }
     }
 }
@@ -863,24 +863,24 @@ export const GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL = gql`
   query subjectOverViewPaged($subject_ids: [String], $first: Int = 10000000){
     subjectOverViewPaged(subject_ids: $subject_ids, first: $first) {
         files {
-          uuid
+          file_id
         }
     }
 }
   `;
 
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
-query fileOverview($uuids: [String], $offset: Int = 0, $first: Int = 10, $order_by: String = "file_name") {
-  fileOverview(uuids: $uuids, offset: $offset, first: $first, order_by: $order_by) {
-    uuids
+query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by: String = "file_name") {
+  fileOverview(file_ids: $file_ids, offset: $offset, first: $first, order_by: $order_by) {
+    file_ids
   }
 }
   `;
 
 // --------------- GraphQL query - Retrieve files tab details --------------
 export const GET_FILES_NAME_QUERY = gql`
-query fileOverview($uuids: [String], $offset: Int = 0, $first: Int = 100000, $order_by:String ="file_name"){
-  fileOverview(uuids: $uuids, offset: $offset,first: $first, order_by: $order_by) {
+query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 100000, $order_by:String ="file_name"){
+  fileOverview(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
     file_name
   }
 }
@@ -901,6 +901,6 @@ export const GET_FILE_IDS_FROM_FILE_NAME = gql`
           order_by:$order_by
       )
       {
-        uuid
+        file_id
       }
   }`;
