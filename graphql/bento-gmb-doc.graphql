@@ -546,11 +546,11 @@ type QueryType {
         fileType: [String] = []
     ): [GroupCount] 
 
-    fileOverview(uuids: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileOverview(uuids: [String] = [], order_by: String = "file_name"): [FileOverview] 
 
-    fileOverviewDesc(uuids: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileOverviewDesc(uuids: [String] = [], order_by: String = "file_name"): [FileOverview] 
 
-    fileIdsFromFileName(file_name: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileIdsFromFileName(file_name: [String] = [], order_by: String = "uuid"): [FileOverview] 
 
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: [String] = []): [FileOverview] 
+    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = "uuid"): [FileOverview] 
 }

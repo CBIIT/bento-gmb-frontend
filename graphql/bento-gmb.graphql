@@ -218,7 +218,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN 'Demo Schema'")
+    schemaVersion: String @cypher(statement: "RETURN 'Demo Schema 0.1.2'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1223,7 +1223,7 @@ type QueryType {
         }
     """, passThrough: true)
 
-    fileOverview(uuids: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileOverview(uuids: [String] = [], order_by: String = "file_name"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
             WHERE (size($uuids) = 0 OR f.UUID IN $uuids)
         OPTIONAL MATCH (f)-->(s:SUBJECT)-->(ct:CLINICALTRIAL)
@@ -1251,7 +1251,7 @@ type QueryType {
             ELSE f.UUID END
     """, passThrough: true)
 
-    fileOverviewDesc(uuids: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileOverviewDesc(uuids: [String] = [], order_by: String = "file_name"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
             WHERE (size($uuids) = 0 OR f.UUID IN $uuids)
         OPTIONAL MATCH (f)-->(s:SUBJECT)-->(ct:CLINICALTRIAL)
@@ -1279,7 +1279,7 @@ type QueryType {
             ELSE f.UUID END DESC
     """, passThrough: true)
 
-    fileIdsFromFileName(file_name: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileIdsFromFileName(file_name: [String] = [], order_by: String = "uuid"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
             WHERE (size($file_name) = 0 OR f.FILE_NAME IN $file_name)
         RETURN {
@@ -1292,7 +1292,7 @@ type QueryType {
             ELSE f.FILE_NAME END
     """, passThrough: true)
 
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: [String] = []): [FileOverview] @cypher(statement: """
+    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = "uuid"): [FileOverview] @cypher(statement: """
         MATCH (f:FILE)
             WHERE (size($file_name) = 0 OR f.FILE_NAME IN $file_name)
         RETURN {

@@ -335,7 +335,7 @@ export function fetchDataForDashboardTab(
     .query({
       query: QUERY,
       variables: {
-        subject_ids: subjectIDsAfterFilter, sample_ids: sampleIDsAfterFilter, file_ids: fileIDsAfterFilter, order_by: sortfield || '',
+        subject_ids: subjectIDsAfterFilter, sample_ids: sampleIDsAfterFilter, uuids: fileIDsAfterFilter, order_by: sortfield || '',
       },
     })
     .then((result) => store.dispatch({ type: 'UPDATE_CURRRENT_TAB_DATA', payload: { currentTab: payload, sortDirection, ..._.cloneDeep(result) } }))
@@ -391,7 +391,7 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
       },
     })
     .then((result) => {
-      const RESULT_DATA = getState().currentActiveTab === tabIndex[2].title ? 'fileOverview' : getState().currentActiveTab === tabIndex[1].title ? 'sampleOverview' : 'subjectOverViewPaged';
+      const RESULT_DATA = getState().currentActiveTab === tabIndex[1].title ? 'fileOverview' : 'subjectOverViewPaged';
       const fileIdsFromQuery = RESULT_DATA === 'fileOverview' ? transformfileIdsToFiles(result.data[RESULT_DATA]) : RESULT_DATA === 'subjectOverViewPaged' ? transformCasesFileIdsToFiles(result.data[RESULT_DATA]) : result.data[RESULT_DATA] || [];
       return fileIdsFromQuery;
     });
@@ -466,7 +466,7 @@ async function getFileIDs(
       variables: {
         subject_ids: caseIds,
         sample_ids: sampleIds,
-        file_ids: [],
+        uuids: [],
         first: fileCount,
       },
     })
@@ -720,7 +720,7 @@ export function getCountForAddAllFilesModal() {
     ? currentState.stats.numberOfCases
     : currentState.currentActiveTab === tabIndex[1].title
       ? currentState.stats.numberOfSamples : currentState.stats.numberOfFiles;
-  return { activeTab: currentState.currentActiveTab || tabIndex[2].title, count: numberCount };
+  return { activeTab: currentState.currentActiveTab || tabIndex[1].title, count: numberCount };
 }
 
 /**
@@ -764,14 +764,10 @@ export async function tableHasSelections() {
 
   const filteredNames = await getFileNamesByFileIds(getState().filteredFileIds);
   switch (getState().currentActiveTab) {
-    case tabIndex[2].title:
+    case tabIndex[1].title:
       filteredIds = filteredNames;
       selectedRowInfo = getState().dataFileSelected.selectedRowInfo;
 
-      break;
-    case tabIndex[1].title:
-      filteredIds = getState().filteredSampleIds;
-      selectedRowInfo = getState().dataSampleSelected.selectedRowInfo;
       break;
     default:
       filteredIds = getState().filteredSubjectIds;
@@ -791,9 +787,6 @@ function setDataFileSelected(result) {
   store.dispatch({ type: 'SET_FILE_SELECTION', payload: result });
 }
 
-function setDataSampleSelected(result) {
-  store.dispatch({ type: 'SET_SAMPLE_SELECTION', payload: result });
-}
 /**
  *  Returns the functuion depend on current active tab
  * @return {func}
@@ -801,10 +794,8 @@ function setDataSampleSelected(result) {
 
 export function getTableRowSelectionEvent() {
   const currentState = getState();
-  const tableRowSelectionEvent = currentState.currentActiveTab === tabIndex[2].title
-    ? setDataFileSelected
-    : currentState.currentActiveTab === tabIndex[1].title
-      ? setDataSampleSelected : setDataCaseSelected;
+  const tableRowSelectionEvent = currentState.currentActiveTab === tabIndex[1].title
+    ? setDataFileSelected : setDataCaseSelected;
   return tableRowSelectionEvent;
 }
 
