@@ -36,6 +36,8 @@ type FileOverview {
     trial_short_name: String
     arm: String
     subject_id: String
+    file_type: String
+    md5sum: String
 }
 
 type SearchResult {
@@ -43,7 +45,67 @@ type SearchResult {
     numberOfSubjects: Int
     numberOfFiles: Int
     fileIds: [String]
-    subject_id: [String]
+    subject_ids: [String]
+}
+
+type SubjectDetail {
+    subject_id: String
+    gender: String
+    ageAtEntry: Int
+    race: String
+    registeringInstitution: String
+    diseaseTerm: String
+    patientSubgroup: String
+    files: [FileOverview]
+    enrollments: [Enrollment]
+    adverseEvents: [AdverseEvent]
+    somaticVariant: [SomaticVariant]
+    germlineVariant: [GermlineVariant]
+}
+
+type Enrollment {
+    dateOfDiagnosis: String
+    histology: String
+    eligibility: String
+    gleasonScore: String
+    consentSignedDate: String
+    consentVersionDate: String
+    stageAtEntry: String
+    labsInclusionStartDate: String
+}
+
+type AdverseEvent {
+    course: String
+    courseDay: String
+    onsetDate: String
+    resolvedDate: String
+    term: String
+    organClass: String
+    eventDescription: String
+    grade: String
+    researchAttribution: String
+    diseaseAttriibution: String
+    otherAttribution: String
+    otherExtra: String
+    unexpectedAdverseEvents: String
+    serious: String
+    action: String
+    therapy: String
+    outcome: String
+    expeditedReportToIRB: String
+    expeditedReportToCCR: String
+}
+
+type SomaticVariant {
+    genePanel500: String
+    genePathogenicVariant: String
+    somaticPathogenicity: String
+}
+
+type GermlineVariant {
+    panelCode: String
+    genePathogenicVariant: String
+    germlinePathogenicity: String
 }
 
 schema {
@@ -51,152 +113,152 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN 'Demo Schema 0.1.4'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.0'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
     numberOfFiles: Int @cypher(statement: "MATCH (f:FILE) RETURN COUNT(f)")
 
-    subjectCountByRace(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByRace(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: s.PT_RACE_CD_1,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByDiseaseTerm(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByDiseaseTerm(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: s.DZ_DX_NM,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByRegisteringInstitution(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByRegisteringInstitution(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: s.REG_INST_ID_CD,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByPatientSubgroup(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByPatientSubgroup(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: s.PT_SUBGRP_ASSIGN_TP,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByDiseaseStageAtEntry(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByDiseaseStageAtEntry(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (e:ENROLLMENT)
         OPTIONAL MATCH (e)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: e.DISEAS_STG,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByCauseOfDeath(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByCauseOfDeath(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (srv:SURVIVAL)
         OPTIONAL MATCH (srv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: srv.DEATH_CAUS_CD,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountBySitesOfDiseaseAtAutopsy(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountBySitesOfDiseaseAtAutopsy(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (srv:SURVIVAL)
         OPTIONAL MATCH (srv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: srv.ATPSY_DZ_SITE_NM,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountBySourceOfTheLabData(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountBySourceOfTheLabData(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (l:LABORATORY)
         OPTIONAL MATCH (l)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: l.LAB_DATA_SRCE_NM,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByLabTest(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByLabTest(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (l:LABORATORY)
         OPTIONAL MATCH (l)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: l.LAB_TEST_NM,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountBySystemOrganClass(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountBySystemOrganClass(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (ae:ADVERSE_EVENTS)
         OPTIONAL MATCH (ae)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: ae.MEDDRA_SOC_TRM_NM,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountBySerious(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountBySerious(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (ae:ADVERSE_EVENTS)
         OPTIONAL MATCH (ae)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: ae.SAE_RSN,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByOutcome(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByOutcome(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (ae:ADVERSE_EVENTS)
         OPTIONAL MATCH (ae)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: ae.AE_OUTCOME,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountBySomaticPathogenicity(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountBySomaticPathogenicity(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (sv:SOMATIC_VARIANT)
         OPTIONAL MATCH (sv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: sv.SOMATIC_VAR_PTHGNC_CAT,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByFileType(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByFileType(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (f:FILE)
         OPTIONAL MATCH (f)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: f.FILE_TYPE,
             subjects: COUNT(s)
         }
     """, passThrough: true)
 
-    subjectCountByGermlinePathogenicity(subject_id: [String] = []): [GroupCount] @cypher(statement: """
+    subjectCountByGermlinePathogenicity(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (gv:GERMLINE_VARIANT)
         OPTIONAL MATCH (gv)-->(s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR s.PT_ID IN $subject_ids)
         RETURN {
             group: gv.GRMLN_VAR_PTHGNC_CAT,
             subjects: COUNT(s)
@@ -347,7 +409,7 @@ type QueryType {
             numberOfSubjects: COUNT(DISTINCT s),
             numberOfFiles: COUNT(DISTINCT f),
             fileIds: COLLECT(DISTINCT f.UUID),
-            subject_id: COLLECT(DISTINCT s.PT_ID)
+            subject_ids: COLLECT(DISTINCT s.PT_ID)
         }
     """, passThrough: true)
 
@@ -1105,6 +1167,134 @@ type QueryType {
         ORDER BY CASE $order_by
             WHEN 'file_name' THEN f.FILE_NAME
             WHEN 'file_id' THEN f.UUID
-            ELSE f.UUID END
+            ELSE f.UUID END DESC
+    """, passThrough: true)
+
+    filesInList(file_ids: [String] = [], order_by: String = ""): [FileOverview] @cypher(statement: """
+        MATCH (f:FILE)
+            WHERE (size($file_ids) = 0 OR $file_ids IS NULL OR f.UUID IN $file_ids)
+        OPTIONAL MATCH (f)-->(s:SUBJECT)
+        RETURN {
+            subject_id: s.PT_ID,
+            file_name: f.FILE_NAME,
+            file_type: f.FILE_TYPE,
+            file_description: f.FILE_DESCRIPTION,
+            file_format: f.FILE_FORMAT,
+            file_size: f.FILE_SIZE,
+            file_id: f.UUID,
+            md5sum: f.MD5SUM
+        }
+        ORDER BY CASE $order_by
+            WHEN 'subject_id' THEN s.PT_ID
+            WHEN 'file_name' THEN f.FILE_NAME
+            WHEN 'file_type' THEN f.FILE_TYPE
+            WHEN 'file_description' THEN f.FILE_DESCRIPTION
+            WHEN 'file_format' THEN f.FILE_FORMAT
+            WHEN 'file_size' THEN f.FILE_SIZE
+            WHEN 'file_id' THEN f.UUID
+            WHEN 'md5sum' THEN f.MD5SUM 
+            ELSE f.FILE_NAME END
+    """, passThrough: true)
+
+    filesInListDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] @cypher(statement: """
+        MATCH (f:FILE)
+            WHERE (size($file_ids) = 0 OR $file_ids IS NULL OR f.UUID IN $file_ids)
+        OPTIONAL MATCH (f)-->(s:SUBJECT)
+        RETURN {
+            subject_id: s.PT_ID,
+            file_name: f.FILE_NAME,
+            file_type: f.FILE_TYPE,
+            file_description: f.FILE_DESCRIPTION,
+            file_format: f.FILE_FORMAT,
+            file_size: f.FILE_SIZE,
+            file_id: f.UUID,
+            md5sum: f.MD5SUM
+        }
+        ORDER BY CASE $order_by
+            WHEN 'subject_id' THEN s.PT_ID
+            WHEN 'file_name' THEN f.FILE_NAME
+            WHEN 'file_type' THEN f.FILE_TYPE
+            WHEN 'file_description' THEN f.FILE_DESCRIPTION
+            WHEN 'file_format' THEN f.FILE_FORMAT
+            WHEN 'file_size' THEN f.FILE_SIZE
+            WHEN 'file_id' THEN f.UUID
+            WHEN 'md5sum' THEN f.MD5SUM 
+            ELSE f.FILE_NAME END DESC
+    """, passThrough: true)
+
+    subjectDetail(subject_id: [String] = []): [SubjectDetail] @cypher(statement: """
+        MATCH (s:SUBJECT)
+            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+        OPTIONAL MATCH (s)<--(f:FILE)
+        OPTIONAL MATCH (s)<--(e:ENROLLMENT)
+        OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
+        OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
+        OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
+        WITH s,
+            COLLECT(f {
+                subject_id: s.PT_ID,
+                file_name: f.FILE_NAME,
+                file_type: f.FILE_TYPE,
+                file_description: f.FILE_DESCRIPTION,
+                file_format: f.FILE_FORMAT,
+                file_size: f.FILE_SIZE,
+                file_id: f.UUID,
+                md5sum: f.MD5SUM
+            }) AS files,
+            COLLECT(e {
+                dateOfDiagnosis: e.DX_DT,
+                histology: e.HIST_CYTPATH_DESC,
+                eligibility: e.PT_ELIG_IND,
+                gleasonScore: e.GLESNSC_GD_PRSCA_VAL,
+                consentSignedDate: e.ICF_SIG_DT,
+                consentVersionDate: e.PROT_AMDT_DT,
+                stageAtEntry: e.DISEAS_STG,
+                labsInclusionStartDate: e.PRESTUDY_LAB_DT
+            }) AS enrollments,
+            COLLECT(ae {
+                course: ae.CRSE_NUM,
+                courseDay: ae.CRSE_DAY_NUM,
+                onsetDate: ae.AE_ONSET_DT,
+                resolvedDate: ae.RESOLV_DT,
+                term: ae.CTCAE5_LLT_NM,
+                organClass: ae.MEDDRA_SOC_TRM_NM,
+                eventDescription: ae.AE_DESC_TXT,
+                grade: ae.AE_SEV_GD,
+                researchAttribution: ae.AE_RESRCH_ATRB_CAT,
+                diseaseAttriibution: ae.AE_DZ_ATRB_CAT,
+                otherAttribution: ae.AE_OTH_COND_ATRB_CAT,
+                otherExtra: ae.OTX_AE_SHORT_TXT,
+                unexpectedAdverseEvents: ae.UNEXP_AE_OCC_CD_IND,
+                serious: ae.SAE_RSN,
+                action: ae.AE_ACTION,
+                therapy: ae.AE_THERAPY,
+                outcome: ae.AE_OUTCOME,
+                expeditedReportToIRB: ae.AER_IND,
+                expeditedReportToCCR: ae.CCR_EP_AE_SUBM_IND
+            }) AS adverseEvents,
+            COLLECT(sv {
+                genePanel500: sv.TUMR_GENE_SEQ_TSO_CD,
+                genePathogenicVariant: sv.GENE_PATH_VAR_NM,
+                somaticPathogenicity: sv.SOMATIC_VAR_PTHGNC_CAT
+            }) AS somaticVariant,
+            COLLECT(gv {
+                panelCode: gv.HERED_GENE_PANL_CD,
+                genePathogenicVariant: gv.GENE_PATH_VAR_NM,
+                germlinePathogenicity: gv.GRMLN_VAR_PTHGNC_CAT
+            }) AS germlineVariant
+        RETURN {
+            subject_id: s.PT_ID,
+            gender: s.PRSN_GENDER_TXT_TP,
+            ageAtEntry: s.PT_AGE_VAL,
+            race: s.PT_RACE_CD_1,
+            registeringInstitution: s.REG_INST_ID_CD,
+            diseaseTerm: s.DZ_DX_NM,
+            patientSubgroup: s.PT_SUBGRP_ASSIGN_TP,
+            files: files,
+            enrollments: enrollments,
+            adverseEvents: adverseEvents,
+            somaticVariant: somaticVariant,
+            germlineVariant: germlineVariant
+        }
     """, passThrough: true)
 }

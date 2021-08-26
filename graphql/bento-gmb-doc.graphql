@@ -203,6 +203,8 @@ type FileOverview {
     trial_short_name: String
     arm: String
     subject_id: String
+    file_type: String
+    md5sum: String
 }
 
 type SearchResult {
@@ -210,7 +212,67 @@ type SearchResult {
     numberOfSubjects: Int
     numberOfFiles: Int
     fileIds: [String]
-    subject_id: [String]
+    subject_ids: [String]
+}
+
+type SubjectDetail {
+    subject_id: String
+    gender: String
+    ageAtEntry: Int
+    race: String
+    registeringInstitution: String
+    diseaseTerm: String
+    patientSubgroup: String
+    files: [FileOverview]
+    enrollments: [Enrollment]
+    adverseEvents: [AdverseEvent]
+    somaticVariant: [SomaticVariant]
+    germlineVariant: [GermlineVariant]
+}
+
+type Enrollment {
+    dateOfDiagnosis: String
+    histology: String
+    eligibility: String
+    gleasonScore: String
+    consentSignedDate: String
+    consentVersionDate: String
+    stageAtEntry: String
+    labsInclusionStartDate: String
+}
+
+type AdverseEvent {
+    course: String
+    courseDay: String
+    onsetDate: String
+    resolvedDate: String
+    term: String
+    organClass: String
+    eventDescription: String
+    grade: String
+    researchAttribution: String
+    diseaseAttriibution: String
+    otherAttribution: String
+    otherExtra: String
+    unexpectedAdverseEvents: String
+    serious: String
+    action: String
+    therapy: String
+    outcome: String
+    expeditedReportToIRB: String
+    expeditedReportToCCR: String
+}
+
+type SomaticVariant {
+    genePanel500: String
+    genePathogenicVariant: String
+    somaticPathogenicity: String
+}
+
+type GermlineVariant {
+    panelCode: String
+    genePathogenicVariant: String
+    germlinePathogenicity: String
 }
 
 schema {
@@ -224,35 +286,35 @@ type QueryType {
     numberOfSubjects: Int 
     numberOfFiles: Int 
 
-    subjectCountByRace(subject_id: [String] = []): [GroupCount] 
+    subjectCountByRace(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByDiseaseTerm(subject_id: [String] = []): [GroupCount] 
+    subjectCountByDiseaseTerm(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByRegisteringInstitution(subject_id: [String] = []): [GroupCount] 
+    subjectCountByRegisteringInstitution(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByPatientSubgroup(subject_id: [String] = []): [GroupCount] 
+    subjectCountByPatientSubgroup(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByDiseaseStageAtEntry(subject_id: [String] = []): [GroupCount] 
+    subjectCountByDiseaseStageAtEntry(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByCauseOfDeath(subject_id: [String] = []): [GroupCount] 
+    subjectCountByCauseOfDeath(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountBySitesOfDiseaseAtAutopsy(subject_id: [String] = []): [GroupCount] 
+    subjectCountBySitesOfDiseaseAtAutopsy(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountBySourceOfTheLabData(subject_id: [String] = []): [GroupCount] 
+    subjectCountBySourceOfTheLabData(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByLabTest(subject_id: [String] = []): [GroupCount] 
+    subjectCountByLabTest(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountBySystemOrganClass(subject_id: [String] = []): [GroupCount] 
+    subjectCountBySystemOrganClass(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountBySerious(subject_id: [String] = []): [GroupCount] 
+    subjectCountBySerious(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByOutcome(subject_id: [String] = []): [GroupCount] 
+    subjectCountByOutcome(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountBySomaticPathogenicity(subject_id: [String] = []): [GroupCount] 
+    subjectCountBySomaticPathogenicity(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByFileType(subject_id: [String] = []): [GroupCount] 
+    subjectCountByFileType(subject_ids: [String] = []): [GroupCount] 
 
-    subjectCountByGermlinePathogenicity(subject_id: [String] = []): [GroupCount] 
+    subjectCountByGermlinePathogenicity(subject_ids: [String] = []): [GroupCount] 
 
     subjectOverViewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] 
 
@@ -553,4 +615,10 @@ type QueryType {
     fileIdsFromFileName(file_name: [String] = [], order_by: String = ""): [FileOverview] 
 
     fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = ""): [FileOverview] 
+
+    filesInList(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
+
+    filesInListDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
+
+    subjectDetail(subject_id: [String] = []): [SubjectDetail] 
 }
