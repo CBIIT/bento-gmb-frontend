@@ -620,5 +620,5 @@ type QueryType {
 
     filesInListDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
-    subjectDetail(subject_id: [String] = []): [SubjectDetail] 
+    subjectDetail(subject_id: String): SubjectDetail 
 }

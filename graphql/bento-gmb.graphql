@@ -280,7 +280,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.2.0'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.1'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1389,9 +1389,8 @@ type QueryType {
             ELSE f.FILE_NAME END DESC
     """, passThrough: true)
 
-    subjectDetail(subject_id: [String] = []): [SubjectDetail] @cypher(statement: """
-        MATCH (s:SUBJECT)
-            WHERE (size($subject_id) = 0 OR $subject_id IS NULL OR s.PT_ID IN $subject_id)
+    subjectDetail(subject_id: String): SubjectDetail @cypher(statement: """
+        MATCH (s:SUBJECT {PT_ID: $subject_id})
         OPTIONAL MATCH (s)<--(f:FILE)
         OPTIONAL MATCH (s)<--(e:ENROLLMENT)
         OPTIONAL MATCH (s)<--(ae:ADVERSE_EVENTS)
