@@ -74,12 +74,6 @@ export const tabContainers = [
         display: true,
       },
       {
-        dataField: 'patientSubgroup',
-        header: 'Patient Subgroup',
-        sort: 'asc',
-        display: true,
-      },
-      {
         dataField: 'stageAtEntry',
         header: 'Stage at Entry',
         sort: 'asc',
