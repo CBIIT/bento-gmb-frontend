@@ -243,7 +243,7 @@ function toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables) {
     })
     .then((result) => client.query({ // request to get the filtered group counts
       query: FILTER_GROUP_QUERY,
-      variables: { subject_ids: result.data.searchSubjects.subjectIds },
+      variables: { subject_ids: result.data.searchSubjects.subject_ids },
     })
       .then((result2) => store.dispatch({
         type: 'TOGGGLE_CHECKBOX_WITH_API',
@@ -827,13 +827,13 @@ const reducers = {
     );
     const checkboxData1 = setSelectedFilterValues(updatedCheckboxData1, item.allFilters);
     fetchDataForDashboardTab(state.currentActiveTab,
-      item.data.searchSubjects.subjectIds, item.data.searchSubjects.sampleIds,
+      item.data.searchSubjects.subject_ids, item.data.searchSubjects.sampleIds,
       item.data.searchSubjects.fileIds);
     return {
       ...state,
       setSideBarLoading: false,
       allActiveFilters: item.allFilters,
-      filteredSubjectIds: item.data.searchSubjects.subjectIds,
+      filteredSubjectIds: item.data.searchSubjects.subject_ids,
       filteredSampleIds: item.data.searchSubjects.sampleIds,
       filteredFileIds: item.data.searchSubjects.fileIds,
       checkbox: {
