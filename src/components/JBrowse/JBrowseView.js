@@ -1,16 +1,16 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@material-ui/core/styles';
 import {
   createViewState,
-  createJBrowseTheme,
+  // createJBrowseTheme,
   JBrowseLinearGenomeView,
-  ThemeProvider,
+  // ThemeProvider,
 } from '@jbrowse/react-linear-genome-view';
 
-const defaultFooterStyles = {
-};
+// const defaultFooterStyles = {
+// };
 
-const theme = createJBrowseTheme();
+// const theme = createJBrowseTheme();
 
 const assembly = {
   name: 'GRCh38',
@@ -76,17 +76,27 @@ const tracks = [
 //   },
 // };
 
-const state = createViewState({
-  assembly,
-  tracks,
-  location: '10:29,838,737..29,838,819',
-  // defaultSession,
-});
+// const state = createViewState({
+//   assembly,
+//   tracks,
+//   location: '10:29,838,737..29,838,819',
+//   // defaultSession,
+// });
 
-const JBrowse = () => (
-  <ThemeProvider theme={theme}>
-    <JBrowseLinearGenomeView viewState={state} />
-  </ThemeProvider>
-);
+function View() {
+  const state = createViewState({
+    assembly,
+    tracks,
+    location: '10:29,838,737..29,838,819',
+  });
+  return <JBrowseLinearGenomeView viewState={state} />;
+}
 
-export default withStyles(defaultFooterStyles, { withTheme: true })(JBrowse);
+// const JBrowse = () => (
+//   <ThemeProvider theme={theme}>
+//     <JBrowseLinearGenomeView viewState={state} />
+//   </ThemeProvider>
+// );
+
+export default View;
+// export default withStyles(defaultFooterStyles, { withTheme: true })(JBrowse);

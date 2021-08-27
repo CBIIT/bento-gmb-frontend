@@ -43,10 +43,10 @@ export const facetSearchData = [
     label: 'Somatic Pathogenicity', field: 'group', api: 'subjectCountBySomaticPathogenicity', apiForFiltering: 'filterSubjectCountBySomaticPathogenicity', datafield: 'somaticPathogenicity', section: 'Filter By Cases', show: true,
   },
   {
-    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'fileType', section: 'Filter By Cases', show: true,
+    label: 'Germline Pathogenicity', field: 'group', api: 'subjectCountByGermlinePathogenicity', apiForFiltering: 'filterSubjectCountByGermlinePathogenicity', datafield: 'germlinePathogenicity', section: 'Filter By Cases', show: true,
   },
   {
-    label: 'Germline Pathogenicity', field: 'group', api: 'subjectCountByGermlinePathogenicity', apiForFiltering: 'filterSubjectCountByGermlinePathogenicity', datafield: 'germlinePathogenicity', section: 'Filter By Cases', show: true,
+    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'fileType', section: 'Filter By Files', show: true,
   },
 ];
 
