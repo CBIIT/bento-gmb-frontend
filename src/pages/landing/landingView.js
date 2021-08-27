@@ -251,7 +251,7 @@ const styles = () => ({
     letterSpacing: '0.8px',
   },
   headerTitle: {
-    paddingTop: '94px',
+    paddingTop: '170px',
     fontFamily: 'Inter Light, Raleway, sans-serif',
     fontSize: '36px',
     fontWeight: '500',
