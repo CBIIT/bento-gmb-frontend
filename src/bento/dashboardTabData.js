@@ -400,28 +400,28 @@ export const DASHBOARD_QUERY = gql`{
   }`;
 
 export const FILTER_GROUP_QUERY = gql`
-  query groupCounts($subject_id: [String]){
-    subjectCountByGermlinePathogenicity (subject_id: $subject_id){
+  query groupCounts($subject_ids: [String]){
+    subjectCountByGermlinePathogenicity (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountBySomaticPathogenicity (subject_id: $subject_id){
+    subjectCountBySomaticPathogenicity (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountByRegisteringInstitution (subject_id: $subject_id){
+    subjectCountByRegisteringInstitution (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountByRace (subject_id: $subject_id){
+    subjectCountByRace (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountByDiseaseStageAtEntry (subject_id: $subject_id){
+    subjectCountByDiseaseStageAtEntry (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountBySerious (subject_id: $subject_id){
+    subjectCountBySerious (subject_ids: $subject_ids){
       group
       subjects
     } 
@@ -467,7 +467,7 @@ searchSubjects(
   numberOfSubjects
   numberOfFiles
   fileIds
-  subject_id
+  subject_ids
 }
 
 filterSubjectCountByRace(

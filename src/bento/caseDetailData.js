@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 import { FileOnRowsSelect } from '../utils/fileTable';
-import { SampleOnRowsSelect } from '../utils/sampleFileTable';
 
 // --------------- Tooltip configuration --------------
 export const tooltipContent = {
@@ -19,32 +18,6 @@ const leftPanel = [
   // Each object here represents a subsection in the panel
   // A maximum of 3 subsections are allowed
   {
-    sectionHeader: 'Program',
-    // sectionDesc: 'Subsection description goes here',
-    properties: [
-      // A maximum of 10 properties are allowed
-      {
-        label: 'Assigned to Program',
-        dataField: 'program_acronym',
-        // link property specify URL value should link to
-        // space holder "{program_id}" will be replaced by actual value in the property program_id
-        link: '/program/{program_id}',
-        // labelLink property specify URL label should link to
-        // labelLink: '/programs',
-        // external links must have URL scheme part such as "https://"
-      },
-      {
-        label: 'Arm',
-        dataField: 'study_acronym',
-        link: '/arm/{study_acronym}',
-      },
-      {
-        label: 'Arm Description',
-        dataField: 'study_name',
-      },
-    ],
-  },
-  {
     sectionHeader: 'Demographics',
     // sectionDesc: 'Demographic Related Info',
     properties: [
@@ -58,65 +31,61 @@ const leftPanel = [
         dataField: 'race',
       },
       {
-        label: 'Ethnicity',
-        dataField: 'ethnicity',
+        label: 'Age at Entry',
+        dataField: 'ageAtEntry',
       },
       {
-        label: 'Age At Enrollment',
-        dataField: 'age_at_index',
+        label: 'Registering Institution',
+        dataField: 'registeringInstitution',
       },
       {
-        label: 'Menopause Status',
-        dataField: 'menopause_status',
+        label: 'Disease Term',
+        dataField: 'diseaseTerm',
       },
       {
-        label: 'Vital Status',
-        dataField: 'vital_status',
-      },
-      {
-        label: 'Cause Of Death',
-        dataField: 'cause_of_death',
+        label: 'Patient Subgroup',
+        dataField: 'patientSubgroup',
       },
     ],
   },
-  {
-    sectionHeader: 'Diagnosis',
-    // sectionDesc: 'Diagnosis Related Info',
-    properties: [
-      {
-        label: 'Diagnosis',
-        dataField: 'disease_type',
-      },
-      {
-        label: 'Diagnosis Subtype',
-        dataField: 'disease_subtype',
-      },
-      {
-        label: 'Tumor Grade',
-        dataField: 'tumor_grade',
-      },
-      {
-        label: 'Tumor Grade (mm)',
-        dataField: 'tumor_largest_dimension_diameter',
-      },
-      {
-        label: 'ER Status',
-        dataField: 'er_status',
-      },
-      {
-        label: 'PR Status',
-        dataField: 'pr_status',
-      },
-      {
-        label: 'Nuclear Grade',
-        dataField: 'nuclear_grade',
-      },
-      {
-        label: 'Recurrence Score',
-        dataField: 'recurrence_score',
-      },
-    ],
-  },
+  // {
+  //   sectionHeader: 'Diagnosis',
+  //   // sectionDesc: 'Diagnosis Related Info',
+  //   properties: [
+  //     {
+  //       label: 'Diagnosis',
+  //       dataField: 'disease_type',
+  //     },
+  //     {
+  //       label: 'Diagnosis Subtype',
+  //       dataField: 'disease_subtype',
+  //     },
+  //     {
+  //       label: 'Tumor Grade',
+  //       dataField: 'tumor_grade',
+  //     },
+  //     {
+  //       label: 'Tumor Grade (mm)',
+  //       dataField: 'tumor_largest_dimension_diameter',
+  //     },
+  //     {
+  //       label: 'ER Status',
+  //       dataField: 'er_status',
+  //     },
+  //     {
+  //       label: 'PR Status',
+  //       dataField: 'pr_status',
+  //     },
+  //     {
+  //       label: 'Nuclear Grade',
+  //       dataField: 'nuclear_grade',
+  //     },
+  //     {
+  //       label: 'Recurrence Score',
+  //       dataField: 'recurrence_score',
+  //     },
+  //   ],
+  // },
 ];
 
 const rightPanel = [
@@ -189,89 +158,6 @@ export const externalLinkIcon = {
   alt: 'External link icon',
 };
 
-// --------------- Table 1 configuration --------------
-const table1 = {
-  // Set 'display' to false to hide the table entirely
-  display: true,
-  // Table title
-  tableTitle: 'ASSOCIATED SAMPLES',
-  // Field name for files data, need to be updated only when using a different GraphQL query
-  subjectDetailField: 'samples',
-  // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'sample_id',
-  // 'asc' or 'desc'
-  defaultSortDirection: 'asc',
-  // Text to appear on Add to cart button
-  buttonText: 'Add Selected Files',
-  saveButtonDefaultStyle: {
-    color: '#fff',
-    backgroundColor: '#09A175',
-    opacity: '1',
-    border: '0px',
-    cursor: 'pointer',
-  },
-  ActiveSaveButtonDefaultStyle: {
-    disabled: 'true',
-    opacity: '0.3',
-    cursor: 'auto',
-  },
-  DeactiveSaveButtonDefaultStyle: {
-    cursor: 'pointer',
-    opacity: 'unset',
-    border: 'unset',
-  },
-  // Help Icon Message
-  tooltipMessage: 'Click button to add selected files associated with the selected sample(s).',
-  helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
-  // download csv
-  download: false,
-  // downloaded File Name
-  downloadFileName: 'Bento_case_files_download',
-  // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
-  // A maximum of 10 columns are allowed
-  columns: [
-    {
-      dataField: 'sample_id',
-      header: 'Sample ID',
-      sort: 'asc',
-      primary: true,
-      display: true,
-    },
-    {
-      dataField: 'disease_subtype',
-      header: 'Diagnosis',
-      dataFromRoot: true,
-    },
-    {
-      dataField: 'tissue_type',
-      header: 'Tissue Type',
-    },
-    {
-      dataField: 'composition',
-      header: 'Tissue Composition',
-    },
-    {
-      dataField: 'sample_anatomic_site',
-      header: 'Sample Anatomic Site',
-    },
-    {
-      dataField: 'method_of_sample_procurement',
-      header: 'Sample Procurement Method',
-    },
-    {
-      dataField: 'test_name',
-      header: 'Platform',
-      dataFromRoot: true,
-    },
-  ],
-  // Util Functions
-  // Custom function on selct checkbox is selected.
-  customOnRowsSelect: SampleOnRowsSelect,
-};
-
 // --------------- Table 2 configuration --------------
 const table2 = {
   // Set 'display' to false to hide the table entirely
@@ -325,10 +211,6 @@ const table2 = {
       header: 'File Type',
     },
     {
-      dataField: 'association',
-      header: 'Association',
-    },
-    {
       dataField: 'file_description',
       header: 'Description',
     },
@@ -367,7 +249,6 @@ const GET_CASE_DETAIL_DATA_QUERY = gql`
       race
       registeringInstitution
       diseaseTerm
-      stageAtEntry
       patientSubgroup
       files {
         subject_id
@@ -399,7 +280,6 @@ const GET_CASE_DETAIL_DATA_QUERY = gql`
         eventDescription
         grade
         researchAttribution
-        diseaseAttribution
         otherAttribution
         otherExtra
         unexpectedAdverseEvents
@@ -432,7 +312,6 @@ export {
   filesOfSamples,
   leftPanel,
   rightPanel,
-  table1,
   table2,
   GET_CASE_DETAIL_DATA_QUERY,
 };

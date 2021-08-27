@@ -6,6 +6,7 @@ import {
 import { Link } from 'react-router-dom';
 import { cn } from 'bento-components';
 import { landingPageData } from '../../bento/landingPageData';
+import { Button } from '../../components/Wrappers/Wrappers';
 import imgAbout from '../../assets/landing/About.png';
 import imgTrial from '../../assets/landing/Trials.png';
 import imgAccess from '../../assets/landing/RequestAccess.png';
@@ -30,11 +31,14 @@ const LandingController = ({ classes }) => (
                 { landingPageData.callToActionDescription}
               </div>
               <div className={classes.headerButtonSection}>
-                {/* <Link to="" className={classes.headerLink}>
-                    <Button className={classes.buttonText} bgColor="neonBlue" color="white">
-                      Data
-                    </Button>
-                  </Link> */}
+                <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
+                  <Button className={classes.transparentButton} bgColor="neonBlue" color="white">
+                    Search cases
+                    <span className={classes.rightArrow}>
+                      ▶
+                    </span>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -519,6 +523,23 @@ const styles = () => ({
   },
   heroTextWrapper: {
     width: '360px',
+  },
+  headerLink: {
+    textDecoration: 'none',
+  },
+  transparentButton: {
+    padding: '12px 15px',
+    height: '40px',
+    color: '#505050 !important',
+    backgroundColor: '#ffffff00 !important',
+    fontSize: '16px',
+    borderBottom: ' 2px #79C5E4 solid',
+    borderRadius: '0px',
+  },
+  rightArrow: {
+    marginLeft: '5px',
+    fontSize: '16px',
+    color: '#76C4E4',
   },
 
 });
