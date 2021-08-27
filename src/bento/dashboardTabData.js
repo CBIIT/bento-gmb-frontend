@@ -181,16 +181,17 @@ export const tabContainers = [
         display: true,
       },
       {
+        dataField: 'file_type',
+        header: 'File Type',
+        sort: 'asc',
+        primary: true,
+        display: true,
+      },
+      {
         dataField: 'file_id',
         header: 'File ID',
         sort: 'asc',
         display: false,
-      },
-      {
-        dataField: 'association',
-        header: 'Association',
-        sort: 'asc',
-        display: true,
       },
       {
         dataField: 'file_description',
@@ -235,36 +236,10 @@ export const tabContainers = [
         },
       },
       {
-        dataField: 'program',
-        header: 'Program Code',
-        sort: 'asc',
-        link: '/program/{program_id}',
-        display: true,
-      },
-      {
-        dataField: 'program_id',
-        header: 'Program ID',
-        sort: 'asc',
-        display: false,
-      },
-      {
-        dataField: 'arm',
-        header: 'Arm',
-        sort: 'asc',
-        link: '/arm/{arm}',
-        display: true,
-      },
-      {
         dataField: 'subject_id',
         header: 'Case ID',
         sort: 'asc',
         link: '/case/{subject_id}',
-        display: true,
-      },
-      {
-        dataField: 'diagnosis',
-        header: 'Diagnosis',
-        sort: 'asc',
         display: true,
       },
     ],
@@ -400,28 +375,28 @@ export const DASHBOARD_QUERY = gql`{
   }`;
 
 export const FILTER_GROUP_QUERY = gql`
-  query groupCounts($subject_id: [String]){
-    subjectCountByGermlinePathogenicity (subject_id: $subject_id){
+  query groupCounts($subject_ids: [String]){
+    subjectCountByGermlinePathogenicity (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountBySomaticPathogenicity (subject_id: $subject_id){
+    subjectCountBySomaticPathogenicity (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountByRegisteringInstitution (subject_id: $subject_id){
+    subjectCountByRegisteringInstitution (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountByRace (subject_id: $subject_id){
+    subjectCountByRace (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountByDiseaseStageAtEntry (subject_id: $subject_id){
+    subjectCountByDiseaseStageAtEntry (subject_ids: $subject_ids){
       group
       subjects
     }
-    subjectCountBySerious (subject_id: $subject_id){
+    subjectCountBySerious (subject_ids: $subject_ids){
       group
       subjects
     } 
@@ -467,7 +442,7 @@ searchSubjects(
   numberOfSubjects
   numberOfFiles
   fileIds
-  subject_id
+  subject_ids
 }
 
 filterSubjectCountByRace(

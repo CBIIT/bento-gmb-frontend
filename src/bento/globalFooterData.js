@@ -2,6 +2,7 @@ import env from '../utils/env';
 // footerLogoImage ideal image size 310x80 px
 
 export default {
+  bg: '#0F253A',
   footerLogoImage: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/footer_FNL_logo.png',
   footerLogoAltText: 'Footer Logo',
   footerLogoHyperlink: 'https://frederick.cancer.gov/',
@@ -14,32 +15,60 @@ export default {
   // Ideal size for icon is 20x20 px
   link_sections: [
     {
-      title: 'About Bento',
+      title: 'About GMB',
       items: [
         {
           text: 'Purpose',
-          link: '/bento',
+          link: '/purpose',
         },
         {
-          text: 'Resources',
-          link: '/resources',
+          text: 'CRDC',
+          link: '/crdc',
         },
         {
-          text: 'Documentation',
-          link: 'https://cbiit.github.io/bento-docs/',
+          text: 'Contact Us',
+          link: 'CTDCHelpDesk@mail.nih.gov',
         },
       ],
     },
+
     {
-      title: 'Support',
+      title: 'About the Data',
       items: [
         {
-          text: 'Contact Us',
-          link: 'bento-help@nih.gov',
+          text: 'CTDC Data & Model',
+          link: '/model',
         },
         {
-          link: 'https://www.linkedin.com/company/frederick-national-laboratory-for-cancer-research/',
-          icon: 'https://raw.githubusercontent.com/CBIIT/bento-tools/master/src/components/assets/footer/linkedInIcon.svg',
+          text: 'Analyzing Data',
+          link: '/crdc',
+        },
+        {
+          text: 'Developers (APIs)',
+          link: '/developers',
+        },
+      ],
+    },
+
+    {
+      title: 'More Information',
+      items: [
+        {
+          text: 'Policies',
+          link: 'https://www.cancer.gov/global/web/policies',
+          title: 'link to NCI policies',
+        },
+        {
+          text: 'Disclaimer',
+          link: 'https://www.cancer.gov/policies/disclaimer',
+        },
+        {
+          text: 'Accessibility',
+          link: 'https://www.cancer.gov/policies/accessibility',
+        },
+        {
+          text: 'FOIA',
+          link: 'https://www.cancer.gov/policies/foia',
         },
       ],
     },
