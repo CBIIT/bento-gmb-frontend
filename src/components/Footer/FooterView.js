@@ -6,5 +6,5 @@ import FooterData from '../../bento/globalFooterData.js';
 
 // import nihLogo from '../../assets/header/icdc_nih_logo.svg';
 
-const ICDCFooter = () => <><Footer data={FooterData} /></>;
+const ICDCFooter = () => <><Footer data={FooterData} background={FooterData.bg}/></>;
 export default ICDCFooter;

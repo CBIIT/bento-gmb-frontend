@@ -79,8 +79,8 @@ export const navBarData = [
 ];
 
 export const navBarCartData = {
-  cartLabel: 'MY Files',
+  cartLabel: '',
   cartLink: '/fileCentricCart',
-  cartIcon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Icon-Cart-Navbar.svg',
+  cartIcon: 'https://raw.githubusercontent.com/CBIIT/bento-gmb-frontend/preProto_1/src/assets/cartIcon.svg',
   cartIconAlt: 'cart_logo',
 };
