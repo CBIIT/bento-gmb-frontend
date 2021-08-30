@@ -280,9 +280,9 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.2.1'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.2'")
 
-    numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICAL_TRIAL) RETURN COUNT(ct)")
+    numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
     numberOfFiles: Int @cypher(statement: "MATCH (f:FILE) RETURN COUNT(f)")
 
