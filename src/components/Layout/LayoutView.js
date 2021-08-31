@@ -14,8 +14,8 @@ import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
-import Programs from '../../pages/programs/programsController';
-import ProgramDetail from '../../pages/programDetail/programDetailController';
+import Trials from '../../pages/trials/trialsController';
+import ProgramDetail from '../../pages/trialDetail/programDetailController';
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
 import JBrowse from '../JBrowse/JBrowseView';
@@ -43,7 +43,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route path="/cases" component={Dashboard} />
-            <Route path="/programs" component={Programs} />
+            <Route path="/trials" component={Trials} />
             <Route path="/model" component={modelPage} />
             <Route path="/table" component={table} />
             <Route path="/fileCentricCart" component={fileCentricCart} />

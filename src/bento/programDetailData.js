@@ -131,29 +131,20 @@ const table = {
 
 // --------------- GraphQL query - Retrieve program details --------------
 const GET_PROGRAM_DETAIL_DATA_QUERY = gql`
-query programDetail($program_id: String!) {
-  programDetail(program_id: $program_id) {
+query trialDetail($trial_id: String!) {
+  trailDetail(trial_id: $trial_id) {
     program_acronym
-    program_id
-    program_name
-    program_full_description
-    institution_name
-    program_external_url
+    trial_id
+    trailName
+    trialDesription
+    leadOrganization
+    trialType
+    trialLongName
     num_subjects
     num_files
-    num_samples
-    num_lab_procedures
-    disease_subtypes
-    diagnoses {
-      group
-      subjects
-    }
+    
     studies { 
       study_name
-      study_type
-      study_acronym
-      study_info
-      study_full_description
       num_subjects
     }
   }
