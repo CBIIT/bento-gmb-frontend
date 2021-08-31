@@ -275,6 +275,14 @@ type GermlineVariant {
     germlinePathogenicity: String
 }
 
+type TrialInfo {
+    trialName: String
+    trial_id: String
+    trialDescription: String
+    trialType: String
+    num_subjects: Int
+}
+
 schema {
     query: QueryType
 }
@@ -621,4 +629,6 @@ type QueryType {
     filesInListDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
     subjectDetail(subject_id: String): SubjectDetail 
+
+    trialsInfo: [TrialInfo] 
 }

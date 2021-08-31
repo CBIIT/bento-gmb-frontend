@@ -275,12 +275,20 @@ type GermlineVariant {
     germlinePathogenicity: String
 }
 
+type TrialInfo {
+    trialName: String
+    trial_id: String
+    trialDescription: String
+    trialType: String
+    num_subjects: Int
+}
+
 schema {
     query: QueryType
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.2.2'")
+    schemaVersion: String @cypher(statement: "RETURN '0.3.0'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1461,6 +1469,18 @@ type QueryType {
             adverseEvents: adverseEvents,
             somaticVariant: somaticVariant,
             germlineVariant: germlineVariant
+        }
+    """, passThrough: true)
+
+    trialsInfo: [TrialInfo] @cypher(statement: """
+        MATCH (ct:CLINICALTRIAL)
+        OPTIONAL MATCH (ct)<--(s:SUBJECT)
+        RETURN {
+            trialName: ct.CLINICAL_TRIAL_SHORT_NAME,
+            trial_id: ct.CLINICAL_TRIAL_ID,
+            trialDescription: ct.CLINICAL_TRIAL_DESCRIPTION,
+            trialType: ct.CLINICAL_TRIAL_TYPE,
+            num_subjects: COUNT(s.PT_ID)
         }
     """, passThrough: true)
 }
