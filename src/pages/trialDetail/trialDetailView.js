@@ -16,7 +16,7 @@ import {
   pageTitle, table, externalLinkIcon,
   programDetailIcon, breadCrumb, aggregateCount,
   pageSubTitle, leftPanel, rightPanel,
-} from '../../bento/programDetailData';
+} from '../../bento/trialDetailData';
 import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
@@ -26,7 +26,7 @@ import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import Widget from '../../components/Widgets/WidgetView';
 import colors from '../../utils/colors';
 
-const ProgramView = ({ classes, data, theme }) => {
+const TrialView = ({ classes, data, theme }) => {
   const programData = data.programDetail;
 
   const redirectTo = () => {
@@ -678,4 +678,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(ProgramView);
+export default withStyles(styles, { withTheme: true })(TrialView);

@@ -142,10 +142,11 @@ query trialDetail($trial_id: String!) {
     trialLongName
     num_subjects
     num_files
-    
-    studies { 
-      study_name
-      num_subjects
+    subjects{
+      subject_id
+      race
+      registeringInstitution
+      diseaseTerm
     }
   }
 }`;
