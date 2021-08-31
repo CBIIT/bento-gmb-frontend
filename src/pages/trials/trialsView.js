@@ -6,14 +6,14 @@ import {
 import { CustomDataTable, getOptions, getColumns } from 'bento-components';
 import {
   table, programListingIcon, externalLinkIcon,
-} from '../../bento/programData';
+} from '../../bento/trialsData';
 import Stats from '../../components/Stats/AllStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
   singleCheckBox, setSideBarToLoading, setDashboardTableLoading,
 } from '../dashboardTab/store/dashboardReducer';
 
-const Programs = ({ classes, data }) => {
+const Trials = ({ classes, data }) => {
   const redirectTo = (program) => {
     setSideBarToLoading();
     setDashboardTableLoading();
@@ -157,4 +157,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(Programs);
+export default withStyles(styles, { withTheme: true })(Trials);
