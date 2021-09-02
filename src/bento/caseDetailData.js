@@ -91,64 +91,64 @@ const leftPanel = [
 const rightPanel = [
   // Each object here represents a subsection in the panel
   // A maximum of 3 subsections are allowed
-  {
-    sectionHeader: 'Treatment',
-    // sectionDesc: 'Treatment Related Info',
-    properties: [
-      // A maximum of 10 properties are allowed
-      {
-        label: 'Primary Surgical Procedure',
-        dataField: 'primary_surgical_procedure',
-      },
-      {
-        label: 'Chemotherapy Regimen Group',
-        dataField: 'chemotherapy_regimen_group',
-      },
-      {
-        label: 'Chemotherapy Regimen',
-        dataField: 'chemotherapy_regimen',
-      },
-      {
-        label: 'Endocrine Therapy Type',
-        dataField: 'endocrine_therapy_type',
-      },
-    ],
-  },
-  {
-    sectionHeader: 'Follow Up',
-    // sectionDesc: 'Follow Up Related Info',
-    properties: [
-      // A maximum of 10 properties are allowed
-      {
-        label: 'Is Disease Free',
-        dataField: 'dfs_event_indicator',
-      },
-      {
-        label: 'Is Recurrence Free',
-        dataField: 'recurrence_free_indicator',
-      },
-      {
-        label: 'Is Distant Recurrence Free',
-        dataField: 'distant_recurrence_indicator',
-      },
-      {
-        label: 'Disease Free Event Type',
-        dataField: 'dfs_event_type',
-      },
-      {
-        label: 'Recurrence Event Type',
-        dataField: 'first_recurrence_type',
-      },
-      {
-        label: 'Days to Progression',
-        dataField: 'days_to_progression',
-      },
-      {
-        label: 'Days to Recurrence',
-        dataField: 'days_to_recurrence',
-      },
-    ],
-  },
+  // {
+  //   sectionHeader: 'Treatment',
+  //   // sectionDesc: 'Treatment Related Info',
+  //   properties: [
+  //     // A maximum of 10 properties are allowed
+  //     {
+  //       label: 'Primary Surgical Procedure',
+  //       dataField: 'primary_surgical_procedure',
+  //     },
+  //     {
+  //       label: 'Chemotherapy Regimen Group',
+  //       dataField: 'chemotherapy_regimen_group',
+  //     },
+  //     {
+  //       label: 'Chemotherapy Regimen',
+  //       dataField: 'chemotherapy_regimen',
+  //     },
+  //     {
+  //       label: 'Endocrine Therapy Type',
+  //       dataField: 'endocrine_therapy_type',
+  //     },
+  //   ],
+  // },
+  // {
+  //   sectionHeader: 'Follow Up',
+  //   // sectionDesc: 'Follow Up Related Info',
+  //   properties: [
+  //     // A maximum of 10 properties are allowed
+  //     {
+  //       label: 'Is Disease Free',
+  //       dataField: 'dfs_event_indicator',
+  //     },
+  //     {
+  //       label: 'Is Recurrence Free',
+  //       dataField: 'recurrence_free_indicator',
+  //     },
+  //     {
+  //       label: 'Is Distant Recurrence Free',
+  //       dataField: 'distant_recurrence_indicator',
+  //     },
+  //     {
+  //       label: 'Disease Free Event Type',
+  //       dataField: 'dfs_event_type',
+  //     },
+  //     {
+  //       label: 'Recurrence Event Type',
+  //       dataField: 'first_recurrence_type',
+  //     },
+  //     {
+  //       label: 'Days to Progression',
+  //       dataField: 'days_to_progression',
+  //     },
+  //     {
+  //       label: 'Days to Recurrence',
+  //       dataField: 'days_to_recurrence',
+  //     },
+  //   ],
+  // },
 ];
 
 // --------------- Dahboard Table external link configuration --------------
@@ -158,16 +158,45 @@ export const externalLinkIcon = {
   alt: 'External link icon',
 };
 
+export const tab = {
+  items: [
+    {
+      index: 0,
+      label: 'ADVERSE EVENTS',
+      value: 'table1',
+      primaryColor: '#D6F2EA',
+    },
+    {
+      index: 1,
+      label: 'GERMLINE VARIANT',
+      value: 'table2',
+      primaryColor: '#F7D7F7',
+    },
+    {
+      index: 2,
+      label: 'SOMATIC VARIANT',
+      value: 'table2',
+      primaryColor: '#D6F2EA',
+    },
+    {
+      index: 3,
+      label: 'ASSOCIATED FILES',
+      value: 'table2',
+      primaryColor: '#F7D7F7',
+    },
+  ],
+};
+
 // --------------- Table 1 configuration --------------
 const table1 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  tableTitle: 'ASSOCIATED FILES',
+  tableTitle: 'Adverse Events',
   // Field name for files data, need to be updated only when using a different GraphQL query
-  subjectDetailField: 'files',
+  subjectDetailField: 'adverseEvents',
   // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'file_name',
+  defaultSortField: 'organClass',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Text to appear on Add to cart button
@@ -203,26 +232,16 @@ const table1 = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'file_name',
-      header: 'File Name',
+      dataField: 'organClass',
+      header: 'Organ Class',
     },
     {
-      dataField: 'file_type',
-      header: 'File Type',
+      dataField: 'outcome',
+      header: 'Outcome',
     },
     {
-      dataField: 'file_description',
-      header: 'Description',
-    },
-    {
-      dataField: 'file_format',
-      header: 'Format',
-    },
-    {
-      dataField: 'file_size',
-      header: 'Size',
-      // set formatBytes to true to display file size (in bytes) in a more human readable format
-      formatBytes: true,
+      dataField: 'serious',
+      header: 'Serious',
     },
   ],
   // Util Functions
@@ -230,8 +249,132 @@ const table1 = {
   customOnRowsSelect: FileOnRowsSelect,
 };
 
-// --------------- Table 2 configuration --------------
+// --------------- Table 2: Germline Variant --------------
 const table2 = {
+  // Set 'display' to false to hide the table entirely
+  display: true,
+  // Table title
+  tableTitle: 'Germline Variant',
+  // Field name for files data, need to be updated only when using a different GraphQL query
+  subjectDetailField: 'germlineVariant',
+  // Value must be one of the 'dataField's in fileTableColumns
+  defaultSortField: 'panelCode',
+  // 'asc' or 'desc'
+  defaultSortDirection: 'asc',
+  // Text to appear on Add to cart button
+  buttonText: 'Add Selected Files',
+  saveButtonDefaultStyle: {
+    color: '#fff',
+    backgroundColor: '#09A175',
+    opacity: '1',
+    border: '0px',
+    cursor: 'pointer',
+  },
+  ActiveSaveButtonDefaultStyle: {
+    disabled: 'true',
+    opacity: '0.3',
+    cursor: 'auto',
+  },
+  DeactiveSaveButtonDefaultStyle: {
+    cursor: 'pointer',
+    opacity: 'unset',
+    border: 'unset',
+  },
+  // Help Icon Message
+  tooltipMessage: 'Click button to add selected files.',
+  helpMessage: 'Here help message',
+  // showHideColumns 'true' or 'false'
+  showHideColumns: true,
+  // download csv 'true' or 'false'
+  download: false,
+  // downloaded File Name
+  downloadFileName: 'Bento_case_samples_download',
+  // Set 'selectableRows' to true to show the row selection
+  selectableRows: true,
+  // A maximum of 10 columns are allowed
+  columns: [
+    {
+      dataField: 'panelCode',
+      header: 'Panel Code',
+    },
+    {
+      dataField: 'germlinePathogenicity',
+      header: 'Pathogenicity',
+    },
+    {
+      dataField: 'genePathogenicVariant',
+      header: 'Pathogenic Variant',
+    },
+  ],
+  // Util Functions
+  // Custom function on selct checkbox is selected.
+  customOnRowsSelect: FileOnRowsSelect,
+};
+
+// --------------- Table 3: Somatic Variant --------------
+const table3 = {
+  // Set 'display' to false to hide the table entirely
+  display: true,
+  // Table title
+  tableTitle: 'Somatic Variant',
+  // Field name for files data, need to be updated only when using a different GraphQL query
+  subjectDetailField: 'somaticVariant',
+  // Value must be one of the 'dataField's in fileTableColumns
+  defaultSortField: 'genePanel500',
+  // 'asc' or 'desc'
+  defaultSortDirection: 'asc',
+  // Text to appear on Add to cart button
+  buttonText: 'Add Selected Files',
+  saveButtonDefaultStyle: {
+    color: '#fff',
+    backgroundColor: '#09A175',
+    opacity: '1',
+    border: '0px',
+    cursor: 'pointer',
+  },
+  ActiveSaveButtonDefaultStyle: {
+    disabled: 'true',
+    opacity: '0.3',
+    cursor: 'auto',
+  },
+  DeactiveSaveButtonDefaultStyle: {
+    cursor: 'pointer',
+    opacity: 'unset',
+    border: 'unset',
+  },
+  // Help Icon Message
+  tooltipMessage: 'Click button to add selected files.',
+  helpMessage: 'Here help message',
+  // showHideColumns 'true' or 'false'
+  showHideColumns: true,
+  // download csv 'true' or 'false'
+  download: false,
+  // downloaded File Name
+  downloadFileName: 'Bento_case_samples_download',
+  // Set 'selectableRows' to true to show the row selection
+  selectableRows: true,
+  // A maximum of 10 columns are allowed
+  columns: [
+    {
+      dataField: 'genePanel500',
+      header: 'Panel Code',
+    },
+    {
+      dataField: 'somaticPathogenicity',
+      header: 'Pathogenicity',
+    },
+    {
+      dataField: 'genePathogenicVariant',
+      header: 'Pathogenic Variant',
+    },
+  ],
+  // Util Functions
+  // Custom function on selct checkbox is selected.
+  customOnRowsSelect: FileOnRowsSelect,
+};
+
+// --------------- Table 4 configuration --------------
+const table4 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
@@ -386,5 +529,7 @@ export {
   rightPanel,
   table1,
   table2,
+  table3,
+  table4,
   GET_CASE_DETAIL_DATA_QUERY,
 };
