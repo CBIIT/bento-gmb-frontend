@@ -27,7 +27,7 @@ import Widget from '../../components/Widgets/WidgetView';
 import colors from '../../utils/colors';
 
 const TrialView = ({ classes, data, theme }) => {
-  const trialData = data.trialDetail[0];
+  const trialData = data.trialDetail;
 
   const redirectTo = () => {
     setSideBarToLoading();

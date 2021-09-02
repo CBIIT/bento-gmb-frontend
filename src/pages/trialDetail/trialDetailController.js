@@ -11,7 +11,7 @@ const TrialDetailContainer = ({ match }) => {
   });
 
   if (loading) return <CircularProgress />;
-  if (error || !data || data.trialDetail[0].trial_id !== match.params.id) {
+  if (error || !data || data.trialDetail.trial_id !== match.params.id) {
     return (
       <Typography variant="headline" color="error" size="sm">
         {error ? `An error has occurred in loading stats component: ${error}` : 'Recieved wrong data'}
