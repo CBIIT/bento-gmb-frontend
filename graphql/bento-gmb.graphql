@@ -301,7 +301,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.4.2'")
+    schemaVersion: String @cypher(statement: "RETURN '0.5.0'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1521,5 +1521,13 @@ type QueryType {
             num_files: fileCount,
             subjects: subjects
         }
+    """, passThrough: true)
+
+    subjectCountByStageAtEntry(trial_id: String): [GroupCount] @cypher(statement: """
+        MATCH (ct:CLINICALTRIAL {CLINICAL_TRIAL_ID: $trial_id})<--(s:SUBJECT)<--(e:ENROLLMENT)
+        RETURN{
+            group: e.DISEAS_STG,
+            subjects: COUNT(*)
+        } 
     """, passThrough: true)
 }

@@ -646,4 +646,6 @@ type QueryType {
     trialsInfo: [TrialInfo] 
 
     trialDetail(trial_id: String): TrialDetail 
+
+    subjectCountByStageAtEntry(trial_id: String): [GroupCount] 
 }
