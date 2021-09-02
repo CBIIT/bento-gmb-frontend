@@ -158,6 +158,78 @@ export const externalLinkIcon = {
   alt: 'External link icon',
 };
 
+// --------------- Table 1 configuration --------------
+const table1 = {
+  // Set 'display' to false to hide the table entirely
+  display: true,
+  // Table title
+  tableTitle: 'ASSOCIATED FILES',
+  // Field name for files data, need to be updated only when using a different GraphQL query
+  subjectDetailField: 'files',
+  // Value must be one of the 'dataField's in fileTableColumns
+  defaultSortField: 'file_name',
+  // 'asc' or 'desc'
+  defaultSortDirection: 'asc',
+  // Text to appear on Add to cart button
+  buttonText: 'Add Selected Files',
+  saveButtonDefaultStyle: {
+    color: '#fff',
+    backgroundColor: '#09A175',
+    opacity: '1',
+    border: '0px',
+    cursor: 'pointer',
+  },
+  ActiveSaveButtonDefaultStyle: {
+    disabled: 'true',
+    opacity: '0.3',
+    cursor: 'auto',
+  },
+  DeactiveSaveButtonDefaultStyle: {
+    cursor: 'pointer',
+    opacity: 'unset',
+    border: 'unset',
+  },
+  // Help Icon Message
+  tooltipMessage: 'Click button to add selected files.',
+  helpMessage: 'Here help message',
+  // showHideColumns 'true' or 'false'
+  showHideColumns: true,
+  // download csv 'true' or 'false'
+  download: false,
+  // downloaded File Name
+  downloadFileName: 'Bento_case_samples_download',
+  // Set 'selectableRows' to true to show the row selection
+  selectableRows: true,
+  // A maximum of 10 columns are allowed
+  columns: [
+    {
+      dataField: 'file_name',
+      header: 'File Name',
+    },
+    {
+      dataField: 'file_type',
+      header: 'File Type',
+    },
+    {
+      dataField: 'file_description',
+      header: 'Description',
+    },
+    {
+      dataField: 'file_format',
+      header: 'Format',
+    },
+    {
+      dataField: 'file_size',
+      header: 'Size',
+      // set formatBytes to true to display file size (in bytes) in a more human readable format
+      formatBytes: true,
+    },
+  ],
+  // Util Functions
+  // Custom function on selct checkbox is selected.
+  customOnRowsSelect: FileOnRowsSelect,
+};
+
 // --------------- Table 2 configuration --------------
 const table2 = {
   // Set 'display' to false to hide the table entirely
@@ -312,6 +384,7 @@ export {
   filesOfSamples,
   leftPanel,
   rightPanel,
+  table1,
   table2,
   GET_CASE_DETAIL_DATA_QUERY,
 };

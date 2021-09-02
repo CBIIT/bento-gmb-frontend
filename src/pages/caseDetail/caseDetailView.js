@@ -15,6 +15,7 @@ import {
   caseHeader,
   leftPanel,
   rightPanel,
+  table1,
   table2,
   tooltipContent,
 } from '../../bento/caseDetailData';
@@ -129,6 +130,39 @@ const CaseDetail = ({ data, classes }) => {
           </Grid>
         </div>
       </div>
+      {table1.display
+        ? (
+          <div id="case_detail_table_associated_samples" className={classes.tableContainer}>
+            <div className={classes.tableDiv}>
+              <Grid item xs={12}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12}>
+                    <GridWithFooter
+                      data={data[table1.subjectDetailField]}
+                      title={(
+                        <div className={classes.tableTitle}>
+                          <span className={classes.tableHeader}>{table1.tableTitle}</span>
+                        </div>
+                      )}
+                      columns={getColumns(table2, classes, data)}
+                      options={getOptions(table1, classes)}
+                      customOnRowsSelect={table1.customOnRowsSelect}
+                      openSnack={openSnack}
+                      closeSnack={closeSnack}
+                      disableRowSelection={table1.disableRowSelection}
+                      buttonText={table1.buttonText}
+                      saveButtonDefaultStyle={table1.saveButtonDefaultStyle}
+                      ActiveSaveButtonDefaultStyle={table1.ActiveSaveButtonDefaultStyle}
+                      DeactiveSaveButtonDefaultStyle={table1.DeactiveSaveButtonDefaultStyle}
+                      tooltipMessage={table1.tooltipMessage}
+                      tooltipContent={tooltipContent}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </div>
+          </div>
+        ) : ''}
       {table2.display
         ? (
           <div id="case_detail_table_associated_files" className={classes.tableContainer}>

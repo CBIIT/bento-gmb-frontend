@@ -47,7 +47,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route path="/model" component={modelPage} />
             <Route path="/table" component={table} />
             <Route path="/fileCentricCart" component={fileCentricCart} />
-            <Route path="/program/:id" component={TrialDetail} />
+            <Route path="/trial/:id" component={TrialDetail} />
             <Route path="/case/:id" component={CaseDetail} />
             <Route path="/arm/:id" component={ArmDetail} />
             <Route path="/JBrowse" component={JBrowse} />

@@ -2,17 +2,17 @@ import gql from 'graphql-tag';
 
 // --------------- Page title configuration --------------
 const pageTitle = {
-  label: 'Program :',
-  dataField: 'program_acronym',
+  label: 'Trial:',
+  dataField: 'trialName',
 };
 
 const pageSubTitle = {
-  dataField: 'program_id',
+  dataField: 'trial_id',
 };
 
 const breadCrumb = {
-  label: 'ALL PROGRAMS',
-  link: '/programs',
+  label: 'ALL Trials',
+  link: '/trials',
 };
 
 // --------------- Aggregated count configuration --------------
@@ -41,29 +41,28 @@ const externalLinkIcon = {
 const leftPanel = {
   attributes: [
     {
-      dataField: 'program_acronym',
-      label: 'Program',
+      dataField: 'trialName',
+      label: 'Trial',
     },
     {
-      dataField: 'program_name',
-      label: 'Program Name',
+      dataField: 'trialLongName',
+      label: 'Trial Name',
     },
     {
-      dataField: 'program_id',
-      label: 'Program Id',
+      dataField: 'trial_id',
+      label: 'Trial Id',
     },
     {
-      dataField: 'program_full_description',
-      label: 'Program Description',
+      dataField: 'trialDesription',
+      label: 'Trial Description',
     },
     {
-      dataField: 'institution_name',
-      label: 'Institution',
+      dataField: 'leadOrganization',
+      label: 'Lead Organization',
     },
     {
-      dataField: 'program_external_url',
-      label: 'External Link to Program',
-      externalLinkToLabel: true,
+      dataField: 'trialPrincipalInvestigator',
+      label: 'Principal Investigator',
     },
   ],
 };
@@ -71,6 +70,12 @@ const leftPanel = {
 // --------------- Right Pannel configuration --------------
 // Ideal size for fileIconSrc is 66x53 px
 const rightPanel = {
+  attributes: [
+    {
+      dataField: 'trialName',
+      label: 'Trial',
+    },
+  ],
   widget: [
     {
       dataField: 'diagnoses',
@@ -94,11 +99,11 @@ const table = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'ARMS',
+  title: 'Cases',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'studies',
+  dataField: 'subjects',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'study_acronym',
+  defaultSortField: 'subject_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -106,49 +111,45 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'study_acronym',
-      header: 'Arm',
-      link: '/arm/{study_acronym}',
+      dataField: 'subject_id',
+      header: 'Case ID',
+      link: '/cases/{subject_id}',
     },
     {
-      dataField: 'study_name',
-      header: 'Arm Name',
+      dataField: 'race',
+      header: 'Race',
     },
     {
-      dataField: 'study_full_description',
-      header: 'Arm Description',
+      dataField: 'diseaseTerm',
+      header: 'DiseaseTerm',
     },
     {
-      dataField: 'study_type',
-      header: 'Arm Type',
-    },
-    {
-      dataField: 'num_subjects',
-      header: 'Associated Cases',
+      dataField: 'registeringInstitution',
+      header: 'Registering Institution',
     },
   ],
 };
 
 // --------------- GraphQL query - Retrieve program details --------------
 const GET_PROGRAM_DETAIL_DATA_QUERY = gql`
-query trialDetail($trial_id: String!) {
-  trailDetail(trial_id: $trial_id) {
-    program_acronym
-    trial_id
-    trailName
-    trialDesription
-    leadOrganization
-    trialType
-    trialLongName
-    num_subjects
-    num_files
-    subjects{
-      subject_id
-      race
-      registeringInstitution
-      diseaseTerm
+query trialDetail($trial_id: String){
+    trialDetail(trial_id: $trial_id){
+        trial_id
+        trialName
+        trialLongName
+        trialDesription
+        leadOrganization
+        trialType
+        trialPrincipalInvestigator
+        num_subjects
+        num_files
+        subjects{
+            subject_id
+            race
+            registeringInstitution
+            diseaseTerm
+        }
     }
-  }
 }`;
 
 export {
@@ -163,3 +164,7 @@ export {
   GET_PROGRAM_DETAIL_DATA_QUERY,
   table,
 };
+// stageAtEntry{
+//   group
+//   subjects
+// }
