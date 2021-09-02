@@ -283,12 +283,25 @@ type TrialInfo {
     num_subjects: Int
 }
 
+type TrialDetail{
+    trial_id: String
+    trialName: String
+    trialLongName: String
+    trialDesription: String
+    leadOrganization: String
+    trialType: String
+    trialPrincipalInvestigator: String
+    num_subjects: Int,
+    num_files: Int,
+    subjects: [SubjectDetail]
+}
+
 schema {
     query: QueryType
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.3.1'")
+    schemaVersion: String @cypher(statement: "RETURN '0.4.0'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1405,7 +1418,7 @@ type QueryType {
         OPTIONAL MATCH (s)<--(sv:SOMATIC_VARIANT)
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
         WITH s,
-            COLLECT(f {
+            COLLECT(DISTINCT f {
                 subject_id: s.PT_ID,
                 file_name: f.FILE_NAME,
                 file_type: f.FILE_TYPE,
@@ -1415,7 +1428,7 @@ type QueryType {
                 file_id: f.UUID,
                 md5sum: f.MD5SUM
             }) AS files,
-            COLLECT(e {
+            COLLECT(DISTINCT e {
                 dateOfDiagnosis: e.DX_DT,
                 histology: e.HIST_CYTPATH_DESC,
                 eligibility: e.PT_ELIG_IND,
@@ -1425,7 +1438,7 @@ type QueryType {
                 stageAtEntry: e.DISEAS_STG,
                 labsInclusionStartDate: e.PRESTUDY_LAB_DT
             }) AS enrollments,
-            COLLECT(ae {
+            COLLECT(DISTINCT ae {
                 course: ae.CRSE_NUM,
                 courseDay: ae.CRSE_DAY_NUM,
                 onsetDate: ae.AE_ONSET_DT,
@@ -1446,12 +1459,12 @@ type QueryType {
                 expeditedReportToIRB: ae.AER_IND,
                 expeditedReportToCCR: ae.CCR_EP_AE_SUBM_IND
             }) AS adverseEvents,
-            COLLECT(sv {
+            COLLECT(DISTINCT sv {
                 genePanel500: sv.TUMR_GENE_SEQ_TSO_CD,
                 genePathogenicVariant: sv.GENE_PATH_VAR_NM,
                 somaticPathogenicity: sv.SOMATIC_VAR_PTHGNC_CAT
             }) AS somaticVariant,
-            COLLECT(gv {
+            COLLECT(DISTINCT gv {
                 panelCode: gv.HERED_GENE_PANL_CD,
                 genePathogenicVariant: gv.GENE_PATH_VAR_NM,
                 germlinePathogenicity: gv.GRMLN_VAR_PTHGNC_CAT
@@ -1481,6 +1494,32 @@ type QueryType {
             trialDescription: ct.CLINICAL_TRIAL_DESCRIPTION,
             trialType: ct.CLINICAL_TRIAL_TYPE,
             num_subjects: COUNT(s.PT_ID)
+        }
+    """, passThrough: true)
+
+    trialDetail(trial_id: String): [TrialDetail] @cypher(statement: """
+        MATCH (ct:CLINICALTRIAL {CLINICAL_TRIAL_ID: $trial_id}) 
+        OPTIONAL MATCH (ct)<--(s:SUBJECT)<--(f:FILE)
+        WITH ct,
+            COUNT(DISTINCT f) AS fileCount,
+            COUNT(DISTINCT s) AS subjectCount,
+            COLLECT(s {
+                subject_id: s.PT_ID,
+                race: s.PT_RACE_CD_1,
+                registeringInstitution: s.REG_INST_ID_CD,
+                diseaseTerm: s.DZ_DX_NM
+            }) AS subjects
+        RETURN {
+            trial_id: ct.CLINICAL_TRIAL_ID,
+            trialName: ct.CLINICAL_TRIAL_SHORT_NAME,
+            trialLongName: ct.CLINICAL_TRIAL_LONG_NAME,
+            trialDesription: ct.CLINICAL_TRIAL_DESCRIPTION,
+            leadOrganization: ct.LEAD_ORGANIZATION,
+            trialType: ct.CLINICAL_TRIAL_TYPE,
+            trialPrincipalInvestigator: ct.PRINCIPAL_INVESTIGATOR,
+            num_subjects: subjectCount,
+            num_files: fileCount,
+            subjects: subjects
         }
     """, passThrough: true)
 }

@@ -283,6 +283,19 @@ type TrialInfo {
     num_subjects: Int
 }
 
+type TrialDetail{
+    trial_id: String
+    trialName: String
+    trialLongName: String
+    trialDesription: String
+    leadOrganization: String
+    trialType: String
+    trialPrincipalInvestigator: String
+    num_subjects: Int,
+    num_files: Int,
+    subjects: [SubjectDetail]
+}
+
 schema {
     query: QueryType
 }
@@ -631,4 +644,6 @@ type QueryType {
     subjectDetail(subject_id: String): SubjectDetail 
 
     trialsInfo: [TrialInfo] 
+
+    trialDetail(trial_id: String): [TrialDetail] 
 }
