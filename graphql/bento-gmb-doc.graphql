@@ -645,5 +645,5 @@ type QueryType {
 
     trialsInfo: [TrialInfo] 
 
-    trialDetail(trial_id: String): [TrialDetail] 
+    trialDetail(trial_id: String): TrialDetail 
 }
