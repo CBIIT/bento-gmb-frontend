@@ -48,6 +48,7 @@ export const table = {
   defaultSortField: 'file_name',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
+  viewColumns: true,
   tableDownloadCSV: customMyFilesTabDownloadCSV,
 
   columns: [

@@ -11,15 +11,21 @@ import GridWithFooter from '../../components/GridWithFooter/GridView';
 import icon from '../../assets/icons/Cases.Icon.svg';
 import Subsection from '../../components/PropertySubsection/caseDetailSubsection';
 import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
+import TabThemeProvider from './components/tabThemeConfig';
 import {
   caseHeader,
   leftPanel,
   rightPanel,
+  table1,
   table2,
+  table3,
+  table4,
   tooltipContent,
+  tab,
 } from '../../bento/caseDetailData';
 import Snackbar from '../../components/Snackbar';
-// import { fetchDataForDashboardDataTable } from '../dashboard/dashboardState';
+import Tab from './components/Tab';
+import TabPanel from './components/TabPanel';
 
 // Main case detail component
 const CaseDetail = ({ data, classes }) => {
@@ -27,13 +33,26 @@ const CaseDetail = ({ data, classes }) => {
     open: false,
     value: 0,
   });
+  const [currentTab, setCurrentTab] = React.useState(0);
+  const handleTabChange = (event, value) => {
+    setCurrentTab(value);
+  };
+
   function openSnack(value1) {
     setsnackbarState({ open: true, value: value1 });
   }
   function closeSnack() {
     setsnackbarState({ open: false });
   }
-  // const dispatch = useDispatch();
+
+  function getBorderStyle() {
+    const style = '3px solid #42779a';
+    return `${style}`;
+  }
+
+  function getTableColor() {
+    return `${tab.items[currentTab].primaryColor}`;
+  }
 
   // make sure dashboard data has been loaded first for stats bar to work
   React.useEffect(() => {
@@ -51,6 +70,41 @@ const CaseDetail = ({ data, classes }) => {
     to: '/cases',
     isALink: true,
   }];
+
+  function tableGenerator(tableData) {
+    return (
+      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
+        <div className={classes.tableDiv}>
+          <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <GridWithFooter
+                  data={data[tableData.subjectDetailField]}
+                  title={(
+                    <div className={classes.tableTitle}>
+                      <span className={classes.tableHeader}>{tableData.tableTitle}</span>
+                    </div>
+                      )}
+                  columns={getColumns(tableData, classes, data)}
+                  options={getOptions(tableData, classes)}
+                  customOnRowsSelect={tableData.customOnRowsSelect}
+                  openSnack={openSnack}
+                  closeSnack={closeSnack}
+                  disableRowSelection={tableData.disableRowSelection}
+                  buttonText={tableData.buttonText}
+                  saveButtonDefaultStyle={tableData.saveButtonDefaultStyle}
+                  ActiveSaveButtonDefaultStyle={tableData.ActiveSaveButtonDefaultStyle}
+                  DeactiveSaveButtonDefaultStyle={tableData.DeactiveSaveButtonDefaultStyle}
+                  tooltipMessage={tableData.tooltipMessage}
+                  tooltipContent={tooltipContent}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -97,7 +151,12 @@ const CaseDetail = ({ data, classes }) => {
 
           <Grid container spacing={1} className={classes.detailContainer}>
             {/* Left panel */}
-            <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.leftPanel]}>
+            <Grid
+              item
+              sm={rightPanel.length > 0 ? 6 : 12}
+              xs={12}
+              className={[classes.detailPanel, classes.leftPanel]}
+            >
               <div className={classes.innerPanel}>
                 <Grid container spacing={2}>
                   {leftPanel.slice(0, 3).map((section) => (
@@ -112,56 +171,57 @@ const CaseDetail = ({ data, classes }) => {
             </Grid>
             {/* Left panel end */}
             {/* Right panel */}
-            <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.rightPanel]}>
-              <div style={{ paddingLeft: '7px' }} className={classes.innerPanel}>
-                <Grid container spacing={2}>
-                  {rightPanel.slice(0, 3).map((section) => (
-                    <Subsection
-                      key={section.sectionHeader}
-                      config={section}
-                      data={data}
-                    />
-                  ))}
-                </Grid>
-              </div>
-            </Grid>
+            {rightPanel.length > 0 ? (
+              <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.rightPanel]}>
+                <div style={{ paddingLeft: '7px' }} className={classes.innerPanel}>
+                  <Grid container spacing={2}>
+                    {rightPanel.slice(0, 3).map((section) => (
+                      <Subsection
+                        key={section.sectionHeader}
+                        config={section}
+                        data={data}
+                      />
+                    ))}
+                  </Grid>
+                </div>
+              </Grid>
+            ) : ''}
             {/* Right panel end */}
           </Grid>
         </div>
       </div>
-      {table2.display
-        ? (
-          <div id="case_detail_table_associated_files" className={classes.tableContainer}>
-            <div className={classes.tableDiv}>
-              <Grid item xs={12}>
-                <Grid container spacing={4}>
-                  <Grid item xs={12}>
-                    <GridWithFooter
-                      data={data[table2.subjectDetailField]}
-                      title={(
-                        <div className={classes.tableTitle}>
-                          <span className={classes.tableHeader}>{table2.tableTitle}</span>
-                        </div>
-                      )}
-                      columns={getColumns(table2, classes, data)}
-                      options={getOptions(table2, classes)}
-                      customOnRowsSelect={table2.customOnRowsSelect}
-                      openSnack={openSnack}
-                      closeSnack={closeSnack}
-                      disableRowSelection={table2.disableRowSelection}
-                      buttonText={table2.buttonText}
-                      saveButtonDefaultStyle={table2.saveButtonDefaultStyle}
-                      ActiveSaveButtonDefaultStyle={table2.ActiveSaveButtonDefaultStyle}
-                      DeactiveSaveButtonDefaultStyle={table2.DeactiveSaveButtonDefaultStyle}
-                      tooltipMessage={table2.tooltipMessage}
-                      tooltipContent={tooltipContent}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </div>
-          </div>
-        ) : ''}
+      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
+        <div className={classes.tableDiv}>
+          <Grid container>
+            <Grid item xs={12}>
+              <TabThemeProvider tableBorder={getBorderStyle()} tablecolor={getTableColor()}>
+                <Tab
+                  styleClasses={classes}
+                  tabItems={tab.items}
+                  currentTab={currentTab}
+                  handleTabChange={handleTabChange}
+                />
+              </TabThemeProvider>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+      <TabPanel value={currentTab} index={0}>
+        {table1.display
+          ? (tableGenerator(table1)) : ''}
+      </TabPanel>
+      <TabPanel value={currentTab} index={1}>
+        {table2.display
+          ? (tableGenerator(table2)) : ''}
+      </TabPanel>
+      <TabPanel value={currentTab} index={2}>
+        {table3.display
+          ? (tableGenerator(table3)) : ''}
+      </TabPanel>
+      <TabPanel value={currentTab} index={3}>
+        {table4.display
+          ? (tableGenerator(table4)) : ''}
+      </TabPanel>
       <div className={classes.blankSpace} />
     </>
   );
