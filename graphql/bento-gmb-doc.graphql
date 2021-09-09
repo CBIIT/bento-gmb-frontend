@@ -302,6 +302,19 @@ type TrialDetail{
     sites: [SiteSubjectCount]
 }
 
+type SiteDetail{
+    site_id: String
+    siteName: String
+    siteAddress: String
+    siteContact: String
+    sitePhone: String
+    siteEmail: String
+    siteStatus: String
+    num_subjects: Int
+    num_files: Int
+    subjects: [SubjectDetail]
+}
+
 schema {
     query: QueryType
 }
@@ -654,4 +667,6 @@ type QueryType {
     trialDetail(trial_id: String): TrialDetail 
 
     subjectCountByStageAtEntry(trial_id: String): [GroupCount] 
+
+    siteDetail(site_id: String): SiteDetail 
 }

@@ -302,12 +302,25 @@ type TrialDetail{
     sites: [SiteSubjectCount]
 }
 
+type SiteDetail{
+    site_id: String
+    siteName: String
+    siteAddress: String
+    siteContact: String
+    sitePhone: String
+    siteEmail: String
+    siteStatus: String
+    num_subjects: Int
+    num_files: Int
+    subjects: [SubjectDetail]
+}
+
 schema {
     query: QueryType
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.5.1'")
+    schemaVersion: String @cypher(statement: "RETURN '0.6.0'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1539,5 +1552,33 @@ type QueryType {
             group: e.DISEAS_STG,
             subjects: COUNT(*)
         } 
+    """, passThrough: true)
+
+    siteDetail(site_id: String): SiteDetail @cypher(statement: """
+        MATCH (site:SITE {REG_INST_ID: $site_id})
+        OPTIONAL MATCH (site)<--(s:SUBJECT)<--(f:FILE)
+        WITH 
+            COUNT(DISTINCT s) AS num_subjects, 
+            COUNT(DISTINCT f) AS num_files
+        MATCH (site:SITE {REG_INST_ID: $site_id})
+        OPTIONAL MATCH (site)<--(s:SUBJECT)
+        WITH site, num_subjects, num_files,
+            COLLECT(DISTINCT s{
+                    subject_id: s.PT_ID,
+                    race: s.PT_RACE_CD_1,
+                    diseaseTerm: s.DZ_DX_NM
+            }) AS subjects
+        RETURN{
+            site_id: site.REG_INST_ID,
+            siteName: site.REG_INST_ID_CD,
+            siteAddress: site.ADDRESS,
+            siteContact: site.CONTACT,
+            sitePhone: site.PHONE,
+            siteEmail: site.EMAIL,
+            siteStatus: site.STATUS,
+            subjects: subjects,
+            num_subjects: num_subjects,
+            num_files: num_files
+        }
     """, passThrough: true)
 }
