@@ -116,6 +116,12 @@ type TrialInfo {
     num_subjects: Int
 }
 
+type SiteSubjectCount{
+    site_id: String
+    name: String
+    subjectCount: Int
+}
+
 type TrialDetail{
     trial_id: String
     trialName: String
@@ -126,7 +132,7 @@ type TrialDetail{
     trialPrincipalInvestigator: String
     num_subjects: Int,
     num_files: Int,
-    subjects: [SubjectDetail]
+    sites: [SiteSubjectCount]
 }
 
 schema {
@@ -134,7 +140,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.5.0'")
+    schemaVersion: String @cypher(statement: "RETURN '0.5.1'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1332,16 +1338,20 @@ type QueryType {
 
     trialDetail(trial_id: String): TrialDetail @cypher(statement: """
         MATCH (ct:CLINICALTRIAL {CLINICAL_TRIAL_ID: $trial_id}) 
-        OPTIONAL MATCH (ct)<--(s:SUBJECT)<--(f:FILE)
-        WITH ct,
-            COUNT(DISTINCT f) AS fileCount,
-            COUNT(DISTINCT s) AS subjectCount,
-            COLLECT(DISTINCT s {
-                subject_id: s.PT_ID,
-                race: s.PT_RACE_CD_1,
-                registeringInstitution: s.REG_INST_ID_CD,
-                diseaseTerm: s.DZ_DX_NM
-            }) AS subjects
+        OPTIONAL MATCH (ct)<--(site:SITE)<--(s:SUBJECT)<--(f:FILE)
+        WITH 
+            COUNT(DISTINCT s) AS num_subjects, 
+            COUNT(DISTINCT f) as num_files
+        MATCH (ct:CLINICALTRIAL {CLINICAL_TRIAL_ID: $trial_id}) 
+        OPTIONAL MATCH (ct)<--(site:SITE)<--(s:SUBJECT)
+        WITH num_subjects, num_files, ct, site, 
+            COUNT(DISTINCT s) AS num_site_subjects
+        WITH num_subjects, num_files, ct,
+            COLLECT(DISTINCT site {
+                site_id: site.REG_INST_ID,
+                name: site.REG_INST_ID_CD,
+                subjectCount: num_site_subjects
+            }) AS sites
         RETURN {
             trial_id: ct.CLINICAL_TRIAL_ID,
             trialName: ct.CLINICAL_TRIAL_SHORT_NAME,
@@ -1350,9 +1360,9 @@ type QueryType {
             leadOrganization: ct.LEAD_ORGANIZATION,
             trialType: ct.CLINICAL_TRIAL_TYPE,
             trialPrincipalInvestigator: ct.PRINCIPAL_INVESTIGATOR,
-            num_subjects: subjectCount,
-            num_files: fileCount,
-            subjects: subjects
+            num_subjects: num_subjects,
+            num_files: num_files,
+            sites: sites
         }
     """, passThrough: true)
 

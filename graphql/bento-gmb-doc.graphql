@@ -283,6 +283,12 @@ type TrialInfo {
     num_subjects: Int
 }
 
+type SiteSubjectCount{
+    site_id: String
+    name: String
+    subjectCount: Int
+}
+
 type TrialDetail{
     trial_id: String
     trialName: String
@@ -293,7 +299,7 @@ type TrialDetail{
     trialPrincipalInvestigator: String
     num_subjects: Int,
     num_files: Int,
-    subjects: [SubjectDetail]
+    sites: [SiteSubjectCount]
 }
 
 schema {
