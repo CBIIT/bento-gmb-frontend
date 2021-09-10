@@ -2,17 +2,17 @@ import gql from 'graphql-tag';
 
 // --------------- Page title configuration --------------
 const pageTitle = {
-  label: 'Program :',
-  dataField: 'program_acronym',
+  label: 'Site:',
+  dataField: 'siteName',
 };
 
 const pageSubTitle = {
-  dataField: 'program_id',
+  dataField: 'site_id',
 };
 
 const breadCrumb = {
-  label: 'ALL PROGRAMS',
-  link: '/programs',
+  label: 'ALL Trials',
+  link: '/trials',
 };
 
 // --------------- Aggregated count configuration --------------
@@ -26,9 +26,9 @@ const aggregateCount = {
 // --------------- Icons configuration --------------
 // Ideal size for programDetailIcon is 107x107 px
 // Ideal size for externalLinkIcon is 16x16 px
-const programDetailIcon = {
+const siteDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'Bento program logo',
+  alt: 'GMB Site logo',
 };
 
 const externalLinkIcon = {
@@ -41,29 +41,28 @@ const externalLinkIcon = {
 const leftPanel = {
   attributes: [
     {
-      dataField: 'program_acronym',
-      label: 'Program',
+      dataField: 'siteName',
+      label: 'Site',
     },
     {
-      dataField: 'program_name',
-      label: 'Program Name',
+      dataField: 'site_id',
+      label: 'Site Id',
     },
     {
-      dataField: 'program_id',
-      label: 'Program Id',
+      dataField: 'siteContact',
+      label: 'Contact Person',
     },
     {
-      dataField: 'program_full_description',
-      label: 'Program Description',
+      dataField: 'siteEmail',
+      label: 'Email',
     },
     {
-      dataField: 'institution_name',
-      label: 'Institution',
+      dataField: 'sitePhone',
+      label: 'Phone',
     },
     {
-      dataField: 'program_external_url',
-      label: 'External Link to Program',
-      externalLinkToLabel: true,
+      dataField: 'siteStatus',
+      label: 'Status',
     },
   ],
 };
@@ -94,11 +93,11 @@ const table = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'ARMS',
+  title: 'Cases',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'studies',
+  dataField: 'subjects',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'study_acronym',
+  defaultSortField: 'subject_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -106,68 +105,51 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'study_acronym',
-      header: 'Arm',
-      link: '/arm/{study_acronym}',
+      dataField: 'subject_id',
+      header: 'Case ID',
+      link: '/case/{subject_id}',
     },
     {
-      dataField: 'study_name',
-      header: 'Arm Name',
+      dataField: 'race',
+      header: 'Race',
     },
     {
-      dataField: 'study_full_description',
-      header: 'Arm Description',
-    },
-    {
-      dataField: 'study_type',
-      header: 'Arm Type',
-    },
-    {
-      dataField: 'num_subjects',
-      header: 'Associated Cases',
+      dataField: 'diseaseTerm',
+      header: 'DiseaseTerm',
     },
   ],
 };
 
 // --------------- GraphQL query - Retrieve program details --------------
-const GET_PROGRAM_DETAIL_DATA_QUERY = gql`
-query programDetail($program_id: String!) {
-  programDetail(program_id: $program_id) {
-    program_acronym
-    program_id
-    program_name
-    program_full_description
-    institution_name
-    program_external_url
-    num_subjects
-    num_files
-    num_samples
-    num_lab_procedures
-    disease_subtypes
-    diagnoses {
-      group
-      subjects
+const GET_SITE_DETAIL_DATA_QUERY = gql`
+query siteDetail($site_id: String){
+    siteDetail(site_id: $site_id){
+        site_id
+        siteName
+        siteAddress
+        siteContact
+        sitePhone
+        siteEmail
+        siteStatus
+        num_subjects
+        num_files
+        subjects{
+            subject_id
+            race
+            diseaseTerm
+        }
     }
-    studies { 
-      study_name
-      study_type
-      study_acronym
-      study_info
-      study_full_description
-      num_subjects
-    }
-  }
 }`;
 
 export {
   pageTitle,
   pageSubTitle,
   aggregateCount,
-  programDetailIcon,
+  siteDetailIcon,
   leftPanel,
   rightPanel,
   externalLinkIcon,
   breadCrumb,
-  GET_PROGRAM_DETAIL_DATA_QUERY,
+  GET_SITE_DETAIL_DATA_QUERY,
   table,
 };

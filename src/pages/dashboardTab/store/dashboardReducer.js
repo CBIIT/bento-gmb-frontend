@@ -23,13 +23,10 @@ import {
   FILTER_QUERY,
   FILTER_GROUP_QUERY,
   GET_FILES_OVERVIEW_QUERY,
-  GET_SAMPLES_OVERVIEW_QUERY,
   GET_CASES_OVERVIEW_QUERY,
   GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL,
-  GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
   GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL,
   GET_FILES_OVERVIEW_DESC_QUERY,
-  GET_SAMPLES_OVERVIEW_DESC_QUERY,
   GET_CASES_OVERVIEW_DESC_QUERY,
   GET_FILES_NAME_QUERY,
   GET_FILE_IDS_FROM_FILE_NAME,
@@ -246,7 +243,7 @@ function toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables) {
     })
     .then((result) => client.query({ // request to get the filtered group counts
       query: FILTER_GROUP_QUERY,
-      variables: { subject_ids: result.data.searchSubjects.subjectIds },
+      variables: { subject_ids: result.data.searchSubjects.subject_ids },
     })
       .then((result2) => store.dispatch({
         type: 'TOGGGLE_CHECKBOX_WITH_API',
@@ -297,8 +294,6 @@ export function resetGroupSelections(payload) {
 
 const querySwitch = (payload, tabContainer) => {
   switch (payload) {
-    case ('Samples'):
-      return { QUERY: tabContainer.defaultSortDirection === 'desc' ? GET_SAMPLES_OVERVIEW_DESC_QUERY : GET_SAMPLES_OVERVIEW_QUERY, sortfield: tabContainer.defaultSortField || '', sortDirection: tabContainer.defaultSortDirection || '' };
     case ('Files'):
       return { QUERY: tabContainer.defaultSortDirection === 'desc' ? GET_FILES_OVERVIEW_DESC_QUERY : GET_FILES_OVERVIEW_QUERY, sortfield: tabContainer.defaultSortField || '', sortDirection: tabContainer.defaultSortDirection || '' };
     default:
@@ -381,11 +376,9 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
   const subjectIds = getState().filteredSubjectIds;
   const sampleIds = getState().filteredSampleIds;
   const fileIds = getState().filteredFileIds;
-  const SELECT_ALL_QUERY = getState().currentActiveTab === tabIndex[2].title
+  const SELECT_ALL_QUERY = getState().currentActiveTab === tabIndex[1].title
     ? GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL
-    : getState().currentActiveTab === tabIndex[1].title
-      ? GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL
-      : GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL;
+    : GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL;
 
   const fetchResult = await client
     .query({
@@ -398,7 +391,7 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
       },
     })
     .then((result) => {
-      const RESULT_DATA = getState().currentActiveTab === tabIndex[2].title ? 'fileOverview' : getState().currentActiveTab === tabIndex[1].title ? 'sampleOverview' : 'subjectOverViewPaged';
+      const RESULT_DATA = getState().currentActiveTab === tabIndex[1].title ? 'fileOverview' : 'subjectOverViewPaged';
       const fileIdsFromQuery = RESULT_DATA === 'fileOverview' ? transformfileIdsToFiles(result.data[RESULT_DATA]) : RESULT_DATA === 'subjectOverViewPaged' ? transformCasesFileIdsToFiles(result.data[RESULT_DATA]) : result.data[RESULT_DATA] || [];
       return fileIdsFromQuery;
     });
@@ -522,11 +515,8 @@ function filterOutFileIds(fileIds) {
 export async function fetchAllFileIDs(fileCount = 100000, selectedIds = [], offset = 0.0, first = 100000, order_by = 'file_name') {
   let filesIds = [];
   switch (getState().currentActiveTab) {
-    case tabIndex[2].title:
-      filesIds = await getFileIDsByFileName(selectedIds, offset, first, order_by);
-      break;
     case tabIndex[1].title:
-      filesIds = await getFileIDs(fileCount, GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL, [], selectedIds, 'sampleOverview');
+      filesIds = await getFileIDsByFileName(selectedIds, offset, first, order_by);
       break;
     default:
       filesIds = await getFileIDs(fileCount, GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL, selectedIds, [], 'subjectOverViewPaged');
@@ -730,7 +720,7 @@ export function getCountForAddAllFilesModal() {
     ? currentState.stats.numberOfCases
     : currentState.currentActiveTab === tabIndex[1].title
       ? currentState.stats.numberOfSamples : currentState.stats.numberOfFiles;
-  return { activeTab: currentState.currentActiveTab || tabIndex[2].title, count: numberCount };
+  return { activeTab: currentState.currentActiveTab || tabIndex[1].title, count: numberCount };
 }
 
 /**
@@ -774,14 +764,10 @@ export async function tableHasSelections() {
 
   const filteredNames = await getFileNamesByFileIds(getState().filteredFileIds);
   switch (getState().currentActiveTab) {
-    case tabIndex[2].title:
+    case tabIndex[1].title:
       filteredIds = filteredNames;
       selectedRowInfo = getState().dataFileSelected.selectedRowInfo;
 
-      break;
-    case tabIndex[1].title:
-      filteredIds = getState().filteredSampleIds;
-      selectedRowInfo = getState().dataSampleSelected.selectedRowInfo;
       break;
     default:
       filteredIds = getState().filteredSubjectIds;
@@ -801,9 +787,6 @@ function setDataFileSelected(result) {
   store.dispatch({ type: 'SET_FILE_SELECTION', payload: result });
 }
 
-function setDataSampleSelected(result) {
-  store.dispatch({ type: 'SET_SAMPLE_SELECTION', payload: result });
-}
 /**
  *  Returns the functuion depend on current active tab
  * @return {func}
@@ -811,10 +794,8 @@ function setDataSampleSelected(result) {
 
 export function getTableRowSelectionEvent() {
   const currentState = getState();
-  const tableRowSelectionEvent = currentState.currentActiveTab === tabIndex[2].title
-    ? setDataFileSelected
-    : currentState.currentActiveTab === tabIndex[1].title
-      ? setDataSampleSelected : setDataCaseSelected;
+  const tableRowSelectionEvent = currentState.currentActiveTab === tabIndex[1].title
+    ? setDataFileSelected : setDataCaseSelected;
   return tableRowSelectionEvent;
 }
 
@@ -846,13 +827,13 @@ const reducers = {
     );
     const checkboxData1 = setSelectedFilterValues(updatedCheckboxData1, item.allFilters);
     fetchDataForDashboardTab(state.currentActiveTab,
-      item.data.searchSubjects.subjectIds, item.data.searchSubjects.sampleIds,
+      item.data.searchSubjects.subject_ids, item.data.searchSubjects.sampleIds,
       item.data.searchSubjects.fileIds);
     return {
       ...state,
       setSideBarLoading: false,
       allActiveFilters: item.allFilters,
-      filteredSubjectIds: item.data.searchSubjects.subjectIds,
+      filteredSubjectIds: item.data.searchSubjects.subject_ids,
       filteredSampleIds: item.data.searchSubjects.sampleIds,
       filteredFileIds: item.data.searchSubjects.fileIds,
       checkbox: {

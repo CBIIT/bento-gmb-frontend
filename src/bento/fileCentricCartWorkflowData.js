@@ -48,6 +48,7 @@ export const table = {
   defaultSortField: 'file_name',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
+  viewColumns: true,
   tableDownloadCSV: customMyFilesTabDownloadCSV,
 
   columns: [
@@ -102,11 +103,9 @@ export const table = {
 export const GET_MY_CART_DATA_QUERY = gql`
 query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="") {
     filesInList(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-        study_code
         subject_id
         file_name
         file_type
-        association
         file_description
         file_format
         file_size

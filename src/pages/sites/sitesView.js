@@ -5,23 +5,23 @@ import {
 } from '@material-ui/core';
 import { CustomDataTable, getOptions, getColumns } from 'bento-components';
 import {
-  table, programListingIcon, externalLinkIcon,
-} from '../../bento/programData';
+  table, siteListingIcon, externalLinkIcon,
+} from '../../bento/sitesData';
 import Stats from '../../components/Stats/AllStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
   singleCheckBox, setSideBarToLoading, setDashboardTableLoading,
 } from '../dashboardTab/store/dashboardReducer';
 
-const Programs = ({ classes, data }) => {
-  const redirectTo = (program) => {
+const Sites = ({ classes, data }) => {
+  const redirectTo = (tableData) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'programs',
-      groupName: 'Program',
+      datafield: 'registeringInstitution',
+      groupName: 'Registering Institution',
       isChecked: true,
-      name: program.rowData[0],
+      name: tableData.rowData[1],
       section: 'Filter By Cases',
     }]);
   };
@@ -34,8 +34,8 @@ const Programs = ({ classes, data }) => {
           <div className={classes.header}>
             <div className={classes.logo}>
               <img
-                src={programListingIcon.src}
-                alt={programListingIcon.alt}
+                src={siteListingIcon.src}
+                alt={siteListingIcon.alt}
               />
 
             </div>
@@ -51,7 +51,7 @@ const Programs = ({ classes, data }) => {
           </div>
 
           { table.display ? (
-            <div id="table_programs" className={classes.tableDiv}>
+            <div id="table_sites" className={classes.tableDiv}>
               <Grid container>
                 <Grid item xs={12}>
                   <CustomDataTable
@@ -157,4 +157,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(Programs);
+export default withStyles(styles, { withTheme: true })(Sites);

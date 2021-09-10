@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
 // --------------- Icons configuration --------------
-// Ideal size for programListingIcon is 100x100 px
+// Ideal size for siteListingIcon is 100x100 px
 // Ideal size for externalLinkIcon is 16x16 px
-const programListingIcon = {
+const siteListingIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'Bento program logo',
+  alt: 'GMB Site logo',
 };
 
 const externalLinkIcon = {
@@ -18,11 +18,11 @@ const table = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'Programs',
+  title: 'Sites',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'programInfo',
+  dataField: 'sitesInfo',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'program_acronym',
+  defaultSortField: 'site_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -30,35 +30,21 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'program_acronym',
-      header: 'Program Code',
-      link: '/program/{program_id}',
-      display: true,
+      dataField: 'site_id',
+      header: 'Site ID',
+      link: '/site/{site_id}',
     },
     {
-      dataField: 'program_id',
-      header: 'Program ID',
+      dataField: 'siteName',
+      header: 'Site Name',
     },
     {
-      dataField: 'program_name',
-      header: 'Program Name',
+      dataField: 'siteAddress',
+      header: 'Address',
     },
     {
-      dataField: 'start_date',
-      header: 'Start Date',
-    },
-    {
-      dataField: 'end_date',
-      header: 'End Date',
-    },
-    {
-      dataField: 'pubmed_id',
-      header: 'PubMed ID',
-      link: 'https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}',
-    },
-    {
-      dataField: 'num_studies',
-      header: 'Number of ARMs',
+      dataField: 'siteStatus',
+      header: 'Status',
     },
     {
       dataField: 'num_subjects',
@@ -67,24 +53,21 @@ const table = {
   ],
 };
 
-// --------------- GraphQL query - Retrieve program info --------------
-const GET_PROGRAMS_DATA_QUERY = gql`{
-  programInfo {
- program_acronym
- program_id
- program_name
- start_date
- end_date
- pubmed_id
- num_studies
- num_subjects
- }
+// --------------- GraphQL query - Retrieve sites info --------------
+const GET_SITES_DATA_QUERY = gql`{
+  sitesInfo{
+      site_id
+      siteName
+      siteAddress
+      siteStatus
+      num_subjects
+  }
 }
  `;
 
 export {
-  programListingIcon,
+  siteListingIcon,
   externalLinkIcon,
   table,
-  GET_PROGRAMS_DATA_QUERY,
+  GET_SITES_DATA_QUERY,
 };
