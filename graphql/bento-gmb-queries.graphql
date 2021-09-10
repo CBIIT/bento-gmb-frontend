@@ -153,7 +153,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.6.0'")
+    schemaVersion: String @cypher(statement: "RETURN '0.6.1'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1404,7 +1404,7 @@ type QueryType {
         RETURN{
             site_id: site.REG_INST_ID,
             siteName: site.REG_INST_ID_CD,
-            siteAddress: site.ADDRESS,
+            siteAddress: site.LOCATION,
             siteContact: site.CONTACT,
             sitePhone: site.PHONE,
             siteEmail: site.EMAIL,
