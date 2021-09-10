@@ -14,9 +14,9 @@ import {
 } from 'bento-components';
 import {
   pageTitle, table, externalLinkIcon,
-  trialDetailIcon, breadCrumb, aggregateCount,
+  siteDetailIcon, breadCrumb, aggregateCount,
   pageSubTitle, leftPanel, rightPanel,
-} from '../../bento/trialDetailData';
+} from '../../bento/siteDetailData';
 import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
@@ -26,18 +26,18 @@ import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import Widget from '../../components/Widgets/WidgetView';
 import colors from '../../utils/colors';
 
-const TrialView = ({ classes, data, theme }) => {
-  const trialData = data.trialDetail;
+const SiteView = ({ classes, data, theme }) => {
+  const siteData = data.siteDetail;
   const widgetData = data.subjectCountByStageAtEntry;
 
   const redirectTo = () => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'programs',
-      groupName: 'Program',
+      datafield: 'registeringInstitution',
+      groupName: 'Registering Institution',
       isChecked: true,
-      name: trialData.program_acronym,
+      name: siteData.siteName,
       section: 'Filter By Cases',
     }]);
   };
@@ -56,8 +56,8 @@ const TrialView = ({ classes, data, theme }) => {
 
   const stat = {
     numberOfTrials: 1,
-    numberOfSubjects: trialData.num_subjects !== undefined ? trialData.num_subjects : 'undefined',
-    numberOfFiles: trialData.num_files !== undefined ? trialData.num_files : 'undefined',
+    numberOfSubjects: siteData.num_subjects !== undefined ? siteData.num_subjects : 'undefined',
+    numberOfFiles: siteData.num_files !== undefined ? siteData.num_files : 'undefined',
   };
 
   const breadCrumbJson = [{
@@ -75,8 +75,8 @@ const TrialView = ({ classes, data, theme }) => {
         <div className={classes.header}>
           <div className={classes.logo}>
             <img
-              src={trialDetailIcon.src}
-              alt={trialDetailIcon.alt}
+              src={siteDetailIcon.src}
+              alt={siteDetailIcon.alt}
             />
 
           </div>
@@ -88,14 +88,14 @@ const TrialView = ({ classes, data, theme }) => {
                 <span>
                   {' '}
                   {' '}
-                  {trialData[pageTitle.dataField]}
+                  {siteData[pageTitle.dataField]}
                 </span>
               </span>
             </div>
             <div className={cn(classes.headerMSubTitle, classes.headerSubTitleCate)}>
               <span id="program_detail_subtile">
                 {' '}
-                {trialData[pageSubTitle.dataField]}
+                {siteData[pageSubTitle.dataField]}
               </span>
 
             </div>
@@ -115,7 +115,7 @@ const TrialView = ({ classes, data, theme }) => {
                   <span className={classes.headerButtonColumn}>{': '}</span>
                   <span className={classes.headerButtonLinkNumber} id="program_detail_header_file_count">
 
-                    {trialData[aggregateCount.dataField]}
+                    {siteData[aggregateCount.dataField]}
 
                   </span>
                 </Link>
@@ -142,9 +142,9 @@ const TrialView = ({ classes, data, theme }) => {
                                 {' '}
                                 <Link
                                   className={classes.link}
-                                  to={`${attribute.actualLink}${trialData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
+                                  to={`${attribute.actualLink}${siteData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
                                 >
-                                  {trialData[attribute.dataField]}
+                                  {siteData[attribute.dataField]}
                                 </Link>
                                 {' '}
                               </span>
@@ -163,12 +163,12 @@ const TrialView = ({ classes, data, theme }) => {
                                 <span className={classes.content}>
                                   {' '}
                                   <a
-                                    href={`${attribute.actualLink}${trialData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
+                                    href={`${attribute.actualLink}${siteData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={classes.link}
                                   >
-                                    {trialData[attribute.dataField]}
+                                    {siteData[attribute.dataField]}
                                   </a>
                                   <img
                                     src={externalLinkIcon.src}
@@ -186,7 +186,7 @@ const TrialView = ({ classes, data, theme }) => {
                                 <span
                                   className={classes.detailContainerHeaderLink}
                                 >
-                                  <a href={`${trialData[attribute.dataField]}`} rel="noopener noreferrer">{attribute.label}</a>
+                                  <a href={`${siteData[attribute.dataField]}`} rel="noopener noreferrer">{attribute.label}</a>
                                 </span>
                               </div>
                             )
@@ -196,7 +196,7 @@ const TrialView = ({ classes, data, theme }) => {
                                   <span
                                     className={classes.detailContainerHeaderLink}
                                   >
-                                    <a href={`${trialData[attribute.dataField]}`} target="_blank" rel="noopener noreferrer">{attribute.label}</a>
+                                    <a href={`${siteData[attribute.dataField]}`} target="_blank" rel="noopener noreferrer">{attribute.label}</a>
                                     <img
                                       src={externalLinkIcon.src}
                                       alt={externalLinkIcon.alt}
@@ -216,7 +216,7 @@ const TrialView = ({ classes, data, theme }) => {
                                   <div>
                                     <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
                                       {' '}
-                                      {trialData[attribute.dataField]}
+                                      {siteData[attribute.dataField]}
                                       {' '}
                                     </span>
                                   </div>
@@ -285,7 +285,7 @@ const TrialView = ({ classes, data, theme }) => {
                           />
                         </div>
                         <div className={classes.fileCount} id="program_detail_file_count">
-                          {trialData[rightPanel.files[0].dataField]}
+                          {siteData[rightPanel.files[0].dataField]}
                         </div>
                       </div>
                     </div>
@@ -309,7 +309,7 @@ const TrialView = ({ classes, data, theme }) => {
                 <Grid item xs={12}>
                   <Typography>
                     <CustomDataTable
-                      data={trialData[table.dataField]}
+                      data={siteData[table.dataField]}
                       columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectToArm)}
                       options={getOptions(table, classes)}
                     />
@@ -676,4 +676,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(TrialView);
+export default withStyles(styles, { withTheme: true })(SiteView);
