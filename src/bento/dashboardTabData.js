@@ -221,7 +221,7 @@ export const tabContainers = [
         downloadDocument: true, // To indicate that column is document donwload
         documentDownloadProps: {
           // Max file size needs to bin Bytes to seperate two support file preview and download
-          maxFileSize: 315,
+          maxFileSize: 1073741824,
           // Tool top text for file download
           toolTipTextFileDownload: 'Download a copy of this file',
           // Tool top text for file preview

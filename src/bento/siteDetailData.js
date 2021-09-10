@@ -2,12 +2,12 @@ import gql from 'graphql-tag';
 
 // --------------- Page title configuration --------------
 const pageTitle = {
-  label: 'Trial:',
-  dataField: 'trialName',
+  label: 'Site:',
+  dataField: 'siteName',
 };
 
 const pageSubTitle = {
-  dataField: 'trial_id',
+  dataField: 'site_id',
 };
 
 const breadCrumb = {
@@ -24,11 +24,11 @@ const aggregateCount = {
 };
 
 // --------------- Icons configuration --------------
-// Ideal size for trialDetailIcon is 107x107 px
+// Ideal size for programDetailIcon is 107x107 px
 // Ideal size for externalLinkIcon is 16x16 px
-const trialDetailIcon = {
+const siteDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'GMB trial logo',
+  alt: 'GMB Site logo',
 };
 
 const externalLinkIcon = {
@@ -41,28 +41,28 @@ const externalLinkIcon = {
 const leftPanel = {
   attributes: [
     {
-      dataField: 'trialName',
-      label: 'Trial',
+      dataField: 'siteName',
+      label: 'Site',
     },
     {
-      dataField: 'trialLongName',
-      label: 'Trial Name',
+      dataField: 'site_id',
+      label: 'Site Id',
     },
     {
-      dataField: 'trial_id',
-      label: 'Trial Id',
+      dataField: 'siteContact',
+      label: 'Contact Person',
     },
     {
-      dataField: 'trialDesription',
-      label: 'Trial Description',
+      dataField: 'siteEmail',
+      label: 'Email',
     },
     {
-      dataField: 'leadOrganization',
-      label: 'Lead Organization',
+      dataField: 'sitePhone',
+      label: 'Phone',
     },
     {
-      dataField: 'trialPrincipalInvestigator',
-      label: 'Principal Investigator',
+      dataField: 'siteStatus',
+      label: 'Status',
     },
   ],
 };
@@ -72,8 +72,8 @@ const leftPanel = {
 const rightPanel = {
   widget: [
     {
-      dataField: 'N/A',
-      label: 'Stage at Entry Distribution',
+      dataField: 'diagnoses',
+      label: 'Diagnosis',
       display: true,
     },
   ],
@@ -93,11 +93,11 @@ const table = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'Sites',
+  title: 'Cases',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'sites',
+  dataField: 'subjects',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'site_id',
+  defaultSortField: 'subject_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -105,53 +105,39 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'site_id',
-      header: 'Site ID',
-      link: '/site/{site_id}',
+      dataField: 'subject_id',
+      header: 'Case ID',
+      link: '/case/{subject_id}',
     },
     {
-      dataField: 'siteName',
-      header: 'Name',
+      dataField: 'race',
+      header: 'Race',
     },
     {
-      dataField: 'siteAddress',
-      header: 'Address',
-    },
-    {
-      dataField: 'siteStatus',
-      header: 'Status',
-    },
-    {
-      dataField: 'subjectCount',
-      header: 'Cases',
+      dataField: 'diseaseTerm',
+      header: 'DiseaseTerm',
     },
   ],
 };
 
-// --------------- GraphQL query - Retrieve trial details --------------
-const GET_TRIAL_DETAIL_DATA_QUERY = gql`
-query trialDetail($trial_id: String){
-    trialDetail(trial_id: $trial_id){
-        trial_id
-        trialName
-        trialLongName
-        trialDesription
-        leadOrganization
-        trialType
-        trialPrincipalInvestigator
+// --------------- GraphQL query - Retrieve program details --------------
+const GET_SITE_DETAIL_DATA_QUERY = gql`
+query siteDetail($site_id: String){
+    siteDetail(site_id: $site_id){
+        site_id
+        siteName
+        siteAddress
+        siteContact
+        sitePhone
+        siteEmail
+        siteStatus
         num_subjects
         num_files
-        sites{
-          site_id
-          siteName
-          siteAddress
-          siteStatus
-          subjectCount
+        subjects{
+            subject_id
+            race
+            diseaseTerm
         }
-    }
-    subjectCountByStageAtEntry(trial_id: $trial_id){
-        group
-        subjects
     }
 }`;
 
@@ -159,11 +145,11 @@ export {
   pageTitle,
   pageSubTitle,
   aggregateCount,
-  trialDetailIcon,
+  siteDetailIcon,
   leftPanel,
   rightPanel,
   externalLinkIcon,
   breadCrumb,
-  GET_TRIAL_DETAIL_DATA_QUERY,
+  GET_SITE_DETAIL_DATA_QUERY,
   table,
 };

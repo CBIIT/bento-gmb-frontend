@@ -48,12 +48,12 @@ const LandingController = ({ classes }) => (
     <div className={classes.container}>
       <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.bannerTexture}>
-          Exploring, analyzing, and understanding data from human cancer trials
+          Find and explore protocol 48 data
         </div>
       </Grid>
       <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.ButtonSection}>
-          <Link to="/cases" className={classes.grayButton}>Learn More</Link>
+          <Link to="/cases" className={classes.grayButton}>View data</Link>
         </div>
       </Grid>
     </div>
@@ -119,10 +119,10 @@ const LandingController = ({ classes }) => (
                   <img className={classes.image} src={imgAccess} alt="GMB Request ACCESS" />
                 </div>
                 <div className={classes.content}>
-                  <div className={classes.contentHeader}> REQUEST ACCESS</div>
+                  <div className={classes.contentHeader}>This Space Open</div>
                   <div className={classes.contentContainer}>
-                    Data and files in GMB are not open access,
-                    they require users to have permission.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nullam dictum at purus.
                   </div>
 
                 </div>
