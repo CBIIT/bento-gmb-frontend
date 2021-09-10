@@ -285,7 +285,9 @@ type TrialInfo {
 
 type SiteSubjectCount{
     site_id: String
-    name: String
+    siteName: String
+    siteAddress: String
+    siteStatus: String
     subjectCount: Int
 }
 
@@ -320,7 +322,7 @@ schema {
 }
 
 type QueryType {
-    schemaVersion: String @cypher(statement: "RETURN '0.6.1'")
+    schemaVersion: String @cypher(statement: "RETURN '0.7.0'")
 
     numberOfTrials: Int @cypher(statement: "MATCH (ct:CLINICALTRIAL) RETURN COUNT(ct)")
     numberOfSubjects: Int @cypher(statement: "MATCH (s:SUBJECT) RETURN COUNT(s)")
@@ -1529,7 +1531,9 @@ type QueryType {
         WITH num_subjects, num_files, ct,
             COLLECT(DISTINCT site {
                 site_id: site.REG_INST_ID,
-                name: site.REG_INST_ID_CD,
+                siteName: site.REG_INST_ID_CD,
+                siteAddress: site.LOCATION,
+                siteStatus: site.STATUS,
                 subjectCount: num_site_subjects
             }) AS sites
         RETURN {
@@ -1579,6 +1583,18 @@ type QueryType {
             subjects: subjects,
             num_subjects: num_subjects,
             num_files: num_files
+        }
+    """, passThrough: true)
+
+    sitesInfo: [SiteDetail] @cypher(statement: """
+        MATCH (site:SITE)
+        OPTIONAL MATCH (site)<--(s:SUBJECT)
+        RETURN {
+            site_id: site.REG_INST_ID,
+            siteName: site.REG_INST_ID_CD,
+            siteAddress: site.LOCATION,
+            siteStatus: site.STATUS,
+            num_subjects: COUNT(DISTINCT s)
         }
     """, passThrough: true)
 }

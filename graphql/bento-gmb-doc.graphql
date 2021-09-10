@@ -285,7 +285,9 @@ type TrialInfo {
 
 type SiteSubjectCount{
     site_id: String
-    name: String
+    siteName: String
+    siteAddress: String
+    siteStatus: String
     subjectCount: Int
 }
 
@@ -669,4 +671,6 @@ type QueryType {
     subjectCountByStageAtEntry(trial_id: String): [GroupCount] 
 
     siteDetail(site_id: String): SiteDetail 
+
+    sitesInfo: [SiteDetail] 
 }
