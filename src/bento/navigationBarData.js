@@ -54,6 +54,11 @@ export const navBarData = [
     link: '/trials',
   },
   {
+    labelText: 'sites',
+    type: 'link',
+    link: '/sites',
+  },
+  {
     labelText: 'cases',
     type: 'link',
     link: '/cases',

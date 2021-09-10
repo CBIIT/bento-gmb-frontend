@@ -16,6 +16,7 @@ import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
 import Trials from '../../pages/trials/trialsController';
 import TrialDetail from '../../pages/trialDetail/trialDetailController';
+import Sites from '../../pages/sites/sitesController';
 import SiteDetail from '../../pages/siteDetail/siteDetailController';
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
@@ -45,6 +46,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route exact path="/home" component={Home} />
             <Route path="/cases" component={Dashboard} />
             <Route path="/trials" component={Trials} />
+            <Route path="/sites" component={Sites} />
             <Route path="/model" component={modelPage} />
             <Route path="/table" component={table} />
             <Route path="/fileCentricCart" component={fileCentricCart} />
