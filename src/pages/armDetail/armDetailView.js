@@ -153,6 +153,7 @@ const ArmDetail = ({ data, classes }) => {
                       colors={colors}
                       titleLocation="bottom"
                       titleAlignment="center"
+                      showTotalCount
                     />
                   </Widget>
                 </div>
