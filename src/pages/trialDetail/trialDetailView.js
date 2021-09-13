@@ -264,6 +264,7 @@ const TrialView = ({ classes, data, theme }) => {
                         colors={colors}
                         titleLocation="bottom"
                         titleAlignment="center"
+                        showTotalCount
                       />
                     </Widget>
                   </Grid>
