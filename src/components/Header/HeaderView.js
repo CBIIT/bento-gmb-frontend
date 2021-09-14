@@ -5,7 +5,7 @@ import headerData from '../../bento/globalHeaderData';
 const customStyle = {
   nihLogoImg: {
     width: '463px',
-    height: '100px',
+    height: '70px',
     marginLeft: '0px',
     minHeight: '54px',
     maxHeight: '100px',
@@ -13,6 +13,8 @@ const customStyle = {
   headerBar: {
     top: '0px',
     zIndex: '999',
+    height: '70px',
+    minHeight: '50px',
   },
 };
 
