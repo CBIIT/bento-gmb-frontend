@@ -3,6 +3,7 @@ import { withStyles, CssBaseline } from '@material-ui/core';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import aboutPageRoutes from '../../bento/aboutPagesRoutes';
 import Header from '../Header/HeaderView';
+import TextBar from '../TextBar/TextBarView';
 import NavBar from '../NavBar/NavBarContainer';
 import Footer from '../Footer/FooterView';
 import Error from '../../pages/error/Error';
@@ -33,6 +34,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
     <HashRouter>
       <>
         <Header />
+        <TextBar />
         <NavBar />
         {/* Reminder: Ajay need to replace the ICDC with env variable and
           change build npm to read env variable */}
