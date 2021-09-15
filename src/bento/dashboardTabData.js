@@ -773,6 +773,7 @@ query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $ord
     file_name
     file_description
     file_format
+    file_type
     file_size
     trial_id
     trial_short_name
@@ -785,10 +786,11 @@ query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $ord
 export const GET_FILES_OVERVIEW_DESC_QUERY = gql`
   query fileOverviewDesc($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
     fileOverviewDesc(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-      file_ids
+      file_id
       file_name
       file_description
       file_format
+      file_type
       file_size
       trial_id
       trial_short_name
@@ -864,7 +866,7 @@ export const GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL = gql`
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
 query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by: String = "file_name") {
   fileOverview(file_ids: $file_ids, offset: $offset, first: $first, order_by: $order_by) {
-    file_ids
+    file_id
   }
 }
   `;
