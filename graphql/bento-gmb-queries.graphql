@@ -1408,6 +1408,7 @@ type QueryType {
             COUNT(DISTINCT f) AS num_files
         MATCH (site:SITE {REG_INST_ID: $site_id})
         OPTIONAL MATCH (site)<--(s:SUBJECT)
+        OPTIONAL MATCH (s)<--(f:file)
         WITH site, num_subjects, num_files,
             COLLECT(DISTINCT s{
                     subject_id: s.PT_ID,
