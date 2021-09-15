@@ -1140,6 +1140,7 @@ type QueryType {
             file_name: f.FILE_NAME,
             file_description: f.FILE_DESCRIPTION,
             file_format: f.FILE_FORMAT,
+            file_type: f.FILE_TYPE,
             file_size: f.FILE_SIZE,
             trial_id: ct.CLINICAL_TRIAL_ID,
             trial_short_name: ct.CLINICAL_TRIAL_SHORT_NAME,
@@ -1151,6 +1152,7 @@ type QueryType {
             WHEN 'file_name' THEN f.FILE_NAME
             WHEN 'file_description' THEN f.FILE_DESCRIPTION
             WHEN 'file_format' THEN f.FILE_FORMAT
+            WHEN 'file_type' THEN f.FILE_TYPE
             WHEN 'file_size' THEN f.FILE_SIZE
             WHEN 'trial_id' THEN ct.CLINICAL_TRIAL_ID
             WHEN 'trial_short_name' THEN ct.CLINICAL_TRIAL_SHORT_NAME
@@ -1168,6 +1170,7 @@ type QueryType {
             file_name: f.FILE_NAME,
             file_description: f.FILE_DESCRIPTION,
             file_format: f.FILE_FORMAT,
+            file_type: f.FILE_TYPE,
             file_size: f.FILE_SIZE,
             trial_id: ct.CLINICAL_TRIAL_ID,
             trial_short_name: ct.CLINICAL_TRIAL_SHORT_NAME,
@@ -1179,6 +1182,7 @@ type QueryType {
             WHEN 'file_name' THEN f.FILE_NAME
             WHEN 'file_description' THEN f.FILE_DESCRIPTION
             WHEN 'file_format' THEN f.FILE_FORMAT
+            WHEN 'file_type' THEN f.FILE_TYPE
             WHEN 'file_size' THEN f.FILE_SIZE
             WHEN 'trial_id' THEN ct.CLINICAL_TRIAL_ID
             WHEN 'trial_short_name' THEN ct.CLINICAL_TRIAL_SHORT_NAME
