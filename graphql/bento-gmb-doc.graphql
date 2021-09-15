@@ -18,6 +18,7 @@ type CANCER_HISTORY {
 
 type CLINICALTRIAL {
   subjects: [SUBJECT] 
+  sites: [SITE] 
 }
 
 type CONCOMITANT_MEASURES_MEDICATIONS {
@@ -33,15 +34,7 @@ type ENROLLMENT {
 }
 
 type FILE {
-  FILE_NAME: String
-  FILE_TYPE: String
-  FILE_DESCRIPTION: String
-  FILE_FORMAT: String
-  FILE_SIZE: String
-  MD5SUM: String
-  FILE_STATUS: String
-  UUID: String
-  FILE_LOCATION: String
+  SUBJECT: SUBJECT 
 }
 
 type FOLLOW_UP {
@@ -85,12 +78,9 @@ type OFF_STUDY {
 }
 
 type PHYSICAL_EXAM_SCREENING {
-  SUBJECT: SUBJECT 
-}
-
-type PHYSICAL_EXAM___SCREENING {
   NOTE_DT_SCRPE: String
   RSCH_COMMENTS_TXT_SCRPE: String
+  SUBJECT: SUBJECT 
 }
 
 type PI_SIGNOFF {
@@ -123,8 +113,13 @@ type RADIATION_SUPPLEMENT {
   SUBJECT: SUBJECT 
 }
 
+type SITE {
+  ADDRESS: String
+  CLINICALTRIAL: CLINICALTRIAL 
+  subjects: [SUBJECT] 
+}
+
 type SOMATIC_VARIANT {
-  SOMATIC_VAR_PTHGNC_CAT: String
   NOTE_DT_SV: String
   RSCH_COMMENTS_TXT_SV: String
   SUBJECT: SUBJECT 
@@ -144,13 +139,30 @@ type STORAGE_2 {
 
 type SUBJECT {
   CLINICALTRIAL: CLINICALTRIAL 
-  NONE: [PRIOR_SURGERY_SUPPLEMENT] 
+  SITE: SITE 
+  storages: [STORAGE] 
   survivals: [SURVIVAL] 
   laboratories: [LABORATORY] 
+  surgery_supplements: [SURGERY_SUPPLEMENT] 
+  off_studies: [OFF_STUDY] 
+  prior_therapy_supplements: [PRIOR_THERAPY_SUPPLEMENT] 
+  pi_signoffs: [PI_SIGNOFF] 
   adverse_events: [ADVERSE_EVENTS] 
+  concomitant_measures_medications: [CONCOMITANT_MEASURES_MEDICATIONS] 
+  cancer_histories: [CANCER_HISTORY] 
+  medical_histories: [MEDICAL_HISTORY] 
+  radiation_supplements: [RADIATION_SUPPLEMENT] 
+  storages_2: [STORAGE_2] 
   enrollments: [ENROLLMENT] 
   somatic_variants: [SOMATIC_VARIANT] 
+  follow_ups: [FOLLOW_UP] 
+  physical_exam_screenings: [PHYSICAL_EXAM_SCREENING] 
   germline_variants: [GERMLINE_VARIANT] 
+  baseline_medical_histories_2: [BASELINE_MEDICAL_HISTORY_2] 
+  files: [FILE] 
+  follow_up_therapies: [FOLLOW_UP_THERAPY] 
+  prior_radiation_supplements: [PRIOR_RADIATION_SUPPLEMENT] 
+  prior_surgery_supplements: [PRIOR_SURGERY_SUPPLEMENT] 
 }
 
 type SURGERY_SUPPLEMENT {
@@ -198,7 +210,7 @@ type FileOverview {
     file_name: String
     file_description: String
     file_format: String
-    file_size: String
+    file_size: Int
     trial_id: String
     trial_short_name: String
     arm: String
@@ -315,6 +327,7 @@ type SiteDetail{
     num_subjects: Int
     num_files: Int
     subjects: [SubjectDetail]
+    files: [FileOverview]
 }
 
 schema {
@@ -668,7 +681,9 @@ type QueryType {
 
     trialDetail(trial_id: String): TrialDetail 
 
-    subjectCountByStageAtEntry(trial_id: String): [GroupCount] 
+    trialSubjectCountByStageAtEntry(trial_id: String): [GroupCount] 
+
+    siteSubjectCountByStageAtEntry(site_id: String): [GroupCount] 
 
     siteDetail(site_id: String): SiteDetail 
 

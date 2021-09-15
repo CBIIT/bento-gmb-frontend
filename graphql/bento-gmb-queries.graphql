@@ -31,7 +31,7 @@ type FileOverview {
     file_name: String
     file_description: String
     file_format: String
-    file_size: String
+    file_size: Int
     trial_id: String
     trial_short_name: String
     arm: String
@@ -148,6 +148,7 @@ type SiteDetail{
     num_subjects: Int
     num_files: Int
     subjects: [SubjectDetail]
+    files: [FileOverview]
 }
 
 schema {
@@ -1383,12 +1384,20 @@ type QueryType {
         }
     """, passThrough: true)
 
-    subjectCountByStageAtEntry(trial_id: String): [GroupCount] @cypher(statement: """
+    trialSubjectCountByStageAtEntry(trial_id: String): [GroupCount] @cypher(statement: """
         MATCH (ct:CLINICALTRIAL {CLINICAL_TRIAL_ID: $trial_id})<--(s:SUBJECT)<--(e:ENROLLMENT)
         RETURN{
             group: e.DISEAS_STG,
             subjects: COUNT(*)
         } 
+    """, passThrough: true)
+
+    siteSubjectCountByStageAtEntry(site_id: String): [GroupCount] @cypher(statement: """
+        MATCH (st:SITE {REG_INST_ID: $site_id})<--(s:SUBJECT)<--(e:ENROLLMENT)
+        RETURN{
+            group: e.DISEAS_STG,
+            subjects: COUNT(*)
+        }
     """, passThrough: true)
 
     siteDetail(site_id: String): SiteDetail @cypher(statement: """
@@ -1404,7 +1413,17 @@ type QueryType {
                     subject_id: s.PT_ID,
                     race: s.PT_RACE_CD_1,
                     diseaseTerm: s.DZ_DX_NM
-            }) AS subjects
+            }) AS subjects,
+            COLLECT(DISTINCT {
+                subject_id: s.PT_ID,
+                file_name: f.FILE_NAME,
+                file_type: f.FILE_TYPE,
+                file_description: f.FILE_DESCRIPTION,
+                file_format: f.FILE_FORMAT,
+                file_size: f.FILE_SIZE,
+                file_id: f.UUID,
+                file_md5sum: f.MD5SUM
+            }) AS files
         RETURN{
             site_id: site.REG_INST_ID,
             siteName: site.REG_INST_ID_CD,
@@ -1415,7 +1434,8 @@ type QueryType {
             siteStatus: site.STATUS,
             subjects: subjects,
             num_subjects: num_subjects,
-            num_files: num_files
+            num_files: num_files,
+            files: files
         }
     """, passThrough: true)
 

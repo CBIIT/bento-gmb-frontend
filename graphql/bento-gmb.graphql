@@ -18,6 +18,7 @@ type CANCER_HISTORY {
 
 type CLINICALTRIAL {
   subjects: [SUBJECT] @relation(name:"of_clinicaltrials", direction:IN)
+  sites: [SITE] @relation(name:"of_clinicaltrials", direction:IN)
 }
 
 type CONCOMITANT_MEASURES_MEDICATIONS {
@@ -33,15 +34,7 @@ type ENROLLMENT {
 }
 
 type FILE {
-  FILE_NAME: String
-  FILE_TYPE: String
-  FILE_DESCRIPTION: String
-  FILE_FORMAT: String
-  FILE_SIZE: String
-  MD5SUM: String
-  FILE_STATUS: String
-  UUID: String
-  FILE_LOCATION: String
+  SUBJECT: SUBJECT @relation(name:"of_subject", direction:OUT)
 }
 
 type FOLLOW_UP {
@@ -85,12 +78,9 @@ type OFF_STUDY {
 }
 
 type PHYSICAL_EXAM_SCREENING {
-  SUBJECT: SUBJECT @relation(name:"of_subject", direction:OUT)
-}
-
-type PHYSICAL_EXAM___SCREENING {
   NOTE_DT_SCRPE: String
   RSCH_COMMENTS_TXT_SCRPE: String
+  SUBJECT: SUBJECT @relation(name:"of_subject", direction:OUT)
 }
 
 type PI_SIGNOFF {
@@ -123,8 +113,13 @@ type RADIATION_SUPPLEMENT {
   SUBJECT: SUBJECT @relation(name:"of_subject", direction:OUT)
 }
 
+type SITE {
+  ADDRESS: String
+  CLINICALTRIAL: CLINICALTRIAL @relation(name:"of_clinicaltrials", direction:OUT)
+  subjects: [SUBJECT] @relation(name:"participate_at_site", direction:IN)
+}
+
 type SOMATIC_VARIANT {
-  SOMATIC_VAR_PTHGNC_CAT: String
   NOTE_DT_SV: String
   RSCH_COMMENTS_TXT_SV: String
   SUBJECT: SUBJECT @relation(name:"of_subject", direction:OUT)
@@ -144,13 +139,30 @@ type STORAGE_2 {
 
 type SUBJECT {
   CLINICALTRIAL: CLINICALTRIAL @relation(name:"of_clinicaltrials", direction:OUT)
-  NONE: [PRIOR_SURGERY_SUPPLEMENT] @relation(name:"of_subject", direction:IN)
+  SITE: SITE @relation(name:"participate_at_site", direction:OUT)
+  storages: [STORAGE] @relation(name:"of_subject", direction:IN)
   survivals: [SURVIVAL] @relation(name:"of_subject", direction:IN)
   laboratories: [LABORATORY] @relation(name:"of_subject", direction:IN)
+  surgery_supplements: [SURGERY_SUPPLEMENT] @relation(name:"of_subject", direction:IN)
+  off_studies: [OFF_STUDY] @relation(name:"of_subject", direction:IN)
+  prior_therapy_supplements: [PRIOR_THERAPY_SUPPLEMENT] @relation(name:"of_subject", direction:IN)
+  pi_signoffs: [PI_SIGNOFF] @relation(name:"of_subject", direction:IN)
   adverse_events: [ADVERSE_EVENTS] @relation(name:"of_subject", direction:IN)
+  concomitant_measures_medications: [CONCOMITANT_MEASURES_MEDICATIONS] @relation(name:"of_subject", direction:IN)
+  cancer_histories: [CANCER_HISTORY] @relation(name:"of_subject", direction:IN)
+  medical_histories: [MEDICAL_HISTORY] @relation(name:"of_subject", direction:IN)
+  radiation_supplements: [RADIATION_SUPPLEMENT] @relation(name:"of_subject", direction:IN)
+  storages_2: [STORAGE_2] @relation(name:"of_subject", direction:IN)
   enrollments: [ENROLLMENT] @relation(name:"of_subject", direction:IN)
   somatic_variants: [SOMATIC_VARIANT] @relation(name:"of_subject", direction:IN)
+  follow_ups: [FOLLOW_UP] @relation(name:"of_subject", direction:IN)
+  physical_exam_screenings: [PHYSICAL_EXAM_SCREENING] @relation(name:"of_subject", direction:IN)
   germline_variants: [GERMLINE_VARIANT] @relation(name:"of_subject", direction:IN)
+  baseline_medical_histories_2: [BASELINE_MEDICAL_HISTORY_2] @relation(name:"of_subject", direction:IN)
+  files: [FILE] @relation(name:"of_subject", direction:IN)
+  follow_up_therapies: [FOLLOW_UP_THERAPY] @relation(name:"of_subject", direction:IN)
+  prior_radiation_supplements: [PRIOR_RADIATION_SUPPLEMENT] @relation(name:"of_subject", direction:IN)
+  prior_surgery_supplements: [PRIOR_SURGERY_SUPPLEMENT] @relation(name:"of_subject", direction:IN)
 }
 
 type SURGERY_SUPPLEMENT {
@@ -198,7 +210,7 @@ type FileOverview {
     file_name: String
     file_description: String
     file_format: String
-    file_size: String
+    file_size: Int
     trial_id: String
     trial_short_name: String
     arm: String
@@ -315,6 +327,7 @@ type SiteDetail{
     num_subjects: Int
     num_files: Int
     subjects: [SubjectDetail]
+    files: [FileOverview]
 }
 
 schema {
@@ -1550,12 +1563,20 @@ type QueryType {
         }
     """, passThrough: true)
 
-    subjectCountByStageAtEntry(trial_id: String): [GroupCount] @cypher(statement: """
+    trialSubjectCountByStageAtEntry(trial_id: String): [GroupCount] @cypher(statement: """
         MATCH (ct:CLINICALTRIAL {CLINICAL_TRIAL_ID: $trial_id})<--(s:SUBJECT)<--(e:ENROLLMENT)
         RETURN{
             group: e.DISEAS_STG,
             subjects: COUNT(*)
         } 
+    """, passThrough: true)
+
+    siteSubjectCountByStageAtEntry(site_id: String): [GroupCount] @cypher(statement: """
+        MATCH (st:SITE {REG_INST_ID: $site_id})<--(s:SUBJECT)<--(e:ENROLLMENT)
+        RETURN{
+            group: e.DISEAS_STG,
+            subjects: COUNT(*)
+        }
     """, passThrough: true)
 
     siteDetail(site_id: String): SiteDetail @cypher(statement: """
@@ -1571,7 +1592,17 @@ type QueryType {
                     subject_id: s.PT_ID,
                     race: s.PT_RACE_CD_1,
                     diseaseTerm: s.DZ_DX_NM
-            }) AS subjects
+            }) AS subjects,
+            COLLECT(DISTINCT {
+                subject_id: s.PT_ID,
+                file_name: f.FILE_NAME,
+                file_type: f.FILE_TYPE,
+                file_description: f.FILE_DESCRIPTION,
+                file_format: f.FILE_FORMAT,
+                file_size: f.FILE_SIZE,
+                file_id: f.UUID,
+                file_md5sum: f.MD5SUM
+            }) AS files
         RETURN{
             site_id: site.REG_INST_ID,
             siteName: site.REG_INST_ID_CD,
@@ -1582,7 +1613,8 @@ type QueryType {
             siteStatus: site.STATUS,
             subjects: subjects,
             num_subjects: num_subjects,
-            num_files: num_files
+            num_files: num_files,
+            files: files
         }
     """, passThrough: true)
 
