@@ -149,7 +149,7 @@ query trialDetail($trial_id: String){
           subjectCount
         }
     }
-    subjectCountByStageAtEntry(trial_id: $trial_id){
+    trialSubjectCountByStageAtEntry(trial_id: $trial_id){
         group
         subjects
     }
