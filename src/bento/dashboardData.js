@@ -7,7 +7,7 @@ export const facetSearchData = [
     label: 'Race', field: 'group', api: 'subjectCountByRace', apiForFiltering: 'filterSubjectCountByRace', datafield: 'race', section: 'Filter By Cases', show: true,
   },
   {
-    label: 'Disease Term', field: 'group', api: 'subjectCountByDiseaseTerm', apiForFiltering: 'filterSubjectCountByDiseaseTerm', datafield: 'race', section: 'Filter By Cases', show: true,
+    label: 'Disease Term', field: 'group', api: 'subjectCountByDiseaseTerm', apiForFiltering: 'filterSubjectCountByDiseaseTerm', datafield: 'diseaseTerm', section: 'Filter By Cases', show: true,
   },
   {
     label: 'Registering Institution', field: 'group', api: 'subjectCountByRegisteringInstitution', apiForFiltering: 'filterSubjectCountByRegisteringInstitution', datafield: 'registeringInstitution', section: 'Filter By Cases', show: true,
