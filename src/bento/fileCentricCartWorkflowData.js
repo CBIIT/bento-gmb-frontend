@@ -124,11 +124,9 @@ query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 10, $orde
 export const GET_MY_CART_DATA_QUERY_DESC = gql`
 query filesInListDesc($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="") {
   filesInListDesc(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-        study_code
         subject_id
         file_name
         file_type
-        association
         file_description
         file_format
         file_size
