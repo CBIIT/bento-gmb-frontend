@@ -5,7 +5,6 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import {
-  CustomDataTable,
   cn,
   manipulateLinks,
   getOptions,
@@ -13,22 +12,37 @@ import {
   CustomActiveDonut,
 } from 'bento-components';
 import {
-  pageTitle, table, externalLinkIcon,
+  pageTitle, table1, table2, externalLinkIcon,
   siteDetailIcon, breadCrumb, aggregateCount,
-  pageSubTitle, leftPanel, rightPanel,
+  pageSubTitle, leftPanel, rightPanel, tooltipContent,
+  tab,
 } from '../../bento/siteDetailData';
 import StatsView from '../../components/Stats/StatsView';
-import { Typography } from '../../components/Wrappers/Wrappers';
+import GridWithFooter from '../../components/GridWithFooter/GridView';
 import {
   singleCheckBox, setSideBarToLoading, setDashboardTableLoading,
 } from '../dashboardTab/store/dashboardReducer';
 import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import Widget from '../../components/Widgets/WidgetView';
 import colors from '../../utils/colors';
+import Snackbar from '../../components/Snackbar';
+// Borrowed Components
+import Tab from '../caseDetail/components/Tab';
+import TabPanel from '../caseDetail/components/TabPanel';
+import TabThemeProvider from '../caseDetail/components/tabThemeConfig';
 
 const SiteView = ({ classes, data, theme }) => {
   const siteData = data.siteDetail;
-  const widgetData = data.subjectCountByStageAtEntry;
+  const widgetData = data.siteSubjectCountByStageAtEntry;
+
+  const [snackbarState, setsnackbarState] = React.useState({
+    open: false,
+    value: 0,
+  });
+  const [currentTab, setCurrentTab] = React.useState(0);
+  const handleTabChange = (event, value) => {
+    setCurrentTab(value);
+  };
 
   const redirectTo = () => {
     setSideBarToLoading();
@@ -42,17 +56,17 @@ const SiteView = ({ classes, data, theme }) => {
     }]);
   };
 
-  const redirectToArm = (programArm) => {
-    setSideBarToLoading();
-    setDashboardTableLoading();
-    singleCheckBox([{
-      datafield: 'studies',
-      groupName: 'Arm',
-      isChecked: true,
-      name: `${programArm.rowData[0]}: ${programArm.rowData[1]}`,
-      section: 'Filter By Cases',
-    }]);
-  };
+  // const redirectToArm = (programArm) => {
+  //   setSideBarToLoading();
+  //   setDashboardTableLoading();
+  //   singleCheckBox([{
+  //     datafield: 'studies',
+  //     groupName: 'Arm',
+  //     isChecked: true,
+  //     name: `${programArm.rowData[0]}: ${programArm.rowData[1]}`,
+  //     section: 'Filter By Cases',
+  //   }]);
+  // };
 
   const stat = {
     numberOfTrials: 1,
@@ -68,8 +82,64 @@ const SiteView = ({ classes, data, theme }) => {
 
   const updatedAttributesData = manipulateLinks(leftPanel.attributes);
 
+  function openSnack(value1) {
+    setsnackbarState({ open: true, value: value1 });
+  }
+  function closeSnack() {
+    setsnackbarState({ open: false });
+  }
+
+  function getBorderStyle() {
+    const style = '3px solid #42779a';
+    return `${style}`;
+  }
+
+  function getTableColor() {
+    return `${tab.items[currentTab].primaryColor}`;
+  }
+  function tableGenerator(tableData) {
+    return (
+      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
+        <div className={classes.tableDiv}>
+          <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <GridWithFooter
+                  data={siteData[tableData.dataField]}
+                  title={(
+                    <div className={classes.tableTitle}>
+                      <span className={classes.tableHeader}>{tableData.tableTitle}</span>
+                    </div>
+                      )}
+                  columns={getColumns(tableData, classes, data)}
+                  options={getOptions(tableData, classes)}
+                  customOnRowsSelect={tableData.customOnRowsSelect}
+                  openSnack={openSnack}
+                  closeSnack={closeSnack}
+                  disableRowSelection={tableData.disableRowSelection}
+                  buttonText={tableData.buttonText}
+                  saveButtonDefaultStyle={tableData.saveButtonDefaultStyle}
+                  ActiveSaveButtonDefaultStyle={tableData.ActiveSaveButtonDefaultStyle}
+                  DeactiveSaveButtonDefaultStyle={tableData.DeactiveSaveButtonDefaultStyle}
+                  tooltipMessage={tableData.tooltipMessage}
+                  tooltipContent={tooltipContent}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
+      <Snackbar
+        snackbarState={snackbarState}
+        closeSnack={closeSnack}
+        autoHideDuration={3000}
+        classes={classes}
+      />
       <StatsView data={stat} />
       <div className={classes.container}>
         <div className={classes.header}>
@@ -298,32 +368,31 @@ const SiteView = ({ classes, data, theme }) => {
           </Grid>
         </div>
       </div>
-      { table.display ? (
-        <div id="table_program_detail" className={classes.tableContainer}>
-
-          <div className={classes.tableDiv}>
-            <div className={classes.tableTitle}>
-              <span className={classes.tableHeader}>{table.title}</span>
-            </div>
+      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
+        <div className={classes.tableDiv}>
+          <Grid container>
             <Grid item xs={12}>
-              <Grid container spacing={8}>
-                <Grid item xs={12}>
-                  <Typography>
-                    <CustomDataTable
-                      data={siteData[table.dataField]}
-                      columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectToArm)}
-                      options={getOptions(table, classes)}
-                    />
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography />
-                </Grid>
-              </Grid>
+              <TabThemeProvider tableBorder={getBorderStyle()} tablecolor={getTableColor()}>
+                <Tab
+                  styleClasses={classes}
+                  tabItems={tab.items}
+                  currentTab={currentTab}
+                  handleTabChange={handleTabChange}
+                />
+              </TabThemeProvider>
             </Grid>
-          </div>
+          </Grid>
         </div>
-      ) : ''}
+      </div>
+      <TabPanel value={currentTab} index={0}>
+        {table1.display
+          ? (tableGenerator(table1)) : ''}
+      </TabPanel>
+      <TabPanel value={currentTab} index={1}>
+        {table2.display
+          ? (tableGenerator(table2)) : ''}
+      </TabPanel>
+      <div className={classes.blankSpace} />
     </>
   );
 };
@@ -559,16 +628,13 @@ const styles = (theme) => ({
   tableContainer: {
     background: '#f3f3f3',
   },
-  tableHeader: {
-    paddingLeft: '30px',
-  },
   paddingTop12: {
     paddingTop: '12px',
   },
   tableDiv: {
     maxWidth: '1340px',
     margin: 'auto',
-    paddingTop: '50px',
+    paddingTop: '30px',
     paddingLeft: '0px',
   },
 
@@ -618,7 +684,6 @@ const styles = (theme) => ({
     fontSize: '17px',
     letterSpacing: '0.025em',
     color: '#0296c9',
-    paddingBottom: '20px',
   },
   fileContainer: {
     paddingTop: '4px',
@@ -653,22 +718,6 @@ const styles = (theme) => ({
   },
   marginTopN37: {
     marginTop: '15px',
-  },
-  tableCell1: {
-    paddingLeft: '25px',
-    width: '200px',
-  },
-  tableCell2: {
-    width: '370px',
-  },
-  tableCell3: {
-    width: '370px',
-  },
-  tableCell4: {
-    width: '160px',
-  },
-  tableCell5: {
-    width: '160px',
   },
   externalLinkIcon: {
     width: '16px',

@@ -77,8 +77,8 @@ query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 1000, $or
 }`;
 
 export const customMyFilesTabDownloadCSV = {
-  keysToInclude: ['file_name', 'file_type', 'file_description', 'file_format', 'file_size', 'file_id', 'md5sum'],
-  header: ['File Name', 'File Type', 'Description', 'File Format', 'Size', 'Case Id', 'md5sum'],
+  keysToInclude: ['file_name', 'subject_id', 'file_description', 'file_description', 'file_size', 'file_type', 'file_id', 'md5sum'],
+  header: ['File Name', 'Case ID', 'Description', 'File Format', 'Size', 'File Type', 'UUID', 'Md5Sum'],
   query: MY_CART,
   apiVariable: 'filesInList',
   fileName: 'GMB File Manifest',

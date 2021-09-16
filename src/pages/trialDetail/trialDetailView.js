@@ -28,7 +28,7 @@ import colors from '../../utils/colors';
 
 const TrialView = ({ classes, data, theme }) => {
   const trialData = data.trialDetail;
-  const widgetData = data.subjectCountByStageAtEntry;
+  const widgetData = data.trialSubjectCountByStageAtEntry;
 
   const redirectTo = () => {
     setSideBarToLoading();

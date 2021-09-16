@@ -343,6 +343,7 @@ const styles = () => ({
   helpIconButton: {
     verticalAlign: 'top',
     marginLeft: '-5px',
+    display: 'none',
   },
 });
 

@@ -23,10 +23,6 @@ const leftPanel = [
     properties: [
       // A maximum of 10 properties are allowed
       {
-        label: 'Gender',
-        dataField: 'gender',
-      },
-      {
         label: 'Race',
         dataField: 'race',
       },
@@ -207,6 +203,7 @@ const table1 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
+    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -221,14 +218,14 @@ const table1 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Adverse_Events_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
+  selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {
@@ -269,6 +266,7 @@ const table2 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
+    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -283,14 +281,14 @@ const table2 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Germline_Variant_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
+  selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {
@@ -331,6 +329,7 @@ const table3 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
+    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -345,14 +344,14 @@ const table3 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Somatic_Variant_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
+  selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {
@@ -373,7 +372,7 @@ const table3 = {
   customOnRowsSelect: FileOnRowsSelect,
 };
 
-// --------------- Table 4 configuration --------------
+// --------------- Table 4: ASSOCIATED FILES --------------
 const table4 = {
   // Set 'display' to false to hide the table entirely
   display: true,
@@ -393,6 +392,7 @@ const table4 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
+    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -407,14 +407,14 @@ const table4 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Files_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
+  selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {

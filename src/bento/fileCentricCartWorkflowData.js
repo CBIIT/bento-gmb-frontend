@@ -55,36 +55,42 @@ export const table = {
     {
       dataField: 'file_name',
       header: 'File Name',
-    },
-    {
-      dataField: 'file_type',
-      header: 'File Type',
-    },
-    {
-      dataField: 'association',
-      header: 'Association',
-    },
-    {
-      dataField: 'file_description',
-      header: 'Description',
-    },
-    {
-      dataField: 'file_format',
-      header: 'Format',
-    },
-    {
-      dataField: 'file_size',
-      header: 'Size',
-      // set formatBytes to true to display file size (in bytes) in a more human readable format
-      formatBytes: true,
+      sort: 'asc',
+      primary: true,
+      display: true,
     },
     {
       dataField: 'subject_id',
       header: 'Case ID',
+      sort: 'asc',
+      link: '/case/{subject_id}',
+      display: true,
     },
     {
-      dataField: 'study_code',
-      header: 'Study Code',
+      dataField: 'file_description',
+      header: 'Description',
+      sort: 'asc',
+      display: true,
+    },
+    {
+      dataField: 'file_format',
+      header: 'File Format',
+      sort: 'asc',
+      display: true,
+    },
+    {
+      dataField: 'file_size',
+      header: 'Size',
+      sort: 'asc',
+      display: true,
+      formatBytes: true,
+    },
+    {
+      dataField: 'file_type',
+      header: 'File Type',
+      sort: 'asc',
+      primary: true,
+      display: true,
     },
     {
       dataField: 'file_id',
