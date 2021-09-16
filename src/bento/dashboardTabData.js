@@ -182,10 +182,10 @@ export const tabContainers = [
         display: true,
       },
       {
-        dataField: 'file_type',
-        header: 'File Type',
+        dataField: 'subject_id',
+        header: 'Case ID',
         sort: 'asc',
-        primary: true,
+        link: '/case/{subject_id}',
         display: true,
       },
       {
@@ -199,19 +199,6 @@ export const tabContainers = [
         header: 'Description',
         sort: 'asc',
         display: true,
-      },
-      {
-        dataField: 'file_format',
-        header: 'File Format',
-        sort: 'asc',
-        display: true,
-      },
-      {
-        dataField: 'file_size',
-        header: 'Size',
-        sort: 'asc',
-        display: true,
-        formatBytes: true,
       },
       {
         dataField: '', // This need to left empty if no data need to be displayed before file download icon
@@ -237,10 +224,23 @@ export const tabContainers = [
         },
       },
       {
-        dataField: 'subject_id',
-        header: 'Case ID',
+        dataField: 'file_format',
+        header: 'File Format',
         sort: 'asc',
-        link: '/case/{subject_id}',
+        display: true,
+      },
+      {
+        dataField: 'file_size',
+        header: 'Size',
+        sort: 'asc',
+        display: true,
+        formatBytes: true,
+      },
+      {
+        dataField: 'file_type',
+        header: 'File Type',
+        sort: 'asc',
+        primary: true,
         display: true,
       },
     ],
