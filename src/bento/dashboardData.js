@@ -92,7 +92,7 @@ export const widgetsData = [
     label: 'Germline Pathogenicity',
     dataName: 'subjectCountByGermlinePathogenicity',
     datatable_field: 'germlinePathogenicity',
-    titleText: 'Cases',
+    titleText: 'Subjects',
     show: true,
   },
   {
@@ -100,7 +100,7 @@ export const widgetsData = [
     label: 'Somatic Pathogenicity',
     dataName: 'subjectCountBySomaticPathogenicity',
     datatable_field: 'somaticPathogenicity',
-    titleText: 'Cases',
+    titleText: 'Subjects',
     show: true,
   },
   {
@@ -108,7 +108,7 @@ export const widgetsData = [
     label: 'Registering Institution',
     dataName: 'subjectCountByRegisteringInstitution',
     datatable_field: 'registeringInstitution',
-    titleText: 'Cases',
+    titleText: 'Subjects',
     show: true,
   },
   {
@@ -116,7 +116,7 @@ export const widgetsData = [
     label: 'Race',
     dataName: 'subjectCountByRace',
     datatable_field: 'race',
-    titleText: 'Cases',
+    titleText: 'Subjects',
     show: true,
   },
   {
@@ -124,7 +124,7 @@ export const widgetsData = [
     label: 'Disease Stage at Entry',
     dataName: 'subjectCountByDiseaseStageAtEntry',
     datatable_field: 'stageAtEntry',
-    titleText: 'Cases',
+    titleText: 'Subjects',
     show: true,
   },
   {
@@ -132,7 +132,7 @@ export const widgetsData = [
     label: 'Serious',
     dataName: 'subjectCountBySerious',
     datatable_field: 'serious',
-    titleText: 'Cases',
+    titleText: 'Subjects',
     show: true,
   },
 ];

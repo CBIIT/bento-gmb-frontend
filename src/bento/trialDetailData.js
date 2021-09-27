@@ -75,6 +75,7 @@ const rightPanel = {
       dataField: 'N/A',
       label: 'Stage at Entry Distribution',
       display: true,
+      titleText: 'Subjects',
     },
   ],
   files: [
