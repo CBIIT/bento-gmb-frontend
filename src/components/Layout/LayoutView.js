@@ -46,7 +46,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route exact path="/ICDC/" component={Home} />
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
-            <Route path="/cases" component={Dashboard} />
+            <Route path="/subjects" component={Dashboard} />
             <Route path="/trials" component={Trials} />
             <Route path="/sites" component={Sites} />
             <Route path="/model" component={modelPage} />
@@ -54,7 +54,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route path="/fileCentricCart" component={fileCentricCart} />
             <Route path="/trial/:id" component={TrialDetail} />
             <Route path="/site/:id" component={SiteDetail} />
-            <Route path="/case/:id" component={CaseDetail} />
+            <Route path="/subject/:id" component={CaseDetail} />
             <Route path="/arm/:id" component={ArmDetail} />
             <Route path="/JBrowse" component={JBrowse} />
             {aboutPageRoutes.map(

@@ -50,7 +50,7 @@ const table = {
     },
     {
       dataField: 'num_subjects',
-      header: 'Associated Cases',
+      header: 'Associated Subjects',
     },
   ],
 };

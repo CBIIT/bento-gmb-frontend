@@ -4,46 +4,46 @@ import gql from 'graphql-tag';
 // A maximum of 12 facetSearchData are allowed
 export const facetSearchData = [
   {
-    label: 'Race', field: 'group', api: 'subjectCountByRace', apiForFiltering: 'filterSubjectCountByRace', datafield: 'race', section: 'Filter By Cases', show: true,
+    label: 'Race', field: 'group', api: 'subjectCountByRace', apiForFiltering: 'filterSubjectCountByRace', datafield: 'race', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Disease Term', field: 'group', api: 'subjectCountByDiseaseTerm', apiForFiltering: 'filterSubjectCountByDiseaseTerm', datafield: 'diseaseTerm', section: 'Filter By Cases', show: true,
+    label: 'Disease Term', field: 'group', api: 'subjectCountByDiseaseTerm', apiForFiltering: 'filterSubjectCountByDiseaseTerm', datafield: 'diseaseTerm', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Registering Institution', field: 'group', api: 'subjectCountByRegisteringInstitution', apiForFiltering: 'filterSubjectCountByRegisteringInstitution', datafield: 'registeringInstitution', section: 'Filter By Cases', show: true,
+    label: 'Registering Institution', field: 'group', api: 'subjectCountByRegisteringInstitution', apiForFiltering: 'filterSubjectCountByRegisteringInstitution', datafield: 'registeringInstitution', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Patient Subgroup', field: 'group', api: 'subjectCountByPatientSubgroup', apiForFiltering: 'filterSubjectCountByPatientSubgroup', datafield: 'patientSubgroup', section: 'Filter By Cases', show: true,
+    label: 'Patient Subgroup', field: 'group', api: 'subjectCountByPatientSubgroup', apiForFiltering: 'filterSubjectCountByPatientSubgroup', datafield: 'patientSubgroup', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Disease Stage at Entry', field: 'group', api: 'subjectCountByDiseaseStageAtEntry', apiForFiltering: 'filterSubjectCountByDiseaseStageAtEntry', datafield: 'stageAtEntry', section: 'Filter By Cases', show: true,
+    label: 'Disease Stage at Entry', field: 'group', api: 'subjectCountByDiseaseStageAtEntry', apiForFiltering: 'filterSubjectCountByDiseaseStageAtEntry', datafield: 'stageAtEntry', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Cause of Death', field: 'group', api: 'subjectCountByCauseOfDeath', apiForFiltering: 'filterSubjectCountByCauseOfDeath', datafield: 'causeOfDeath', section: 'Filter By Cases', show: true,
+    label: 'Cause of Death', field: 'group', api: 'subjectCountByCauseOfDeath', apiForFiltering: 'filterSubjectCountByCauseOfDeath', datafield: 'causeOfDeath', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Sites of Disease at Autopsy', field: 'group', api: 'subjectCountBySitesOfDiseaseAtAutopsy', apiForFiltering: 'filterSubjectCountBySitesOfDiseaseAtAutopsy', datafield: 'sitesOfDiseaseAtAutopsy', section: 'Filter By Cases', show: true,
+    label: 'Sites of Disease at Autopsy', field: 'group', api: 'subjectCountBySitesOfDiseaseAtAutopsy', apiForFiltering: 'filterSubjectCountBySitesOfDiseaseAtAutopsy', datafield: 'sitesOfDiseaseAtAutopsy', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Source of the Lab Data', field: 'group', api: 'subjectCountBySourceOfTheLabData', apiForFiltering: 'filterSubjectCountBySourceOfTheLabData', datafield: 'sourceOfTheLabData', section: 'Filter By Cases', show: true,
+    label: 'Source of the Lab Data', field: 'group', api: 'subjectCountBySourceOfTheLabData', apiForFiltering: 'filterSubjectCountBySourceOfTheLabData', datafield: 'sourceOfTheLabData', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Lab Test', field: 'group', api: 'subjectCountByLabTest', apiForFiltering: 'filterSubjectCountByLabTest', datafield: 'labTest', section: 'Filter By Cases', show: true,
+    label: 'Lab Test', field: 'group', api: 'subjectCountByLabTest', apiForFiltering: 'filterSubjectCountByLabTest', datafield: 'labTest', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'System Organ Class', field: 'group', api: 'subjectCountBySystemOrganClass', apiForFiltering: 'filterSubjectCountBySystemOrganClass', datafield: 'systemOrganClass', section: 'Filter By Cases', show: true,
+    label: 'System Organ Class', field: 'group', api: 'subjectCountBySystemOrganClass', apiForFiltering: 'filterSubjectCountBySystemOrganClass', datafield: 'systemOrganClass', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Serious', field: 'group', api: 'subjectCountBySerious', apiForFiltering: 'filterSubjectCountBySerious', datafield: 'serious', section: 'Filter By Cases', show: true,
+    label: 'Serious', field: 'group', api: 'subjectCountBySerious', apiForFiltering: 'filterSubjectCountBySerious', datafield: 'serious', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Outcome', field: 'group', api: 'subjectCountByOutcome', apiForFiltering: 'filterSubjectCountByOutcome', datafield: 'outcome', section: 'Filter By Cases', show: true,
+    label: 'Outcome', field: 'group', api: 'subjectCountByOutcome', apiForFiltering: 'filterSubjectCountByOutcome', datafield: 'outcome', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Somatic Pathogenicity', field: 'group', api: 'subjectCountBySomaticPathogenicity', apiForFiltering: 'filterSubjectCountBySomaticPathogenicity', datafield: 'somaticPathogenicity', section: 'Filter By Cases', show: true,
+    label: 'Somatic Pathogenicity', field: 'group', api: 'subjectCountBySomaticPathogenicity', apiForFiltering: 'filterSubjectCountBySomaticPathogenicity', datafield: 'somaticPathogenicity', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Germline Pathogenicity', field: 'group', api: 'subjectCountByGermlinePathogenicity', apiForFiltering: 'filterSubjectCountByGermlinePathogenicity', datafield: 'germlinePathogenicity', section: 'Filter By Cases', show: true,
+    label: 'Germline Pathogenicity', field: 'group', api: 'subjectCountByGermlinePathogenicity', apiForFiltering: 'filterSubjectCountByGermlinePathogenicity', datafield: 'germlinePathogenicity', section: 'Filter By Subject', show: true,
   },
   {
     label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'fileType', section: 'Filter By Files', show: true,
@@ -52,12 +52,12 @@ export const facetSearchData = [
 
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
-  'Filter By Cases': {
+  'Filter By Subject': {
     color: '#10A075',
     checkBoxColorsOne: '#E8F7DC',
     checkBoxColorsTwo: '#F5FDEE',
     height: '5px',
-    isExpanded: false,
+    isExpanded: true,
   },
   'Filter By Samples': {
     color: '#10BEFF',

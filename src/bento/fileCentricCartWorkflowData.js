@@ -61,9 +61,9 @@ export const table = {
     },
     {
       dataField: 'subject_id',
-      header: 'Case ID',
+      header: 'Subject ID',
       sort: 'asc',
-      link: '/case/{subject_id}',
+      link: '/subjects/{subject_id}',
       display: true,
     },
     {

@@ -17,9 +17,9 @@ const breadCrumb = {
 
 // --------------- Aggregated count configuration --------------
 const aggregateCount = {
-  labelText: 'Cases',
+  labelText: 'Subjects',
   dataField: 'num_subjects',
-  link: '/cases',
+  link: '/subjects',
   display: true,
 };
 
@@ -129,7 +129,7 @@ const table = {
     },
     {
       dataField: 'subjectCount',
-      header: 'Cases',
+      header: 'Subjects',
     },
   ],
 };

@@ -47,7 +47,7 @@ export const tab = {
   items: [
     {
       index: 0,
-      label: 'ASSOCIATED CASES',
+      label: 'ASSOCIATED SUBJECTS',
       value: 'table1',
       primaryColor: '#D6F2EA',
     },
@@ -112,12 +112,12 @@ const rightPanel = {
   ],
 };
 
-// --------------- Table 1: ASSOCIATED CASES --------------
+// --------------- Table 1: ASSOCIATED SUBJECTS --------------
 const table1 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  tableTitle: 'ASSOCIATED CASES',
+  tableTitle: 'ASSOCIATED SUBJECTS',
   // Field name for files data, need to be updated only when using a different GraphQL query
   dataField: 'subjects',
   // Value must be one of the 'dataField's in fileTableColumns
@@ -152,15 +152,15 @@ const table1 = {
   // download csv 'true' or 'false'
   download: true,
   // downloaded File Name
-  downloadFileName: 'Cases_CSV_download',
+  downloadFileName: 'SUBJECTS_CSV_download',
   // Set 'selectableRows' to true to show the row selection
   selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {
       dataField: 'subject_id',
-      header: 'Case ID',
-      link: '/case/{subject_id}',
+      header: 'Subject ID',
+      link: '/subject/{subject_id}',
     },
     {
       dataField: 'race',

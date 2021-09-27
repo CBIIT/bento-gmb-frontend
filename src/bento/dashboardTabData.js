@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
-import { customCasesTabDownloadCSV, customFilesTabDownloadCSV } from './tableDownloadCSV';
+import { customSubjectsTabDownloadCSV, customFilesTabDownloadCSV } from './tableDownloadCSV';
 
 // --------------- Tooltip configuration --------------
 export const tooltipContent = {
   icon: 'https://raw.githubusercontent.com/google/material-design-icons/master/src/action/help/materialicons/24px.svg',
   alt: 'tooltipIcon',
-  0: 'Click button to add selected files associated with the selected case(s).',
+  0: 'Click button to add selected files associated with the selected subject(s).',
   1: 'Click button to add selected files associated with the selected sample(s).',
   2: 'Click button to add selected files.',
 };
@@ -18,9 +18,10 @@ export const externalLinkIcon = {
 };
 
 // --------------- Tabs Table configuration --------------
+// TODO: Rename query GET_CASES_OVERVIEW_QUERY to GET_SUBJECTS_OVERVIEW_QUERY
 export const tabContainers = [
   {
-    name: 'Cases',
+    name: 'Subjects',
     dataField: 'dataCase',
     api: 'GET_CASES_OVERVIEW_QUERY',
     paginationAPIField: 'subjectOverViewPaged',
@@ -49,9 +50,9 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'subject_id',
-        header: 'Case ID',
+        header: 'Subject ID',
         sort: 'asc',
-        link: '/case/{subject_id}',
+        link: '/subject/{subject_id}',
         primary: true,
         display: true,
       },
@@ -134,15 +135,15 @@ export const tabContainers = [
         display: true,
       },
     ],
-    id: 'case_tab',
+    id: 'subject_tab',
     onRowsSelect: 'type1',
     disableRowSelection: 'type1',
-    tableID: 'case_tab_table',
+    tableID: 'subject_tab_table',
     selectableRows: true,
-    tableDownloadCSV: customCasesTabDownloadCSV,
+    tableDownloadCSV: customSubjectsTabDownloadCSV,
     tabIndex: '0',
     viewColumns: true,
-    downloadFileName: 'Bento_Dashboard_cases_download',
+    downloadFileName: 'GMB_Dashboard_subjects_download',
     headerPagination: true,
     footerPagination: true,
   },
@@ -183,7 +184,7 @@ export const tabContainers = [
       },
       {
         dataField: 'subject_id',
-        header: 'Case ID',
+        header: 'Subject ID',
         sort: 'asc',
         link: '/case/{subject_id}',
         display: true,
@@ -252,7 +253,7 @@ export const tabContainers = [
     tabIndex: '2',
     viewColumns: true,
     tableDownloadCSV: customFilesTabDownloadCSV,
-    downloadFileName: 'Bento_Dashboard_cases_download',
+    downloadFileName: 'GMB_Dashboard_files_download',
     headerPagination: true,
     footerPagination: true,
   },
@@ -261,8 +262,8 @@ export const tabContainers = [
 // --------------- Tabs Header Data configuration --------------
 export const tabs = [
   {
-    id: 'case_tab',
-    title: 'Cases',
+    id: 'casesubject_tab',
+    title: 'Subjects',
     dataField: 'dataCase',
     count: 'numberOfSubjects',
   },
@@ -277,7 +278,7 @@ export const tabs = [
 // --------------- Tabs Header Style configuration --------------
 export const tabIndex = [
   {
-    title: 'Cases',
+    title: 'Subjects',
     primaryColor: '#D6F2EA',
     secondaryColor: '#FFDFB8',
     selectedColor: '#10A075',
