@@ -9,7 +9,7 @@ export const tooltipContent = {
 
 // -------------- Case ID area configurations --------------
 const caseHeader = {
-  label: 'Case ID',
+  label: 'Subject ID',
   dataField: 'subject_id',
 };
 

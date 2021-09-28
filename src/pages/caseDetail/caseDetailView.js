@@ -66,8 +66,8 @@ const CaseDetail = ({ data, classes }) => {
   };
 
   const breadCrumbJson = [{
-    name: 'ALL CASES /',
-    to: '/cases',
+    name: 'ALL SUBJECTS /',
+    to: '/subjects',
     isALink: true,
   }];
 

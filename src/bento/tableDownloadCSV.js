@@ -25,10 +25,10 @@ query subjectOverViewPaged($subject_ids: [String], $offset: Int = 0, $first: Int
 }
 `;
 
-export const customCasesTabDownloadCSV = {
+export const customSubjectsTabDownloadCSV = {
   keysToInclude: ['subject_id', 'race', 'diseaseTerm', 'registeringInstitution', 'patientSubgroup', 'stageAtEntry', 'causeOfDeath',
     'sitesOfDiseaseAtAutopsy', 'sourceOfTheLabData', 'labTest'],
-  header: ['Case ID', 'Race', 'Disease Term', 'Registering Institution', 'Patient Subgroup', 'Stage at Entry', 'Cause of Death',
+  header: ['Subject ID', 'Race', 'Disease Term', 'Registering Institution', 'Patient Subgroup', 'Stage at Entry', 'Cause of Death',
     'Sites of Disease at Autopsy', 'Source of The Lab Data', 'Lab Test'],
   query: GET_CASES_TAB,
   apiVariable: 'subjectOverViewPaged',
@@ -53,9 +53,9 @@ query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $ord
 `;
 
 export const customFilesTabDownloadCSV = {
-  keysToInclude: ['file_id', 'file_name', 'file_description', 'file_format', 'file_size', 'trial_id',
-    'trial_short_name', 'arm', 'subject_id'],
-  header: ['File ID', 'File Name', 'Description', 'File Format', 'Size', 'Trial Id', 'Trial Name', 'Arm', 'Case ID'],
+  keysToInclude: ['file_id', 'file_name', 'subject_id', 'file_description', 'file_format', 'file_size', 'trial_id',
+    'trial_short_name', 'arm'],
+  header: ['File ID', 'File Name', 'Subject ID', 'Description', 'File Format', 'Size', 'Trial Id', 'Trial Name', 'Arm'],
   query: GET_FILES_TAB,
   apiVariable: 'fileOverview',
   fileName: 'GMB_Files_download',
@@ -78,7 +78,7 @@ query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 1000, $or
 
 export const customMyFilesTabDownloadCSV = {
   keysToInclude: ['file_name', 'subject_id', 'file_description', 'file_description', 'file_size', 'file_type', 'file_id', 'md5sum'],
-  header: ['File Name', 'Case ID', 'Description', 'File Format', 'Size', 'File Type', 'UUID', 'Md5Sum'],
+  header: ['File Name', 'Subject ID', 'Description', 'File Format', 'Size', 'File Type', 'UUID', 'Md5Sum'],
   query: MY_CART,
   apiVariable: 'filesInList',
   fileName: 'GMB File Manifest',

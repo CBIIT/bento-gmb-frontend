@@ -17,9 +17,9 @@ const breadCrumb = {
 
 // --------------- Aggregated count configuration --------------
 const aggregateCount = {
-  labelText: 'Cases',
+  labelText: 'Subjects',
   dataField: 'num_subjects',
-  link: '/cases',
+  link: '/subjects',
   display: true,
 };
 
@@ -75,6 +75,7 @@ const rightPanel = {
       dataField: 'N/A',
       label: 'Stage at Entry Distribution',
       display: true,
+      titleText: 'Subjects',
     },
   ],
   files: [
@@ -129,7 +130,7 @@ const table = {
     },
     {
       dataField: 'subjectCount',
-      header: 'Cases',
+      header: 'Subjects',
     },
   ],
 };

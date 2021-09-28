@@ -335,6 +335,7 @@ const SiteView = ({ classes, data, theme }) => {
                         titleLocation="bottom"
                         titleAlignment="center"
                         showTotalCount
+                        titleText={rightPanel.widget[0].titleText}
                       />
                     </Widget>
                   </Grid>

@@ -13,7 +13,7 @@ import imgAccess from '../../assets/landing/RequestAccess.png';
 import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
 import texturebg from '../../assets/landing/BackgroundTexture-LP.jpg';
-import casesImage from '../../assets/landing/Cases.png';
+import subjectsImage from '../../assets/landing/subjects.png';
 import hero from '../../assets/landing/hero.png';
 
 const LandingController = ({ classes }) => (
@@ -33,7 +33,7 @@ const LandingController = ({ classes }) => (
               <div className={classes.headerButtonSection}>
                 <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
                   <Button className={classes.transparentButton} bgColor="neonBlue" color="white">
-                    Search cases
+                    Search subjects
                     <span className={classes.rightArrow}>
                       ▶
                     </span>
@@ -53,7 +53,7 @@ const LandingController = ({ classes }) => (
       </Grid>
       <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.ButtonSection}>
-          <Link to="/cases" className={classes.grayButton}>View data</Link>
+          <Link to="/subjects" className={classes.grayButton}>View data</Link>
         </div>
       </Grid>
     </div>
@@ -139,10 +139,10 @@ const LandingController = ({ classes }) => (
 
             </div>
             <div className={classes.contentRightBottom}>
-              <div className={classes.cases}>
-                <div className={classes.greyContentHeader}> Cases</div>
+              <div className={classes.subjects}>
+                <div className={classes.greyContentHeader}> subjects</div>
                 <div className={classes.greyContent}>
-                  Search all the Cases and build cohorts from all the
+                  Search all the subjects and build cohorts from all the
                   Programs/Studies within the GMB. The data files from
                   these cohorts can then be analyzed in the Cloud Resources.
                 </div>
@@ -152,7 +152,7 @@ const LandingController = ({ classes }) => (
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
-                    <Link to="/cases" className={classes.greybutton}>Explore</Link>
+                    <Link to="/subjects" className={classes.greybutton}>Explore</Link>
                   </div>
                 </div>
               </div>
@@ -399,11 +399,11 @@ const styles = () => ({
     float: 'left',
     width: '597px',
     background: '#fff',
-    backgroundImage: `url(${casesImage})`,
+    backgroundImage: `url(${subjectsImage})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
-  cases: {
+  subjects: {
     height: '438px',
     paddingLeft: '370px',
     paddingTop: '70px',
