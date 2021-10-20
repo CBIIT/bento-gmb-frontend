@@ -51,6 +51,7 @@ const leftPanel = {
     {
       dataField: 'trial_id',
       label: 'Trial Id',
+      externalLinkToDataField: true,
     },
     {
       dataField: 'trialDesription',
