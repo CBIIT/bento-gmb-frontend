@@ -205,23 +205,44 @@ const TrialView = ({ classes, data, theme }) => {
                                   </span>
                                 </div>
                               )
-                              : (
-                                <div>
-                                  <span
-                                    className={classes.detailContainerHeader}
-                                    id={`program_detail_left_section_title_${index + 1}`}
-                                  >
-                                    {attribute.label}
-                                  </span>
+                              : attribute.externalLinkToDataField
+                                ? (
                                   <div>
-                                    <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
-                                      {' '}
-                                      {trialData[attribute.dataField]}
-                                      {' '}
+                                    <span
+                                      className={classes.detailContainerHeader}
+                                      id={`program_detail_left_section_title_${index + 1}`}
+                                    >
+                                      {attribute.label}
                                     </span>
+                                    <div>
+                                      <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
+                                        <a href="https://clinicaltrials.gov/ct2/show/NCT04706663" target="_blank" rel="noopener noreferrer">{trialData[attribute.dataField]}</a>
+                                        <img
+                                          src={externalLinkIcon.src}
+                                          alt={externalLinkIcon.alt}
+                                          className={classes.externalLinkIcon}
+                                        />
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              )
+                                )
+                                : (
+                                  <div>
+                                    <span
+                                      className={classes.detailContainerHeader}
+                                      id={`program_detail_left_section_title_${index + 1}`}
+                                    >
+                                      {attribute.label}
+                                    </span>
+                                    <div>
+                                      <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
+                                        {' '}
+                                        {trialData[attribute.dataField]}
+                                        {' '}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )
 }
                     </div>
                   </Grid>
