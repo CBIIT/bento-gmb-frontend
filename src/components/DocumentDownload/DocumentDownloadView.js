@@ -53,19 +53,19 @@ const DocumentDownload = ({
       fileFormat === 'bam' || fileFormat === 'bai' ? (
         <Grid container>
           <Grid item xs={6} id="table_file">
+            <ToolTip classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} title={toolTipTextFileDownload} arrow placement="bottom">
+              <div onClick={() => fetchFileToDownload(fileLocation)}>
+                <CustomIcon imgSrc={iconFileDownload} />
+              </div>
+            </ToolTip>
+          </Grid>
+          <Grid item xs={6} id="table_file">
             <ToolTip classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} title={toolTipTextFileViewer} arrow placement="bottom">
               <Link
                 to={`/fileViewer/${caseId}`}
               >
                 <CustomIcon imgSrc={iconFileViewer} />
               </Link>
-            </ToolTip>
-          </Grid>
-          <Grid item xs={6} id="table_file">
-            <ToolTip classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} title={toolTipTextFileDownload} arrow placement="bottom">
-              <div onClick={() => fetchFileToDownload(fileLocation)}>
-                <CustomIcon imgSrc={iconFileDownload} />
-              </div>
             </ToolTip>
           </Grid>
         </Grid>
