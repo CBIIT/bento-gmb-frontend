@@ -34,6 +34,15 @@ type ENROLLMENT {
 }
 
 type FILE {
+  FILE_NAME: String
+  FILE_TYPE: String
+  FILE_DESCRIPTION: String
+  FILE_FORMAT: String
+  FILE_SIZE: Int
+  MD5SUM: String
+  FILE_STATUS: String
+  UUID: String
+  FILE_LOCATION: String
   SUBJECT: SUBJECT 
 }
 
