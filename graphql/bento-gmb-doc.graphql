@@ -332,14 +332,6 @@ schema {
 type QueryType {
     schemaVersion: String 
 
-    fileIdsFromFileName(file_name: [String] = [], order_by: String = ""): [FileOverview] 
-
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = ""): [FileOverview] 
-
-    filesInList(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
-
-    filesInListDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
-
     subjectDetail(subject_id: String): SubjectDetail 
 
     trialsInfo: [TrialInfo] 
