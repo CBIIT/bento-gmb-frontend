@@ -16,7 +16,7 @@ export const facetSearchData = [
     label: 'Patient Subgroup', field: 'group', api: 'subjectCountByPatientSubgroup', apiForFiltering: 'filterSubjectCountByPatientSubgroup', datafield: 'patientSubgroup', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Disease Stage at Entry', field: 'group', api: 'subjectCountByDiseaseStageAtEntry', apiForFiltering: 'filterSubjectCountByDiseaseStageAtEntry', datafield: 'stageAtEntry', section: 'Filter By Subject', show: true,
+    label: 'Disease Stage at Entry', field: 'group', api: 'subjectCountByStageAtEntry', apiForFiltering: 'filterSubjectCountByStageAtEntry', datafield: 'stageAtEntry', section: 'Filter By Subject', show: true,
   },
   {
     label: 'Cause of Death', field: 'group', api: 'subjectCountByCauseOfDeath', apiForFiltering: 'filterSubjectCountByCauseOfDeath', datafield: 'causeOfDeath', section: 'Filter By Subject', show: true,
@@ -49,6 +49,16 @@ export const facetSearchData = [
     label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'fileType', section: 'Filter By Files', show: true,
   },
 ];
+
+/** Dashboard Facet Local Find Configurations * */
+export const facetSectionFindApi = {
+  Cases: {
+    api: 'subjectIds',
+  },
+  Files: {
+    api: 'fileIds',
+  },
+};
 
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
@@ -122,7 +132,7 @@ export const widgetsData = [
   {
     type: 'donut',
     label: 'Disease Stage at Entry',
-    dataName: 'subjectCountByDiseaseStageAtEntry',
+    dataName: 'subjectCountByStageAtEntry',
     datatable_field: 'stageAtEntry',
     titleText: 'Subjects',
     show: true,
@@ -246,75 +256,75 @@ export const showCheckboxCount = 5;
 
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_DATA_QUERY = gql`{
-  numberOfPrograms
-  numberOfSubjects
-  numberOfSamples
-  numberOfLabProcedures
-  numberOfFiles
-  subjectCountByProgram{
+    numberOfPrograms
+    numberOfSubjects
+    numberOfSamples
+    numberOfLabProcedures
+    numberOfFiles
+    subjectCountByProgram{
         group
         subjects
-      }
+    }
     subjectCountByStudy{
         group
         subjects
-      }
+    }
     subjectCountByDiagnoses{
         group
         subjects
-      }
+    }
     subjectCountByRecurrenceScore{
         group
         subjects
-      }
+    }
     subjectCountByTumorSize{
         group
         subjects
-      }
+    }
     subjectCountByChemotherapyRegimen{
         group
         subjects
-      }
+    }
     subjectCountByTumorGrade{
         group
         subjects
-      }
-  subjectCountByErStatus{
+    }
+    subjectCountByErStatus{
         group
         subjects
-      }
-  subjectCountByPrStatus{
+    }
+    subjectCountByPrStatus{
         group
         subjects
-      }
-  subjectCountByMenopauseStatus{
+    }
+    subjectCountByMenopauseStatus{
         group
         subjects
-      }
-  subjectCountByChemotherapyRegimen{
+    }
+    subjectCountByChemotherapyRegimen{
         group
         subjects
-      }
-      subjectCountByEndocrineTherapy{
-    group
-    subjects
-  }
-  subjectCountByFileType{
-    group
-    subjects
-}
-subjectCountByFileAssociation {
-    group
-    subjects
-}
-subjectCountByTissueComposition{
-    group
-    subjects
-}
-subjectCountByTissueType{
-    group
-    subjects
-}
+    }
+    subjectCountByEndocrineTherapy{
+        group
+        subjects
+    }
+    subjectCountByFileType{
+        group
+        subjects
+    }
+    subjectCountByFileAssociation {
+        group
+        subjects
+    }
+    subjectCountByTissueComposition{
+        group
+        subjects
+    }
+    subjectCountByTissueType{
+        group
+        subjects
+    }
     armsByPrograms {
         program
         caseSize
@@ -325,53 +335,53 @@ subjectCountByTissueType{
         }
     }
     subjectOverViewPaged(first: 100) {
-      subject_id
-      program_id
-      study_info
-      samples
-      program
-      study_acronym
-      diagnosis
-      recurrence_score
-      tumor_size
-      tumor_grade
-      er_status
-      pr_status
-      chemotherapy
-      endocrine_therapy
-      menopause_status
-      age_at_index
-      survival_time
-      lab_procedures
-      files{
-        file_id
-      }
-  }
-  }`;
+        subject_id
+        program_id
+        study_info
+        samples
+        program
+        study_acronym
+        diagnosis
+        recurrence_score
+        tumor_size
+        tumor_grade
+        er_status
+        pr_status
+        chemotherapy
+        endocrine_therapy
+        menopause_status
+        age_at_index
+        survival_time
+        lab_procedures
+        files{
+            file_id
+        }
+    }
+}`;
 
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_TABLE_DATA_QUERY = gql`{
-  subjectOverViewPaged(first: 1000000) {
-      subject_id
-      program_id
-      study_info
-      samples
-      program
-      study_acronym
-      diagnosis
-      recurrence_score
-      tumor_size
-      tumor_grade
-      er_status
-      pr_status
-      chemotherapy
-      endocrine_therapy
-      menopause_status
-      age_at_index
-      survival_time
-      lab_procedures
-      files{
-        file_id
-      }
-  }
-  }`;
+    subjectOverViewPaged(first: 1000000) {
+        subject_id
+        program_id
+        study_info
+        samples
+        program
+        study_acronym
+        diagnosis
+        recurrence_score
+        tumor_size
+        tumor_grade
+        er_status
+        pr_status
+        chemotherapy
+        endocrine_therapy
+        menopause_status
+        age_at_index
+        survival_time
+        lab_procedures
+        files{
+            file_id
+        }
+    }
+}`;
