@@ -569,7 +569,7 @@ export const DASHBOARD_QUERY = gql`
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
     query fileOverview(
-        #        $subject_id: [String], 
+        $subject_id: [String],
         $file_id: [String],
         $file_name: [String],
         $race: [String],
@@ -593,7 +593,7 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
         $sort_direction: String = "asc"
     ){
         fileOverview(
-            #            subject_id:$subject_id,
+            subject_id:$subject_id,
             file_id:$file_id,
             file_name:$file_name,
             race:$race,
@@ -619,9 +619,9 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
             file_name
             subject_id
             description
-            fileFormat
+            file_format
             size
-            fileType
+            file_type
         }
     }`;
 
@@ -946,18 +946,19 @@ export const GET_FILES_NAME_QUERY = gql`
 export const GET_FILE_IDS_FROM_FILE_NAME = gql`
     query (
         $file_name: [String],
-        $offset: Int,
-        $first: Int,
-        $order_by: String
+        $order_by: String,
+        $sort_direction: String="desc"
     )
     {
-        fileIdsFromFileNameDesc(
+        fileIdsFromFileName(
             file_name:$file_name,
             offset:$offset,
             first:$first,
-            order_by:$order_by
+            order_by:$order_by,
+            sort_direction: $sort_direction
         )
         {
             file_id
+            file_name
         }
     }`;

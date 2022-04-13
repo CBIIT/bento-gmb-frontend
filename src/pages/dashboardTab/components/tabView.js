@@ -240,9 +240,14 @@ const TabView = ({
           className={classes.button}
           id={`${tableID}_${buttonText}`}
         >
-          { buttonText }
+          {buttonText}
         </button>
-        <ToolTip classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} title={tooltipMessage} arrow placement="bottom">
+        <ToolTip
+          classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }}
+          title={tooltipMessage}
+          arrow
+          placement="bottom"
+        >
           <IconButton
             aria-label="help"
             className={classes.helpIconButton}
@@ -267,7 +272,8 @@ const TabView = ({
         <Grid item xs={12} id={tableID}>
           <CustomDataTable
             data={data}
-            columns={getColumns(customColumn, classes, data, externalLinkIcon, '', () => {}, DocumentDownload)}
+            columns={getColumns(customColumn, classes, data, externalLinkIcon, '', () => {
+            }, DocumentDownload)}
             options={finalOptions}
             count={count}
             overview={getOverviewQuery(api)}
@@ -291,10 +297,15 @@ const TabView = ({
           onClick={exportFiles}
           className={classes.button}
         >
-          { buttonText }
+          {buttonText}
         </button>
 
-        <ToolTip classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} title={tooltipMessage} arrow placement="bottom">
+        <ToolTip
+          classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }}
+          title={tooltipMessage}
+          arrow
+          placement="bottom"
+        >
           <IconButton
             aria-label="help"
             className={classes.helpIconButton}

@@ -34,24 +34,27 @@ import {
   DASHBOARD_QUERY,
   GET_FILES_OVERVIEW_QUERY,
   GET_CASES_OVERVIEW_QUERY,
-  GET_SAMPLES_OVERVIEW_QUERY,
+  // GET_SAMPLES_OVERVIEW_QUERY,
 } from '../../../bento/dashboardTabData';
 
-/* import local search data here */
+import {
+  GET_IDS_BY_TYPE,
+  GET_SEARCH_NODES_BY_FACET,
+  GET_SUBJECT_IDS, SUBJECT_OVERVIEW_QUERY, widgetsSearchData,
+} from '../../../bento/localSearchData';
 
-// initial state
 const storeKey = 'dashboardTab';
 
 const initialState = {
   dashboardTab: {
     autoCompleteSelection: {
-      subject_ids: [],
-      sample_ids: [],
+      subject_ids: []
+      // sample_ids: [],
       file_ids: [],
     },
     bulkUpload: {
       subject_ids: [],
-      sample_ids: [],
+      // sample_ids: [],
       file_ids: [],
     },
     isDataTableUptoDate: false,
@@ -112,24 +115,12 @@ function customizer(objValue, srcValue) {
   }
 }
 
-/** The following functions should be added here whren ready
- * -
- * - getSearch
- * - getSearchPageResults
- * - getSearchWidgetsData
- * - getAllSubjectIds
- * - getAllIds
- * - getSubjectIds
- * - getSubjectDetails
- * - addBulkModalSearchData
- * - uploadBulkModalSearch
- * - localSearch
- * - getFileIDs
- * - filterOutFileIds
- * - setSearchCriteria
- * -
- * -
- * */
+/**
+ * removes EmptySubjectsFromDonutDataa.
+ * @param {object} data
+ *  @param {object}
+ */
+const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.subjects !== 0);
 
 /**
  * Returns the  stats from inputAPI data.
@@ -157,12 +148,115 @@ function getFilteredStat(input, statCountVariables) {
   return filteredStats;
 }
 
-/**
- * removes EmptySubjectsFromDonutDataa.
- * @param {object} data
- *  @param {object}
- */
-const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.subjects !== 0);
+function getSearchWidgetsData(data, widgetsInfoFromCustConfig) {
+  const donut = widgetsInfoFromCustConfig.reduce((acc, widget) => {
+    const Data = widget.type === 'sunburst'
+      ? transformInitialDataForSunburst(data[widget.mapWithDashboardWidget])
+      : removeEmptySubjectsFromDonutData(data[widget.mapWithDashboardWidget]);
+    const label = widget.dataName;
+    return { ...acc, [label]: Data };
+  }, {});
+  const replacements = widgetsSearchData.reduce(
+    (acc, widget) => ({ ...acc, ...{ [widget.dataName]: widget.mapWithDashboardWidget } }),
+    {},
+  );
+
+  const replacedItems = Object.keys(donut).map((key) => {
+    const newKey = replacements[key] || key;
+    return { [newKey]: donut[key] };
+  });
+  const newTab = replacedItems.reduce((a, b) => ({ ...a, ...b }));
+  return newTab;
+}
+
+/** The following functions should be added here whren ready
+ * - addAutoComplete (done)
+ * - getSearch
+ * - getSearchPageResults
+ * - getSearchWidgetsData (done)
+ * - getAllSubjectIds (done)
+ * - getAllIds (done)
+ * - getSubjectIds
+ * - getSubjectDetails (done)
+ * - addBulkModalSearchData
+ * - uploadBulkModalSearch
+ * - localSearch (done)
+ * - getFileIDs
+ * - filterOutFileIds
+ * - setSearchCriteria
+ * - convertResultInPrevType
+ * - customizer (done)
+ * */
+
+const convertResultInPrevType = (result) => {
+  const payload = result;
+
+  payload.data = {
+    ...result.data.searchSubjects,
+    nodeCountsFromLists: {
+      numberOfFiles: result.data.searchSubjects.numberOfFiles,
+      numberOfTrials: result.data.searchSubjects.numberOfTrials,
+      numberOfSites: result.data.searchSubjects.numberOfSites,
+      numberOfSubjects: result.data.searchSubjects.numberOfSubjects,
+    },
+  };
+
+  return payload;
+};
+
+/* returns {object} data */
+export async function getCaseData(variables) {
+  const result = await client.query({
+    query: GET_SEARCH_NODES_BY_FACET,
+    variables,
+  });
+
+  return convertResultInPrevType(result);
+}
+
+const getSubjectDetails = async (variables) => {
+  // order_by: 'age_at_index',
+  // age_at_index: [ageAtIndex, null],
+  const result = await client.query({
+    query: SUBJECT_OVERVIEW_QUERY,
+    variables: {
+      offset: 0,
+      first: 100,
+      sort_direction: 'desc',
+      order_by: 'subject_id',
+      ...variables,
+    },
+  });
+
+  return result;
+};
+
+export async function getAllSubjectIds(subIdArray) {
+  return client.query({
+    query: GET_SUBJECT_IDS,
+    variables: {
+      subject_ids: subIdArray,
+    },
+  }).then((result) => result.data.findSubjectIdsInList)
+    .catch((error) => store.dispatch({ type: 'DASHBOARDTAB_QUERY_ERR', error }));
+}
+
+export async function getAllIds(type) {
+  const allids = await client
+    .query({
+      query: GET_IDS_BY_TYPE(type),
+      variables: {},
+    }).then((result) => result.data.idsLists)
+    .catch((error) => store.dispatch(
+      { type: 'DASHBOARDTAB_QUERY_ERR', error },
+    ));
+  return allids;
+}
+
+export function addAutoComplete({ newValue, type, isFilteredData = false }) {
+  const items = isFilteredData ? newValue : newValue.map((val) => val.title);
+  store.dispatch({ type: 'ADD_AUTOCOMPLETE_DATA', payload: { value: items, type } });
+}
 
 /**
  * Returns the widgets data.
@@ -376,12 +470,6 @@ export function resetGroupSelections(payload) {
  *  @param {json} tabContainer
  * @return {json} with three keys QUERY, sortfield, sortDirection
  */
-
-export function addAutoComplete({ newValue, type, isFilteredData = false }) {
-  const items = isFilteredData ? newValue : newValue.map((val) => val.title);
-  store.dispatch({ type: 'ADD_AUTOCOMPLETE_DATA', payload: { value: items, type } });
-}
-
 const querySwitch = (payload, tabContainer) => {
   const defaultProps = {
     sortfield: tabContainer && utils.hasOwnProp(tabContainer, 'defaultSortField')
@@ -578,11 +666,11 @@ async function getFileIDs(
   return fetchResult;
 }
 
-/*
-* Removing fileIds that are not in our current list of filtered fileIds
-* @param array fileIds
-* @return array
-*/
+/**
+ * Removing fileIds that are not in our current list of filtered fileIds
+ * @param array fileIds
+ * @return array
+ */
 function filterOutFileIds(fileIds) {
   // Removing fileIds that are not in our current list of filtered fileIds
   const { filteredFileIds } = getState();
@@ -597,7 +685,7 @@ function filterOutFileIds(fileIds) {
   return fileIds;
 }
 
-/*
+/**
  * Gets all file ids for active subjectIds.
  * TODO this  functtion can use filtered file IDs except for initial load
  * @param obj fileCoubt
@@ -722,7 +810,6 @@ export async function setSingleFilter(payload) {
  * @param {object} payload
  * @return distpatcher
  */
-
 export async function singleCheckBox(payload) {
   await setSingleFilter(payload);
   const currentAllFilterVariables = payload === {} ? allFilters : createFilterVariables(payload);
@@ -759,7 +846,8 @@ export function toggleSlider(value, sideBarItem) {
   if (!value.includes('')) {
     const payload = {};
     const currentAllFilterVariables = createFilterVariablesRange(value, sideBarItem);
-    // For performance issue we are using initial dasboardquery instead of fitered for empty filters
+    // For performance issue we are using
+    // initial dashboard query instead of fitered for empty filters
     if (_.isEqual(currentAllFilterVariables, allFilters())) {
       clearAllFilters();
     } else toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables);
@@ -814,6 +902,28 @@ function getCheckbox(data, mapping) {
     isChecked: false,
     subjects: item.subjects,
   }));
+}
+
+function customCheckBox(data, facetSearchData1, isEmpty) {
+  const caseCountField = 'subjects';
+  return (
+    facetSearchData1.map((mapping) => ({
+      groupName: mapping.label,
+      checkboxItems: mapping.slider === true
+        ? data[mapping.api]
+        : (isEmpty ? getCheckbox(data, mapping.apiForFiltering) : transformAPIDataIntoCheckBoxData(
+          data[mapping.api],
+          mapping.field,
+          caseCountField,
+          mapping.customNumberSort,
+        )),
+      datafield: mapping.datafield,
+      show: mapping.show,
+      slider: mapping.slider,
+      quantifier: mapping.slider,
+      section: mapping.section,
+    }))
+  );
 }
 
 /**
@@ -967,11 +1077,77 @@ export const getDashboard = () => getState();
  * This is where the reducers will be.
  * we will also be taking out a few search reducers out until the service is ready
  * these include:
- *   - LOCAL_SEARCH
+ *   - LOCAL_SEARCH (Done)
  *   - SET_SEARCH_CRITERIA
  *   - ADD_AUTOCOMPLETEDATA
  *   - ADD_BULKSEARCHDATA
  * */
+export function addBulkModalSearchData(value, type) {
+  // const items = value.map((val) => val.title);
+  store.dispatch({ type: 'ADD_BULKSEARCHDATA', payload: { value, type } });
+}
+
+/**
+ * Local Search
+ * */
+export async function localSearch(searchcriteria, isQuery = false) {
+  if (searchcriteria.length === 0 && !isQuery) {
+    clearAllFilters();
+  } else {
+    const variables = {
+      ...getState().allActiveFilters,
+      ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+    };
+
+    const [
+      caseResponse,
+      subjectResponse,
+    ] = await Promise.all([
+      getCaseData(variables),
+      getSubjectDetails(variables),
+    ]);
+    store.dispatch({
+      type: 'LOCAL_SEARCH',
+      payload: {
+        subjectResponse,
+        result: caseResponse,
+        variables,
+      },
+    });
+  }
+}
+
+/**
+ * Uplpad Modal Set
+ *
+ * @return distpatcher
+ */
+export async function uploadBulkModalSearch(searchcriteria, type) {
+  addBulkModalSearchData(searchcriteria, type);
+  const variables = {
+    ...getState().allActiveFilters,
+    ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+  };
+
+  const [
+    caseResponse,
+    subjectResponse,
+  ] = await Promise.all([
+    getCaseData(variables),
+    getSubjectDetails(variables),
+  ]);
+
+  store.dispatch({
+    type: 'LOCAL_SEARCH',
+    payload: {
+      subjectResponse,
+      result: caseResponse,
+      variables,
+    },
+  });
+}
+
+// reducers
 const reducers = {
   DASHBOARDTAB_QUERY_ERR: (state, item) => ({
     ...state,
@@ -1099,12 +1275,12 @@ const reducers = {
         },
         autoCompleteSelection: {
           subject_ids: [],
-          sample_ids: [],
+          // sample_ids: [],
           file_ids: [],
         },
         bulkUpload: {
           subject_ids: [],
-          sample_ids: [],
+          // sample_ids: [],
           file_ids: [],
         },
       } : { ...state };
@@ -1130,12 +1306,12 @@ const reducers = {
         },
         autoCompleteSelection: {
           subject_ids: [],
-          sample_ids: [],
+          // sample_ids: [],
           file_ids: [],
         },
         bulkUpload: {
           subject_ids: [],
-          sample_ids: [],
+          // sample_ids: [],
           file_ids: [],
         },
         checkbox: {
@@ -1249,12 +1425,12 @@ const reducers = {
     ...state,
     autoCompleteSelection: {
       subject_ids: [],
-      sample_ids: [],
+      // sample_ids: [],
       file_ids: [],
     },
     bulkUpload: {
       subject_ids: [],
-      sample_ids: [],
+      // sample_ids: [],
       file_ids: [],
     },
     allActiveFilters: {},
@@ -1263,11 +1439,60 @@ const reducers = {
     ...state,
     autoCompleteSelection: {
       subject_ids: [],
-      sample_ids: [],
+      // sample_ids: [],
       file_ids: [],
     },
     allActiveFilters: {},
   }),
+  ADD_AUTOCOMPLETE_DATA: (state, { type, value }) => ({
+    ...state,
+    autoCompleteSelection: {
+      ...state.autoCompleteSelection,
+      [`${type}_ids`]: value,
+    },
+  }),
+  ADD_BULKSEARCHDATA: (state, { type, value }) => ({
+    ...state,
+    bulkUpload: {
+      [`${type}_ids`]: value,
+    },
+  }),
+  LOCAL_SEARCH: (state, item) => {
+    const isEmpty = item.subjectResponse.data
+      && item.subjectResponse.data.subjectOverview
+      && item.subjectResponse.data.subjectOverview.length < 1;
+    const checkboxData = customCheckBox(item.result.data, facetSearchData, isEmpty);
+    const newCheckboxData = [...checkboxData];
+    checkboxData.map((val, idx) => {
+      if (item.variables && item.variables[val.datafield] && item.variables[val.datafield].length) {
+        const checkboxItem = newCheckboxData[idx].checkboxItems;
+        checkboxItem.map((data, id) => {
+          // eslint-disable-next-line max-len
+          const index = item.variables[val.datafield].findIndex((check) => check === data.name);
+          if (index >= 0) {
+            checkboxItem[id].isChecked = true;
+          }
+          return null;
+        });
+        newCheckboxData[idx].checkboxItems = checkboxItem;
+      }
+      return null;
+    });
+    return {
+      ...state,
+      setSideBarLoading: false,
+      datatable: {
+        dataCase: item.subjectResponse.data.subjectOverview,
+      },
+      checkbox: {
+        data: newCheckboxData,
+        variables: item.variables,
+      },
+      stats: getFilteredStat(item.result.data.nodeCountsFromLists, statsCount),
+      widgets: getSearchWidgetsData(item.result.data, widgetsSearchData),
+
+    };
+  },
 };
 
 // INJECT-REDUCERS INTO REDUX STORE
