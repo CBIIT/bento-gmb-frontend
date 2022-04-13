@@ -48,7 +48,7 @@ const storeKey = 'dashboardTab';
 const initialState = {
   dashboardTab: {
     autoCompleteSelection: {
-      subject_ids: [],
+      subject_ids: []
       // sample_ids: [],
       file_ids: [],
     },
@@ -479,6 +479,8 @@ const querySwitch = (payload, tabContainer) => {
   };
 
   switch (payload) {
+    case ('Samples'):
+      return { QUERY: GET_SAMPLES_OVERVIEW_QUERY, ...defaultProps };
     case ('Files'):
       return { QUERY: GET_FILES_OVERVIEW_QUERY, ...defaultProps };
     default:
@@ -933,6 +935,29 @@ function customCheckBox(data, facetSearchData1, isEmpty) {
  * * @param {object} currentCheckboxSelection
  * @return {json}
  */
+
+function customCheckBox(data, facetSearchData1, isEmpty) {
+  const caseCountField = 'subjects';
+  return (
+    facetSearchData1.map((mapping) => ({
+      groupName: mapping.label,
+      checkboxItems: mapping.slider === true
+        ? data[mapping.api]
+        : (isEmpty ? getCheckbox(data, mapping.apiForFiltering) : transformAPIDataIntoCheckBoxData(
+          data[mapping.api],
+          mapping.field,
+          caseCountField,
+          mapping.customNumberSort,
+        )),
+      datafield: mapping.datafield,
+      show: mapping.show,
+      slider: mapping.slider,
+      quantifier: mapping.slider,
+      section: mapping.section,
+    }))
+  );
+}
+
 export function updateFilteredAPIDataIntoCheckBoxData(data, facetSearchDataFromConfig) {
   return (
     facetSearchDataFromConfig.map((mapping) => ({

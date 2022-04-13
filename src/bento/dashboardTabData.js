@@ -569,7 +569,7 @@ export const DASHBOARD_QUERY = gql`
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
     query fileOverview(
-        $subject_id: [String], 
+        $subject_id: [String],
         $file_id: [String],
         $file_name: [String],
         $race: [String],
