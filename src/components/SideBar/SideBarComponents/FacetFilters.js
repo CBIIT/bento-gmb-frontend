@@ -137,7 +137,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
     && state.dashboardTab.bulkUpload
       ? state.dashboardTab.bulkUpload : {
         subject_ids: [],
-        sample_ids: [],
+        // sample_ids: [],
         file_ids: [],
       }));
 
@@ -146,7 +146,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
     && state.dashboardTab.autoCompleteSelection
       ? state.dashboardTab.autoCompleteSelection : {
         subject_ids: [],
-        sample_ids: [],
+        // sample_ids: [],
         file_ids: [],
       }));
 
@@ -454,7 +454,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
             open={showCasesModal}
             closeModal={closeCasesModal}
             handleClose={closeCasesModal}
-            type="subjectIds"
+            type="subject_ids"
             ref={modelRef}
           />
           <ExpansionPanel
@@ -468,9 +468,15 @@ export const FacetPanelComponent = ({ classes }, ref) => {
             <CustomExpansionPanelSummary
               aria-controls={currentSection.sectionName}
             >
-              {/* <ListItemText primary={sideBarItem.groupName} /> */}
+              {/** <ListItemText primary={sideBarItem.groupName} />
+                There is another issue to note here. How will this be converted to
+               a component unless it is cleaned up.
+                 issues are as follows:
+                 - currentSection.sectionName can be different from 'Cases' used in bento-tools.
+               */}
+              {/* eslint-disable-next-line no-console */}
               {
-                currentSection.sectionName === 'Cases' ? (
+                currentSection.sectionName === 'Filter By Subject' ? (
                   <div
                     id={currentSection.sectionName}
                     className={classes.sectionSummaryTextCase}
@@ -487,7 +493,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                           {bulkUpload.subject_ids.length !== 0 ? <InputSetListItem /> : ''}
                           <AutoComplete
                             ref={searchRef}
-                            type={facetSectionFindApi[currentSection.sectionName].api}
+                            type={facetSectionFindApi[currentSection.sectionName].type}
                             data={getAllIds(facetSectionFindApi[currentSection.sectionName].api)}
                           />
                           <Button
