@@ -1,5 +1,4 @@
 /** TODO: implement everything that has to do with local and global search. Skip them for now */
-// eslint-disable
 import _ from 'lodash';
 import {
   customSort,
@@ -27,14 +26,11 @@ import {
   GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL,
   GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART,
   GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART,
-  // GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART,
-  // GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
   GET_FILES_NAME_QUERY,
   tabIndex,
   DASHBOARD_QUERY,
   GET_FILES_OVERVIEW_QUERY,
   GET_CASES_OVERVIEW_QUERY,
-  // GET_SAMPLES_OVERVIEW_QUERY,
 } from '../../../bento/dashboardTabData';
 
 import {
@@ -48,13 +44,11 @@ const storeKey = 'dashboardTab';
 const initialState = {
   dashboardTab: {
     autoCompleteSelection: {
-      subject_ids: []
-      // sample_ids: [],
+      subject_ids: [],
       file_ids: [],
     },
     bulkUpload: {
       subject_ids: [],
-      // sample_ids: [],
       file_ids: [],
     },
     isDataTableUptoDate: false,
@@ -479,8 +473,6 @@ const querySwitch = (payload, tabContainer) => {
   };
 
   switch (payload) {
-    case ('Samples'):
-      return { QUERY: GET_SAMPLES_OVERVIEW_QUERY, ...defaultProps };
     case ('Files'):
       return { QUERY: GET_FILES_OVERVIEW_QUERY, ...defaultProps };
     default:
@@ -904,28 +896,6 @@ function getCheckbox(data, mapping) {
   }));
 }
 
-function customCheckBox(data, facetSearchData1, isEmpty) {
-  const caseCountField = 'subjects';
-  return (
-    facetSearchData1.map((mapping) => ({
-      groupName: mapping.label,
-      checkboxItems: mapping.slider === true
-        ? data[mapping.api]
-        : (isEmpty ? getCheckbox(data, mapping.apiForFiltering) : transformAPIDataIntoCheckBoxData(
-          data[mapping.api],
-          mapping.field,
-          caseCountField,
-          mapping.customNumberSort,
-        )),
-      datafield: mapping.datafield,
-      show: mapping.show,
-      slider: mapping.slider,
-      quantifier: mapping.slider,
-      section: mapping.section,
-    }))
-  );
-}
-
 /**
  *  updateFilteredAPIDataIntoCheckBoxData works for first time init Checkbox,
  that function transforms the data which returns from API into a another format
@@ -1031,10 +1001,6 @@ export async function tableHasSelections() {
       filteredIds = filteredNames;
       selectedRowInfo = getState().dataFileSelected.selectedRowInfo;
       break;
-    /* case tabIndex[1].title:
-      filteredIds = getState().filteredSampleIds;
-      selectedRowInfo = getState().dataSampleSelected.selectedRowInfo;
-      break; */
     default:
       filteredIds = getState().filteredSubjectIds;
       selectedRowInfo = getState().dataCaseSelected.selectedRowInfo;
@@ -1053,9 +1019,6 @@ function setDataFileSelected(result) {
   store.dispatch({ type: 'SET_FILE_SELECTION', payload: result });
 }
 
-/* function setDataSampleSelected(result) {
-  store.dispatch({ type: 'SET_SAMPLE_SELECTION', payload: result });
-} */
 /**
  *  Returns the functuion depend on current active tab
  * @return {func}
