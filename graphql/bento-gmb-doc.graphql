@@ -18,7 +18,6 @@ type CANCER_HISTORY {
 
 type CLINICALTRIAL {
   subjects: [SUBJECT] 
-  sites: [SITE] 
 }
 
 type CONCOMITANT_MEASURES_MEDICATIONS {
@@ -34,15 +33,6 @@ type ENROLLMENT {
 }
 
 type FILE {
-  FILE_NAME: String
-  FILE_TYPE: String
-  FILE_DESCRIPTION: String
-  FILE_FORMAT: String
-  FILE_SIZE: Int
-  MD5SUM: String
-  FILE_STATUS: String
-  UUID: String
-  FILE_LOCATION: String
   SUBJECT: SUBJECT 
 }
 
@@ -87,9 +77,12 @@ type OFF_STUDY {
 }
 
 type PHYSICAL_EXAM_SCREENING {
+  SUBJECT: SUBJECT 
+}
+
+type PHYSICAL_EXAM___SCREENING {
   NOTE_DT_SCRPE: String
   RSCH_COMMENTS_TXT_SCRPE: String
-  SUBJECT: SUBJECT 
 }
 
 type PI_SIGNOFF {
@@ -122,12 +115,6 @@ type RADIATION_SUPPLEMENT {
   SUBJECT: SUBJECT 
 }
 
-type SITE {
-  ADDRESS: String
-  CLINICALTRIAL: CLINICALTRIAL 
-  subjects: [SUBJECT] 
-}
-
 type SOMATIC_VARIANT {
   NOTE_DT_SV: String
   RSCH_COMMENTS_TXT_SV: String
@@ -148,7 +135,6 @@ type STORAGE_2 {
 
 type SUBJECT {
   CLINICALTRIAL: CLINICALTRIAL 
-  SITE: SITE 
   storages: [STORAGE] 
   survivals: [SURVIVAL] 
   laboratories: [LABORATORY] 
@@ -345,344 +331,6 @@ schema {
 
 type QueryType {
     schemaVersion: String 
-
-    numberOfTrials: Int 
-    numberOfSubjects: Int 
-    numberOfFiles: Int 
-
-    subjectCountByRace(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByDiseaseTerm(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByRegisteringInstitution(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByPatientSubgroup(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByDiseaseStageAtEntry(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByCauseOfDeath(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountBySitesOfDiseaseAtAutopsy(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountBySourceOfTheLabData(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByLabTest(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountBySystemOrganClass(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountBySerious(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByOutcome(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountBySomaticPathogenicity(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByFileType(subject_ids: [String] = []): [GroupCount] 
-
-    subjectCountByGermlinePathogenicity(subject_ids: [String] = []): [GroupCount] 
-
-    subjectOverViewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] 
-
-    subjectOverViewPagedDesc(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] 
-
-    searchSubjects(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): SearchResult 
-
-    filterSubjectCountByRace(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByDiseaseTerm(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByRegisteringInstitution(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByPatientSubgroup(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByDiseaseStageAtEntry(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByCauseOfDeath(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountBySitesOfDiseaseAtAutopsy(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountBySourceOfTheLabData(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByLabTest(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountBySystemOrganClass(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountBySerious(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByOutcome(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountBySomaticPathogenicity(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByFileType(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    filterSubjectCountByGermlinePathogenicity(
-        race: [String] = [],
-        diseaseTerm: [String] = [],
-        registeringInstitution: [String] = [],
-        patientSubgroup: [String] = [],
-        stageAtEntry: [String] = [],
-        causeOfDeath: [String] = [],
-        sitesOfDiseaseAtAutopsy: [String] = [],
-        sourceOfTheLabData: [String] = [],
-        labTest: [String] = [],
-        systemOrganClass: [String] = [],
-        serious: [String] = [],
-        outcome: [String] = [],
-        somaticPathogenicity: [String] = [],
-        germlinePathogenicity: [String] = [],
-        fileType: [String] = []
-    ): [GroupCount] 
-
-    fileOverview(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
-
-    fileOverviewDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
-
-    fileIdsFromFileName(file_name: [String] = [], order_by: String = ""): [FileOverview] 
-
-    fileIdsFromFileNameDesc(file_name: [String] = [], order_by: String = ""): [FileOverview] 
-
-    filesInList(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
-
-    filesInListDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
     subjectDetail(subject_id: String): SubjectDetail 
 
