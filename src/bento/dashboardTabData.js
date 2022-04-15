@@ -569,7 +569,6 @@ export const DASHBOARD_QUERY = gql`
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
     query fileOverview(
-        $subject_id: [String], 
         $file_id: [String],
         $file_name: [String],
         $race: [String],
@@ -593,7 +592,6 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
         $sort_direction: String = "asc"
     ){
         fileOverview(
-            subject_id:$subject_id,
             file_id:$file_id,
             file_name:$file_name,
             race:$race,
@@ -617,11 +615,13 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
             sort_direction: $sort_direction
         ) {
             file_name
-            subject_id
-            description
-            file_format
             size
-            file_type
+            description
+            file_id
+            subject_id
+#            subject_id
+#            file_format
+#            file_type
         }
     }`;
 
@@ -774,12 +774,19 @@ export const GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL = gql`
 `;
 
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
-    query search (
-        $file_names: [String]
+    query fileIdsFromFileName(
+        $file_name: [String],
+        $order_by: String,
+        $sort_direction: String
     ){
-        fileIDsFromList (
-            file_names: $file_names
-        )
+        fileIdsFromFileName(
+            file_name: $file_name,
+            order_by: $order_by,
+            sort_direction: $sort_direction
+        ){
+            file_name
+            file_id
+        }
     }
 `;
 
@@ -929,7 +936,7 @@ export const GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART = gql`
             order_by: $order_by,
             first: $first
         ){
-            file_id,
+            files
         }
     }
 `;
