@@ -584,7 +584,7 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
   /* const SELECT_ALL_QUERY = getState().currentActiveTab === tabIndex[1].title
     ? GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART
     : getState().currentActiveTab === tabIndex[1].title
-      ? GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CAR0T
+      ? GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART
       : GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART;........ */
   const SELECT_ALL_QUERY = getState().currentActiveTab === tabIndex[1].title
     ? GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART
