@@ -4,11 +4,11 @@ import {
 } from '@material-ui/core';
 
 const AfterSignIn = ({
-  classes, userName, signOutLink,
+  classes, userName, signoutLink,
 }) => {
   const [displayDropDownMenu, setDisplayDropDownMenu] = React.useState(false);
 
-  function handleMoveIn() {
+  function handleClick() {
     setDisplayDropDownMenu(true);
   }
 
@@ -18,27 +18,28 @@ const AfterSignIn = ({
 
   return (
     <div
-      onMouseEnter={handleMoveIn}
+      onMouseEnter={handleClick}
       onMouseLeave={handleMoveOut}
       className={classes.aboutMenu}
     >
       <Button
-        clases={{ label: classes.logotype, text: classes.buttonRootNoRightPadding }}
+        classes={{ label: classes.logotype, text: classes.buttonRootNoRightPadding }}
         disableRipple
       >
         {userName}
       </Button>
-      {displayDropDownMenu ? (
-        <Paper>
-          <Button
-            onClick={signOutLink}
-            classes={{ label: classes.textColor, text: classes.padding0 }}
-            disableRipple
-          >
-            logout
-          </Button>
-        </Paper>
-      ) : ''}
+      {displayDropDownMenu
+        ? (
+          <Paper className={classes.paper}>
+            <Button
+              onClick={signoutLink}
+              classes={{ label: classes.textColor, text: classes.paddding0 }}
+              disableRipple
+            >
+              logout
+            </Button>
+          </Paper>
+        ) : ''}
     </div>
   );
 };
