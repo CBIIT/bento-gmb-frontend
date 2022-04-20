@@ -35,11 +35,6 @@ const IndexPage = ({ classes }) => {
 
   return (
     <>
-      {/* eslint-disable no-console */}
-      {console.group('%cThe following data is required by the auth system', 'background:aquamarine; color:#fff;')}
-      {console.log(`EnableAuthentication: ${globalData.enableAuthentication}`)}
-      {console.log(`AuthEndPoint: ${globalData.authEndPoint}`)}
-      {console.groupEnd()}
       {globalData.enableAuthentication && (typeof globalData.authEndPoint === 'undefined' || globalData.authEndPoint.includes('google') || globalData.authEndPoint.includes('Google') || globalData.authEndPoint === []) && (
         <>
           {(isSignedIn && userName !== undefined && typeof userName !== 'undefined') ? (
