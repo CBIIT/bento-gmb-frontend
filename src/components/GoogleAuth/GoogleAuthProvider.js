@@ -46,9 +46,7 @@ export const GoogleAuthProvider = ({ children }) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ code: resp }),
-          }).then((response) => response.json).catch(() => {
-            /* possible error here, need a way to catch and parse the errors. */
-          });
+          }).then((response) => response.json());
 
           if (!rawResponse) return;
 
