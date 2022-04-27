@@ -6,21 +6,35 @@ export const statsStyling = {
     statTitleFirst: true,
     height: '47px',
     background: '#8DCAFF',
-    top: '145px',
   },
 };
 
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Trials',
+    statTitle: 'Programs',
     type: 'field',
-    statAPI: 'numberOfTrials',
+    statAPI: 'numberOfPrograms',
   },
   {
-    statTitle: 'Subjects',
+    statTitle: 'Arms',
+    type: 'field',
+    statAPI: 'numberOfStudies',
+  },
+  {
+    statTitle: 'Cases',
     type: 'field',
     statAPI: 'numberOfSubjects',
+  },
+  {
+    statTitle: 'samples',
+    type: 'field',
+    statAPI: 'numberOfSamples',
+  },
+  {
+    statTitle: 'Assays',
+    type: 'field',
+    statAPI: 'numberOfLabProcedures',
   },
   {
     statTitle: 'files',
@@ -31,9 +45,11 @@ export const globalStatsData = [
 
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
-  searchSubjects{
-      numberOfTrials
-      numberOfSubjects
-      numberOfFiles
+  numberOfPrograms
+  numberOfStudies
+  numberOfSubjects
+  numberOfSamples
+  numberOfLabProcedures
+  numberOfFiles
   }
-}`;
+  `;

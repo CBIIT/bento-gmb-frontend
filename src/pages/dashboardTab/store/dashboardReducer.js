@@ -1,4 +1,5 @@
-/** TODO: implement everything that has to do with local and global search. Skip them for now */
+/* eslint-disable arrow-body-style */
+/* eslint-disable react/destructuring-assignment */
 import _ from 'lodash';
 import {
   customSort,
@@ -12,31 +13,35 @@ import {
   transformInitialDataForSunburst,
   transformAPIDataIntoCheckBoxData,
 } from 'bento-components';
-import { utilities as utils } from '../../../utils/objectUtils';
-
 import store from '../../../store';
 import client from '../../../utils/graphqlClient';
-/** add search page imports here */
+import { SEARCH_PAGE_RESULTS, SEARCH } from '../../../bento/search';
 import { globalStatsData as statsCount } from '../../../bento/globalStatsData';
 import { widgetsData, facetSearchData } from '../../../bento/dashboardData';
 
 import {
   tabContainers,
   GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL,
+  GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
   GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL,
-  GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART,
-  GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART,
   GET_FILES_NAME_QUERY,
+  GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART,
+  GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART,
+  GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART,
+  // GET_FILE_IDS_FROM_FILE_NAME,
   tabIndex,
-  DASHBOARD_QUERY,
+  DASHBOARD_QUERY_NEW,
   GET_FILES_OVERVIEW_QUERY,
   GET_CASES_OVERVIEW_QUERY,
+  GET_SAMPLES_OVERVIEW_QUERY,
 } from '../../../bento/dashboardTabData';
-
 import {
   GET_IDS_BY_TYPE,
+  GET_SUBJECT_IDS,
+  widgetsSearchData,
+  SUBJECT_OVERVIEW_QUERY,
   GET_SEARCH_NODES_BY_FACET,
-  GET_SUBJECT_IDS, SUBJECT_OVERVIEW_QUERY, widgetsSearchData,
+  ageAtIndex,
 } from '../../../bento/localSearchData';
 
 const storeKey = 'dashboardTab';
@@ -45,10 +50,12 @@ const initialState = {
   dashboardTab: {
     autoCompleteSelection: {
       subject_ids: [],
+      sample_ids: [],
       file_ids: [],
     },
     bulkUpload: {
       subject_ids: [],
+      sample_ids: [],
       file_ids: [],
     },
     isDataTableUptoDate: false,
@@ -94,14 +101,14 @@ const initialState = {
   },
 };
 
-// Helpers
+// HELPERS
 const getState = () => store.getState()[storeKey];
 
 function shouldFetchDataForDashboardTabDataTable(state) {
   return !(state.isFetched);
 }
 
-/* support  merge with function in lodash */
+// Custom function for mergeWith
 // eslint-disable-next-line consistent-return
 function customizer(objValue, srcValue) {
   if (_.isArray(objValue)) {
@@ -109,12 +116,29 @@ function customizer(objValue, srcValue) {
   }
 }
 
-/**
- * removes EmptySubjectsFromDonutDataa.
- * @param {object} data
- *  @param {object}
- */
-const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.subjects !== 0);
+export async function getSearch(inputVlaue) {
+  const allids = await client
+    .query({
+      query: SEARCH,
+      variables: {
+        input: inputVlaue,
+      },
+    })
+    .then((result) => result.data.globalSearch);
+  return allids;
+}
+
+export async function getSearchPageResults(inputVlaue) {
+  const allids = await client
+    .query({
+      query: SEARCH_PAGE_RESULTS,
+      variables: {
+        input: inputVlaue,
+      },
+    })
+    .then((result) => result.data.globalSearch);
+  return allids;
+}
 
 /**
  * Returns the  stats from inputAPI data.
@@ -142,115 +166,12 @@ function getFilteredStat(input, statCountVariables) {
   return filteredStats;
 }
 
-function getSearchWidgetsData(data, widgetsInfoFromCustConfig) {
-  const donut = widgetsInfoFromCustConfig.reduce((acc, widget) => {
-    const Data = widget.type === 'sunburst'
-      ? transformInitialDataForSunburst(data[widget.mapWithDashboardWidget])
-      : removeEmptySubjectsFromDonutData(data[widget.mapWithDashboardWidget]);
-    const label = widget.dataName;
-    return { ...acc, [label]: Data };
-  }, {});
-  const replacements = widgetsSearchData.reduce(
-    (acc, widget) => ({ ...acc, ...{ [widget.dataName]: widget.mapWithDashboardWidget } }),
-    {},
-  );
-
-  const replacedItems = Object.keys(donut).map((key) => {
-    const newKey = replacements[key] || key;
-    return { [newKey]: donut[key] };
-  });
-  const newTab = replacedItems.reduce((a, b) => ({ ...a, ...b }));
-  return newTab;
-}
-
-/** The following functions should be added here whren ready
- * - addAutoComplete (done)
- * - getSearch
- * - getSearchPageResults
- * - getSearchWidgetsData (done)
- * - getAllSubjectIds (done)
- * - getAllIds (done)
- * - getSubjectIds
- * - getSubjectDetails (done)
- * - addBulkModalSearchData
- * - uploadBulkModalSearch
- * - localSearch (done)
- * - getFileIDs
- * - filterOutFileIds
- * - setSearchCriteria
- * - convertResultInPrevType
- * - customizer (done)
- * */
-
-const convertResultInPrevType = (result) => {
-  const payload = result;
-
-  payload.data = {
-    ...result.data.searchSubjects,
-    nodeCountsFromLists: {
-      numberOfFiles: result.data.searchSubjects.numberOfFiles,
-      numberOfTrials: result.data.searchSubjects.numberOfTrials,
-      numberOfSites: result.data.searchSubjects.numberOfSites,
-      numberOfSubjects: result.data.searchSubjects.numberOfSubjects,
-    },
-  };
-
-  return payload;
-};
-
-/* returns {object} data */
-export async function getCaseData(variables) {
-  const result = await client.query({
-    query: GET_SEARCH_NODES_BY_FACET,
-    variables,
-  });
-
-  return convertResultInPrevType(result);
-}
-
-const getSubjectDetails = async (variables) => {
-  // order_by: 'age_at_index',
-  // age_at_index: [ageAtIndex, null],
-  const result = await client.query({
-    query: SUBJECT_OVERVIEW_QUERY,
-    variables: {
-      offset: 0,
-      first: 100,
-      sort_direction: 'desc',
-      order_by: 'subject_id',
-      ...variables,
-    },
-  });
-
-  return result;
-};
-
-export async function getAllSubjectIds(subIdArray) {
-  return client.query({
-    query: GET_SUBJECT_IDS,
-    variables: {
-      subject_ids: subIdArray,
-    },
-  }).then((result) => result.data.findSubjectIdsInList)
-    .catch((error) => store.dispatch({ type: 'DASHBOARDTAB_QUERY_ERR', error }));
-}
-
-export async function getAllIds(type) {
-  const allids = await client
-    .query({
-      query: GET_IDS_BY_TYPE(type),
-      variables: {},
-    }).then((result) => result.data.idsLists)
-    .catch((error) => store.dispatch(
-      { type: 'DASHBOARDTAB_QUERY_ERR', error },
-    ));
-  return allids;
-}
-
-export function addAutoComplete({ newValue, type, isFilteredData = false }) {
-  const items = isFilteredData ? newValue : newValue.map((val) => val.title);
-  store.dispatch({ type: 'ADD_AUTOCOMPLETE_DATA', payload: { value: items, type } });
-}
+/**
+ * removes EmptySubjectsFromDonutDataa.
+ * @param {object} data
+ *  @param {object}
+ */
+const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.subjects !== 0);
 
 /**
  * Returns the widgets data.
@@ -272,24 +193,48 @@ function getWidgetsInitData(data, widgetsInfoFromCustConfig) {
  * Generate a default varibles for filter query.
  *
  * Need to be updated with custodian of filter
- * @return object
+ * @return json
  */
 
 function allFilters() {
-  return facetSearchData.reduce((acc, facet) => (
+  const emptyFilters = facetSearchData.reduce((acc, facet) => (
     { ...acc, [facet.datafield]: [] }
   ), {});
+  return emptyFilters;
 }
 
 /**
- * Fetch Information for dashboard tab
- * */
+ * Returns the widgets data.
+ * @param {object} data
+ * @param {json} widgetsInfoFromCustConfig
+ * @return {json}r
+ */
+
+function getSearchWidgetsData(data, widgetsInfoFromCustConfig) {
+  const donut = widgetsInfoFromCustConfig.reduce((acc, widget) => {
+    const Data = widget.type === 'sunburst' ? transformInitialDataForSunburst(data[widget.mapWithDashboardWidget]) : removeEmptySubjectsFromDonutData(data[widget.mapWithDashboardWidget]);
+    const label = widget.dataName;
+    return { ...acc, [label]: Data };
+  }, {});
+  const replacements = widgetsSearchData.reduce(
+    (acc, widget) => ({ ...acc, ...{ [widget.dataName]: widget.mapWithDashboardWidget } }),
+    {},
+  );
+
+  const replacedItems = Object.keys(donut).map((key) => {
+    const newKey = replacements[key] || key;
+    return { [newKey]: donut[key] };
+  });
+  const newTab = replacedItems.reduce((a, b) => ({ ...a, ...b }));
+  return newTab;
+}
+
 function fetchDashboardTab() {
   return () => {
     store.dispatch({ type: 'REQUEST_DASHBOARDTAB' });
     return client
       .query({
-        query: DASHBOARD_QUERY,
+        query: DASHBOARD_QUERY_NEW,
         variables: {
           ...allFilters(),
           ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
@@ -305,7 +250,7 @@ function fetchDashboardTab() {
 function fetchDashboardTabForClearAll() {
   return () => client
     .query({
-      query: DASHBOARD_QUERY,
+      query: DASHBOARD_QUERY_NEW,
       variables: {
         ...getState().allActiveFilters,
         ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
@@ -318,17 +263,47 @@ function fetchDashboardTabForClearAll() {
     ));
 }
 
+export async function getAllIds(type) {
+  const allids = await client
+    .query({
+      query: GET_IDS_BY_TYPE(type),
+      variables: {
+      },
+    })
+    .then((result) => result.data.idsLists)
+    .catch((error) => store.dispatch(
+      { type: 'DASHBOARDTAB_QUERY_ERR', error },
+    ));
+  return allids;
+}
+export async function getAllSubjectIds(subjectIdsArray) {
+  const allids = await client
+    .query({
+      query: GET_SUBJECT_IDS,
+      variables: {
+        subject_ids: subjectIdsArray,
+      },
+    })
+    .then((result) => result.data.findSubjectIdsInList)
+    .catch((error) => store.dispatch(
+      { type: 'DASHBOARDTAB_QUERY_ERR', error },
+    ));
+  return allids;
+}
+
+export const getSubjectIds = () => getState().filteredSubjectIds;
+
 /**
  * Returns filter variable for graphql query using the all filters.
  *
  * @param {object} data
- * @return {object}
+ * @return {json}
  */
 
 function createFilterVariables(data) {
   const currentAllActiveFilters = getState().allActiveFilters;
   // eslint-disable-next-line  no-unused-vars
-  return Object.entries(currentAllActiveFilters).reduce((acc, [key, val]) => {
+  const filter = Object.entries(currentAllActiveFilters).reduce((acc, [key, val]) => {
     if (data[0].datafield === key) {
       return data[0].isChecked
         ? { ...acc, [key]: [...currentAllActiveFilters[key], ...[data[0].name]] }
@@ -337,6 +312,8 @@ function createFilterVariables(data) {
     // return { ...acc , [key]: [...currentAllActiveFilters[key],...[data[0].name]] }
     return { ...acc, [key]: currentAllActiveFilters[key] };
   }, {});
+
+  return filter;
 }
 
 function createFilterVariablesRange(value, sideBarItem) {
@@ -382,22 +359,115 @@ export async function clearAllFiltersExceptBulkUpload() {
   store.dispatch({ type: 'RESET_ALL_EXCEPT_BULK_UPLOAD' });
 }
 
-/* const convertResultInPrevType = (result) => {
+const convertResultInPrevType = (result) => {
   const payload = result;
   payload.data = {
     ...result.data.searchSubjects,
     nodeCountsFromLists: {
       numberOfFiles: result.data.searchSubjects.numberOfFiles,
-      // numberOfLabProcedures: result.data.searchSubjects.numberOfLabProcedures,
-      numberOfTrials: result.data.searchSubjects.numberOfTrials,
-      // numberOfSamples: result.data.searchSubjects.numberOfSamples,
-      numberOfSites: result.data.searchSubjects.numberOfSites,
+      numberOfLabProcedures: result.data.searchSubjects.numberOfLabProcedures,
+      numberOfPrograms: result.data.searchSubjects.numberOfPrograms,
+      numberOfSamples: result.data.searchSubjects.numberOfSamples,
+      numberOfStudies: result.data.searchSubjects.numberOfStudies,
       numberOfSubjects: result.data.searchSubjects.numberOfSubjects,
     },
   };
 
   return payload;
-}; */
+};
+
+async function getCaseData(variables) {
+  const result = await client.query({
+    query: GET_SEARCH_NODES_BY_FACET,
+    variables,
+  });
+  const data = convertResultInPrevType(result);
+  return data;
+}
+
+const getSubjectDetails = async (variables) => {
+  const result = await client.query({
+    query: SUBJECT_OVERVIEW_QUERY,
+    variables: {
+      offset: 0,
+      first: 100,
+      sort_direction: 'desc',
+      order_by: 'age_at_index',
+      age_at_index: [ageAtIndex, null],
+      ...variables,
+    },
+  });
+  return result;
+};
+
+export function addBulkModalSearchData(value, type) {
+  // const items = value.map((val) => val.title);
+  store.dispatch({ type: 'ADD_BULKSEARCHDATA', payload: { value, type } });
+}
+
+/**
+ * Uplpad Modal Set
+ *
+ * @return distpatcher
+ */
+
+export async function uploadBulkModalSearch(searchcriteria, type) {
+  addBulkModalSearchData(searchcriteria, type);
+  const variables = {
+    ...getState().allActiveFilters,
+    ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+  };
+
+  const [
+    caseResponse,
+    subjectResponse,
+  ] = await Promise.all([
+    getCaseData(variables),
+    getSubjectDetails(variables),
+  ]);
+
+  store.dispatch({
+    type: 'LOCAL_SEARCH',
+    payload: {
+      subjectResponse,
+      result: caseResponse,
+      variables,
+    },
+  });
+}
+
+/**
+ * Local search
+ *
+ * @return distpatcher
+ */
+
+export async function localSearch(searchcriteria, isQuery = false) {
+  if (searchcriteria.length === 0 && !isQuery) {
+    clearAllFilters();
+  } else {
+    const variables = {
+      ...getState().allActiveFilters,
+      ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+    };
+
+    const [
+      caseResponse,
+      subjectResponse,
+    ] = await Promise.all([
+      getCaseData(variables),
+      getSubjectDetails(variables),
+    ]);
+    store.dispatch({
+      type: 'LOCAL_SEARCH',
+      payload: {
+        subjectResponse,
+        result: caseResponse,
+        variables,
+      },
+    });
+  }
+}
 
 /**
  * Helper function to query and get filtered values for dashboard
@@ -408,7 +478,7 @@ export async function clearAllFiltersExceptBulkUpload() {
 function toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables) {
   return client
     .query({ // request to get the filtered subjects
-      query: DASHBOARD_QUERY,
+      query: DASHBOARD_QUERY_NEW,
       variables: {
         first: 100,
         ...currentAllFilterVariables,
@@ -458,25 +528,26 @@ export function resetGroupSelections(payload) {
 }
 
 /**
- * Switch to get query sort direction and sort field .
+ * Switch to get query sort dorection and sort field .
  *
  * @param {string} payload
  *  @param {json} tabContainer
  * @return {json} with three keys QUERY, sortfield, sortDirection
  */
-const querySwitch = (payload, tabContainer) => {
-  const defaultProps = {
-    sortfield: tabContainer && utils.hasOwnProp(tabContainer, 'defaultSortField')
-      ? tabContainer.defaultSortField : '',
-    sortDirection: tabContainer && utils.hasOwnProp(tabContainer, 'defaultSortDirection')
-      ? tabContainer.defaultSortDirection : '',
-  };
 
+export function addAutoComplete({ newValue, type, isFilteredData = false }) {
+  const items = isFilteredData ? newValue : newValue.map((val) => val.title);
+  store.dispatch({ type: 'ADD_AUTOCOMPLETE_DATA', payload: { value: items, type } });
+}
+
+const querySwitch = (payload, tabContainer) => {
   switch (payload) {
+    case ('Samples'):
+      return { QUERY: GET_SAMPLES_OVERVIEW_QUERY, sortfield: tabContainer.defaultSortField || '', sortDirection: tabContainer.defaultSortDirection || '' };
     case ('Files'):
-      return { QUERY: GET_FILES_OVERVIEW_QUERY, ...defaultProps };
+      return { QUERY: GET_FILES_OVERVIEW_QUERY, sortfield: tabContainer.defaultSortField || '', sortDirection: tabContainer.defaultSortDirection || '' };
     default:
-      return { QUERY: GET_CASES_OVERVIEW_QUERY, ...defaultProps };
+      return { QUERY: GET_CASES_OVERVIEW_QUERY, sortfield: tabContainer.defaultSortField || '', sortDirection: tabContainer.defaultSortDirection || '' };
   }
 };
 
@@ -508,7 +579,7 @@ export function fetchDataForDashboardTab(
   const { QUERY, sortfield, sortDirection } = getQueryAndDefaultSort(payload);
   const newFilters = filters;
   // deal with empty string inside the age_at_index filter
-  if (filters && utils.hasOwnProp(filters, 'age_at_index') && filters.age_at_index.length === 2) {
+  if (filters && filters.age_at_index.length === 2) {
     if (filters.age_at_index.includes('')) {
       newFilters.age_at_index = [];
     }
@@ -565,7 +636,7 @@ function transformfileIdsToFiles(data) {
 
 /**
  * Gets all file ids for active subjectIds.
- * TODO this function can use filtered file IDs except for initial load
+ * TODO this  functtion can use filtered file IDs except for initial load
  * @param obj fileCoubt
  * @return {json}
  */
@@ -575,14 +646,11 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
   const activeFilters = getState().allActiveFilters !== {}
     ? getState().allActiveFilters : allFilters();
 
-  /* const SELECT_ALL_QUERY = getState().currentActiveTab === tabIndex[1].title
+  const SELECT_ALL_QUERY = getState().currentActiveTab === tabIndex[2].title
     ? GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART
     : getState().currentActiveTab === tabIndex[1].title
       ? GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART
-      : GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART;........ */
-  const SELECT_ALL_QUERY = getState().currentActiveTab === tabIndex[1].title
-    ? GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART
-    : GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART;
+      : GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART;
 
   const fetchResult = await client
     .query({
@@ -594,20 +662,12 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
       },
     })
     .then((result) => {
-      const RESULT_DATA = getState().currentActiveTab === tabIndex[1].title ? 'fileOverview' : 'subjectOverview';
-      // const RESULT_DATA = getState().currentActiveTab === tabIndex[2].title
-      // ? 'fileOverview' : getState().currentActiveTab === tabIndex[1].title
-      // ? 'sampleOverview' : 'subjectOverview';
-      /* const fileIdsFromQuery = RESULT_DATA === 'fileOverview'
-      ? transformfileIdsToFiles(result.data[RESULT_DATA]) : RESULT_DATA === 'subjectOverViewPaged'
-      ? transformCasesFileIdsToFiles(result.data[RESULT_DATA]) : result.data[RESULT_DATA] || []; */
-      const fileIdsFromQuery = RESULT_DATA === 'fileOverview'
-        ? transformfileIdsToFiles(result.data[RESULT_DATA])
-        : transformCasesFileIdsToFiles(result.data[RESULT_DATA]);
+      const RESULT_DATA = getState().currentActiveTab === tabIndex[2].title ? 'fileOverview' : getState().currentActiveTab === tabIndex[1].title ? 'sampleOverview' : 'subjectOverview';
+      const fileIdsFromQuery = RESULT_DATA === 'fileOverview' ? transformfileIdsToFiles(result.data[RESULT_DATA]) : RESULT_DATA === 'subjectOverViewPaged' ? transformCasesFileIdsToFiles(result.data[RESULT_DATA]) : result.data[RESULT_DATA] || [];
       return fileIdsFromQuery;
     });
 
-  // Restarting the result Bringing {files} to files
+  // Restaruting the result Bringing {files} to files
   const filesArray = fetchResult.reduce((accumulator, currentValue) => {
     const { files } = currentValue;
     // check if file
@@ -624,6 +684,36 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
     : filesArray;
   return filteredFilesArray;
 }
+
+// /**
+//  * Returns file IDs of given filenames.
+//  * @param array file_name
+//  * @param int offset
+//  * @param int first
+//  * @param SORT_SINGLE_GROUP_CHECKBOX order_by
+//  * @return {json}
+//  */
+
+// async function getFileIDsByFileName
+// (file_name = [], offset = 0, first = 100000, order_by = 'file_name') {
+//   const data = await client
+//     .query({
+//       query: GET_FILE_IDS_FROM_FILE_NAME,
+//       variables: {
+//         file_name,
+//         offset,
+//         first,
+//         order_by,
+//       },
+//     })
+//     .then((result) => {
+//       if (result && result.data && result.data.fileIdsFromFileNameDesc.length > 0) {
+//         return result.data.fileIdsFromFileNameDesc.map((d) => d.file_id);
+//       }
+//       return [];
+//     });
+//   return data;
+// }
 
 /**
  * Returns file IDs of given sampleids or subjectids.
@@ -658,11 +748,11 @@ async function getFileIDs(
   return fetchResult;
 }
 
-/**
- * Removing fileIds that are not in our current list of filtered fileIds
- * @param array fileIds
- * @return array
- */
+/*
+* Removing fileIds that are not in our current list of filtered fileIds
+* @param array fileIds
+* @return array
+*/
 function filterOutFileIds(fileIds) {
   // Removing fileIds that are not in our current list of filtered fileIds
   const { filteredFileIds } = getState();
@@ -677,7 +767,7 @@ function filterOutFileIds(fileIds) {
   return fileIds;
 }
 
-/**
+/*
  * Gets all file ids for active subjectIds.
  * TODO this  functtion can use filtered file IDs except for initial load
  * @param obj fileCoubt
@@ -686,13 +776,12 @@ function filterOutFileIds(fileIds) {
 export async function fetchAllFileIDs(fileCount = 100000, selectedIds = []) {
   let filesIds = [];
   switch (getState().currentActiveTab) {
-    case tabIndex[1].title:
+    case tabIndex[2].title:
       filesIds = await getFileIDs(fileCount, GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL, [], [], selectedIds, 'fileIDsFromList');
       break;
-    // case tabIndex[0].title:
-    //   filesIds = await getFileIDs(fileCount,
-    //   GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL, [], selectedIds, [], 'fileIDsFromList');
-    //   break;
+    case tabIndex[1].title:
+      filesIds = await getFileIDs(fileCount, GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL, [], selectedIds, [], 'fileIDsFromList');
+      break;
     default:
       filesIds = await getFileIDs(fileCount, GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL, selectedIds, [], [], 'fileIDsFromList');
   }
@@ -719,6 +808,7 @@ function getWidgetsData(input, widgetsInfoFromCustConfig) {
 
 /**
  * Reducer for fetch dashboard data
+ *
  * @return distpatcher
  */
 
@@ -756,7 +846,8 @@ function createSingleFilterVariables(payload) {
  */
 
 function sortByCheckboxByIsChecked(checkboxData) {
-  return checkboxData.sort((a, b) => b.isChecked - a.isChecked);
+  checkboxData.sort((a, b) => b.isChecked - a.isChecked);
+  return checkboxData;
 }
 
 /**
@@ -786,15 +877,15 @@ function sortByCheckboxItemsByCount(checkboxData) {
 /**
  * Sets the given filter variable as the only filter for the dasboard
  * @param {object} data
- * @return dispatcher
+ * @return distpatcher
  */
 export async function setSingleFilter(payload) {
   // test weather there are active dashboard filters if so clear all filters
   if (!_.isEqual(getState().allActiveFilters, allFilters())) {
     await clearAllFilters();
   }
-
-  store.dispatch({ type: 'SET_SINGLE_FILTER', payload: createSingleFilterVariables(payload) });
+  const singlefiter = createSingleFilterVariables(payload);
+  store.dispatch({ type: 'SET_SINGLE_FILTER', payload: singlefiter });
 }
 
 /**
@@ -802,6 +893,7 @@ export async function setSingleFilter(payload) {
  * @param {object} payload
  * @return distpatcher
  */
+
 export async function singleCheckBox(payload) {
   await setSingleFilter(payload);
   const currentAllFilterVariables = payload === {} ? allFilters : createFilterVariables(payload);
@@ -820,8 +912,7 @@ export async function singleCheckBox(payload) {
 export function toggleCheckBox(payload, isQuery = false) {
   return () => {
     const currentAllFilterVariables = payload === {} ? allFilters : createFilterVariables(payload);
-    // For performance issue we are using initial dashboard
-    // query instead of filtered for empty filters
+    // For performance issue we are using initial dasboardquery instead of fitered for empty filters
     if (_.isEqual(currentAllFilterVariables, allFilters()) && !isQuery) {
       clearAllFilters();
     } else {
@@ -838,8 +929,7 @@ export function toggleSlider(value, sideBarItem) {
   if (!value.includes('')) {
     const payload = {};
     const currentAllFilterVariables = createFilterVariablesRange(value, sideBarItem);
-    // For performance issue we are using
-    // initial dashboard query instead of fitered for empty filters
+    // For performance issue we are using initial dasboardquery instead of fitered for empty filters
     if (_.isEqual(currentAllFilterVariables, allFilters())) {
       clearAllFilters();
     } else toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables);
@@ -889,17 +979,16 @@ export function sortAll() {
 }
 
 function getCheckbox(data, mapping) {
-  return data[mapping].map((item) => ({
-    name: item.group,
-    isChecked: false,
-    subjects: item.subjects,
-  }));
+  const checkboxData = data[mapping].map((item) => {
+    return { name: item.group, isChecked: false, subjects: item.subjects };
+  });
+  return checkboxData;
 }
 
 /**
  *  updateFilteredAPIDataIntoCheckBoxData works for first time init Checkbox,
- that function transforms the data which returns from API into a another format
- so it contains more information and easy for front-end to show it correctly.
+that function transforms the data which returns from API into a another format
+so it contains more information and easy for front-end to show it correctly.
  *  * @param {object} currentGroupCount
  *  * @param {object} willUpdateGroupCount
  * * @param {object} currentCheckboxSelection
@@ -946,14 +1035,11 @@ export function updateFilteredAPIDataIntoCheckBoxData(data, facetSearchDataFromC
 
 export function getCountForAddAllFilesModal() {
   const currentState = getState();
-  /* const numberCount = currentState.currentActiveTab === tabIndex[0].title
-    ? currentState.stats.numberOfCases
-    : currentState.currentActiveTab === tabIndex[1].title
-      ? currentState.stats.numberOfSamples : currentState.stats.numberOfFiles; */
   const numberCount = currentState.currentActiveTab === tabIndex[0].title
     ? currentState.stats.numberOfCases
-    : currentState.stats.numberOfFiles;
-  return { activeTab: currentState.currentActiveTab || tabIndex[1].title, count: numberCount };
+    : currentState.currentActiveTab === tabIndex[1].title
+      ? currentState.stats.numberOfSamples : currentState.stats.numberOfFiles;
+  return { activeTab: currentState.currentActiveTab || tabIndex[2].title, count: numberCount };
 }
 
 /**
@@ -997,9 +1083,14 @@ export async function tableHasSelections() {
 
   const filteredNames = await getFileNamesByFileIds(getState().filteredFileIds);
   switch (getState().currentActiveTab) {
-    case tabIndex[1].title:
+    case tabIndex[2].title:
       filteredIds = filteredNames;
       selectedRowInfo = getState().dataFileSelected.selectedRowInfo;
+
+      break;
+    case tabIndex[1].title:
+      filteredIds = getState().filteredSampleIds;
+      selectedRowInfo = getState().dataSampleSelected.selectedRowInfo;
       break;
     default:
       filteredIds = getState().filteredSubjectIds;
@@ -1019,6 +1110,9 @@ function setDataFileSelected(result) {
   store.dispatch({ type: 'SET_FILE_SELECTION', payload: result });
 }
 
+function setDataSampleSelected(result) {
+  store.dispatch({ type: 'SET_SAMPLE_SELECTION', payload: result });
+}
 /**
  *  Returns the functuion depend on current active tab
  * @return {func}
@@ -1026,8 +1120,11 @@ function setDataFileSelected(result) {
 
 export function getTableRowSelectionEvent() {
   const currentState = getState();
-  return currentState.currentActiveTab === tabIndex[1].title
-    ? setDataFileSelected : setDataCaseSelected;
+  const tableRowSelectionEvent = currentState.currentActiveTab === tabIndex[2].title
+    ? setDataFileSelected
+    : currentState.currentActiveTab === tabIndex[1].title
+      ? setDataSampleSelected : setDataCaseSelected;
+  return tableRowSelectionEvent;
 }
 
 export function clearTableSelections() {
@@ -1036,77 +1133,10 @@ export function clearTableSelections() {
 
 export const getDashboard = () => getState();
 
-/**
- * This is where the reducers will be.
- * we will also be taking out a few search reducers out until the service is ready
- * these include:
- *   - LOCAL_SEARCH (Done)
- *   - SET_SEARCH_CRITERIA
- *   - ADD_AUTOCOMPLETEDATA
- *   - ADD_BULKSEARCHDATA
- * */
-export function addBulkModalSearchData(value, type) {
-  // const items = value.map((val) => val.title);
-  store.dispatch({ type: 'ADD_BULKSEARCHDATA', payload: { value, type } });
-}
-
-/**
- * Local Search
- * */
-export async function localSearch(searchcriteria, isQuery = false) {
-  if (searchcriteria.length === 0 && !isQuery) {
-    clearAllFilters();
-  } else {
-    const variables = {
-      ...getState().allActiveFilters,
-      ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
-    };
-
-    const [
-      caseResponse,
-      subjectResponse,
-    ] = await Promise.all([
-      getCaseData(variables),
-      getSubjectDetails(variables),
-    ]);
-    store.dispatch({
-      type: 'LOCAL_SEARCH',
-      payload: {
-        subjectResponse,
-        result: caseResponse,
-        variables,
-      },
-    });
-  }
-}
-
-/**
- * Uplpad Modal Set
- *
- * @return distpatcher
- */
-export async function uploadBulkModalSearch(searchcriteria, type) {
-  addBulkModalSearchData(searchcriteria, type);
-  const variables = {
-    ...getState().allActiveFilters,
-    ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
-  };
-
-  const [
-    caseResponse,
-    subjectResponse,
-  ] = await Promise.all([
-    getCaseData(variables),
-    getSubjectDetails(variables),
-  ]);
-
+export function setSearchCriteria(payload) {
   store.dispatch({
-    type: 'LOCAL_SEARCH',
-    payload: {
-      subjectResponse,
-      result: caseResponse,
-      variables,
-    },
+    type: 'SET_SEARCH_CRITERIA',
+    payload,
   });
 }
 
@@ -1114,18 +1144,20 @@ export async function uploadBulkModalSearch(searchcriteria, type) {
 const reducers = {
   DASHBOARDTAB_QUERY_ERR: (state, item) => ({
     ...state,
-    error: item,
     hasError: true,
+    error: item,
     isLoading: false,
     isFetched: false,
   }),
-  READY_DASHBOARDTAB: (state) => ({
-    ...state,
-    isLoading: false,
-    isFetched: true,
-    setSideBarLoading: false,
-    isDashboardTableLoading: false,
-  }),
+  READY_DASHBOARDTAB: (state) => {
+    return {
+      ...state,
+      isLoading: false,
+      isFetched: true,
+      setSideBarLoading: false,
+      isDashboardTableLoading: false,
+    };
+  },
   TOGGGLE_CHECKBOX_WITH_API: (state, item) => {
     let updatedCheckboxData1 = updateFilteredAPIDataIntoCheckBoxData(
       item.data.searchSubjects, facetSearchData,
@@ -1148,6 +1180,42 @@ const reducers = {
       widgets: getWidgetsInitData(item.data.searchSubjects, widgetsData),
     };
   },
+  LOCAL_SEARCH: (state, item) => {
+    const isEmpty = item.subjectResponse.data
+      && item.subjectResponse.data.subjectOverview
+      && item.subjectResponse.data.subjectOverview.length < 1;
+    const checkboxData = customCheckBox(item.result.data, facetSearchData, isEmpty);
+    const newCheckboxData = [...checkboxData];
+    checkboxData.map((val, idx) => {
+      if (item.variables && item.variables[val.datafield] && item.variables[val.datafield].length) {
+        const checkboxItem = newCheckboxData[idx].checkboxItems;
+        checkboxItem.map((data, id) => {
+          // eslint-disable-next-line max-len
+          const index = item.variables[val.datafield].findIndex((check) => check === data.name);
+          if (index >= 0) {
+            checkboxItem[id].isChecked = true;
+          }
+          return null;
+        });
+        newCheckboxData[idx].checkboxItems = checkboxItem;
+      }
+      return null;
+    });
+    return {
+      ...state,
+      setSideBarLoading: false,
+      datatable: {
+        dataCase: item.subjectResponse.data.subjectOverview,
+      },
+      checkbox: {
+        data: newCheckboxData,
+        variables: item.variables,
+      },
+      stats: getFilteredStat(item.result.data.nodeCountsFromLists, statsCount),
+      widgets: getSearchWidgetsData(item.result.data, widgetsSearchData),
+
+    };
+  },
   UPDATE_CURRRENT_TAB_DATA: (state, item) => (
     {
       ...state,
@@ -1161,6 +1229,10 @@ const reducers = {
       },
     }
   ),
+  SET_SEARCH_CRITERIA: (state, item) => ({
+    ...state,
+    searchCriteria: item,
+  }),
   REQUEST_DASHBOARDTAB: (state) => ({ ...state, isLoading: true }),
   SET_SIDEBAR_LOADING: (state) => ({ ...state, setSideBarLoading: true }),
   SET_SINGLE_FILTER: (state, item) => (
@@ -1238,12 +1310,12 @@ const reducers = {
         },
         autoCompleteSelection: {
           subject_ids: [],
-          // sample_ids: [],
+          sample_ids: [],
           file_ids: [],
         },
         bulkUpload: {
           subject_ids: [],
-          // sample_ids: [],
+          sample_ids: [],
           file_ids: [],
         },
       } : { ...state };
@@ -1269,12 +1341,12 @@ const reducers = {
         },
         autoCompleteSelection: {
           subject_ids: [],
-          // sample_ids: [],
+          sample_ids: [],
           file_ids: [],
         },
         bulkUpload: {
           subject_ids: [],
-          // sample_ids: [],
+          sample_ids: [],
           file_ids: [],
         },
         checkbox: {
@@ -1388,12 +1460,12 @@ const reducers = {
     ...state,
     autoCompleteSelection: {
       subject_ids: [],
-      // sample_ids: [],
+      sample_ids: [],
       file_ids: [],
     },
     bulkUpload: {
       subject_ids: [],
-      // sample_ids: [],
+      sample_ids: [],
       file_ids: [],
     },
     allActiveFilters: {},
@@ -1402,7 +1474,7 @@ const reducers = {
     ...state,
     autoCompleteSelection: {
       subject_ids: [],
-      // sample_ids: [],
+      sample_ids: [],
       file_ids: [],
     },
     allActiveFilters: {},
@@ -1420,42 +1492,6 @@ const reducers = {
       [`${type}_ids`]: value,
     },
   }),
-  LOCAL_SEARCH: (state, item) => {
-    const isEmpty = item.subjectResponse.data
-      && item.subjectResponse.data.subjectOverview
-      && item.subjectResponse.data.subjectOverview.length < 1;
-    const checkboxData = customCheckBox(item.result.data, facetSearchData, isEmpty);
-    const newCheckboxData = [...checkboxData];
-    checkboxData.map((val, idx) => {
-      if (item.variables && item.variables[val.datafield] && item.variables[val.datafield].length) {
-        const checkboxItem = newCheckboxData[idx].checkboxItems;
-        checkboxItem.map((data, id) => {
-          // eslint-disable-next-line max-len
-          const index = item.variables[val.datafield].findIndex((check) => check === data.name);
-          if (index >= 0) {
-            checkboxItem[id].isChecked = true;
-          }
-          return null;
-        });
-        newCheckboxData[idx].checkboxItems = checkboxItem;
-      }
-      return null;
-    });
-    return {
-      ...state,
-      setSideBarLoading: false,
-      datatable: {
-        dataCase: item.subjectResponse.data.subjectOverview,
-      },
-      checkbox: {
-        data: newCheckboxData,
-        variables: item.variables,
-      },
-      stats: getFilteredStat(item.result.data.nodeCountsFromLists, statsCount),
-      widgets: getSearchWidgetsData(item.result.data, widgetsSearchData),
-
-    };
-  },
 };
 
 // INJECT-REDUCERS INTO REDUX STORE

@@ -1,6 +1,6 @@
 import { v1 as uuid } from 'uuid';
 import { _, mergeWith, isArray } from 'lodash';
-import { facetSearchData } from '../../../bento/dashboardData_new';
+import { facetSearchData } from '../../../bento/dashboardData';
 
 const COLORS = [
   '#39C0F0',

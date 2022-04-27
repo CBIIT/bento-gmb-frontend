@@ -1,87 +1,128 @@
 import gql from 'graphql-tag';
 
+export const searchEnabled = true;
+
+export const filterTabTitleText = 'Filter';
+export const searchTabTitleText = 'Search';
+
 // --------------- Dashboard Sidebar Filters configuration --------------
 // A maximum of 12 facetSearchData are allowed
 export const facetSearchData = [
   {
-    label: 'Race', field: 'group', api: 'subjectCountByRace', apiForFiltering: 'filterSubjectCountByRace', datafield: 'race', section: 'Filter By Subject', show: true,
+    label: 'Program', field: 'group', api: 'subjectCountByProgram', apiForFiltering: 'filterSubjectCountByProgram', datafield: 'programs', section: 'Cases', show: true,
   },
   {
-    label: 'Disease Term', field: 'group', api: 'subjectCountByDiseaseTerm', apiForFiltering: 'filterSubjectCountByDiseaseTerm', datafield: 'disease_term', section: 'Filter By Subject', show: true,
+    label: 'Arm', field: 'group', api: 'subjectCountByStudy', apiForFiltering: 'filterSubjectCountByStudy', datafield: 'studies', section: 'Cases', show: true,
   },
   {
-    label: 'Registering Institution', field: 'group', api: 'subjectCountByRegisteringInstitution', apiForFiltering: 'filterSubjectCountByRegisteringInstitution', datafield: 'registering_institution', section: 'Filter By Subject', show: true,
+    label: 'Diagnosis', field: 'group', api: 'subjectCountByDiagnoses', apiForFiltering: 'filterSubjectCountByDiagnoses', datafield: 'diagnoses', section: 'Cases', show: true,
   },
   {
-    label: 'Patient Subgroup', field: 'group', api: 'subjectCountByPatientSubgroup', apiForFiltering: 'filterSubjectCountByPatientSubgroup', datafield: 'patient_subgroup', section: 'Filter By Subject', show: true,
+    label: 'Recurrence Score', field: 'group', api: 'subjectCountByRecurrenceScore', apiForFiltering: 'filterSubjectCountByRecurrenceScore', datafield: 'rc_scores', section: 'Cases', show: true, customNumberSort: true,
   },
   {
-    label: 'Disease Stage at Entry', field: 'group', api: 'subjectCountByStageAtEntry', apiForFiltering: 'filterSubjectCountByStageAtEntry', datafield: 'stage_at_entry', section: 'Filter By Subject', show: true,
+    label: 'Tumor Size', field: 'group', api: 'subjectCountByTumorSize', apiForFiltering: 'filterSubjectCountByTumorSize', datafield: 'tumor_sizes', section: 'Cases', show: true, customNumberSort: true,
   },
   {
-    label: 'Cause of Death', field: 'group', api: 'subjectCountByCauseOfDeath', apiForFiltering: 'filterSubjectCountByCauseOfDeath', datafield: 'cause_of_death', section: 'Filter By Subject', show: true,
+    label: 'Chemotherapy', field: 'group', api: 'subjectCountByChemotherapyRegimen', apiForFiltering: 'filterSubjectCountByChemotherapyRegimen', datafield: 'chemo_regimen', section: 'Cases', show: true,
   },
   {
-    label: 'Sites of Disease at Autopsy', field: 'group', api: 'subjectCountBySitesOfDiseaseAtAutopsy', apiForFiltering: 'filterSubjectCountBySitesOfDiseaseAtAutopsy', datafield: 'sites_of_disease_at_autopsy', section: 'Filter By Subject', show: true,
+    label: 'Tumor Grade', field: 'group', api: 'subjectCountByTumorGrade', apiForFiltering: 'filterSubjectCountByTumorGrade', datafield: 'tumor_grades', section: 'Cases', show: true,
   },
   {
-    label: 'Source of the Lab Data', field: 'group', api: 'subjectCountBySourceOfTheLabData', apiForFiltering: 'filterSubjectCountBySourceOfTheLabData', datafield: 'source_of_the_lab_data', section: 'Filter By Subject', show: true,
+    label: 'ER Status', field: 'group', api: 'subjectCountByErStatus', apiForFiltering: 'filterSubjectCountByErStatus', datafield: 'er_status', section: 'Cases', show: true,
   },
   {
-    label: 'Lab Test', field: 'group', api: 'subjectCountByLabTest', apiForFiltering: 'filterSubjectCountByLabTest', datafield: 'lab_test', section: 'Filter By Subject', show: true,
+    label: 'PR Status', field: 'group', api: 'subjectCountByPrStatus', apiForFiltering: 'filterSubjectCountByPrStatus', datafield: 'pr_status', section: 'Cases', show: true,
   },
   {
-    label: 'System Organ Class', field: 'group', api: 'subjectCountBySystemOrganClass', apiForFiltering: 'filterSubjectCountBySystemOrganClass', datafield: 'system_organ_class', section: 'Filter By Subject', show: true,
+    label: 'Endocrine Therapy', field: 'group', api: 'subjectCountByEndocrineTherapy', apiForFiltering: 'filterSubjectCountByEndocrineTherapy', datafield: 'endo_therapies', section: 'Cases', show: true,
   },
   {
-    label: 'Serious', field: 'group', api: 'subjectCountBySerious', apiForFiltering: 'filterSubjectCountBySerious', datafield: 'serious', section: 'Filter By Subject', show: true,
+    label: 'Menopause Status', field: 'group', api: 'subjectCountByMenopauseStatus', apiForFiltering: 'filterSubjectCountByMenopauseStatus', datafield: 'meno_status', section: 'Cases', show: true,
   },
   {
-    label: 'Outcome', field: 'group', api: 'subjectCountByOutcome', apiForFiltering: 'filterSubjectCountByOutcome', datafield: 'outcome', section: 'Filter By Subject', show: true,
+    label: 'Tissue Type', field: 'group', api: 'subjectCountByTissueType', apiForFiltering: 'filterSubjectCountByTissueType', datafield: 'tissue_type', section: 'Samples', show: true,
   },
   {
-    label: 'Somatic Pathogenicity', field: 'group', api: 'subjectCountBySomaticPathogenicity', apiForFiltering: 'filterSubjectCountBySomaticPathogenicity', datafield: 'somatic_pathogenicity', section: 'Filter By Subject', show: true,
+    label: 'Tissue Composition', field: 'group', api: 'subjectCountByTissueComposition', apiForFiltering: 'filterSubjectCountByTissueComposition', datafield: 'composition', section: 'Samples', show: true,
   },
   {
-    label: 'Germline Pathogenicity', field: 'group', api: 'subjectCountByGermlinePathogenicity', apiForFiltering: 'filterSubjectCountByGermlinePathogenicity', datafield: 'germline_pathogenicity', section: 'Filter By Subject', show: true,
+    label: 'File Association', field: 'group', api: 'subjectCountByFileAssociation', apiForFiltering: 'filterSubjectCountByFileAssociation', datafield: 'association', section: 'Files', show: true,
   },
   {
-    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'file_type', section: 'Filter By Files', show: true,
+    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'file_type', section: 'Files', show: true,
+  },
+  {
+    label: 'Age', api: 'filterSubjectCountByAge', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'age_at_index', section: 'Cases', show: true, slider: true, quantifier: 'Years',
   },
 ];
 
-/** Dashboard Facet Local Find Configurations * */
-export const facetSectionFindApi = {
-  'Filter By Subject': {
-    api: 'subject_ids',
-    type: 'subjectIds',
-    // api: 'subject_ids',
+// --------------- Dashboard Sidebar Sections styling --------------
+export const facetSectionVariables = {
+  Cases: {
+    color: '#10A075',
+    backgroundColor: '#C0E9D7',
+    checkBoxColorsOne: '#E8F7DC',
+    checkBoxColorsTwo: '#F5FDEE',
+    height: '5px',
+    isExpanded: true,
   },
+  Samples: {
+    color: '#10BEFF',
+    backgroundColor: '#C3EAF5',
+    checkBoxColorsOne: '#C9EBF7',
+    checkBoxColorsTwo: '#E8F8FE',
+    height: '5px',
+    isExpanded: true,
+  },
+  Files: {
+    color: '#E636E4',
+    backgroundColor: '#F5C3F1',
+    checkBoxColorsOne: '#FBE3FB',
+    checkBoxColorsTwo: '#FFF2FF',
+    height: '5px',
+    isExpanded: true,
+  },
+};
+
+// --------------- Dashboard Facet Local Find Configuration --------------
+
+export const facetSectionFindApi = {
   Cases: {
     api: 'subjectIds',
+  },
+  Samples: {
+    api: 'sampleIds',
   },
   Files: {
     api: 'fileIds',
   },
 };
 
-// --------------- Dashboard Sidebar Sections styling --------------
-export const facetSectionVariables = {
-  'Filter By Subject': {
+export const search = {
+  fileIds: {
+    color: '#E636E4',
+    checkBoxColorsOne: '#FBE3FB',
+    checkBoxColorsTwo: '#FFF2FF',
+    height: '5px',
+    isExpanded: false,
+  },
+  subjectIds: {
     color: '#10A075',
     checkBoxColorsOne: '#E8F7DC',
     checkBoxColorsTwo: '#F5FDEE',
     height: '5px',
-    isExpanded: true,
+    isExpanded: false,
   },
-  'Filter By Samples': {
+  sampleIds: {
     color: '#10BEFF',
     checkBoxColorsOne: '#C9EBF7',
     checkBoxColorsTwo: '#E8F8FE',
     height: '5px',
     isExpanded: false,
   },
-  'Filter By Files': {
+  fileNames: {
     color: '#E636E4',
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
@@ -99,55 +140,67 @@ export const defaultFacetSectionVariables = {
   isExpanded: false,
 };
 
+export const defaultSearch = {
+  color: '#000000',
+  checkBoxColorsOne: '#E8F7DC',
+  checkBoxColorsTwo: '#F5FDEE',
+  height: '5px',
+  isExpanded: false,
+};
+
+// --------------- Dashboard ActiveFiltersQuery configuration --------------
+export const displayActiveFiltersQuery = true;
+
 // --------------- Dashboard Widgets configuration --------------
 // A maximum of 6 widgets are allowed
 export const widgetsData = [
   {
-    type: 'donut',
-    label: 'Germline Pathogenicity',
-    dataName: 'subjectCountByGermlinePathogenicity',
-    datatable_field: 'germlinePathogenicity',
-    titleText: 'Subjects',
+    type: 'sunburst',
+    label: 'Programs and Arms',
+    dataName: 'armsByPrograms',
+    datatable_level1_field: 'program',
+    datatable_level2_field: 'study_acronym',
+    titleText: 'Cases',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Somatic Pathogenicity',
-    dataName: 'subjectCountBySomaticPathogenicity',
-    datatable_field: 'somaticPathogenicity',
-    titleText: 'Subjects',
+    label: 'Diagnosis',
+    dataName: 'subjectCountByDiagnoses',
+    datatable_field: 'diagnosis',
+    titleText: 'Cases',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Registering Institution',
-    dataName: 'subjectCountByRegisteringInstitution',
-    datatable_field: 'registeringInstitution',
-    titleText: 'Subjects',
+    label: 'Recurrence Score',
+    dataName: 'subjectCountByRecurrenceScore',
+    datatable_field: 'recurrence_score',
+    titleText: 'Cases',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Race',
-    dataName: 'subjectCountByRace',
-    datatable_field: 'race',
-    titleText: 'Subjects',
+    label: 'Tumor Size',
+    dataName: 'subjectCountByTumorSize',
+    datatable_field: 'tumor_size',
+    titleText: 'Cases',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Disease Stage at Entry',
-    dataName: 'subjectCountByStageAtEntry',
-    datatable_field: 'stageAtEntry',
-    titleText: 'Subjects',
+    label: 'Chemotherapy',
+    dataName: 'subjectCountByChemotherapyRegimen',
+    datatable_field: 'chemotherapy',
+    titleText: 'Cases',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Serious',
-    dataName: 'subjectCountBySerious',
-    datatable_field: 'serious',
-    titleText: 'Subjects',
+    label: 'Endocrine Therapy',
+    dataName: 'subjectCountByEndocrineTherapy',
+    datatable_field: 'endocrine_therapy',
+    titleText: 'Cases',
     show: true,
   },
 ];
@@ -261,75 +314,81 @@ export const showCheckboxCount = 5;
 
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_DATA_QUERY = gql`{
-    numberOfPrograms
-    numberOfSubjects
-    numberOfSamples
-    numberOfLabProcedures
-    numberOfFiles
-    subjectCountByProgram{
+  numberOfPrograms
+  numberOfStudies
+  numberOfSubjects
+  numberOfSamples
+  numberOfLabProcedures
+  numberOfFiles
+  subjectCountByProgram{
         group
         subjects
-    }
+      }
     subjectCountByStudy{
         group
         subjects
-    }
+      }
     subjectCountByDiagnoses{
         group
         subjects
-    }
+      }
     subjectCountByRecurrenceScore{
         group
         subjects
-    }
+      }
     subjectCountByTumorSize{
         group
         subjects
-    }
+      }
     subjectCountByChemotherapyRegimen{
         group
         subjects
-    }
+      }
     subjectCountByTumorGrade{
         group
         subjects
-    }
-    subjectCountByErStatus{
+      }
+  subjectCountByErStatus{
         group
         subjects
-    }
-    subjectCountByPrStatus{
+      }
+  subjectCountByPrStatus{
         group
         subjects
-    }
-    subjectCountByMenopauseStatus{
+      }
+  subjectCountByMenopauseStatus{
         group
         subjects
-    }
-    subjectCountByChemotherapyRegimen{
+      }
+  subjectCountByChemotherapyRegimen{
         group
         subjects
-    }
-    subjectCountByEndocrineTherapy{
-        group
-        subjects
-    }
-    subjectCountByFileType{
-        group
-        subjects
-    }
-    subjectCountByFileAssociation {
-        group
-        subjects
-    }
-    subjectCountByTissueComposition{
-        group
-        subjects
-    }
-    subjectCountByTissueType{
-        group
-        subjects
-    }
+      }
+      subjectCountByEndocrineTherapy{
+    group
+    subjects
+  }
+  subjectCountByFileType{
+    group
+    subjects
+}
+subjectCountByFileAssociation {
+    group
+    subjects
+}
+subjectCountByTissueComposition{
+    group
+    subjects
+}
+filterSubjectCountByAge{
+  lowerBound
+  upperBound
+  subjects
+}
+subjectCountByTissueType{
+    group
+    subjects
+}
     armsByPrograms {
         program
         caseSize
@@ -340,53 +399,53 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
         }
     }
     subjectOverViewPaged(first: 100) {
-        subject_id
-        program_id
-        study_info
-        samples
-        program
-        study_acronym
-        diagnosis
-        recurrence_score
-        tumor_size
-        tumor_grade
-        er_status
-        pr_status
-        chemotherapy
-        endocrine_therapy
-        menopause_status
-        age_at_index
-        survival_time
-        lab_procedures
-        files{
-            file_id
-        }
-    }
-}`;
+      subject_id
+      program_id
+      study_info
+      samples
+      program
+      study_acronym
+      diagnosis
+      recurrence_score
+      tumor_size
+      tumor_grade
+      er_status
+      pr_status
+      chemotherapy
+      endocrine_therapy
+      menopause_status
+      age_at_index
+      survival_time
+      lab_procedures
+      files{
+        file_id
+      }
+  }
+  }`;
 
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_TABLE_DATA_QUERY = gql`{
-    subjectOverViewPaged(first: 1000000) {
-        subject_id
-        program_id
-        study_info
-        samples
-        program
-        study_acronym
-        diagnosis
-        recurrence_score
-        tumor_size
-        tumor_grade
-        er_status
-        pr_status
-        chemotherapy
-        endocrine_therapy
-        menopause_status
-        age_at_index
-        survival_time
-        lab_procedures
-        files{
-            file_id
-        }
-    }
-}`;
+  subjectOverViewPaged(first: 1000000) {
+      subject_id
+      program_id
+      study_info
+      samples
+      program
+      study_acronym
+      diagnosis
+      recurrence_score
+      tumor_size
+      tumor_grade
+      er_status
+      pr_status
+      chemotherapy
+      endocrine_therapy
+      menopause_status
+      age_at_index
+      survival_time
+      lab_procedures
+      files{
+        file_id
+      }
+  }
+  }`;

@@ -35,7 +35,7 @@ const LocalSearchComponent = ({ classes, type }, ref) => {
 
   const handleAddAutoComplete = (newValue, isDelete) => {
     addAutoComplete({
-      type: type.replace(/(Ids)|(_ids)/, ''),
+      type: type.replace('Ids', ''),
       newValue,
     });
     setSideBarToLoading();
@@ -60,18 +60,13 @@ const LocalSearchComponent = ({ classes, type }, ref) => {
   }));
 
   React.useEffect(() => {
-    let active = true; let
-      opts;
+    let active = true;
     if (!loading) {
       return undefined;
     }
     (async () => {
-      const response = await getAllIds(selectionType);
-      if (type === 'subjectIds') {
-        opts = response[selectionType].map((id) => ({ type: selectionType, title: id }));
-      } else {
-        opts = response[selectionType].map((id) => ({ type, title: id }));
-      }
+      const response = await getAllIds(type);
+      const opts = response[type].map((id) => ({ type, title: id }));
       if (active) {
         setOptions(opts);
       }
@@ -97,8 +92,8 @@ const LocalSearchComponent = ({ classes, type }, ref) => {
       }
       setSideBarToLoading();
       setValue(newValueUnique);
-      handleAddAutoComplete(newValueUnique, isDelete);
       localSearch(newValueUnique, isDelete);
+      handleAddAutoComplete(newValueUnique, isDelete);
     }
   }
 

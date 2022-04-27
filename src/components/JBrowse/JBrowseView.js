@@ -1,29 +1,45 @@
 import React from 'react';
-// import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import {
   createViewState,
-  // createJBrowseTheme,
+  createJBrowseTheme,
   JBrowseLinearGenomeView,
-  // ThemeProvider,
+  ThemeProvider,
 } from '@jbrowse/react-linear-genome-view';
 
-// const defaultFooterStyles = {
-// };
+const defaultFooterStyles = {
+};
 
-// const theme = createJBrowseTheme();
+const theme = createJBrowseTheme();
 
 const assembly = {
-  name: 'GRCh38',
+  name: 'hg19',
+  aliases: ['GRCh37'],
   sequence: {
     type: 'ReferenceSequenceTrack',
-    trackId: 'GRCh38-ReferenceSequenceTrack',
+    trackId: 'Pd8Wh30ei9R',
     adapter: {
-      type: 'IndexedFastaAdapter',
+      type: 'BgzipFastaAdapter',
       fastaLocation: {
-        uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/ebi_grch37.fasta',
+        uri: 'https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz',
+        locationType: 'UriLocation',
       },
       faiLocation: {
-        uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/ebi_grch37.fasta.fai',
+        uri: 'https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.fai',
+        locationType: 'UriLocation',
+      },
+      gziLocation: {
+        uri: 'https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz.gzi',
+        locationType: 'UriLocation',
+      },
+    },
+  },
+  refNameAliases: {
+    adapter: {
+      type: 'RefNameAliasAdapter',
+      location: {
+        uri: 'https://s3.amazonaws.com/jbrowse.org/genomes/hg19/hg19_aliases.txt',
+        locationType: 'UriLocation',
       },
     },
   },
@@ -34,19 +50,19 @@ const tracks = [
   {
     trackId: 'my_alignments_track',
     name: 'My Alignments',
-    assemblyNames: ['GRCh38'],
+    assemblyNames: ['hg19'],
     type: 'AlignmentsTrack',
     adapter: {
       type: 'BamAdapter',
-      bamLocation: { uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/NA20811.bam' },
-      index: { location: { uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/NA20811.bam.bai' } },
+      bamLocation: { uri: 'https://s3.amazonaws.com/bento-bam-vcf-files/HCC1143.gathered.bam' },
+      index: { location: { uri: 'https://s3.amazonaws.com/bento-bam-vcf-files/HCC1143.gathered.bam.bai' } },
     },
   },
   {
     type: 'VariantTrack',
     trackId: 'my_track',
     name: 'My Variants',
-    assemblyNames: ['GRCh38'],
+    assemblyNames: ['hg19'],
     adapter: {
       type: 'VcfTabixAdapter',
       vcfGzLocation: { uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/NA20811.10.sorted.vcf.gz' },
@@ -76,27 +92,17 @@ const tracks = [
 //   },
 // };
 
-// const state = createViewState({
-//   assembly,
-//   tracks,
-//   location: '10:29,838,737..29,838,819',
-//   // defaultSession,
-// });
+const state = createViewState({
+  assembly,
+  tracks,
+  location: '10:29,838,737..29,838,819',
+  // defaultSession,
+});
 
-function View() {
-  const state = createViewState({
-    assembly,
-    tracks,
-    location: '10:29,838,737..29,838,819',
-  });
-  return <JBrowseLinearGenomeView viewState={state} />;
-}
+const JBrowse = () => (
+  <ThemeProvider theme={theme}>
+    <JBrowseLinearGenomeView viewState={state} />
+  </ThemeProvider>
+);
 
-// const JBrowse = () => (
-//   <ThemeProvider theme={theme}>
-//     <JBrowseLinearGenomeView viewState={state} />
-//   </ThemeProvider>
-// );
-
-export default View;
-// export default withStyles(defaultFooterStyles, { withTheme: true })(JBrowse);
+export default withStyles(defaultFooterStyles, { withTheme: true })(JBrowse);

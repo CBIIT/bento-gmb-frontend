@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StatsView from './StatsView';
 import { fetchDataForStats } from './StatsState';
-import { utilities as utils } from '../../utils/objectUtils';
 
 const Stats = () => {
   const data = useSelector((state) => {
@@ -11,8 +10,7 @@ const Stats = () => {
       const dispatch = useDispatch();
       dispatch(fetchDataForStats());
     }
-    return (utils.hasOwnProp(state.stats.data, 'searchSubjects')
-      ? state.stats.data.searchSubjects : state.stats.data);
+    return state.stats.data;
   });
 
   return (!data || data.length === 0 ? (<CircularProgress />) : <StatsView data={data} />);
