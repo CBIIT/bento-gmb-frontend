@@ -9,7 +9,6 @@ import globalData from '../../bento/siteWideConfig';
 
 const BentoNavBar = ({ cartFieldIds }) => (
   <>
-    {console.log(`authentication enabled ${globalData.enableAuthentication}`) /* eslint-disable-line no-console */}
     {globalData.enableAuthentication ? (
       <NavBar
         navBarData={navBarData}

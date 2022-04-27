@@ -34,6 +34,11 @@ import {
 } from '../../../bento/dashboardTabData';
 
 import {
+  SEARCH,
+  SEARCH_PAGE_RESULTS,
+} from '../../../bento/search';
+
+import {
   GET_IDS_BY_TYPE,
   GET_SEARCH_NODES_BY_FACET,
   GET_SUBJECT_IDS, SUBJECT_OVERVIEW_QUERY, widgetsSearchData,
@@ -165,12 +170,12 @@ function getSearchWidgetsData(data, widgetsInfoFromCustConfig) {
 
 /** The following functions should be added here whren ready
  * - addAutoComplete (done)
- * - getSearch
- * - getSearchPageResults
+ * - getSearch (done)
+ * - getSearchPageResults (d0ne)
  * - getSearchWidgetsData (done)
  * - getAllSubjectIds (done)
  * - getAllIds (done)
- * - getSubjectIds
+ * - getSubjectIds (done)
  * - getSubjectDetails (done)
  * - addBulkModalSearchData
  * - uploadBulkModalSearch
@@ -715,6 +720,46 @@ function getWidgetsData(input, widgetsInfoFromCustConfig) {
   }, {});
 
   return donut;
+}
+
+export function addTypesToData(resData) {
+  const newData = {}; // eslint-disable-line
+  Object.keys(resData).forEach((resKey) => {
+    if (!Array.isArray(resData[resKey]) || !resData[resKey].length) {
+      newData[resKey] = resData[resKey];
+    } else {
+      newData[resKey] = (resData[resKey] || []).map((item) => ({ ...item, type: resKey }));
+    }
+  });
+  return newData;
+}
+
+/**
+ * Get Search
+ * */
+export async function getSearch(inputValue) {
+  const allids = await client
+    .query({
+      query: SEARCH,
+      variables: {
+        input: inputValue,
+      },
+    })
+    .then((result) => (result.data.globalSearch));
+  return allids;
+}
+
+export async function getSearchPageResults(inputValue) {
+  const allIds = await client.query(
+    {
+      query: SEARCH_PAGE_RESULTS,
+      variables: {
+        input: inputValue,
+      },
+    },
+  ).then((result) => (result.data.globalSearch));
+
+  return allIds;
 }
 
 /**

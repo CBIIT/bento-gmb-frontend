@@ -476,7 +476,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                */}
               {/* eslint-disable-next-line no-console */}
               {
-                currentSection.sectionName === 'Filter By Subject' ? (
+                currentSection.sectionName === 'Subject' ? (
                   <div
                     id={currentSection.sectionName}
                     className={classes.sectionSummaryTextCase}

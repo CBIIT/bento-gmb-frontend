@@ -106,19 +106,28 @@ export const table = {
 };
 
 // --------------- GraphQL query - Retrieve selected cases info --------------
-export const GET_MY_CART_DATA_QUERY = gql`
-query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="") {
-    filesInList(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-        subject_id
-        file_name
-        file_type
-        file_description
-        file_format
-        file_size
-        file_id
-        md5sum
+export const GET_MY_CART_DATA_QUERY = gql`    
+    query filesInList(
+        $file_ids: [String]=[],
+        $order_by: String="file_name",
+        $sort_direction: String="asc",
+    ){
+        filesInList(
+            file_id: $file_ids,
+            order_by: $order_by, 
+            sort_direction: $sort_direction
+        ){
+            subject_id 
+            file_name
+            fileType
+            description
+            fileFormat
+            size
+            file_id
+            md5sum
+        }
     }
-}`;
+`;
 
 // --------------- GraphQL query - Retrieve selected files info Desc --------------
 export const GET_MY_CART_DATA_QUERY_DESC = gql`
