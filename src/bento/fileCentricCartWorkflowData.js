@@ -22,7 +22,7 @@ export const myFilesPageData = {
   tooltipIcon: 'https://raw.githubusercontent.com/google/material-design-icons/master/src/action/help/materialicons/24px.svg',
   tooltipAlt: 'tooltip icon',
   tooltipMessage: 'To access and analyze files: select and remove unwanted files,  click the “Download Manifest” button, and upload the resulting Manifest file to your Seven Bridges Genomics account.',
-  textareaPlaceholder: 'Please add a description for the XML file you are about to download.',
+  textareaPlaceholder: 'Please add a description for the CSV file you are about to download.',
   errorMessage: 'An error has occurred in loading CART',
   popUpWindow: {
     showNumberOfFileBeRemoved: true,
@@ -48,50 +48,44 @@ export const table = {
   defaultSortField: 'file_name',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
-  viewColumns: true,
+  paginationAPIField: 'filesInList',
   tableDownloadCSV: customMyFilesTabDownloadCSV,
 
   columns: [
     {
       dataField: 'file_name',
       header: 'File Name',
-      sort: 'asc',
-      primary: true,
-      display: true,
-    },
-    {
-      dataField: 'subject_id',
-      header: 'Subject ID',
-      sort: 'asc',
-      link: '/subjects/{subject_id}',
-      display: true,
-    },
-    {
-      dataField: 'file_description',
-      header: 'Description',
-      sort: 'asc',
-      display: true,
-    },
-    {
-      dataField: 'file_format',
-      header: 'File Format',
-      sort: 'asc',
-      display: true,
-    },
-    {
-      dataField: 'file_size',
-      header: 'Size',
-      sort: 'asc',
-      display: true,
-      formatBytes: true,
     },
     {
       dataField: 'file_type',
       header: 'File Type',
-      sort: 'asc',
-      primary: true,
-      display: true,
     },
+    /* {
+      dataField: 'association',
+      header: 'Association',
+    }, */
+    {
+      dataField: 'file_description',
+      header: 'Description',
+    },
+    {
+      dataField: 'file_format',
+      header: 'Format',
+    },
+    {
+      dataField: 'file_size',
+      header: 'Size',
+      // set formatBytes to true to display file size (in bytes) in a more human readable format
+      formatBytes: true,
+    },
+    {
+      dataField: 'subject_id',
+      header: 'Case ID',
+    },
+    /* {
+      dataField: 'study_code',
+      header: 'Study Code',
+    }, */
     {
       dataField: 'file_id',
       header: 'UUID',
@@ -107,30 +101,23 @@ export const table = {
 
 // --------------- GraphQL query - Retrieve selected cases info --------------
 export const GET_MY_CART_DATA_QUERY = gql`
-query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="") {
-    filesInList(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-        subject_id
-        file_name
-        file_type
-        file_description
-        file_format
-        file_size
-        file_id
-        md5sum
-    }
-}`;
-
-// --------------- GraphQL query - Retrieve selected files info Desc --------------
-export const GET_MY_CART_DATA_QUERY_DESC = gql`
-query filesInListDesc($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="") {
-  filesInListDesc(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-        subject_id
-        file_name
-        file_type
-        file_description
-        file_format
-        file_size
-        file_id
-        md5sum
-    }
-}`;
+    query filesInList(
+        $file_id: [String],
+        $order_by: String,
+        $sort_direction: String
+    ){
+        filesInList(
+            file_id: $file_id,
+            order_by: $order_by,
+            sort_direction: $sort_direction
+        ){
+            subject_id
+            file_name
+            fileType
+            description
+            fileFormat
+            size
+            file_id
+            md5sum
+        }
+    }`;
