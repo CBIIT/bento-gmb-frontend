@@ -297,36 +297,12 @@ export const tabContainers = [
         link: '/case/{subject_id}',
         display: false,
       },
-      // {
-      //   dataField: 'association',
-      //   header: 'Association',
-      //   sort: 'asc',
-      //   display: true,
-      // },
-      {
-        dataField: 'description',
-        header: 'Description',
-        sort: 'asc',
-        display: true,
-      },
-      {
-        dataField: 'fileFormat',
-        header: 'File Format',
-        sort: 'asc',
-        display: true,
-      },
       {
         dataField: 'size',
         header: 'Size',
         sort: 'asc',
         display: true,
         formatBytes: true,
-      },
-      {
-        dataField: 'file_type',
-        header: 'Type',
-        sort: 'asc',
-        display: true,
       },
       {
         dataField: '', // This need to left empty if no data need to be displayed before file download icon
@@ -348,7 +324,7 @@ export const tabContainers = [
           // datafield where file file id exists in the table which is used to get file location
           fileLocationColumn: 'file_id',
           // datafield where file format exists in the table
-          fileFormatColumn: 'fileFormat',
+          /* fileFormatColumn: 'fileFormat', */
           // datafield where file case id exists in the table which is used to get file information
           caseIdColumn: 'subject_id',
           // Unauthenticated lock icon
