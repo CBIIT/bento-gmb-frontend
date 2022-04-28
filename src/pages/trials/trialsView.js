@@ -56,7 +56,7 @@ const Trials = ({ classes, data }) => {
                 <Grid item xs={12}>
                   <CustomDataTable
                     data={data[table.dataField]}
-                    columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectTo)}
+                    columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectTo)}
                     options={getOptions(table, classes)}
                   />
                 </Grid>
