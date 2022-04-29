@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
@@ -12,88 +13,119 @@ const defaultFooterStyles = {
 
 const theme = createJBrowseTheme();
 
-const assembly = {
-  name: 'GRCh38',
+const createAssembly = ({ fastaLocation, faiLocation, gziLocation }) => ({
+  name: 'hg19',
+  aliases: ['GRCh37'],
   sequence: {
     type: 'ReferenceSequenceTrack',
-    trackId: 'GRCh38-ReferenceSequenceTrack',
+    trackId: 'Pd8Wh30ei9R',
     adapter: {
-      type: 'IndexedFastaAdapter',
-      fastaLocation: {
-        uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/ebi_grch37.fasta',
-      },
-      faiLocation: {
-        uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/ebi_grch37.fasta.fai',
+      type: 'BgzipFastaAdapter',
+      fastaLocation,
+      faiLocation,
+      gziLocation,
+    },
+  },
+  refNameAliases: {
+    adapter: {
+      type: 'RefNameAliasAdapter',
+      location: {
+        uri: 'https://s3.amazonaws.com/jbrowse.org/genomes/hg19/hg19_aliases.txt',
+        locationType: 'UriLocation',
       },
     },
   },
+});
+
+const getVariantsAdapter = ({ vcfGzLocationUri, indexUri }) => ({
+  type: 'VcfTabixAdapter',
+  vcfGzLocation: { uri: vcfGzLocationUri },
+  index: { location: { uri: indexUri } },
+});
+
+const getAlignmentAdapter = ({ bamLocationUri, indexUri }) => ({
+  type: 'BamAdapter',
+  bamLocation: { uri: bamLocationUri },
+  index: { location: { uri: indexUri } },
+});
+
+const getTracks = ({
+  alignments, variants, variantsUris, alignmentUris,
+}) => {
+  const tracks = [];
+  const alignmentOpts = {
+    adapter: {},
+    name: 'My Alignments',
+    assemblyNames: ['hg19'],
+    type: 'AlignmentsTrack',
+    trackId: 'my_alignments_track',
+  };
+
+  const variantsOpts = {
+    adapter: {},
+    name: 'My Variants',
+    trackId: 'my_track',
+    type: 'VariantTrack',
+    assemblyNames: ['hg19'],
+  };
+
+  if (alignments) {
+    alignmentOpts.adapter = getAlignmentAdapter(alignmentUris);
+    tracks.push(alignmentOpts);
+  }
+
+  if (variants) {
+    variantsOpts.adapter = getVariantsAdapter(variantsUris);
+    tracks.push(variantsOpts);
+  }
+
+  return tracks;
 };
 
-const tracks = [
-  {
-    trackId: 'my_alignments_track',
-    name: 'My Alignments',
-    assemblyNames: ['GRCh38'],
-    type: 'AlignmentsTrack',
-    adapter: {
-      type: 'BamAdapter',
-      bamLocation: { uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/NA20811.bam' },
-      index: { location: { uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/NA20811.bam.bai' } },
-    },
+const JBrowseDetail = ({
+  bamFiles,
+  options: {
+    variants,
+    alignments,
+    variantsUris,
+    referenceSequenceUris,
   },
-  {
-    type: 'VariantTrack',
-    trackId: 'my_track',
-    name: 'My Variants',
-    assemblyNames: ['GRCh38'],
-    adapter: {
-      type: 'VcfTabixAdapter',
-      vcfGzLocation: { uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/NA20811.10.sorted.vcf.gz' },
-      index: { location: { uri: 'https://bento-bam-vcf-files.s3.amazonaws.com/NA20811.10.sorted.vcf.gz.tbi' } },
-    },
-  },
-];
-
-const JBrowseDetail = ({ bamFiles }) => {
-  const [trackList, setTracks] = useState(tracks);
+}) => {
+  const [trackList, setTracks] = useState([]);
 
   const getState = () => {
     const state = createViewState({
-      assembly,
       tracks: trackList,
+      assembly: createAssembly(referenceSequenceUris),
       location: '10:29,838,737..29,838,819',
     });
     return state;
   };
 
-  const configureAdapter = () => {
-    const adapter = {
-      type: 'BamAdapter',
-      bamLocation: { uri: '' },
-      index: { location: { uri: '' } },
-    };
+  const configureAdapters = () => {
+    const alignmentUris = {};
 
-    bamFiles.forEach((file) => {
-      if (file.file_type === 'bam') {
-        adapter.bamLocation.uri = file.file_location;
-      }
-      if (file.file_type === 'bai') {
-        adapter.index.location.uri = file.file_location;
-      }
+    if (alignments) {
+      bamFiles.forEach((file) => {
+        if (file.file_type === 'bam') {
+          alignmentUris.bamLocationUri = file.file_location;
+        }
+        if (file.file_type === 'bai') {
+          alignmentUris.indexUri = file.file_location;
+        }
+      });
+    }
+
+    const currentTracks = getTracks({
+      alignmentUris, variantsUris, alignments, variants,
     });
 
-    let alignmentTrack = trackList[0];
-    alignmentTrack = {
-      ...alignmentTrack,
-      adapter,
-    };
-
-    setTracks([alignmentTrack, trackList[1]]);
+    setTracks(currentTracks);
   };
 
   useEffect(() => {
     if (bamFiles.length > 0) {
-      configureAdapter();
+      configureAdapters();
     }
   }, [bamFiles]);
 
@@ -102,6 +134,31 @@ const JBrowseDetail = ({ bamFiles }) => {
       <JBrowseLinearGenomeView viewState={getState()} />
     </ThemeProvider>
   );
+};
+
+JBrowseDetail.propTypes = {
+  bamFiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      file_type: PropTypes.string.isRequired,
+      file_location: PropTypes.string.isRequired,
+    }),
+  ),
+  options: PropTypes.shape({
+    variants: PropTypes.bool,
+    alignments: PropTypes.bool,
+    referenceSequenceUris: PropTypes.shape({
+      faiLocation: PropTypes.string.isRequired,
+      fastaLocation: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
+};
+
+JBrowseDetail.defaultProps = {
+  options: {
+    variants: false,
+    alignments: false,
+  },
+  bamFiles: [],
 };
 
 export default withStyles(defaultFooterStyles, { withTheme: true })(JBrowseDetail);

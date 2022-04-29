@@ -4,19 +4,13 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { cn } from 'bento-components';
-import { landingPageData } from '../../bento/landingPageData';
+import StatsView from './components/statsView';
 import { Button } from '../../components/Wrappers/Wrappers';
-import imgAbout from '../../assets/landing/About.png';
-import imgTrial from '../../assets/landing/Trials.png';
-import imgAccess from '../../assets/landing/RequestAccess.png';
+import { landingPageData } from '../../bento/landingPageData';
 import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
-import texturebg from '../../assets/landing/BackgroundTexture-LP.jpg';
-import subjectsImage from '../../assets/landing/subjects.png';
-import hero from '../../assets/landing/hero.png';
 
-const LandingController = ({ classes }) => (
+const LandingView = ({ classes, statsData }) => (
   <div className={classes.page}>
     <div className={classes.container}>
       <div className={classes.hero}>
@@ -32,11 +26,8 @@ const LandingController = ({ classes }) => (
               </div>
               <div className={classes.headerButtonSection}>
                 <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
-                  <Button className={classes.transparentButton} bgColor="neonBlue" color="white">
-                    Search subjects
-                    <span className={classes.rightArrow}>
-                      ▶
-                    </span>
+                  <Button className={classes.buttonText} bgColor="neonBlue" color="white">
+                    {landingPageData.callToActionButtonText}
                   </Button>
                 </Link>
               </div>
@@ -45,48 +36,43 @@ const LandingController = ({ classes }) => (
         </Grid>
       </div>
     </div>
-    <div className={classes.container}>
-      <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
-        <div className={classes.bannerTexture}>
-          Find and explore protocol 48 data
-        </div>
-      </Grid>
-      <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
-        <div className={classes.ButtonSection}>
-          <Link to="/subjects" className={classes.grayButton}>View data</Link>
-        </div>
-      </Grid>
-    </div>
+    <div className={classes.whiteSection} />
+    <StatsView stats={landingPageData.landingPageStatsBar} statsData={statsData} />
     <div className={classes.container}>
       <div className={classes.texture}>
         <Grid container spacing={16} direction="row" className={classes.landingContainer}>
           <div className={classes.contentLeft}>
             <div className={classes.about}>
               <div className={classes.aboutImageSection}>
-                <img src={imgAbout} className={classes.aboutImage} alt="GMB about" />
+                <img
+                  src={landingPageData.tile1.img}
+                  className={classes.aboutImage}
+                  alt={landingPageData.tile1.alt}
+                  id="tile1_image"
+                />
               </div>
-              <div className={classes.GMBWords}>
-                About
-                {' '}
-                <br />
-                {' '}
-                Prostate Cancer Natural History (PCNH)
+              <div className={classes.DCWords} id="tile1_title">
+                {landingPageData.tile1.titleText.match(/\b(\w+)\b/g).map((word) => (
+                  <>
+                    {word}
+                    <br />
+                  </>
+                ))}
               </div>
-              <div className={classes.aboutContent}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                ut aliquip ex ea commodo consequat.
+              <div className={classes.aboutContent} id="tile1_description">
+                {landingPageData.tile1.descriptionText}
               </div>
               <div className={classes.aboutButtonSection}>
                 <div className={classes.aboutButtonLeft}>
-                  <img src={iconAbout} className={classes.iconAbout} alt="GMB about icon" />
+                  <img src={iconAbout} className={classes.iconAbout} alt="CTDC about icon" />
                 </div>
-                <div className={classes.aboutButtonRight}>
-                  <Link to="/purpose" className={classes.aboutButton}>EXPLORE</Link>
+                <div className={classes.aboutButtonRight} id="tile1_button">
+                  <Link
+                    to={landingPageData.tile1.callToActionLink}
+                    className={classes.aboutButton}
+                  >
+                    {landingPageData.tile1.callToActionText}
+                  </Link>
                 </div>
               </div>
             </div>
@@ -95,64 +81,92 @@ const LandingController = ({ classes }) => (
             <div className={classes.contentRightTop}>
               <div className={classes.program}>
                 <div className={classes.programImg}>
-                  <img className={classes.image} src={imgTrial} alt="GMB  Trials" />
+                  <img
+                    className={classes.image}
+                    src={landingPageData.tile2.img}
+                    alt={landingPageData.tile2.alt}
+                    id="tile2_image"
+                  />
                 </div>
                 <div className={classes.content}>
-                  <div className={classes.contentHeader}> Trials</div>
-                  <div className={classes.contentContainer}>
-                    View summaries of clinical trials within GMB.
+                  <div className={classes.contentHeader} id="tile2_title">
+                    {landingPageData.tile2.titleText}
+                  </div>
+                  <div className={classes.contentContainer} id="tile2_description">
+                    {landingPageData.tile2.descriptionText}
                   </div>
 
                 </div>
-                <div className={classes.yellowButton}>
+                <div className={classes.blueButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="GMB about " />
+                    <img className={classes.icon} src={icon} alt="CTDC about " />
                     {' '}
                   </div>
-                  <div className={classes.blueButtonRight}>
-                    <Link to="/trials" className={classes.blueButton}>READ MORE</Link>
+                  <div className={classes.blueButtonRight} id="tile2_button">
+                    <Link
+                      to={landingPageData.tile2.callToActionLink}
+                      className={classes.blueButton}
+                    >
+                      {landingPageData.tile2.callToActionText}
+                    </Link>
                   </div>
                 </div>
               </div>
               <div className={classes.studies}>
                 <div className={classes.programImg}>
-                  <img className={classes.image} src={imgAccess} alt="GMB Request ACCESS" />
+                  <img
+                    className={classes.image}
+                    src={landingPageData.tile3.img}
+                    alt={landingPageData.tile3.src}
+                    id="tile3_image"
+                  />
                 </div>
                 <div className={classes.content}>
-                  <div className={classes.contentHeader}>This Space Open</div>
-                  <div className={classes.contentContainer}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam dictum at purus.
+                  <div className={classes.contentHeader} id="tile3_title">
+                    {landingPageData.tile3.titleText}
+                  </div>
+                  <div className={classes.contentContainer} id="tile3_description">
+                    {landingPageData.tile3.descriptionText}
                   </div>
 
                 </div>
-                <div className={classes.brownButton}>
+                <div className={classes.blueButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="GMB about" />
+                    <img className={classes.icon} src={icon} alt="CTDC about " />
                     {' '}
                   </div>
-                  <div className={classes.blueButtonRight}>
-                    <Link to="/request-access" className={classes.brownButton}>READ MORE</Link>
+                  <div className={classes.blueButtonRight} id="tile3_button">
+                    <Link
+                      to={landingPageData.tile3.callToActionLink}
+                      className={classes.blueButton}
+                    >
+                      {landingPageData.tile3.callToActionText}
+                    </Link>
                   </div>
                 </div>
               </div>
 
             </div>
             <div className={classes.contentRightBottom}>
-              <div className={classes.subjects}>
-                <div className={classes.greyContentHeader}> subjects</div>
-                <div className={classes.greyContent}>
-                  Search all the subjects and build cohorts from all the
-                  Programs/Studies within the GMB. The data files from
-                  these cohorts can then be analyzed in the Cloud Resources.
+              <div className={classes.cases} id="tile4_image">
+                <div className={classes.mountainMeadowContentHeader} id="tile4_title">
+                  {landingPageData.tile4.titleText}
                 </div>
-                <div className={classes.greybuttonSection}>
+                <div className={classes.mountainMeadowContent} id="tile4_description">
+                  {landingPageData.tile4.descriptionText}
+                </div>
+                <div className={classes.mountainMeadowButtonSection}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.greyIcon} src={icon} alt="GMB about " />
+                    <img className={classes.mountainMeadowIcon} src={icon} alt="CTDC about " />
                     {' '}
                   </div>
-                  <div className={classes.blueButtonRight}>
-                    <Link to="/subjects" className={classes.greybutton}>Explore</Link>
+                  <div className={classes.blueButtonRight} id="tile4_button">
+                    <Link
+                      to={landingPageData.tile4.callToActionLink}
+                      className={classes.mountainMeadowButton}
+                    >
+                      {landingPageData.tile4.callToActionText}
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -170,46 +184,14 @@ const styles = () => ({
   },
   heroImage: {
     width: '100%',
-    height: '600px',
+    height: '420px',
     backgroundRepeat: 'no-repeat',
-    // backgroundSize: '100% 100%',
-    background: `url(${hero})`,
-    '@media (min-width: 1000px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1200px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1400px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1600px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1800px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 2000px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
+    backgroundSize: '100% 100%',
+    backgroundImage: `url(${landingPageData.landingPageHero.img})`,
   },
   texture: {
     backgroundSize: 'cover',
-    backgroundImage: `url(${texturebg})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundAttachment: 'fixed',
+    background: '#B6DCFC',
     padding: '120px 0 80px 0',
   },
   container: {
@@ -218,27 +200,11 @@ const styles = () => ({
 
   },
 
-  bannerTexture: {
-    color: '#4898B4',
-    fontFamily: 'Raleway',
-    fontSize: '19px',
-    fontWeight: '600',
-    lineHeight: '60px',
-    textAlign: 'center',
-    margin: '0 auto',
-    letterSpacing: '0.050pt',
-    textTransform: 'uppercase',
-    width: '869px',
+  whiteSection: {
+    height: '8px',
+    background: 'white',
   },
-  ButtonSection: {
-    margin: '0 auto -15px auto',
-    background: '#505050',
-    width: '179px',
-    height: '47px',
-    borderRadius: '50px',
-    textAlign: 'center',
-  },
-  grayButton: {
+  redButton: {
     height: '13px',
     color: '#FFFFFF',
     fontFamily: 'Raleway',
@@ -252,25 +218,27 @@ const styles = () => ({
   },
   headerTitle: {
     paddingTop: '94px',
-    fontFamily: 'Inter Light, Raleway, sans-serif',
-    fontSize: '36px',
-    fontWeight: '500',
+    fontFamily: 'Inter, Raleway, sans-serif',
+    fontSize: '38px',
+    fontWeight: '600',
     lineHeight: '35px',
-    color: '#0F253A',
+    color: '#0077E3',
     letterSpacing: '-0px',
-    textTransform: 'uppercase',
   },
   paddingLeft50: {
     paddingLeft: '50px',
   },
   headerContent: {
-    color: '#3390B6',
+    color: '#000000',
     fontFamily: 'Lato, Raleway',
     fontSize: '16px',
     fontWeight: '500',
     lineHeight: '27px',
     marginTop: '16px',
     marginBottom: '26px',
+  },
+  headerLink: {
+    textDecoration: 'none',
   },
 
   iconAbout: {
@@ -286,25 +254,27 @@ const styles = () => ({
   },
 
   aboutImage: {
-    width: '300px',
+    width: '297px',
+    height: '249px',
     padding: '14px',
   },
   aboutImageSection: {
+    height: '249px',
   },
-  GMBWords: {
-    height: '168px',
-    background: '#0B2731',
+  DCWords: {
+    height: '200px',
+    background: '#274FA5',
     color: '#FFFFFF',
-    fontSize: '26px',
-    textTransform: 'uppercase',
-    lineHeight: '29px',
-    padding: '24px 75px 26px 26px',
-    fontFamily: 'Oswald',
+    fontSize: '28px',
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    lineHeight: '36px',
+    padding: '10px 75px 26px 26px',
+    fontFamily: 'Lato',
   },
   landingContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: '15px',
   },
   contentLeft: {
     float: 'left',
@@ -312,24 +282,25 @@ const styles = () => ({
   },
   about: {
     width: '300px',
-    backgroundColor: '#76C4E4',
+    backgroundColor: 'white',
   },
   image: {
     width: '293px',
-    height: '251px',
+    height: '249px',
   },
   aboutContent: {
-    background: '#76C4E4',
+    background: 'white',
     minHeight: '372px',
     width: '300px',
     padding: '30px 30px 32px 30px',
-    color: '#fff',
-    fontFamily: '"Open Sans"',
-    fontSize: '14px',
+    color: '#000000',
+    fontFamily: 'Nunito',
+    fontSize: '16px',
+    fontWeight: '500',
     lineHeight: '22px',
   },
   aboutButtonSection: {
-    background: '#76C4E4',
+    background: 'white',
     height: '71px',
   },
   imgIconAbout: {
@@ -337,12 +308,12 @@ const styles = () => ({
   },
   aboutButtonLeft: {
     float: 'left',
-    background: '#0F253A',
+    background: '#443CBB',
     height: '45px',
     width: '48px',
   },
   aboutButtonRight: {
-    background: '#16688A',
+    background: '#7747FF',
     float: 'left',
     height: '45px',
     width: '132px',
@@ -356,29 +327,31 @@ const styles = () => ({
     lineHeight: '45px',
     paddingLeft: '20px',
     boxShadow: 'none',
+    letterSpacing: '1px',
   },
 
   content: {
     width: '100%',
+    height: '155px',
+    overflowY: 'auto',
     background: '#fff',
     paddingLeft: '30px',
-    paddingTop: '6px',
-    minHeight: '130px',
+    paddingTop: '5px',
+    minHeight: '138px',
   },
   contentHeader: {
-    color: '#20506A',
-    fontFamily: 'Oswald',
-    fontSize: '26px',
-    fontWeight: '500',
+    color: '#033D6F',
+    fontFamily: 'Lato',
+    fontSize: '28px',
+    fontWeight: 'bold',
     lineHeight: '27px',
     padding: '10px 0',
-    textTransform: 'uppercase',
   },
   contentContainer: {
     width: '215px',
     color: '#010101',
-    fontFamily: 'Lato',
-    fontSize: '15px',
+    fontFamily: 'Nunito',
+    fontSize: '16px',
     lineHeight: '22px',
     paddingLeft: '2px',
     paddingBottom: '10px',
@@ -386,10 +359,11 @@ const styles = () => ({
 
   program: {
     float: 'left',
-    padding: '0 10px 8px 0px',
+    padding: '0 10px 6.8px 0px',
   },
   programImg: {
     background: '#fff',
+    height: '249px',
   },
   studies: {
     float: 'left',
@@ -399,25 +373,25 @@ const styles = () => ({
     float: 'left',
     width: '597px',
     background: '#fff',
-    backgroundImage: `url(${subjectsImage})`,
+    backgroundImage: `url(${landingPageData.tile4.img})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
-  subjects: {
-    height: '438px',
-    paddingLeft: '370px',
+  cases: {
+    height: '436px',
+    paddingLeft: '340px',
     paddingTop: '70px',
   },
-  greybuttonSection: {
+  mountainMeadowButtonSection: {
     height: '46px',
     width: '176px',
-    backgroundColor: '#20506A',
+    backgroundColor: '#10A075',
     marginTop: '20px',
 
   },
   blueButton: {
     height: '45px',
-    background: '#E5A553',
+    background: '#0077E3',
     color: '#FFFFFF',
     fontFamily: 'Raleway',
     fontSize: '12px',
@@ -425,61 +399,42 @@ const styles = () => ({
     lineHeight: '25px',
     paddingLeft: '8px',
     textDecoration: 'none',
-  },
-  yellowButton: {
-    height: '45px',
-    background: '#E5A553',
-    color: '#FFFFFF',
-    fontFamily: 'Raleway',
-    fontSize: '12px',
-    fontWeight: '600',
-    lineHeight: '25px',
-    paddingLeft: '8px',
-    textDecoration: 'none',
-  },
-  brownButton: {
-    height: '45px',
-    background: '#8C7D6B',
-    color: '#FFFFFF',
-    fontFamily: 'Raleway',
-    fontSize: '12px',
-    fontWeight: '600',
-    lineHeight: '25px',
-    paddingLeft: '8px',
-    textDecoration: 'none',
+    letterSpacing: '1px',
   },
   blueButtonLeft: {
     float: 'left',
   },
   blueButtonRight: {
     float: 'left',
-    lineHeight: '47px',
+    lineHeight: '44px',
+    marginLeft: '8px',
+    fontFamily: 'Lato',
+    fontSize: '14px',
     color: '#fff',
     textTransform: 'uppercase',
   },
-  greyContentHeader: {
-    color: '#20506A',
-    fontFamily: 'Oswald',
-    fontSize: '31px',
-    fontWeight: '500',
+  mountainMeadowContentHeader: {
+    color: '#033D6F',
+    fontFamily: 'Lato',
+    fontSize: '28px',
+    fontWeight: 'bold',
     lineHeight: '32px',
     padding: '15px 0',
-    textTransform: 'uppercase',
   },
-  greyContent: {
-    height: '173px',
-    width: '166px',
+  mountainMeadowContent: {
+    height: '143px',
+    width: '230px',
     color: '#010101',
-    fontFamily: 'Lato',
+    fontFamily: 'Nunito',
     fontSize: '15px',
     lineHeight: '22px',
   },
-  greyIcon: {
+  mountainMeadowIcon: {
     width: '20px',
-    marginTop: '15px',
+    marginTop: '12px',
     marginLeft: '28px',
   },
-  greybutton: {
+  mountainMeadowButton: {
     padding: '15px 5px 0 0',
     height: '9px',
     width: '71px',
@@ -490,6 +445,7 @@ const styles = () => ({
     lineHeight: '19.31px',
     textDecoration: 'none',
     marginLeft: '8px',
+    letterSpacing: '1px',
     '&:hover': {
       color: '#ffffff',
     },
@@ -502,20 +458,17 @@ const styles = () => ({
   },
   animationContainer: {
     position: 'relative',
-    height: '800px',
-    maxHeight: '800px',
-    overflow: 'hidden',
+    left: '33%',
   },
 
   paddingLeft2: {
     paddingLeft: '2px',
   },
-
   heroTextContainer: {
     position: 'absolute',
     width: '400px',
     margin: 'auto',
-    left: '0px',
+    left: '12px',
     right: 0,
     '@media (min-width: 900px)': {
       width: '906px',
@@ -524,23 +477,9 @@ const styles = () => ({
   heroTextWrapper: {
     width: '360px',
   },
-  headerLink: {
-    textDecoration: 'none',
-  },
-  transparentButton: {
-    padding: '12px 15px',
+  buttonText: {
+    padding: '12px 30px',
     height: '40px',
-    color: '#505050 !important',
-    backgroundColor: '#ffffff00 !important',
-    fontSize: '16px',
-    borderBottom: ' 2px #79C5E4 solid',
-    borderRadius: '0px',
   },
-  rightArrow: {
-    marginLeft: '5px',
-    fontSize: '16px',
-    color: '#76C4E4',
-  },
-
 });
-export default withStyles(styles, { withTheme: true })(LandingController);
+export default withStyles(styles, { withTheme: true })(LandingView);

@@ -5,29 +5,34 @@ import gql from 'graphql-tag';
 // Tile1 Tile2 Tile3 images 293x349 px
 // Tile4 image optimum size 600x 436 px
 export const landingPageData = {
-  callToActionTitle: 'Prostate Cancer Natual History Study- data portal',
-  callToActionDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  callToActionTitle: 'Explore, Analyze, Visualize Clinical Trial Data Sets',
+  callToActionDescription: 'Model, Store and Share your Data Sets using the Bento Framework for Data Sharing Platforms.',
   callToActionButtonText: 'EXPLORE THE SITE',
-  callToActionLink: '/cases',
+  callToActionLink: '/explore',
   landingPageHero: {
     alt: 'Alt tag1',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_Hero_Graphic.png',
   },
   landingPageStatsBar: [
     {
-      statTitle: 'Trials',
-      type: 'field',
-      statAPI: 'searchSubjects.numberOfTrials',
+      statTitle: 'Programs',
+      statAPI: 'numberOfPrograms',
+    },
+    {
+      statTitle: 'Arms',
+      statAPI: 'numberOfStudies',
     },
     {
       statTitle: 'Cases',
-      type: 'field',
-      statAPI: 'searchSubjects.numberOfSubjects',
+      statAPI: 'numberOfSubjects',
+    },
+    {
+      statTitle: 'samples',
+      statAPI: 'numberOfSamples',
     },
     {
       statTitle: 'files',
-      type: 'field',
-      statAPI: 'searchSubjects.numberOfFiles',
+      statAPI: 'numberOfFiles',
     },
   ],
   tile1: {
@@ -60,16 +65,16 @@ export const landingPageData = {
     titleText: 'Cases',
     descriptionText: 'Analyze cases from the TAILORx clinical trial.',
     callToActionText: 'Explore',
-    callToActionLink: '/cases', // This links to the cases dashboard.
+    callToActionLink: '/explore', // This links to the cases dashboard.
   },
 };
 
 // --------------- GraphQL query - Retrieve Landing page data --------------
 export const GET_LANDING_PAGE_DATA_QUERY = gql`{
-    searchSubjects{
-        numberOfTrials
-        numberOfSubjects
-        numberOfFiles   
-    }
+  numberOfPrograms
+  numberOfStudies
+  numberOfSubjects
+  numberOfSamples
+  numberOfFiles
   }
   `;

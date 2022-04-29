@@ -4,15 +4,15 @@ import gql from 'graphql-tag';
 // wizardIconSrc optimum size 400x46.76
 
 export const navBarCartData = {
-  cartLabel: 'MY SUBJECTS',
+  cartLabel: 'MY CASES',
   cartLink: '/myCases',
   cartIcon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Icon-Cart-Navbar.svg',
   cartIconAlt: 'cart_logo',
 };
 
 export const myCasesPageData = {
-  myCasesMainTitle: 'My Subjects :',
-  myCasesSubTitle: 'Subjects',
+  myCasesMainTitle: 'My Cases :',
+  myCasesSubTitle: 'Cases',
   buttonText: 'GO TO FILES',
   buttonLink: '/mycasesfiles',
   headerIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Icon-Cart-Workflow.svg',

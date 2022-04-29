@@ -3,7 +3,6 @@ import { withStyles, CssBaseline } from '@material-ui/core';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import aboutPageRoutes from '../../bento/aboutPagesRoutes';
 import Header from '../Header/HeaderView';
-import TextBar from '../TextBar/TextBarView';
 import NavBar from '../NavBar/NavBarContainer';
 import Footer from '../Footer/FooterView';
 import Error from '../../pages/error/Error';
@@ -15,14 +14,14 @@ import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
-import Trials from '../../pages/trials/trialsController';
-import TrialDetail from '../../pages/trialDetail/trialDetailController';
-import Sites from '../../pages/sites/sitesController';
-import SiteDetail from '../../pages/siteDetail/siteDetailController';
+import Programs from '../../pages/programs/programsController';
+import ProgramDetail from '../../pages/programDetail/programDetailController';
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
 import JBrowse from '../JBrowse/JBrowseView';
 import JBrowseDetail from '../../pages/jbrowseDetail/jbrowseDetailController';
+import GlobalSearch from '../../pages/search/searchView';
+import GlobalSearchController from '../../pages/search/searchViewController';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -35,7 +34,6 @@ const Layout = ({ classes, isSidebarOpened }) => (
     <HashRouter>
       <>
         <Header />
-        <TextBar />
         <NavBar />
         {/* Reminder: Ajay need to replace the ICDC with env variable and
           change build npm to read env variable */}
@@ -47,17 +45,17 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route exact path="/ICDC/" component={Home} />
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
-            <Route path="/subjects" component={Dashboard} />
-            <Route path="/trials" component={Trials} />
-            <Route path="/sites" component={Sites} />
+            <Route path="/explore" component={Dashboard} />
+            <Route path="/programs" component={Programs} />
             <Route path="/model" component={modelPage} />
             <Route path="/table" component={table} />
             <Route path="/fileCentricCart" component={fileCentricCart} />
-            <Route path="/trial/:id" component={TrialDetail} />
-            <Route path="/site/:id" component={SiteDetail} />
-            <Route path="/subject/:id" component={CaseDetail} />
+            <Route path="/program/:id" component={ProgramDetail} />
+            <Route path="/case/:id" component={CaseDetail} />
             <Route path="/arm/:id" component={ArmDetail} />
             <Route path="/JBrowse" component={JBrowse} />
+            <Route exact path="/search" component={GlobalSearch} />
+            <Route path="/search/:id" component={GlobalSearchController} />
             <Route path="/fileViewer/:id" component={JBrowseDetail} />
             {aboutPageRoutes.map(
               (aboutPageRoute, index) => (

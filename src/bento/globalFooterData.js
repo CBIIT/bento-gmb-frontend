@@ -2,8 +2,7 @@ import env from '../utils/env';
 // footerLogoImage ideal image size 310x80 px
 
 export default {
-  bg: '#0F253A',
-  footerLogoImage: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/footer_FNL_logo.png',
+  footerLogoImage: 'https://raw.githubusercontent.com/cbiit/datacommons-assets/main/bento/images/icons/png/footerlogo.png',
   footerLogoAltText: 'Footer Logo',
   footerLogoHyperlink: 'https://frederick.cancer.gov/',
   footerStaticText: 'NIH … Turning Discovery Into Health®',
@@ -15,60 +14,32 @@ export default {
   // Ideal size for icon is 20x20 px
   link_sections: [
     {
-      title: 'About GMB',
+      title: 'About Bento',
       items: [
         {
           text: 'Purpose',
-          link: '/purpose',
+          link: '/bento',
         },
         {
-          text: 'CRDC',
-          link: '/crdc',
+          text: 'Resources',
+          link: '/resources',
         },
+        {
+          text: 'Documentation',
+          link: 'https://cbiit.github.io/bento-docs/',
+        },
+      ],
+    },
+    {
+      title: 'Support',
+      items: [
         {
           text: 'Contact Us',
-          link: 'CTDCHelpDesk@mail.nih.gov',
-        },
-      ],
-    },
-
-    {
-      title: 'About the Data',
-      items: [
-        {
-          text: 'CTDC Data & Model',
-          link: '/model',
+          link: 'bento-help@nih.gov',
         },
         {
-          text: 'Analyzing Data',
-          link: '/crdc',
-        },
-        {
-          text: 'Developers (APIs)',
-          link: '/developers',
-        },
-      ],
-    },
-
-    {
-      title: 'More Information',
-      items: [
-        {
-          text: 'Policies',
-          link: 'https://www.cancer.gov/global/web/policies',
-          title: 'link to NCI policies',
-        },
-        {
-          text: 'Disclaimer',
-          link: 'https://www.cancer.gov/policies/disclaimer',
-        },
-        {
-          text: 'Accessibility',
-          link: 'https://www.cancer.gov/policies/accessibility',
-        },
-        {
-          text: 'FOIA',
-          link: 'https://www.cancer.gov/policies/foia',
+          link: 'https://www.linkedin.com/company/frederick-national-laboratory-for-cancer-research/',
+          icon: 'https://raw.githubusercontent.com/CBIIT/bento-tools/master/src/components/assets/footer/linkedInIcon.svg',
         },
       ],
     },
