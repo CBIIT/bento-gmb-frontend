@@ -177,6 +177,7 @@ const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.su
  * @return {json}r
  */
 function getWidgetsInitData(data, widgetsInfoFromCustConfig) {
+  console.log(data);
   const donut = widgetsInfoFromCustConfig.reduce((acc, widget) => {
     const Data = widget.type === 'sunburst' ? transformInitialDataForSunburst(data[widget.dataName]) : removeEmptySubjectsFromDonutData(data[widget.dataName]);
     const label = widget.dataName;
@@ -579,18 +580,6 @@ export function fetchDataForDashboardTab(
 ) {
   const { QUERY, sortfield, sortDirection } = getQueryAndDefaultSort(payload);
   const newFilters = filters;
-  // deal with empty string inside the age_at_index filter
-  if (filters && filters.age_at_index.length === 2) {
-    if (filters.age_at_index.includes('')) {
-      newFilters.age_at_index = [];
-    }
-    if (typeof filters.age_at_index[0] === 'string') {
-      newFilters.age_at_index[0] = Number(newFilters.age_at_index[0]);
-    }
-    if (typeof filters.age_at_index[1] === 'string') {
-      newFilters.age_at_index[1] = Number(newFilters.age_at_index[1]);
-    }
-  }
   const activeFilters = newFilters === null
     ? (getState().allActiveFilters !== {}
       ? {

@@ -81,7 +81,7 @@ const DocumentDownload = ({
         { (globalData.enableAuthentication && !isSignedIn) ? (
           <ToolTip classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} title={toolTipTextUnauthenticated} arrow placement="bottom">
             <div
-              style={{ textAlign: 'center' }}
+              style={{ textAlign: 'center', marginLeft: '-50px' }}
               onClick={() => signIn()}
             >
               <CustomIcon imgSrc={iconUnauthenticated} />

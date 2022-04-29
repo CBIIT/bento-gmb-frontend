@@ -9,93 +9,77 @@ export const searchTabTitleText = 'Search';
 // A maximum of 12 facetSearchData are allowed
 export const facetSearchData = [
   {
-    label: 'Program', field: 'group', api: 'subjectCountByProgram', apiForFiltering: 'filterSubjectCountByProgram', datafield: 'programs', section: 'Cases', show: true,
+    label: 'Race', field: 'group', api: 'subjectCountByRace', apiForFiltering: 'filterSubjectCountByRace', datafield: 'race', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Arm', field: 'group', api: 'subjectCountByStudy', apiForFiltering: 'filterSubjectCountByStudy', datafield: 'studies', section: 'Cases', show: true,
+    label: 'Disease Term', field: 'group', api: 'subjectCountByDiseaseTerm', apiForFiltering: 'filterSubjectCountByDiseaseTerm', datafield: 'disease_term', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Diagnosis', field: 'group', api: 'subjectCountByDiagnoses', apiForFiltering: 'filterSubjectCountByDiagnoses', datafield: 'diagnoses', section: 'Cases', show: true,
+    label: 'Registering Institution', field: 'group', api: 'subjectCountByRegisteringInstitution', apiForFiltering: 'filterSubjectCountByRegisteringInstitution', datafield: 'registering_institution', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Recurrence Score', field: 'group', api: 'subjectCountByRecurrenceScore', apiForFiltering: 'filterSubjectCountByRecurrenceScore', datafield: 'rc_scores', section: 'Cases', show: true, customNumberSort: true,
+    label: 'Patient Subgroup', field: 'group', api: 'subjectCountByPatientSubgroup', apiForFiltering: 'filterSubjectCountByPatientSubgroup', datafield: 'patient_subgroup', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Tumor Size', field: 'group', api: 'subjectCountByTumorSize', apiForFiltering: 'filterSubjectCountByTumorSize', datafield: 'tumor_sizes', section: 'Cases', show: true, customNumberSort: true,
+    label: 'Disease Stage at Entry', field: 'group', api: 'subjectCountByStageAtEntry', apiForFiltering: 'filterSubjectCountByStageAtEntry', datafield: 'stage_at_entry', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Chemotherapy', field: 'group', api: 'subjectCountByChemotherapyRegimen', apiForFiltering: 'filterSubjectCountByChemotherapyRegimen', datafield: 'chemo_regimen', section: 'Cases', show: true,
+    label: 'Cause of Death', field: 'group', api: 'subjectCountByCauseOfDeath', apiForFiltering: 'filterSubjectCountByCauseOfDeath', datafield: 'cause_of_death', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Tumor Grade', field: 'group', api: 'subjectCountByTumorGrade', apiForFiltering: 'filterSubjectCountByTumorGrade', datafield: 'tumor_grades', section: 'Cases', show: true,
+    label: 'Sites of Disease at Autopsy', field: 'group', api: 'subjectCountBySitesOfDiseaseAtAutopsy', apiForFiltering: 'filterSubjectCountBySitesOfDiseaseAtAutopsy', datafield: 'sites_of_disease_at_autopsy', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'ER Status', field: 'group', api: 'subjectCountByErStatus', apiForFiltering: 'filterSubjectCountByErStatus', datafield: 'er_status', section: 'Cases', show: true,
+    label: 'Source of the Lab Data', field: 'group', api: 'subjectCountBySourceOfTheLabData', apiForFiltering: 'filterSubjectCountBySourceOfTheLabData', datafield: 'source_of_the_lab_data', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'PR Status', field: 'group', api: 'subjectCountByPrStatus', apiForFiltering: 'filterSubjectCountByPrStatus', datafield: 'pr_status', section: 'Cases', show: true,
+    label: 'Lab Test', field: 'group', api: 'subjectCountByLabTest', apiForFiltering: 'filterSubjectCountByLabTest', datafield: 'lab_test', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Endocrine Therapy', field: 'group', api: 'subjectCountByEndocrineTherapy', apiForFiltering: 'filterSubjectCountByEndocrineTherapy', datafield: 'endo_therapies', section: 'Cases', show: true,
+    label: 'System Organ Class', field: 'group', api: 'subjectCountBySystemOrganClass', apiForFiltering: 'filterSubjectCountBySystemOrganClass', datafield: 'system_organ_class', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Menopause Status', field: 'group', api: 'subjectCountByMenopauseStatus', apiForFiltering: 'filterSubjectCountByMenopauseStatus', datafield: 'meno_status', section: 'Cases', show: true,
+    label: 'Serious', field: 'group', api: 'subjectCountBySerious', apiForFiltering: 'filterSubjectCountBySerious', datafield: 'serious', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Tissue Type', field: 'group', api: 'subjectCountByTissueType', apiForFiltering: 'filterSubjectCountByTissueType', datafield: 'tissue_type', section: 'Samples', show: true,
+    label: 'Outcome', field: 'group', api: 'subjectCountByOutcome', apiForFiltering: 'filterSubjectCountByOutcome', datafield: 'outcome', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'Tissue Composition', field: 'group', api: 'subjectCountByTissueComposition', apiForFiltering: 'filterSubjectCountByTissueComposition', datafield: 'composition', section: 'Samples', show: true,
+    label: 'Somatic Pathogenicity', field: 'group', api: 'subjectCountBySomaticPathogenicity', apiForFiltering: 'filterSubjectCountBySomaticPathogenicity', datafield: 'somatic_pathogenicity', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'File Association', field: 'group', api: 'subjectCountByFileAssociation', apiForFiltering: 'filterSubjectCountByFileAssociation', datafield: 'association', section: 'Files', show: true,
+    label: 'Germline Pathogenicity', field: 'group', api: 'subjectCountByGermlinePathogenicity', apiForFiltering: 'filterSubjectCountByGermlinePathogenicity', datafield: 'germline_pathogenicity', section: 'Filter By Subject', show: true,
   },
   {
-    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'file_type', section: 'Files', show: true,
-  },
-  {
-    label: 'Age', api: 'filterSubjectCountByAge', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'age_at_index', section: 'Cases', show: true, slider: true, quantifier: 'Years',
+    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'file_type', section: 'Filter By Files', show: true,
   },
 ];
 
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
-  Cases: {
+  'Filter By Subject': {
     color: '#10A075',
-    backgroundColor: '#C0E9D7',
     checkBoxColorsOne: '#E8F7DC',
     checkBoxColorsTwo: '#F5FDEE',
     height: '5px',
     isExpanded: true,
   },
-  Samples: {
-    color: '#10BEFF',
-    backgroundColor: '#C3EAF5',
-    checkBoxColorsOne: '#C9EBF7',
-    checkBoxColorsTwo: '#E8F8FE',
-    height: '5px',
-    isExpanded: true,
-  },
-  Files: {
+  'Filter By Files': {
     color: '#E636E4',
-    backgroundColor: '#F5C3F1',
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
     height: '5px',
-    isExpanded: true,
+    isExpanded: false,
   },
 };
 
 // --------------- Dashboard Facet Local Find Configuration --------------
 
 export const facetSectionFindApi = {
-  Cases: {
-    api: 'subjectIds',
+  'Filter By Subject': {
+    api: 'subject_ids',
   },
-  Samples: {
-    api: 'sampleIds',
-  },
-  Files: {
+  'Filter By Files': {
     api: 'fileIds',
   },
 };
@@ -156,50 +140,50 @@ export const displayActiveFiltersQuery = true;
 export const widgetsData = [
   {
     type: 'donut',
-    label: 'Diagnosis',
-    dataName: 'subjectCountByDiagnoses',
-    datatable_field: 'diagnosis',
-    titleText: 'Cases',
+    label: 'Germline Pathogenicity',
+    dataName: 'subjectCountByGermlinePathogenicity',
+    datatable_field: 'germlinePathogenicity',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Diagnosis',
-    dataName: 'subjectCountByDiagnoses',
-    datatable_field: 'diagnosis',
-    titleText: 'Cases',
+    label: 'Somatic Pathogenicity',
+    dataName: 'subjectCountBySomaticPathogenicity',
+    datatable_field: 'somaticPathogenicity',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Recurrence Score',
-    dataName: 'subjectCountByRecurrenceScore',
-    datatable_field: 'recurrence_score',
-    titleText: 'Cases',
+    label: 'Registering Institution',
+    dataName: 'subjectCountByRegisteringInstitution',
+    datatable_field: 'registeringInstitution',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Tumor Size',
-    dataName: 'subjectCountByTumorSize',
-    datatable_field: 'tumor_size',
-    titleText: 'Cases',
+    label: 'Race',
+    dataName: 'subjectCountByRace',
+    datatable_field: 'race',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Chemotherapy',
-    dataName: 'subjectCountByChemotherapyRegimen',
-    datatable_field: 'chemotherapy',
-    titleText: 'Cases',
+    label: 'Disease Stage at Entry',
+    dataName: 'subjectCountByStageAtEntry',
+    datatable_field: 'stageAtEntry',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Endocrine Therapy',
-    dataName: 'subjectCountByEndocrineTherapy',
-    datatable_field: 'endocrine_therapy',
-    titleText: 'Cases',
+    label: 'Serious',
+    dataName: 'subjectCountBySerious',
+    datatable_field: 'serious',
+    titleText: 'Subjects',
     show: true,
   },
 ];
