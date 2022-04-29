@@ -20,8 +20,7 @@ export const externalLinkIcon = {
 // --------------- Tabs Table configuration --------------
 export const tabContainers = [
   {
-
-    name: 'Cases',
+    name: 'Subjects',
     dataField: 'dataCase',
     api: 'GET_CASES_OVERVIEW_QUERY',
     paginationAPIField: 'subjectOverview',
@@ -268,7 +267,7 @@ export const tabContainers = [
 export const tabs = [
   {
     id: 'case_tab',
-    title: 'Cases',
+    title: 'Subjects',
     dataField: 'dataCase',
     count: 'numberOfSubjects',
   },
@@ -283,7 +282,7 @@ export const tabs = [
 // --------------- Tabs Header Style configuration --------------
 export const tabIndex = [
   {
-    title: 'Cases',
+    title: 'Subjects',
     primaryColor: '#D6F2EA',
     secondaryColor: '#FFDFB8',
     selectedColor: '#10A075',

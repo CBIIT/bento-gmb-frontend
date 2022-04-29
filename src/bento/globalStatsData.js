@@ -12,29 +12,14 @@ export const statsStyling = {
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Programs',
+    statTitle: 'Trials',
     type: 'field',
-    statAPI: 'numberOfPrograms',
+    statAPI: 'numberOfTrials',
   },
   {
-    statTitle: 'Arms',
-    type: 'field',
-    statAPI: 'numberOfStudies',
-  },
-  {
-    statTitle: 'Cases',
+    statTitle: 'Subjects',
     type: 'field',
     statAPI: 'numberOfSubjects',
-  },
-  {
-    statTitle: 'samples',
-    type: 'field',
-    statAPI: 'numberOfSamples',
-  },
-  {
-    statTitle: 'Assays',
-    type: 'field',
-    statAPI: 'numberOfLabProcedures',
   },
   {
     statTitle: 'files',
@@ -45,11 +30,9 @@ export const globalStatsData = [
 
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
-  numberOfPrograms
-  numberOfStudies
-  numberOfSubjects
-  numberOfSamples
-  numberOfLabProcedures
-  numberOfFiles
+  searchSubjects{
+      numberOfTrials
+      numberOfSubjects
+      numberOfFiles
   }
-  `;
+  }`;
