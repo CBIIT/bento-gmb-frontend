@@ -4,18 +4,18 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { CustomDataTable, getOptions, getColumns } from 'bento-components';
-import globalData from '../../bento/siteWideConfig';
 import {
   table, programListingIcon, externalLinkIcon,
-} from '../../bento/programData';
+} from '../../bento/trialsData';
 import Stats from '../../components/Stats/AllStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
   singleCheckBox, setSideBarToLoading, setDashboardTableLoading,
 } from '../dashboardTab/store/dashboardReducer';
 
-const Programs = ({ classes, data }) => {
+const Trials = ({ classes, data }) => {
   const redirectTo = (program) => {
+    console.log(program);
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
@@ -23,7 +23,7 @@ const Programs = ({ classes, data }) => {
       groupName: 'Program',
       isChecked: true,
       name: program.rowData[0],
-      section: 'Filter By Cases',
+      section: 'Filter By Subject',
     }]);
   };
 
@@ -57,7 +57,7 @@ const Programs = ({ classes, data }) => {
                 <Grid item xs={12}>
                   <CustomDataTable
                     data={data[table.dataField]}
-                    columns={getColumns(table, classes, data, externalLinkIcon, '/explore', redirectTo, '', globalData.replaceEmptyValueWith)}
+                    columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectTo)}
                     options={getOptions(table, classes)}
                   />
                 </Grid>
@@ -158,4 +158,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(Programs);
+export default withStyles(styles, { withTheme: true })(Trials);

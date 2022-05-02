@@ -2,33 +2,33 @@ import gql from 'graphql-tag';
 
 // --------------- Page title configuration --------------
 const pageTitle = {
-  label: 'Program :',
-  dataField: 'program_acronym',
+  label: 'Trial:',
+  dataField: 'trialName',
 };
 
 const pageSubTitle = {
-  dataField: 'program_id',
+  dataField: 'trial_id',
 };
 
 const breadCrumb = {
-  label: 'ALL PROGRAMS',
-  link: '/programs',
+  label: 'ALL Trials',
+  link: '/trials',
 };
 
 // --------------- Aggregated count configuration --------------
 const aggregateCount = {
-  labelText: 'Cases',
+  labelText: 'Subjects',
   dataField: 'num_subjects',
-  link: '/explore',
+  link: '/subjects',
   display: true,
 };
 
 // --------------- Icons configuration --------------
-// Ideal size for programDetailIcon is 107x107 px
+// Ideal size for trialDetailIcon is 107x107 px
 // Ideal size for externalLinkIcon is 16x16 px
-const programDetailIcon = {
+const trialDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'Bento program logo',
+  alt: 'GMB trial logo',
 };
 
 const externalLinkIcon = {
@@ -41,29 +41,29 @@ const externalLinkIcon = {
 const leftPanel = {
   attributes: [
     {
-      dataField: 'program_acronym',
-      label: 'Program',
+      dataField: 'trialName',
+      label: 'Trial',
     },
     {
-      dataField: 'program_name',
-      label: 'Program Name',
+      dataField: 'trialLongName',
+      label: 'Trial Name',
     },
     {
-      dataField: 'program_id',
-      label: 'Program Id',
+      dataField: 'trial_id',
+      label: 'Trial Id',
+      externalLinkToDataField: true,
     },
     {
-      dataField: 'program_full_description',
-      label: 'Program Description',
+      dataField: 'trialDesription',
+      label: 'Trial Description',
     },
     {
-      dataField: 'institution_name',
-      label: 'Institution',
+      dataField: 'leadOrganization',
+      label: 'Lead Organization',
     },
     {
-      dataField: 'program_external_url',
-      label: 'External Link to Program',
-      externalLinkToLabel: true,
+      dataField: 'trialPrincipalInvestigator',
+      label: 'Principal Investigator',
     },
   ],
 };
@@ -73,9 +73,10 @@ const leftPanel = {
 const rightPanel = {
   widget: [
     {
-      dataField: 'diagnoses',
-      label: 'Diagnosis',
+      dataField: 'N/A',
+      label: 'Stage at Entry Distribution',
       display: true,
+      titleText: 'Subjects',
     },
   ],
   files: [
@@ -94,80 +95,83 @@ const table = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'ARMS',
+  title: 'Sites',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'studies',
+  dataField: 'sites',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'study_acronym',
+  defaultSortField: 'site_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
+  // download csv 'true' or 'false'
+  download: true,
+  // downloaded File Name
+  downloadFileName: 'samples_download',
   // Set 'selectableRows' to true to show the row selection
   selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'study_acronym',
-      header: 'Arm',
-      link: '/arm/{study_acronym}',
+      dataField: 'site_id',
+      header: 'Site ID',
+      link: '/site/{site_id}',
     },
     {
-      dataField: 'study_name',
-      header: 'Arm Name',
+      dataField: 'siteName',
+      header: 'Name',
     },
     {
-      dataField: 'study_full_description',
-      header: 'Arm Description',
+      dataField: 'siteAddress',
+      header: 'Address',
     },
     {
-      dataField: 'study_type',
-      header: 'Arm Type',
+      dataField: 'siteStatus',
+      header: 'Status',
     },
     {
-      dataField: 'num_subjects',
-      header: 'Associated Cases',
+      dataField: 'subjectCount',
+      header: 'Subjects',
     },
   ],
 };
 
-// --------------- GraphQL query - Retrieve program details --------------
-const GET_PROGRAM_DETAIL_DATA_QUERY = gql`
-query programDetail($program_id: String!) {
-  programDetail(program_id: $program_id) {
-    program_acronym
-    program_id
-    program_name
-    program_full_description
-    institution_name
-    program_external_url
-    num_subjects
-    num_files
-    num_samples
-    num_lab_procedures
-    disease_subtypes
-    diagnoses {
-      group
-      subjects
+// --------------- GraphQL query - Retrieve trial details --------------
+const GET_TRIAL_DETAIL_DATA_QUERY = gql`
+query trialDetail($trial_id: String){
+    trialDetail(trial_id: $trial_id){
+        trial_id
+        trialName
+        trialLongName
+        trialDesription
+        leadOrganization
+        trialType
+        trialPrincipalInvestigator
+        num_subjects
+        num_files
+        sites{
+          site_id
+          siteName
+          siteAddress
+          siteStatus
+          subjectCount
+        }
     }
-    studies { 
-      study_name
-      study_type
-      study_acronym
-      study_info
-      study_full_description
-      num_subjects
+    trialSubjectCountByStageAtEntry(trial_id: $trial_id){
+        group
+        subjects
     }
-  }
 }`;
 
 export {
   pageTitle,
   pageSubTitle,
   aggregateCount,
-  programDetailIcon,
+  trialDetailIcon,
   leftPanel,
   rightPanel,
   externalLinkIcon,
   breadCrumb,
-  GET_PROGRAM_DETAIL_DATA_QUERY,
+  GET_TRIAL_DETAIL_DATA_QUERY,
   table,
 };

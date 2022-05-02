@@ -8,14 +8,15 @@ import Footer from '../Footer/FooterView';
 import Error from '../../pages/error/Error';
 import Dashboard from '../../pages/dashboardTab/dashboardController';
 import CaseDetail from '../../pages/caseDetail/caseDetailController';
-import ArmDetail from '../../pages/armDetail/armDetailController';
 import modelPage from '../../pages/modelPage/modelPageView';
 import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
-import Programs from '../../pages/programs/programsController';
-import ProgramDetail from '../../pages/programDetail/programDetailController';
+import Trials from '../../pages/trials/trialsController';
+import TrialDetail from '../../pages/trialDetail/trialDetailController';
+import Sites from '../../pages/sites/sitesController';
+import SiteDetail from '../../pages/siteDetail/siteDetailController';
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
 import JBrowse from '../JBrowse/JBrowseView';
@@ -45,14 +46,15 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route exact path="/ICDC/" component={Home} />
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
-            <Route path="/explore" component={Dashboard} />
-            <Route path="/programs" component={Programs} />
+            <Route path="/subjects" component={Dashboard} />
+            <Route path="/trials" component={Trials} />
+            <Route path="/sites" component={Sites} />
             <Route path="/model" component={modelPage} />
             <Route path="/table" component={table} />
             <Route path="/fileCentricCart" component={fileCentricCart} />
-            <Route path="/program/:id" component={ProgramDetail} />
-            <Route path="/case/:id" component={CaseDetail} />
-            <Route path="/arm/:id" component={ArmDetail} />
+            <Route path="/trial/:id" component={TrialDetail} />
+            <Route path="/site/:id" component={SiteDetail} />
+            <Route path="/subject/:id" component={CaseDetail} />
             <Route path="/JBrowse" component={JBrowse} />
             <Route exact path="/search" component={GlobalSearch} />
             <Route path="/search/:id" component={GlobalSearchController} />
