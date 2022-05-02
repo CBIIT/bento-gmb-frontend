@@ -7,9 +7,11 @@ import SearchAutoFill from '../Search/searchAutoFillComponent';
 const customStyle = {
   nihLogoImg: {
     width: '463px',
+    height: '70px',
     marginLeft: '0px',
     minHeight: '54px',
     maxHeight: '100px',
+    marginBottom: '15px',
   },
 };
 
