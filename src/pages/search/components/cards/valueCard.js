@@ -56,8 +56,6 @@ const ValueCard = ({ data, classes, index }) => {
               label={prop.label}
               value={data[prop.dataField]}
               link={prop.link}
-              // labelLink={prop.labelLink}
-              // classes={classes}
               index
             />
           ))}

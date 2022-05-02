@@ -6,12 +6,10 @@ import PropertyItem from '../propertyItem';
 
 const CaseCard = ({ data, classes, index }) => {
   const properties = [
-
     {
-      label: 'Program ID',
-      dataField: 'program_id',
-      link: '/program/{program_id}',
-
+      label: 'Trial ID',
+      dataField: 'clinical_trial_id',
+      link: '/trial/{clinical_trial_id}',
     },
     {
       label: 'Diagnosis',
@@ -29,7 +27,7 @@ const CaseCard = ({ data, classes, index }) => {
     <>
       <Grid item container className={classes.card}>
         <Grid item xs={1} className={classes.indexContainer}>
-          {index + 1 }
+          {index + 1}
         </Grid>
         <Grid item xs={11} className={classes.propertyContainer}>
           <div>
@@ -46,8 +44,6 @@ const CaseCard = ({ data, classes, index }) => {
               label={prop.label}
               value={data[prop.dataField]}
               link={prop.link}
-            // labelLink={prop.labelLink}
-            // classes={classes}
               index
             />
           ))}

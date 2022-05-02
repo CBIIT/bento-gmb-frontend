@@ -1,26 +1,23 @@
-import { Grid, withStyles } from '@material-ui/core';
 import React from 'react';
+import { Grid, withStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { prepareLinks } from 'bento-components';
 import PropertyItem from '../propertyItem';
 
-const NodeCard = ({ data, classes, index }) => {
+const SiteCard = ({ data, classes, index }) => {
   const properties = [
     {
-      label: 'Node Name',
-      dataField: 'node_name',
-      link: '/case/{subject_id}',
+      label: 'Program ID',
+      dataField: 'program_id',
+      link: '/program/{program_id}',
     },
     {
-      label: 'Property Name',
-      dataField: 'property_name',
+      label: 'Study Name',
+      dataField: 'study_name',
     },
     {
-      label: 'File Name',
-      dataField: 'file_name',
-    },
-    {
-      label: 'File Id',
-      dataField: 'file_id',
+      label: 'Study Type',
+      dataField: 'study_type',
     },
   ];
   const propertiesWithLinks = prepareLinks(properties, data);
@@ -29,32 +26,36 @@ const NodeCard = ({ data, classes, index }) => {
     <>
       <Grid item container className={classes.card}>
         <Grid item xs={1} className={classes.indexContainer}>
-          {index + 1 }
+          {index + 1}
         </Grid>
         <Grid item xs={11} className={classes.propertyContainer}>
           <div>
-            <span className={classes.detailContainerHeader}>Node</span>
-            <span className={classes.cardTitle}>{data.file_id}</span>
+            <span className={classes.detailContainerHeader}>SITE</span>
+            <span className={classes.cardTitle}>
+              <Link to={`/site/${data.site_id}`} className={classes.cardTitle}>
+                {data.site_id}
+              </Link>
 
+            </span>
           </div>
+
           {propertiesWithLinks.map((prop) => (
             <PropertyItem
               label={prop.label}
               value={data[prop.dataField]}
               link={prop.link}
+              index
             />
           ))}
         </Grid>
       </Grid>
-
     </>
   );
 };
 
 const styles = () => ({
-  cartIcon: {
-    height: '22px',
-    margin: '0px 0px 0px 6px',
+  content: {
+    fontSize: '12px',
   },
   indexContainer: {
     padding: '18px 0px 18px 18px',
@@ -68,18 +69,16 @@ const styles = () => ({
   },
   cardTitle: {
     color: '#7747FF',
+    textDecoration: 'none',
     fontSize: '16px',
     fontFamily: 'Nunito',
     paddingLeft: '9px',
     verticalAlign: 'middle',
   },
-  content: {
-    fontSize: '12px',
-  },
   detailContainerHeader: {
     textTransform: 'uppercase',
     padding: '2px 8px',
-    backgroundColor: '#ECC28B',
+    backgroundColor: '#DBDBDB',
     color: '#000000',
     fontFamily: 'Nunito',
     fontSize: '12px',
@@ -90,4 +89,4 @@ const styles = () => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(NodeCard);
+export default withStyles(styles, { withTheme: true })(SiteCard);

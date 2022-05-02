@@ -9,177 +9,126 @@ export const programListingIcon = {
 };
 
 export const SEARCH = gql`
-query globalSearch($input: String){
-    globalSearch(input: $input) {
-        programs {
-            program_id
-        }
-        studies {
-            study_id
-        }
-        subjects {
-            subject_id
-        }
-        samples {
-            sample_id
-        }
-        files {
-            file_id
-        }
-        model {
-            node_name
+    query globalSearch($input: String){
+        globalSearch(input: $input) {
+            trials {
+                clinical_trial_id
+            }
+            subjects {
+                subject_id
+            }
+            files {
+                file_id
+            }
+            model {
+                node_name
+            }
         }
     }
-}
 `;
 
-export const SEARCH_PAGE_RESULT_PROGRAM = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
-        programs {
-            type
-            program_id
-            program_name
-            program_code
+export const SEARCH_PAGE_RESULT_TRIAL = gql`
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            trials {
+                clinical_trial_id
+                clinical_trial_short_name
+                clinical_trial_long_name
+                clinical_trial_description
+                clinical_trial_type
+                type: __typename
+            }
         }
-}
-}
-`;
-
-export const SEARCH_PAGE_RESULT_STUDIES = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
-        studies {
-            type
-            study_id
-            program_id
-            study_name
-            study_type
-            study_code
-        }
-}
-}
+    }
 `;
 
 export const SEARCH_PAGE_RESULT_SUBJECTS = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
-        subjects {
-            type
-            subject_id
-            program_id
-            diagnosis
-            age
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            subjects {
+                subject_id
+                type: __typename
+            }
         }
-}
-}
-`;
-
-export const SEARCH_PAGE_RESULT_SAMPLES = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
-        samples {
-            type
-            sample_id
-            program_id
-            subject_id
-            diagnosis
-            sample_anatomic_site
-            tissue_type
-        }
-}
-}
+    }
 `;
 
 export const SEARCH_PAGE_RESULT_FILES = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
-        files {
-            type
-            file_id
-            file_name
-            file_format
-            program_id
-            subject_id
-            sample_id
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            files {
+                file_id
+                file_name
+                file_description
+                type: __typename
+            }
         }
-}
-}
+    }
 `;
 
 export const SEARCH_PAGE_RESULT_MODEL = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
-        model {
-            type
-            node_name
-            property_name
-            property_description
-            property_required
-            property_type
-            value
-            highlight
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            model {
+                type
+                node_name
+                property_name
+                property_description
+                property_required
+                property_type
+                value
+                highlight
+            }
         }
-}
-}
+    }
 `;
 
 export const SEARCH_PAGE_RESULT_ABOUT = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
 
-        about_page {
-            type
-            text
-            page
-            title
+            about_page {
+                page
+                title
+                type
+                text
+            }
         }
-}
-}
+    }
 `;
 
 export const SEARCH_PAGE_RESULTS = gql`
-query globalSearch($input: String, $first: Int, $offset: Int){
-    globalSearch(
-        input: $input
-        first: $first
-        offset: $offset
-    ) {
-        program_count
-        study_count
-        subject_count
-        sample_count
-        file_count
-        model_count
-        about_count
-}
-}
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            trial_count
+            subject_count
+            file_count
+            model_count
+            about_count
+        }
+    }
 `;

@@ -11,25 +11,14 @@ const FileCard = ({ data, classes, index }) => {
       dataField: 'file_name',
     },
     {
-      label: 'File Format',
-      dataField: 'file_format',
-
-    },
-    {
-      label: 'Program ID',
-      dataField: 'program_id',
-      link: '/program/{program_id}',
+      label: 'Trial ID',
+      dataField: 'clinical_trial_id',
+      link: '/trial/{clinical_trial_id}',
 
     },
     {
       label: 'Case ID',
       dataField: 'subject_id',
-      link: '/case/{subject_id}',
-
-    },
-    {
-      label: 'Sample ID',
-      dataField: 'sample_id',
       link: '/case/{subject_id}',
     },
   ];
@@ -60,19 +49,6 @@ const FileCard = ({ data, classes, index }) => {
               // classes={classes}
             />
           ))}
-        </Grid>
-        <Grid item xs={3}>
-          {/* <Button variant="outlined" sx={{ borderRadius: 100 }}>
-            <span className={classes.badge}>
-              <img
-                className={classes.cartIcon}
-                src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Icon-Cart-Navbar.svg"
-                alt="add to cart"
-              />
-
-            </span>
-            Add to cart
-          </Button> */}
         </Grid>
       </Grid>
 
