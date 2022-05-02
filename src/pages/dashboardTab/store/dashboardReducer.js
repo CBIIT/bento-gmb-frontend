@@ -177,7 +177,6 @@ const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.su
  * @return {json}r
  */
 function getWidgetsInitData(data, widgetsInfoFromCustConfig) {
-  console.log(data);
   const donut = widgetsInfoFromCustConfig.reduce((acc, widget) => {
     const Data = widget.type === 'sunburst' ? transformInitialDataForSunburst(data[widget.dataName]) : removeEmptySubjectsFromDonutData(data[widget.dataName]);
     const label = widget.dataName;
@@ -539,9 +538,6 @@ export function addAutoComplete({ newValue, type, isFilteredData = false }) {
 }
 
 const querySwitch = (payload, tabContainer) => {
-  console.log('====================================');
-  console.log(tabContainer);
-  console.log('====================================');
   switch (payload) {
     case ('Files'):
       return { QUERY: GET_FILES_OVERVIEW_QUERY, sortfield: tabContainer.defaultSortField || '', sortDirection: tabContainer.defaultSortDirection || '' };
@@ -558,9 +554,6 @@ const querySwitch = (payload, tabContainer) => {
  */
 
 const getQueryAndDefaultSort = (payload = tabIndex[0].title) => {
-  console.log('=============payload=======================');
-  console.log(payload);
-  console.log('====================================');
   const tabContainer = tabContainers.find((x) => x.name === payload);
   return querySwitch(payload, tabContainer);
 };
@@ -910,7 +903,6 @@ export function toggleCheckBox(payload, isQuery = false) {
 }
 
 export function toggleSlider(value, sideBarItem) {
-  // console.log(value);
   if (!value.includes('')) {
     const payload = {};
     const currentAllFilterVariables = createFilterVariablesRange(value, sideBarItem);
