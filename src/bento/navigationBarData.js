@@ -1,8 +1,10 @@
 export const navBarstyling = {
   global: {
-    backgroundColor: '#142D64',
-    height: '39px',
-    padding: '9px 20px 0px 20px',
+    backgroundColor: '#0F253A',
+    height: '51px',
+    padding: '14px 20px 0px 20px',
+    fontColor: '#B3E4F3',
+    activeLabel: '2px solid #B3E4F3',
   },
   dropDownIcon: {
     displayIcon: false,
@@ -47,14 +49,19 @@ export const navBarData = [
     link: '/home',
   },
   {
-    labelText: 'explore',
+    labelText: 'trials',
     type: 'link',
-    link: '/explore',
+    link: '/trials',
   },
   {
-    labelText: 'programs',
+    labelText: 'sites',
     type: 'link',
-    link: '/programs',
+    link: '/sites',
+  },
+  {
+    labelText: 'Subjects',
+    type: 'link',
+    link: '/subjects',
   },
   {
     labelText: 'about',
@@ -77,8 +84,8 @@ export const navBarData = [
 ];
 
 export const navBarCartData = {
-  cartLabel: 'MY Files',
+  cartLabel: '',
   cartLink: '/fileCentricCart',
-  cartIcon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Icon-Cart-Navbar.svg',
+  cartIcon: 'https://raw.githubusercontent.com/CBIIT/bento-gmb-frontend/develop/src/assets/cartIcon.svg',
   cartIconAlt: 'cart_logo',
 };

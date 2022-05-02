@@ -57,34 +57,26 @@ export const table = {
       header: 'File Name',
     },
     {
-      dataField: 'file_type',
+      dataField: 'fileType',
       header: 'File Type',
     },
     {
-      dataField: 'association',
-      header: 'Association',
-    },
-    {
-      dataField: 'file_description',
+      dataField: 'description',
       header: 'Description',
     },
     {
-      dataField: 'file_format',
+      dataField: 'fileFormat',
       header: 'Format',
     },
     {
-      dataField: 'file_size',
+      dataField: 'size',
       header: 'Size',
       // set formatBytes to true to display file size (in bytes) in a more human readable format
       formatBytes: true,
     },
     {
       dataField: 'subject_id',
-      header: 'Case ID',
-    },
-    {
-      dataField: 'study_code',
-      header: 'Study Code',
+      header: 'Subject ID',
     },
     {
       dataField: 'file_id',
@@ -102,15 +94,13 @@ export const table = {
 // --------------- GraphQL query - Retrieve selected cases info --------------
 export const GET_MY_CART_DATA_QUERY = gql`
 query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name", $sort_direction:String="asc") {
-    filesInList(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by, sort_direction: $sort_direction) {
-        study_code
+    filesInList(file_id: $file_ids, offset: $offset,first: $first, order_by: $order_by, sort_direction: $sort_direction) {
         subject_id
         file_name
-        file_type
-        association
-        file_description
-        file_format
-        file_size
+        fileType
+        description
+        fileFormat
+        size
         file_id
         md5sum
     }

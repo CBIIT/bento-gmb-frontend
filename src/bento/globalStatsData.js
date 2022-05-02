@@ -6,6 +6,7 @@ export const statsStyling = {
     statTitleFirst: true,
     height: '47px',
     background: '#8DCAFF',
+    top: '145px',
   },
 };
 
@@ -35,4 +36,4 @@ export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
       numberOfSubjects
       numberOfFiles
   }
-  }`;
+}`;
