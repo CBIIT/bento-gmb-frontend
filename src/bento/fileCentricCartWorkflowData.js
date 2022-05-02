@@ -76,11 +76,7 @@ export const table = {
     },
     {
       dataField: 'subject_id',
-      header: 'Case ID',
-    },
-    {
-      dataField: 'study_code',
-      header: 'Study Code',
+      header: 'Subject ID',
     },
     {
       dataField: 'file_id',
