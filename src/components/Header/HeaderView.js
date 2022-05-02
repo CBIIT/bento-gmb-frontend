@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from 'bento-components';
 import { withRouter } from 'react-router-dom';
 import headerData from '../../bento/globalHeaderData';
-import SearchAUtoFill from '../Search/searchAutoFillComponent';
+import SearchAutoFill from '../Search/searchAutoFillComponent';
 
 const ICDCHeader = (props) => {
   const { location } = props;
@@ -17,7 +17,7 @@ const ICDCHeader = (props) => {
       logo={headerData.globalHeaderLogo}
       alt={headerData.globalHeaderLogoAltText}
       homeLink={headerData.globalHeaderLogoLink}
-      SearchComponent={SearchAUtoFill}
+      SearchComponent={SearchAutoFill}
     />
   );
 };

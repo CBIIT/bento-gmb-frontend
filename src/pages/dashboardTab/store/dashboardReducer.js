@@ -113,24 +113,24 @@ function customizer(objValue, srcValue) {
   }
 }
 
-export async function getSearch(inputVlaue) {
+export async function getSearch(inputValue) {
   const allids = await client
     .query({
       query: SEARCH,
       variables: {
-        input: inputVlaue,
+        input: inputValue,
       },
     })
     .then((result) => result.data.globalSearch);
   return allids;
 }
 
-export async function getSearchPageResults(inputVlaue) {
+export async function getSearchPageResults(inputValue) {
   const allids = await client
     .query({
       query: SEARCH_PAGE_RESULTS,
       variables: {
-        input: inputVlaue,
+        input: inputValue,
       },
     })
     .then((result) => result.data.globalSearch);
@@ -177,7 +177,6 @@ const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.su
  * @return {json}r
  */
 function getWidgetsInitData(data, widgetsInfoFromCustConfig) {
-  console.log(data);
   const donut = widgetsInfoFromCustConfig.reduce((acc, widget) => {
     const Data = widget.type === 'sunburst' ? transformInitialDataForSunburst(data[widget.dataName]) : removeEmptySubjectsFromDonutData(data[widget.dataName]);
     const label = widget.dataName;

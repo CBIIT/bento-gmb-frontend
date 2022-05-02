@@ -1,28 +1,29 @@
 import { Grid, withStyles } from '@material-ui/core';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { prepareLinks } from 'bento-components';
 import PropertyItem from '../propertyItem';
 
-const NodeCard = ({ data, classes, index }) => {
+const TrialCard = ({ data, classes, index }) => {
   const properties = [
     {
-      label: 'Node Name',
-      dataField: 'node_name',
-      link: '/case/{subject_id}',
+      label: 'Trial Name',
+      dataField: 'clinical_trial_short_name',
     },
     {
-      label: 'Property Name',
-      dataField: 'property_name',
+      label: 'Trial Long Name',
+      dataField: 'clinical_trial_long_name',
     },
     {
-      label: 'File Name',
-      dataField: 'file_name',
+      label: 'Trial Description',
+      dataField: 'clinical_trial_description',
     },
     {
-      label: 'File Id',
-      dataField: 'file_id',
+      label: 'Trial Type',
+      dataField: 'clinical_trial_type',
     },
   ];
+
   const propertiesWithLinks = prepareLinks(properties, data);
 
   return (
@@ -33,29 +34,28 @@ const NodeCard = ({ data, classes, index }) => {
         </Grid>
         <Grid item xs={11} className={classes.propertyContainer}>
           <div>
-            <span className={classes.detailContainerHeader}>Node</span>
-            <span className={classes.cardTitle}>{data.file_id}</span>
+            <span className={classes.detailContainerHeader}>TRIAL</span>
+            <Link to={`/trial/${data.clinical_trial_id}`} className={classes.cardTitle}>
+              {data.clinical_trial_id}
+            </Link>
 
           </div>
+
           {propertiesWithLinks.map((prop) => (
             <PropertyItem
               label={prop.label}
               value={data[prop.dataField]}
               link={prop.link}
+              index
             />
           ))}
         </Grid>
       </Grid>
-
     </>
   );
 };
 
 const styles = () => ({
-  cartIcon: {
-    height: '22px',
-    margin: '0px 0px 0px 6px',
-  },
   indexContainer: {
     padding: '18px 0px 18px 18px',
     color: '#747474',
@@ -68,6 +68,7 @@ const styles = () => ({
   },
   cardTitle: {
     color: '#7747FF',
+    textDecoration: 'none',
     fontSize: '16px',
     fontFamily: 'Nunito',
     paddingLeft: '9px',
@@ -79,7 +80,7 @@ const styles = () => ({
   detailContainerHeader: {
     textTransform: 'uppercase',
     padding: '2px 8px',
-    backgroundColor: '#ECC28B',
+    backgroundColor: '#FFE25A',
     color: '#000000',
     fontFamily: 'Nunito',
     fontSize: '12px',
@@ -90,4 +91,4 @@ const styles = () => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(NodeCard);
+export default withStyles(styles, { withTheme: true })(TrialCard);
