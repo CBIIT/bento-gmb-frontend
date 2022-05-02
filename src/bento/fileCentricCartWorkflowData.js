@@ -61,10 +61,6 @@ export const table = {
       header: 'File Type',
     },
     {
-      dataField: 'association',
-      header: 'Association',
-    },
-    {
       dataField: 'description',
       header: 'Description',
     },
