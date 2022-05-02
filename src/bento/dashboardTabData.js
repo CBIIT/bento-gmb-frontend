@@ -1011,55 +1011,63 @@ query search (
 
 export const GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART = gql`
 query subjectsAddAllToCart(
-  $subject_ids: [String],
-  $programs: [String] ,
-  $studies: [String] ,
-  $diagnoses: [String] ,
-  $rc_scores: [String] ,
-  $tumor_sizes: [String] ,
-  $chemo_regimen: [String] ,
-  $tumor_grades: [String] ,
-  $er_status: [String] ,
-  $pr_status: [String] ,
-  $endo_therapies: [String] ,
-  $meno_status: [String] ,
-  $tissue_type: [String],
-  $composition: [String],
-  $association: [String],
-  $file_type: [String],
-  $age_at_index: [Float],
-  $first: Int,
-  $offset: Int= 0, 
-  $order_by: String = "file_id",
-  $sort_direction: String = "asc" 
-  ){
-  subjectOverview(
-      subject_ids: $subject_ids,
-      programs: $programs,
-      studies: $studies,
-      diagnoses: $diagnoses,
-      rc_scores: $rc_scores,
-      tumor_sizes: $tumor_sizes,
-      chemo_regimen: $chemo_regimen,
-      tumor_grades: $tumor_grades,
-      er_status: $er_status,
-      pr_status: $pr_status,
-      endo_therapies: $endo_therapies,
-      meno_status: $meno_status,
-      tissue_type: $tissue_type,
-      composition: $composition,
-      association: $association,
-      file_type: $file_type,
-      age_at_index: $age_at_index,
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-      ) {
-      files
-  }
-}
-    `;
+    $subject_ids: [String],
+    $race: [String],
+    $disease_term: [String],
+    $registering_institution: [String],
+    $patient_subgroup: [String],
+    $stage_at_entry: [String],
+    $cause_of_death: [String],
+    $sites_of_disease_at_autopsy: [String],
+    $source_of_the_lab_data: [String],
+    $lab_test: [String],
+    $system_organ_class: [String],
+    $serious: [String],
+    $outcome: [String],
+    $somatic_pathogenicity: [String],
+    $germline_pathogenicity: [String],
+    $file_type: [String],
+    $offset: Int,
+    $first: Int,
+    $order_by: String,
+    $sort_direction: String
+){
+    subjectOverview(
+        subject_id:$subject_ids,
+        race:$race,
+        disease_term:$disease_term,
+        registering_institution:$registering_institution,
+        patient_subgroup:$patient_subgroup,
+        stage_at_entry:$stage_at_entry,
+        cause_of_death:$cause_of_death,
+        sites_of_disease_at_autopsy:$sites_of_disease_at_autopsy,
+        source_of_the_lab_data:$source_of_the_lab_data,
+        lab_test:$lab_test,
+        system_organ_class:$system_organ_class,
+        serious:$serious,
+        outcome:$outcome,
+        somatic_pathogenicity:$somatic_pathogenicity,
+        germline_pathogenicity:$germline_pathogenicity,
+        file_type: $file_type,
+        offset: $offset,
+        first: $first,
+        order_by: $order_by,
+        sort_direction: $sort_direction
+    ){
+        subject_id
+        race
+        disease_term
+        stageAtEntry
+        causeOfDeath
+        sitesOfDiseaseAtAutopsy
+        sourceOfTheLabData
+        labTest
+        systemOrganClass
+        serious
+        outcome
+        files
+    }
+}`;
 
 export const GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART = gql`
     query samplesAddAllToCart(
