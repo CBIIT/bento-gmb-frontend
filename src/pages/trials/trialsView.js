@@ -14,15 +14,14 @@ import {
 } from '../dashboardTab/store/dashboardReducer';
 
 const Trials = ({ classes, data }) => {
-  const redirectTo = (program) => {
-    console.log(program);
+  const redirectTo = (trial) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
       datafield: 'programs',
       groupName: 'Program',
       isChecked: true,
-      name: program.rowData[0],
+      name: trial.rowData[0],
       section: 'Filter By Subject',
     }]);
   };

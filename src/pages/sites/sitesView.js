@@ -19,7 +19,7 @@ const Sites = ({ classes, data }) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'registeringInstitution',
+      datafield: 'registering_institution',
       groupName: 'Registering Institution',
       isChecked: true,
       name,
