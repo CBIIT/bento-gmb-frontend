@@ -20,7 +20,7 @@ const ICDCFooter = () => {
     getSystems();
   }, [FooterData]);
 
-  return <><Footer data={footerUpdatedData} /></>;
+  return <><Footer data={footerUpdatedData} background={FooterData.bg} /></>;
 };
 
 export default ICDCFooter;
