@@ -333,7 +333,7 @@ const TrialView = ({ classes, data, theme }) => {
                   <Typography>
                     <CustomDataTable
                       data={trialData[table.dataField]}
-                      columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectToArm)}
+                      columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectToArm)}
                       options={getOptions(table, classes)}
                     />
                   </Typography>
