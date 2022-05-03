@@ -8,7 +8,7 @@ export const landingPageData = {
   callToActionTitle: 'Prostate Cancer Natual History Study- data portal',
   callToActionDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   callToActionButtonText: 'EXPLORE THE SITE',
-  callToActionLink: '/cases',
+  callToActionLink: '/subjects',
   landingPageHero: {
     alt: 'Alt tag1',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_Hero_Graphic.png',
@@ -60,7 +60,7 @@ export const landingPageData = {
     titleText: 'Cases',
     descriptionText: 'Analyze cases from the TAILORx clinical trial.',
     callToActionText: 'Explore',
-    callToActionLink: '/cases', // This links to the cases dashboard.
+    callToActionLink: '/subjects', // This links to the cases dashboard.
   },
 };
 
