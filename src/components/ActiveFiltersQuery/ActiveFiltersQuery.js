@@ -93,7 +93,7 @@ const ActiveFiltersQuery = ({ classes }) => {
           <span
             className={classes.filterCheckboxes}
             style={{
-              color: facetSectionVariables.Cases.color,
+              color: facetSectionVariables['Filter By Subject'].color,
             }}
             onClick={onDeleteInputSet}
           >
@@ -138,7 +138,7 @@ const ActiveFiltersQuery = ({ classes }) => {
         className={classes.filterCheckboxes}
         key={idx}
         style={{
-          color: facetSectionVariables.Cases.color,
+          color: facetSectionVariables['Filter By Subject'].color,
         }}
         onClick={() => (isFilter
           ? onDeleteFilterCheckbox(filterData, data)
@@ -149,6 +149,9 @@ const ActiveFiltersQuery = ({ classes }) => {
       {isLastIndex ? null : ' '}
     </>
   );
+
+  const getClassProperty = (chkProp) => (Object.prototype.hasOwnProperty.call(classes, chkProp)
+    ? classes[chkProp] : '');
 
   const removeCaseIds = () => {
     const newValue = [];
@@ -167,28 +170,28 @@ const ActiveFiltersQuery = ({ classes }) => {
   return (
     <div>
       {(updatedFilters.length || autoCompleteSelection.length || bulkUpload.length) > 0 ? (
-        <div className={classes.queryWrapper}>
+        <div className={getClassProperty('queryWrapper')}>
           <Button
             color="primary"
             variant="outlined"
             onClick={clearQuery}
-            className={classes.clearQueryButton}
+            className={getClassProperty('clearQueryButton')}
             disabled={(updatedFilters.length
               || autoCompleteSelection.length
               || bulkUpload.length) <= 0}
           >
             Clear Query
           </Button>
-          <span className={classes.divider} />
-          <span className={classes.queryContainer}>
+          <span className={getClassProperty('divider')} />
+          <span className={getClassProperty('queryContainer')}>
             {(autoCompleteSelection.length || bulkUpload.length) ? (
               <span>
                 {(bulkUpload.length && !autoCompleteSelection.length)
                   ? (
                     <span
-                      className={classes.filterCheckboxes}
+                      className={getClassProperty('filterCheckboxes')}
                       style={{
-                        backgroundColor: facetSectionVariables.Cases.backgroundColor,
+                        backgroundColor: facetSectionVariables['Filter By Subject'].backgroundColor,
                       }}
                       onClick={onDeleteInputSet}
                     >
@@ -200,9 +203,9 @@ const ActiveFiltersQuery = ({ classes }) => {
                     <span>
                       {' '}
                       <span
-                        className={classes.filterName}
+                        className={getClassProperty('filterName')}
                         style={{
-                          backgroundColor: facetSectionVariables.Cases.backgroundColor,
+                          backgroundColor: facetSectionVariables['Filter By Subject'].backgroundColor,
                         }}
                         onClick={removeCaseIds}
                       >
@@ -210,7 +213,7 @@ const ActiveFiltersQuery = ({ classes }) => {
                       </span>
                       {' '}
                       {' '}
-                      <span className={classes.operators}>
+                      <span className={getClassProperty('operators')}>
                         {(autoCompleteSelection.length === 1 && !bulkUpload.length) ? 'IS ' : 'IN '}
                       </span>
                     </span>
@@ -219,29 +222,29 @@ const ActiveFiltersQuery = ({ classes }) => {
                   {autoCompleteSelection.length === 1
                     ? (
                       <>
-                        {bulkUpload.length ? <span className={classes.bracketsOpen}>(</span> : null}
+                        {bulkUpload.length ? <span className={getClassProperty('bracketsOpen')}>(</span> : null}
                         {getInputSet()}
                         <span
-                          className={classes.filterCheckboxes}
+                          className={getClassProperty('filterCheckboxes')}
                           style={{
-                            color: facetSectionVariables.Cases.color,
+                            color: facetSectionVariables['Filter By Subject'].color,
                           }}
                           onClick={() => onDeleteCaseIds(autoCompleteSelection[0])}
                         >
                           {autoCompleteSelection[0]}
                         </span>
                         {bulkUpload.length
-                          ? <span className={classes.bracketsClose}>)</span>
+                          ? <span className={getClassProperty('bracketsClose')}>)</span>
                           : null}
                       </>
                     ) : autoCompleteSelection.length >= 3 ? (
                       <>
-                        <span className={classes.bracketsOpen}>(</span>
+                        <span className={getClassProperty('bracketsOpen')}>(</span>
                         {getInputSet()}
                         <span
-                          className={classes.filterCheckboxes}
+                          className={getClassProperty('filterCheckboxes')}
                           style={{
-                            color: facetSectionVariables.Cases.color,
+                            color: facetSectionVariables['Filter By Subject'].color,
                           }}
                           onClick={() => onDeleteCaseIds(autoCompleteSelection[0])}
                         >
@@ -249,22 +252,22 @@ const ActiveFiltersQuery = ({ classes }) => {
                         </span>
                         {' '}
                         <span
-                          className={classes.filterCheckboxes}
+                          className={getClassProperty('filterCheckboxes')}
                           style={{
-                            color: facetSectionVariables.Cases.color,
+                            color: facetSectionVariables['Filter By Subject'].color,
                           }}
                           onClick={() => onDeleteCaseIds(autoCompleteSelection[1])}
                         >
                           {autoCompleteSelection[1]}
                         </span>
                         ...
-                        <span className={classes.bracketsClose}>)</span>
+                        <span className={getClassProperty('bracketsClose')}>)</span>
                       </>
                     ) : (
                       autoCompleteSelection.length
                         ? (
                           <>
-                            <span className={classes.bracketsOpen}>(</span>
+                            <span className={getClassProperty('bracketsClose')}>(</span>
                             {getInputSet()}
                             {autoCompleteSelection.map((data, idx) => (
                               getFilterJoin(
@@ -274,7 +277,7 @@ const ActiveFiltersQuery = ({ classes }) => {
                                 false,
                               )
                             ))}
-                            <span className={classes.bracketsClose}>)</span>
+                            <span className={getClassProperty('bracketsClose')}>)</span>
                           </>
                         )
                         : null
@@ -284,16 +287,16 @@ const ActiveFiltersQuery = ({ classes }) => {
             ) : null}
             {
               ((autoCompleteSelection.length || bulkUpload.length) && updatedFilters.length)
-                ? <span className={classes.operators}> AND </span>
+                ? <span className={getClassProperty('operators')}> AND </span>
                 : null
             }
             {updatedFilters.map((filter, index) => (
               <span>
                 <span>
                   {' '}
-                  {index !== 0 ? <span className={classes.operators}> AND </span> : ''}
+                  {index !== 0 ? <span className={getClassProperty('operators')}> AND </span> : ''}
                   <span
-                    className={classes.filterName}
+                    className={getClassProperty('filterName')}
                     style={{
                       backgroundColor: facetSectionVariables[filter.section].backgroundColor,
                     }}
@@ -308,13 +311,13 @@ const ActiveFiltersQuery = ({ classes }) => {
                 </span>
                 <span>
                   {' '}
-                  <span className={classes.operators}>
+                  <span className={getClassProperty('operators')}>
                     {filter.checkbox.length === 1 ? 'IS ' : 'IN '}
                   </span>
                   {filter.checkbox.length === 1
                     ? (
                       <span
-                        className={classes.filterCheckboxes}
+                        className={getClassProperty('filterCheckboxes')}
                         style={{
                           color: facetSectionVariables[filter.section].color,
                         }}
@@ -324,9 +327,9 @@ const ActiveFiltersQuery = ({ classes }) => {
                       </span>
                     ) : filter.checkbox.length >= 3 ? (
                       <>
-                        <span className={classes.bracketsOpen}>(</span>
+                        <span className={getClassProperty('bracketsOpen')}>(</span>
                         <span
-                          className={classes.filterCheckboxes}
+                          className={getClassProperty('filterCheckboxes')}
                           style={{
                             color: facetSectionVariables[filter.section].color,
                           }}
@@ -336,7 +339,7 @@ const ActiveFiltersQuery = ({ classes }) => {
                         </span>
                         {' '}
                         <span
-                          className={classes.filterCheckboxes}
+                          className={getClassProperty('filterCheckboxes')}
                           style={{
                             color: facetSectionVariables[filter.section].color,
                           }}
@@ -345,15 +348,15 @@ const ActiveFiltersQuery = ({ classes }) => {
                           {filter.checkbox[1]}
                         </span>
                         ...
-                        <span className={classes.bracketsClose}>)</span>
+                        <span className={getClassProperty('bracketsClose')}>)</span>
                       </>
                     ) : (
                       <>
-                        <span className={classes.bracketsOpen}>(</span>
+                        <span className={getClassProperty('bracketsOpen')}>(</span>
                         {filter.checkbox.map((data, idx) => (
                           getFilterJoin(data, idx, filter.checkbox.length - 1 === idx, true, filter)
                         ))}
-                        <span className={classes.bracketsClose}>)</span>
+                        <span className={getClassProperty('bracketsClose')}>)</span>
                       </>
                     )}
                 </span>

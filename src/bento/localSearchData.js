@@ -29,7 +29,7 @@ export const GET_IDS_BY_TYPE = (type) => gql`{
 
 export const GET_SEARCH_NODES_BY_FACET = gql`
 query searchSubjects(
-    $subject_id: [String],
+    $subject_ids: [String],
     $race: [String],
     $disease_term: [String],
     $registering_institution: [String],
@@ -47,7 +47,7 @@ query searchSubjects(
     $file_type: [String]
 ){
     searchSubjects(
-        subject_id:$subject_id,
+        subject_id:$subject_ids,
         race:$race,
         disease_term:$disease_term,
         registering_institution:$registering_institution,
@@ -309,7 +309,7 @@ query fileOverview(
 
 export const SUBJECT_OVERVIEW_QUERY = gql`
 query subjectOverview(
-    $subject_id: [String],
+    $subject_ids: [String],
     $race: [String],
     $disease_term: [String],
     $registering_institution: [String],
@@ -331,7 +331,7 @@ query subjectOverview(
     $sort_direction: String
 ){
     subjectOverview(
-        subject_id:$subject_id,
+        subject_id:$subject_ids,
         race:$race,
         disease_term:$disease_term,
         registering_institution:$registering_institution,
@@ -370,53 +370,57 @@ query subjectOverview(
 
 export const widgetsSearchData = [
   {
-    type: 'sunburst',
-    label: 'Programs and Arms',
-    dataName: 'armsByProgramsFromLists',
-    mapWithDashboardWidget: 'armsByPrograms',
-    datatable_level1_field: 'program',
-    datatable_level2_field: 'study_acronym',
-    titleText: 'Cases',
+    type: 'donut',
+    label: 'Germline Pathogenicity',
+    dataName: 'subjectCountByGermlinePathogenicity',
+    datatable_field: 'germlinePathogenicity',
+    mapWithDashboardWidget: 'subjectCountByGermlinePathogenicity',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Diagnosis',
-    dataName: 'subjectCountByDiagnosesFromLists',
-    mapWithDashboardWidget: 'subjectCountByDiagnoses',
-    titleText: 'Cases',
+    label: 'Somatic Pathogenicity',
+    dataName: 'subjectCountBySomaticPathogenicity',
+    datatable_field: 'somaticPathogenicity',
+    mapWithDashboardWidget: 'subjectCountBySomaticPathogenicity',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Recurrence Score',
-    dataName: 'subjectCountByRecurrenceScoreFromLists',
-    mapWithDashboardWidget: 'subjectCountByRecurrenceScore',
-    titleText: 'Cases',
+    label: 'Registering Institution',
+    dataName: 'subjectCountByRegisteringInstitution',
+    datatable_field: 'registeringInstitution',
+    mapWithDashboardWidget: 'subjectCountByRegisteringInstitution',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Tumor Size',
-    dataName: 'subjectCountByTumorSizeFromLists',
-    mapWithDashboardWidget: 'subjectCountByTumorSize',
-    titleText: 'Cases',
+    label: 'Race',
+    dataName: 'subjectCountByRace',
+    datatable_field: 'race',
+    mapWithDashboardWidget: 'subjectCountByRace',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Chemotherapy',
-    dataName: 'subjectCountByChemotherapyRegimenFromLists',
-    mapWithDashboardWidget: 'subjectCountByChemotherapyRegimen',
-    titleText: 'Cases',
+    label: 'Disease Stage at Entry',
+    dataName: 'subjectCountByStageAtEntry',
+    datatable_field: 'stageAtEntry',
+    mapWithDashboardWidget: 'subjectCountByStageAtEntry',
+    titleText: 'Subjects',
     show: true,
   },
   {
     type: 'donut',
-    label: 'Endocrine Therapy',
-    dataName: 'subjectCountByEndocrineTherapyFromLists',
-    mapWithDashboardWidget: 'subjectCountByEndocrineTherapy',
-    titleText: 'Cases',
+    label: 'Serious',
+    dataName: 'subjectCountBySerious',
+    datatable_field: 'serious',
+    mapWithDashboardWidget: 'subjectCountBySerious',
+    titleText: 'Subjects',
     show: true,
   },
 ];

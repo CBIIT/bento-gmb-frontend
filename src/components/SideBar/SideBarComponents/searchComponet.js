@@ -35,7 +35,7 @@ const LocalSearchComponent = ({ classes, type }, ref) => {
 
   const handleAddAutoComplete = (newValue, isDelete) => {
     addAutoComplete({
-      type: type.replace('Ids', ''),
+      type: type.replace('_ids', ''),
       newValue,
     });
     setSideBarToLoading();

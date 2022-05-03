@@ -59,6 +59,7 @@ export const facetSearchData = [
 export const facetSectionVariables = {
   'Filter By Subject': {
     color: '#10A075',
+    backgroundColor: '#C0E9D7',
     checkBoxColorsOne: '#E8F7DC',
     checkBoxColorsTwo: '#F5FDEE',
     height: '5px',
@@ -66,6 +67,7 @@ export const facetSectionVariables = {
   },
   'Filter By Files': {
     color: '#E636E4',
+    backgroundColor: '#F5C3F1',
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
     height: '5px',
