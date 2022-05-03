@@ -1,6 +1,6 @@
 import React from 'react';
-import {GoogleAuthProvider} from './GoogleAuthProvider';
+import { GoogleAuthProvider } from './GoogleAuthProvider';
 
-const wrapRootElement = ({element}) => <GoogleAuthProvider>{element}</GoogleAuthProvider>;
+const wrapRootElement = ({ element }) => <GoogleAuthProvider>{element}</GoogleAuthProvider>;
 
 export default wrapRootElement;

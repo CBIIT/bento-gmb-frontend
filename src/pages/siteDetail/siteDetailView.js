@@ -45,14 +45,15 @@ const SiteView = ({ classes, data, theme }) => {
   };
 
   const redirectTo = () => {
+    const name = `${siteData.site_id} : ${siteData.siteName}`;
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'registeringInstitution',
+      datafield: 'registering_institution',
       groupName: 'Registering Institution',
       isChecked: true,
-      name: siteData.siteName,
-      section: 'Filter By Cases',
+      name,
+      section: 'Filter By Subject',
     }]);
   };
 

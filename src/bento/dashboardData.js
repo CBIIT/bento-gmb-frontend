@@ -1,5 +1,10 @@
 import gql from 'graphql-tag';
 
+export const searchEnabled = true;
+
+export const filterTabTitleText = 'Filter';
+export const searchTabTitleText = 'Search';
+
 // --------------- Dashboard Sidebar Filters configuration --------------
 // A maximum of 12 facetSearchData are allowed
 export const facetSearchData = [
@@ -50,21 +55,6 @@ export const facetSearchData = [
   },
 ];
 
-/** Dashboard Facet Local Find Configurations * */
-export const facetSectionFindApi = {
-  'Filter By Subject': {
-    api: 'subject_ids',
-    type: 'subjectIds',
-    // api: 'subject_ids',
-  },
-  Cases: {
-    api: 'subjectIds',
-  },
-  Files: {
-    api: 'fileIds',
-  },
-};
-
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
   'Filter By Subject': {
@@ -74,14 +64,49 @@ export const facetSectionVariables = {
     height: '5px',
     isExpanded: true,
   },
-  'Filter By Samples': {
+  'Filter By Files': {
+    color: '#E636E4',
+    checkBoxColorsOne: '#FBE3FB',
+    checkBoxColorsTwo: '#FFF2FF',
+    height: '5px',
+    isExpanded: false,
+  },
+};
+
+// --------------- Dashboard Facet Local Find Configuration --------------
+
+export const facetSectionFindApi = {
+  'Filter By Subject': {
+    api: 'subject_ids',
+  },
+  'Filter By Files': {
+    api: 'fileIds',
+  },
+};
+
+export const search = {
+  fileIds: {
+    color: '#E636E4',
+    checkBoxColorsOne: '#FBE3FB',
+    checkBoxColorsTwo: '#FFF2FF',
+    height: '5px',
+    isExpanded: false,
+  },
+  subjectIds: {
+    color: '#10A075',
+    checkBoxColorsOne: '#E8F7DC',
+    checkBoxColorsTwo: '#F5FDEE',
+    height: '5px',
+    isExpanded: false,
+  },
+  sampleIds: {
     color: '#10BEFF',
     checkBoxColorsOne: '#C9EBF7',
     checkBoxColorsTwo: '#E8F8FE',
     height: '5px',
     isExpanded: false,
   },
-  'Filter By Files': {
+  fileNames: {
     color: '#E636E4',
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
@@ -98,6 +123,17 @@ export const defaultFacetSectionVariables = {
   height: '5px',
   isExpanded: false,
 };
+
+export const defaultSearch = {
+  color: '#000000',
+  checkBoxColorsOne: '#E8F7DC',
+  checkBoxColorsTwo: '#F5FDEE',
+  height: '5px',
+  isExpanded: false,
+};
+
+// --------------- Dashboard ActiveFiltersQuery configuration --------------
+export const displayActiveFiltersQuery = true;
 
 // --------------- Dashboard Widgets configuration --------------
 // A maximum of 6 widgets are allowed
@@ -261,75 +297,81 @@ export const showCheckboxCount = 5;
 
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_DATA_QUERY = gql`{
-    numberOfPrograms
-    numberOfSubjects
-    numberOfSamples
-    numberOfLabProcedures
-    numberOfFiles
-    subjectCountByProgram{
+  numberOfPrograms
+  numberOfStudies
+  numberOfSubjects
+  numberOfSamples
+  numberOfLabProcedures
+  numberOfFiles
+  subjectCountByProgram{
         group
         subjects
-    }
+      }
     subjectCountByStudy{
         group
         subjects
-    }
+      }
     subjectCountByDiagnoses{
         group
         subjects
-    }
+      }
     subjectCountByRecurrenceScore{
         group
         subjects
-    }
+      }
     subjectCountByTumorSize{
         group
         subjects
-    }
+      }
     subjectCountByChemotherapyRegimen{
         group
         subjects
-    }
+      }
     subjectCountByTumorGrade{
         group
         subjects
-    }
-    subjectCountByErStatus{
+      }
+  subjectCountByErStatus{
         group
         subjects
-    }
-    subjectCountByPrStatus{
+      }
+  subjectCountByPrStatus{
         group
         subjects
-    }
-    subjectCountByMenopauseStatus{
+      }
+  subjectCountByMenopauseStatus{
         group
         subjects
-    }
-    subjectCountByChemotherapyRegimen{
+      }
+  subjectCountByChemotherapyRegimen{
         group
         subjects
-    }
-    subjectCountByEndocrineTherapy{
-        group
-        subjects
-    }
-    subjectCountByFileType{
-        group
-        subjects
-    }
-    subjectCountByFileAssociation {
-        group
-        subjects
-    }
-    subjectCountByTissueComposition{
-        group
-        subjects
-    }
-    subjectCountByTissueType{
-        group
-        subjects
-    }
+      }
+      subjectCountByEndocrineTherapy{
+    group
+    subjects
+  }
+  subjectCountByFileType{
+    group
+    subjects
+}
+subjectCountByFileAssociation {
+    group
+    subjects
+}
+subjectCountByTissueComposition{
+    group
+    subjects
+}
+filterSubjectCountByAge{
+  lowerBound
+  upperBound
+  subjects
+}
+subjectCountByTissueType{
+    group
+    subjects
+}
     armsByPrograms {
         program
         caseSize
@@ -340,53 +382,53 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
         }
     }
     subjectOverViewPaged(first: 100) {
-        subject_id
-        program_id
-        study_info
-        samples
-        program
-        study_acronym
-        diagnosis
-        recurrence_score
-        tumor_size
-        tumor_grade
-        er_status
-        pr_status
-        chemotherapy
-        endocrine_therapy
-        menopause_status
-        age_at_index
-        survival_time
-        lab_procedures
-        files{
-            file_id
-        }
-    }
-}`;
+      subject_id
+      program_id
+      study_info
+      samples
+      program
+      study_acronym
+      diagnosis
+      recurrence_score
+      tumor_size
+      tumor_grade
+      er_status
+      pr_status
+      chemotherapy
+      endocrine_therapy
+      menopause_status
+      age_at_index
+      survival_time
+      lab_procedures
+      files{
+        file_id
+      }
+  }
+  }`;
 
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_TABLE_DATA_QUERY = gql`{
-    subjectOverViewPaged(first: 1000000) {
-        subject_id
-        program_id
-        study_info
-        samples
-        program
-        study_acronym
-        diagnosis
-        recurrence_score
-        tumor_size
-        tumor_grade
-        er_status
-        pr_status
-        chemotherapy
-        endocrine_therapy
-        menopause_status
-        age_at_index
-        survival_time
-        lab_procedures
-        files{
-            file_id
-        }
-    }
-}`;
+  subjectOverViewPaged(first: 1000000) {
+      subject_id
+      program_id
+      study_info
+      samples
+      program
+      study_acronym
+      diagnosis
+      recurrence_score
+      tumor_size
+      tumor_grade
+      er_status
+      pr_status
+      chemotherapy
+      endocrine_therapy
+      menopause_status
+      age_at_index
+      survival_time
+      lab_procedures
+      files{
+        file_id
+      }
+  }
+  }`;

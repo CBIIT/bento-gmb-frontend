@@ -14,15 +14,15 @@ import {
 } from '../dashboardTab/store/dashboardReducer';
 
 const Trials = ({ classes, data }) => {
-  const redirectTo = (program) => {
+  const redirectTo = (trial) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
       datafield: 'programs',
       groupName: 'Program',
       isChecked: true,
-      name: program.rowData[0],
-      section: 'Filter By Cases',
+      name: trial.rowData[0],
+      section: 'Filter By Subject',
     }]);
   };
 
@@ -56,7 +56,7 @@ const Trials = ({ classes, data }) => {
                 <Grid item xs={12}>
                   <CustomDataTable
                     data={data[table.dataField]}
-                    columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectTo)}
+                    columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectTo)}
                     options={getOptions(table, classes)}
                   />
                 </Grid>

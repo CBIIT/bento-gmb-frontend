@@ -64,7 +64,6 @@ const styles = () => ({
     fontSize: 20,
     fontWeight: 300,
     marginLeft: 10,
-    color: 'gray',
   },
   searchContainer: {
     zIndex: 3,
@@ -118,7 +117,6 @@ const styles = () => ({
     fontSize: '10px',
   },
   findCaseButton: {
-    marginLeft: '105px',
     backgroundColor: '#10A075',
     boxSizing: 'border-box',
     height: 30,

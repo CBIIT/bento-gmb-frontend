@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Button, withStyles, Paper,
 } from '@material-ui/core';
+// import DropdownItemsMenu from './DropdownItemsMenu';
 
 const AfterSignIn = ({
   classes, userName, signoutLink,
@@ -15,6 +16,11 @@ const AfterSignIn = ({
   function handleMoveOut() {
     setDisplayDropDownMenu(false);
   }
+
+  // function dropdownMenuClickEvent() {
+  //   setDisplayDropDownMenu(false);
+  //   handleButtonClickEvent('aboutMenu');
+  // }
 
   return (
     <div

@@ -27,6 +27,7 @@ import {
   toggleSlider,
   setSideBarToLoading,
   setDashboardTableLoading,
+  // eslint-disable-next-line no-unused-vars
   sortSection,
   getAllIds,
   resetGroupSelections,
@@ -74,7 +75,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
   // data from store
   const sideBarContent = useSelector((state) => (
     state.dashboardTab
-    && state.dashboardTab.checkbox
+      && state.dashboardTab.checkbox
       ? state.dashboardTab.checkbox : {
         data: [],
         defaultPanel: false,
@@ -98,10 +99,10 @@ export const FacetPanelComponent = ({ classes }, ref) => {
   // data from store for sidebar laoding
   const isSidebarLoading = useSelector((state) => (
     state.dashboardTab
-    && state.dashboardTab.setSideBarLoading
+      && state.dashboardTab.setSideBarLoading
       ? state.dashboardTab.setSideBarLoading : false));
   const tabDataLoading = useSelector((state) => (state.dashboardTab
-  && state.dashboardTab.isDashboardTableLoading
+    && state.dashboardTab.isDashboardTableLoading
     ? state.dashboardTab.isDashboardTableLoading
     : false));
   // redux use actions
@@ -129,24 +130,24 @@ export const FacetPanelComponent = ({ classes }, ref) => {
 
   const sortByForGroups = useSelector((state) => (
     state.dashboardTab
-    && state.dashboardTab.sortByList
+      && state.dashboardTab.sortByList
       ? state.dashboardTab.sortByList : {}));
 
   const bulkUpload = useSelector((state) => (
     state.dashboardTab
-    && state.dashboardTab.bulkUpload
+      && state.dashboardTab.bulkUpload
       ? state.dashboardTab.bulkUpload : {
         subject_ids: [],
-        // sample_ids: [],
+        sample_ids: [],
         file_ids: [],
       }));
 
   const autoCompleteSelection = useSelector((state) => (
     state.dashboardTab
-    && state.dashboardTab.autoCompleteSelection
+          && state.dashboardTab.autoCompleteSelection
       ? state.dashboardTab.autoCompleteSelection : {
         subject_ids: [],
-        // sample_ids: [],
+        sample_ids: [],
         file_ids: [],
       }));
 
@@ -309,9 +310,9 @@ export const FacetPanelComponent = ({ classes }, ref) => {
     } else {
       selectedSliderCheckbox = typeof sliderValue[sideBarIndex] !== 'undefined'
         ? (sliderValue[sideBarIndex][0]
-        > sideBarItem.checkboxItems.lowerBound
-        || sliderValue[sideBarIndex][1]
-        < sideBarItem.checkboxItems.upperBound)
+          > sideBarItem.checkboxItems.lowerBound
+          || sliderValue[sideBarIndex][1]
+          < sideBarItem.checkboxItems.upperBound)
         && (
           <div>
             <ListItem
@@ -454,7 +455,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
             open={showCasesModal}
             closeModal={closeCasesModal}
             handleClose={closeCasesModal}
-            type="subject_ids"
+            type="subjectIds"
             ref={modelRef}
           />
           <ExpansionPanel
@@ -468,13 +469,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
             <CustomExpansionPanelSummary
               aria-controls={currentSection.sectionName}
             >
-              {/** <ListItemText primary={sideBarItem.groupName} />
-                There is another issue to note here. How will this be converted to
-               a component unless it is cleaned up.
-                 issues are as follows:
-                 - currentSection.sectionName can be different from 'Cases' used in bento-tools.
-               */}
-              {/* eslint-disable-next-line no-console */}
+              {/* <ListItemText primary={sideBarItem.groupName} /> */}
               {
                 currentSection.sectionName === 'Filter By Subject' ? (
                   <div
@@ -493,7 +488,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                           {bulkUpload.subject_ids.length !== 0 ? <InputSetListItem /> : ''}
                           <AutoComplete
                             ref={searchRef}
-                            type={facetSectionFindApi[currentSection.sectionName].type}
+                            type={facetSectionFindApi[currentSection.sectionName].api}
                             data={getAllIds(facetSectionFindApi[currentSection.sectionName].api)}
                           />
                           <Button
@@ -627,32 +622,32 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                               </div>
                             )}
                           {sideBarItem.slider === true
-                          && (
-                            <div
-                              className={
-                                classes.sortGroup
-                              }
-                            >
-                              <span
-                                className={classes.sortGroupIcon}
+                            && (
+                              <div
+                                className={
+                                  classes.sortGroup
+                                }
                               >
-                                <Icon
-                                  onClick={handleGroupReset(
-                                    sideBarItem,
-                                    sideBarIndex,
-                                  )}
-                                  style={{ fontSize: 15 }}
+                                <span
+                                  className={classes.sortGroupIcon}
                                 >
-                                  <img
-                                    src={resetIconFilter.src}
-                                    height={size}
-                                    width={size}
-                                    alt={resetIconFilter.alt}
-                                  />
-                                </Icon>
-                              </span>
-                            </div>
-                          )}
+                                  <Icon
+                                    onClick={handleGroupReset(
+                                      sideBarItem,
+                                      sideBarIndex,
+                                    )}
+                                    style={{ fontSize: 15 }}
+                                  >
+                                    <img
+                                      src={resetIconFilter.src}
+                                      height={size}
+                                      width={size}
+                                      alt={resetIconFilter.alt}
+                                    />
+                                  </Icon>
+                                </span>
+                              </div>
+                            )}
                           {
                             sideBarItem.slider !== true ? (
                               sideBarItem.checkboxItems.map(
@@ -747,9 +742,9 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                                   <div>
                                     {typeof sliderValue[sideBarIndex] !== 'undefined'
                                       ? (sliderValue[sideBarIndex][0]
-                                    > sideBarItem.checkboxItems.lowerBound
-                                    || sliderValue[sideBarIndex][1]
-                                    < sideBarItem.checkboxItems.upperBound)
+                                      > sideBarItem.checkboxItems.lowerBound
+                                      || sliderValue[sideBarIndex][1]
+                                      < sideBarItem.checkboxItems.upperBound)
                                     && (
                                       <div>
                                         <ListItem
@@ -800,8 +795,8 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                     </ExpansionPanel>
                     <div className={classes.selectedCheckboxDisplay}>
                       {!groupsExpanded.includes(sideBarItem.groupName)
-                      // && sideBarItem.slider !== true
-                      && showSelectedChecbox(sideBarItem, currentSection, sideBarIndex)}
+                        // && sideBarItem.slider !== true
+                        && showSelectedChecbox(sideBarItem, currentSection, sideBarIndex)}
                     </div>
                   </>
                 ))}
