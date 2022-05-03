@@ -18,6 +18,7 @@ type CANCER_HISTORY {
 
 type CLINICALTRIAL {
   subjects: [SUBJECT] 
+  sites: [SITE] 
 }
 
 type CONCOMITANT_MEASURES_MEDICATIONS {
@@ -33,6 +34,15 @@ type ENROLLMENT {
 }
 
 type FILE {
+  FILE_NAME: String
+  FILE_TYPE: String
+  FILE_DESCRIPTION: String
+  FILE_FORMAT: String
+  FILE_SIZE: Int
+  MD5SUM: String
+  FILE_STATUS: String
+  UUID: String
+  FILE_LOCATION: String
   SUBJECT: SUBJECT 
 }
 
@@ -77,12 +87,9 @@ type OFF_STUDY {
 }
 
 type PHYSICAL_EXAM_SCREENING {
-  SUBJECT: SUBJECT 
-}
-
-type PHYSICAL_EXAM___SCREENING {
   NOTE_DT_SCRPE: String
   RSCH_COMMENTS_TXT_SCRPE: String
+  SUBJECT: SUBJECT 
 }
 
 type PI_SIGNOFF {
@@ -115,6 +122,12 @@ type RADIATION_SUPPLEMENT {
   SUBJECT: SUBJECT 
 }
 
+type SITE {
+  ADDRESS: String
+  CLINICALTRIAL: CLINICALTRIAL 
+  subjects: [SUBJECT] 
+}
+
 type SOMATIC_VARIANT {
   NOTE_DT_SV: String
   RSCH_COMMENTS_TXT_SV: String
@@ -135,6 +148,7 @@ type STORAGE_2 {
 
 type SUBJECT {
   CLINICALTRIAL: CLINICALTRIAL 
+  SITE: SITE 
   storages: [STORAGE] 
   survivals: [SURVIVAL] 
   laboratories: [LABORATORY] 
