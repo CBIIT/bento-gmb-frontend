@@ -17,14 +17,15 @@ export default {
     {
       title: 'About GMB',
       items: [
-        {
+        /* {
           text: 'Purpose',
-          link: '/purpose',
-        },
-        {
+          /!* link: '/purpose', // service not ready yet,
+          nothing provided about what should be on this page. *!/
+        }, */
+        /* {
           text: 'CRDC',
-          link: '/crdc',
-        },
+          /!* link: '/crdc', //same with this link *!/
+        }, */
         {
           text: 'Contact Us',
           link: 'CTDCHelpDesk@mail.nih.gov',
@@ -32,7 +33,7 @@ export default {
       ],
     },
 
-    {
+    /* {
       title: 'About the Data',
       items: [
         {
@@ -48,7 +49,7 @@ export default {
           link: '/developers',
         },
       ],
-    },
+    }, */
 
     {
       title: 'More Information',
