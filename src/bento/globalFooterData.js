@@ -17,39 +17,12 @@ export default {
     {
       title: 'About GMB',
       items: [
-        /* {
-          text: 'Purpose',
-          /!* link: '/purpose', // service not ready yet,
-          nothing provided about what should be on this page. *!/
-        }, */
-        /* {
-          text: 'CRDC',
-          /!* link: '/crdc', //same with this link *!/
-        }, */
         {
           text: 'Contact Us',
           link: 'CTDCHelpDesk@mail.nih.gov',
         },
       ],
     },
-
-    /* {
-      title: 'About the Data',
-      items: [
-        {
-          text: 'CTDC Data & Model',
-          link: '/model',
-        },
-        {
-          text: 'Analyzing Data',
-          link: '/crdc',
-        },
-        {
-          text: 'Developers (APIs)',
-          link: '/developers',
-        },
-      ],
-    }, */
 
     {
       title: 'More Information',
