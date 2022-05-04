@@ -59,7 +59,6 @@ export const facetSearchData = [
 export const facetSectionVariables = {
   'Filter By Subject': {
     color: '#10A075',
-    backgroundColor: '#C0E9D7',
     checkBoxColorsOne: '#E8F7DC',
     backgroundColor: '#C0E9D7',
     checkBoxColorsTwo: '#F5FDEE',
