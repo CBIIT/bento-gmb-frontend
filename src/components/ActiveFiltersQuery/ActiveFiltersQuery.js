@@ -20,13 +20,13 @@ const ActiveFiltersQuery = ({ classes }) => {
   // get all filters information from state
   const allFiltersinfo = useSelector((state) => (
     state.dashboardTab
-      && state.dashboardTab.checkbox
+    && state.dashboardTab.checkbox
       ? state.dashboardTab.checkbox : {}));
   const autoCompleteSelection = useSelector((state) => (state.dashboardTab
-    && state.dashboardTab.autoCompleteSelection
+  && state.dashboardTab.autoCompleteSelection
     ? state.dashboardTab.autoCompleteSelection.subject_ids : {}));
   const bulkUpload = useSelector((state) => (state.dashboardTab
-    && state.dashboardTab.bulkUpload ? state.dashboardTab.bulkUpload.subject_ids : {}));
+  && state.dashboardTab.bulkUpload ? state.dashboardTab.bulkUpload.subject_ids : {}));
   // activeFilters helps filtering only active Filters
   const activeFilters = [];
   // Loop all filters except range filter to find active ones only

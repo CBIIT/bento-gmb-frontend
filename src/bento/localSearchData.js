@@ -13,9 +13,9 @@ export const GET_ALL_IDS = gql`{
 
 export const GET_SUBJECT_IDS = gql`
   query search ($subject_ids: [String]){
-    findSubjectIdsInList (subject_ids: $subject_ids) {
+    findSubjectIdsInList (subject_id: $subject_ids) {
         subject_id
-        program_id
+        trial_id
     }
 }
 `;

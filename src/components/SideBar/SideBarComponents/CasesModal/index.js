@@ -267,8 +267,8 @@ const FacetModal = ({
         }
         return unmatchData;
       });
-      setMatchIds(matchedSubIds);
-      setUnmatchedIds(unMatchedContent);
+      setMatchIds(matchedSubIds || []);
+      setUnmatchedIds(unMatchedContent || []);
     } else {
       setMatchIds([]);
       setUnmatchedIds([]);
