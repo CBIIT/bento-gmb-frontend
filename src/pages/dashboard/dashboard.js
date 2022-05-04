@@ -115,7 +115,6 @@ const Dashboard = ({
                                 colors={colors}
                                 titleLocation="bottom"
                                 titleAlignment="center"
-                                showTotalCount
                               />
                             </Widget>
                           </Grid>

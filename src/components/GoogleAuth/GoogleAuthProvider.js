@@ -4,24 +4,20 @@ import env from '../../utils/env';
 import { signInRed, signOutRed } from './state/loginReducer';
 
 const AUTH_API = env.REACT_APP_AUTH_API;
-const GOOGLE_CLIENT_ID = env.REACT_APP_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = env.REACT_APP_GOOGLE_CLIENT_ID || 'Invalid ID';
 
 const createContext = () => {
-  const context = React.createContext();
-
+  const ctx = React.createContext();
   const useCtx = () => {
-    const contextValue = useContext(context);
+    const contextValue = useContext(ctx);
 
-    if (contextValue === undefined || typeof contextValue === 'undefined') {
-      throw new Error('useCtx must be inside a provider with a value');
-    }
+    if (contextValue === undefined) { throw new Error('useCtx must be inside a Provider with a value'); }
 
     return contextValue;
   };
 
-  return [useCtx, context.Provider];
+  return [useCtx, ctx.Provider];
 };
-
 const [useGoogleAuth, AuthProvider] = createContext();
 
 export const GoogleAuthProvider = ({ children }) => {
@@ -38,6 +34,9 @@ export const GoogleAuthProvider = ({ children }) => {
   const onSignInClick = () => {
     grantOfflineAccess().then((resp) => {
       if (resp) {
+        // Hide the sign-in button now that the user is authorized, for example:
+
+        // Send the code to the server
         (async () => {
           const rawResponse = await fetch(`${AUTH_API}/api/auth/login`, {
             method: 'POST',
@@ -46,20 +45,20 @@ export const GoogleAuthProvider = ({ children }) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ code: resp }),
-          }).then((response) => response.json());
+          }).then((response) => response.json()).catch(() => {
+          });
 
           if (!rawResponse) return;
-
           const content = await rawResponse;
           localStorage.setItem('username', content.name);
           signInRed(content.name);
         })();
+      } else {
+        // There was an error.
       }
-      // add else block to track any errors
     }).catch(() => {
     });
-
-    // wonder what this is about (this.auth.signIn())
+    // this.auth.signIn();
   };
 
   const onSignOut = () => {
@@ -72,9 +71,21 @@ export const GoogleAuthProvider = ({ children }) => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-      }).then(signOut, signOut);
+      }).then(() => {
+        signOut();
+      })
+        .catch(() => {
+        });
     })();
+    // this.auth.signIn();
   };
+
+  /**
+   * A wrapper function around `fetch` that handles automatically refreshing
+   * our `accessToken` if it is within 5 minutes of expiring.
+   *
+   * Behaves identically to `fetch` otherwise.
+   */
 
   return (
     <AuthProvider
@@ -84,11 +95,11 @@ export const GoogleAuthProvider = ({ children }) => {
         isInitialized,
         googleUser,
         signOut: onSignOut,
+        // fetchWithRefresh,
       }}
     >
       {children}
     </AuthProvider>
   );
 };
-
 export { useGoogleAuth };

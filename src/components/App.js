@@ -9,6 +9,7 @@ import { GoogleAuthProvider } from './GoogleAuth/GoogleAuthProvider';
 const App = () => (
   <CustomThemeProvider>
     <GoogleAuthProvider>
+
       {/* Reminder: Ajay need to replace the ICDC with env variable and
     change build npm to read env variable */}
       <BrowserRouter>
@@ -17,6 +18,7 @@ const App = () => (
         </Switch>
       </BrowserRouter>
     </GoogleAuthProvider>
+
   </CustomThemeProvider>
 );
 

@@ -9,7 +9,6 @@ import Footer from '../Footer/FooterView';
 import Error from '../../pages/error/Error';
 import Dashboard from '../../pages/dashboardTab/dashboardController';
 import CaseDetail from '../../pages/caseDetail/caseDetailController';
-import ArmDetail from '../../pages/armDetail/armDetailController';
 import modelPage from '../../pages/modelPage/modelPageView';
 import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
@@ -23,6 +22,8 @@ import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
 import JBrowse from '../JBrowse/JBrowseView';
 import JBrowseDetail from '../../pages/jbrowseDetail/jbrowseDetailController';
+import GlobalSearch from '../../pages/search/searchView';
+import GlobalSearchController from '../../pages/search/searchViewController';
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -56,8 +57,9 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route path="/trial/:id" component={TrialDetail} />
             <Route path="/site/:id" component={SiteDetail} />
             <Route path="/subject/:id" component={CaseDetail} />
-            <Route path="/arm/:id" component={ArmDetail} />
             <Route path="/JBrowse" component={JBrowse} />
+            <Route exact path="/search" component={GlobalSearch} />
+            <Route path="/search/:id" component={GlobalSearchController} />
             <Route path="/fileViewer/:id" component={JBrowseDetail} />
             {aboutPageRoutes.map(
               (aboutPageRoute, index) => (

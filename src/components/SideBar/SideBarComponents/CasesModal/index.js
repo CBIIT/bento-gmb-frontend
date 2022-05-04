@@ -331,7 +331,7 @@ const FacetModal = ({
               value={fileContent}
               name="caseDescription"
               onChange={handleChange}
-              placeholder="eg. BENTO-CASE-06, BENTO-CASE-22"
+              placeholder="eg. 102, 112"
               className={classes.textArea}
             />
           </div>
