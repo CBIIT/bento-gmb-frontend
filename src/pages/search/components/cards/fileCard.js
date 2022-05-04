@@ -17,9 +17,9 @@ const FileCard = ({ data, classes, index }) => {
 
     },
     {
-      label: 'Case ID',
+      label: 'Subject ID',
       dataField: 'subject_id',
-      link: '/case/{subject_id}',
+      link: '/subject/{subject_id}',
     },
   ];
   const propertiesWithLinks = prepareLinks(properties, data);
@@ -34,7 +34,7 @@ const FileCard = ({ data, classes, index }) => {
           <div>
             <span className={classes.detailContainerHeader}>FILE</span>
             <span className={classes.cardTitle}>
-              <Link to={`/case/${data.subject_id}`} className={classes.cardTitle}>
+              <Link to={`/subject/${data.subject_id}`} className={classes.cardTitle}>
                 {data.file_id}
               </Link>
             </span>
