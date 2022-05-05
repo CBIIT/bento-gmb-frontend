@@ -15,7 +15,7 @@ import {
 
 const Sites = ({ classes, data }) => {
   const redirectTo = (tableData) => {
-    const name = `${tableData.rowData[0]} : ${tableData.rowData[1]}`;
+    const name = `${tableData.rowData[0]}`;
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
