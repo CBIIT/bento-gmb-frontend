@@ -249,6 +249,12 @@ export const tabContainers = [
         sort: 'asc',
         display: true,
       },
+      {
+        dataField: 'file_id',
+        header: 'File ID',
+        sort: 'asc',
+        display: false,
+      },
     ],
     id: 'file_tab',
     onRowsSelect: 'type2',
