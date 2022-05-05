@@ -18,34 +18,8 @@ export default {
       title: 'About GMB',
       items: [
         {
-          text: 'Purpose',
-          link: '/purpose',
-        },
-        {
-          text: 'CRDC',
-          link: '/crdc',
-        },
-        {
           text: 'Contact Us',
           link: 'CTDCHelpDesk@mail.nih.gov',
-        },
-      ],
-    },
-
-    {
-      title: 'About the Data',
-      items: [
-        {
-          text: 'CTDC Data & Model',
-          link: '/model',
-        },
-        {
-          text: 'Analyzing Data',
-          link: '/crdc',
-        },
-        {
-          text: 'Developers (APIs)',
-          link: '/developers',
         },
       ],
     },
