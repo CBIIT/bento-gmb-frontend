@@ -482,8 +482,6 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                         <img src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/FacetLocalFindSearchIcon.svg" className={classes.findCaseIcon} alt="search" />
                       </div>
                     </div>
-                    {console.log(`Show search: ${showSearch}`) /* eslint-disable-line no-console */}
-
                     {
                       showSearch && (
                         <div className={classes.searchContainer} onClick={handleCaseFacetClick}>
