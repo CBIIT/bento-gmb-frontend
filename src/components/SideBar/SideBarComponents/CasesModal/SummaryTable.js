@@ -119,7 +119,7 @@ const SummaryTable = (props) => {
       id="uploadCaseSetSummarySection"
     >
       <p className={classes.summary} id="uploadCaseSetSummaryCount">
-        {`${matchedContent.length + unmatchedContent.length} submitted Case IDs mapped to ${matchedContent.length} unique Bento Case IDs`}
+        {`${matchedContent.length + unmatchedContent.length} submitted Case IDs mapped to ${matchedContent.length} unique GMB Subject IDs`}
       </p>
       <p className={classes.title}>
         Summary Table
@@ -154,7 +154,7 @@ const SummaryTable = (props) => {
               <tr id="uploadCaseSetMatchedHeader">
                 <th className={classes.header}>SUBMITTED CASE ID</th>
                 <td className={classes.emptyCell} />
-                <th className={classes.header}>ASSOCIATED PROGRAM</th>
+                <th className={classes.header}>ASSOCIATED TRIAL</th>
               </tr>
               <tr className={classes.heading}>
                 <td className={classes.columnPadding}><Divider style={{ width: '100%' }} className={classes.divider} /></td>
@@ -167,7 +167,7 @@ const SummaryTable = (props) => {
                 <tr key={id}>
                   <td className={classes.tableColumn} style={id % 2 ? { backgroundColor: '#fff' } : { backgroundColor: '#F8F8F8' }}>{matched.subject_id}</td>
                   <td className={classes.emptyCell} />
-                  <td className={classes.programHeading} style={id % 2 ? { backgroundColor: '#fff' } : { backgroundColor: '#F8F8F8' }}>{matched.program_id}</td>
+                  <td className={classes.programHeading} style={id % 2 ? { backgroundColor: '#fff' } : { backgroundColor: '#F8F8F8' }}>{matched.trial_id}</td>
                 </tr>
               ))}
             </table>

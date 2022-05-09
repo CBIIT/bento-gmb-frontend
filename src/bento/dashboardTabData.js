@@ -211,7 +211,7 @@ export const tabContainers = [
         downloadDocument: true, // To indicate that column is document donwload
         documentDownloadProps: {
           // Max file size needs to bin Bytes to seperate two support file preview and download
-          maxFileSize: 315,
+          maxFileSize: 300000,
           // Tool top text for Unauthenticated users
           toolTipTextUnauthenticated: 'Login to access this file',
           // Tool top text for file download
@@ -248,6 +248,12 @@ export const tabContainers = [
         header: 'Type',
         sort: 'asc',
         display: true,
+      },
+      {
+        dataField: 'file_id',
+        header: 'File ID',
+        sort: 'asc',
+        display: false,
       },
     ],
     id: 'file_tab',
