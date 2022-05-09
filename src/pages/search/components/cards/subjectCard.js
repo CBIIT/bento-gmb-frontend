@@ -15,10 +15,6 @@ const CaseCard = ({ data, classes, index }) => {
       label: 'Subject ID',
       dataField: 'subject_id',
     },
-    {
-      label: 'Age',
-      dataField: 'age',
-    },
   ];
 
   const propertiesWithLinks = prepareLinks(properties, data);
