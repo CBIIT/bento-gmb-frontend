@@ -96,7 +96,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
       toggleSlider(value, sideBarItem);
     }
   };
-  // daa from store for sidebar laoding
+  // data from store for sidebar laoding
   const isSidebarLoading = useSelector((state) => (
     state.dashboardTab
       && state.dashboardTab.setSideBarLoading
