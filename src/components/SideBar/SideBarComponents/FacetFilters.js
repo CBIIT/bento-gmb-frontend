@@ -96,7 +96,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
       toggleSlider(value, sideBarItem);
     }
   };
-  // data from store for sidebar laoding
+  // daa from store for sidebar laoding
   const isSidebarLoading = useSelector((state) => (
     state.dashboardTab
       && state.dashboardTab.setSideBarLoading
@@ -108,7 +108,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
   // redux use actions
   const dispatch = useDispatch();
 
-  const [showSearch, toggleSearch] = React.useState(false);
+  const [showSearch, toggleSearch] = React.useState(true);
 
   const [groupsExpanded, setGroupsExpanded] = React.useState([]);
 
@@ -186,7 +186,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
 
   React.useEffect(() => {
     // Open toggle chnages
-    if (sectionExpanded.includes('Cases')) {
+    if (sectionExpanded.includes('Filter By Subject')) {
       toggleSearch(true);
     } else {
       toggleSearch(false);
@@ -482,6 +482,8 @@ export const FacetPanelComponent = ({ classes }, ref) => {
                         <img src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/FacetLocalFindSearchIcon.svg" className={classes.findCaseIcon} alt="search" />
                       </div>
                     </div>
+                    {console.log(`Show search: ${showSearch}`) /* eslint-disable-line no-console */}
+
                     {
                       showSearch && (
                         <div className={classes.searchContainer} onClick={handleCaseFacetClick}>

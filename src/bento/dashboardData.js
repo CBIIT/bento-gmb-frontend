@@ -69,7 +69,7 @@ export const facetSectionVariables = {
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
     height: '5px',
-    isExpanded: false,
+    isExpanded: true,
   },
 };
 
