@@ -108,7 +108,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
   // redux use actions
   const dispatch = useDispatch();
 
-  const [showSearch, toggleSearch] = React.useState(false);
+  const [showSearch, toggleSearch] = React.useState(true);
 
   const [groupsExpanded, setGroupsExpanded] = React.useState([]);
 
@@ -186,7 +186,7 @@ export const FacetPanelComponent = ({ classes }, ref) => {
 
   React.useEffect(() => {
     // Open toggle chnages
-    if (sectionExpanded.includes('Cases')) {
+    if (sectionExpanded.includes('Filter By Subject')) {
       toggleSearch(true);
     } else {
       toggleSearch(false);
