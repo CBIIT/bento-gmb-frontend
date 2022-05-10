@@ -4,19 +4,23 @@ import FileCard from './cards/fileCard';
 import TrialCard from './cards/trialCard';
 import ValueCard from './cards/valueCard';
 import AboutCard from './cards/aboutCard';
+import SiteCard from './cards/siteCard';
 
 const Components = {
   GS_Subject: CaseCard,
   GS_File: FileCard,
   GS_Trial: TrialCard,
+  GS_Site: SiteCard,
   node: ValueCard,
   value: ValueCard,
   about: AboutCard,
+  property: ValueCard,
 };
 
 export default ({
   searchText, data, classes, index,
 }) => {
+  console.log(`${'%c'} The component data type is: ${data.type}`, 'background: black; color: aquamarine;'); //eslint-disable-line
   if (typeof Components[data.type] !== 'undefined') {
     return React.createElement(Components[data.type], {
       data, classes, index, searchText,
