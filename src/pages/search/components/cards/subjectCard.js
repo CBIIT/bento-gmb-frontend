@@ -12,12 +12,8 @@ const CaseCard = ({ data, classes, index }) => {
       link: '/trial/{clinical_trial_id}',
     },
     {
-      label: 'Diagnosis',
-      dataField: 'diagnosis',
-    },
-    {
-      label: 'Age',
-      dataField: 'age',
+      label: 'Subject ID',
+      dataField: 'subject_id',
     },
   ];
 
@@ -33,7 +29,7 @@ const CaseCard = ({ data, classes, index }) => {
           <div>
             <span className={classes.detailContainerHeader}>CASE</span>
             <span>
-              <Link to={`/case/${data.subject_id}`} className={classes.cardTitle}>
+              <Link to={`/subject/${data.subject_id}`} className={classes.cardTitle}>
                 {data.subject_id}
               </Link>
 

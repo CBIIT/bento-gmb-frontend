@@ -60,16 +60,18 @@ export const facetSectionVariables = {
   'Filter By Subject': {
     color: '#10A075',
     checkBoxColorsOne: '#E8F7DC',
+    backgroundColor: '#C0E9D7',
     checkBoxColorsTwo: '#F5FDEE',
     height: '5px',
     isExpanded: true,
   },
   'Filter By Files': {
     color: '#E636E4',
+    backgroundColor: '#F5C3F1',
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
     height: '5px',
-    isExpanded: false,
+    isExpanded: true,
   },
 };
 
@@ -88,6 +90,7 @@ export const search = {
   fileIds: {
     color: '#E636E4',
     checkBoxColorsOne: '#FBE3FB',
+    backgroundColor: '#C3EAF5',
     checkBoxColorsTwo: '#FFF2FF',
     height: '5px',
     isExpanded: false,
@@ -111,7 +114,7 @@ export const search = {
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
     height: '5px',
-    isExpanded: false,
+    isExpanded: true,
   },
 };
 
