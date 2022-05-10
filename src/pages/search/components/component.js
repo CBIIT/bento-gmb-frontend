@@ -20,7 +20,6 @@ const Components = {
 export default ({
   searchText, data, classes, index,
 }) => {
-  console.log(`${'%c'} The component data type is: ${data.type}`, 'background: black; color: aquamarine;'); //eslint-disable-line
   if (typeof Components[data.type] !== 'undefined') {
     return React.createElement(Components[data.type], {
       data, classes, index, searchText,
