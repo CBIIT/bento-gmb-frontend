@@ -29,8 +29,8 @@ query subjectOverViewPaged($subject_ids: [String], $offset: Int = 0, $first: Int
 `;
 
 export const customCasesTabDownloadCSV = {
-  keysToInclude: ['subject_id', 'program', 'program_id', 'study_acronym', 'diagnosis', 'tumor_size', 'er_status', 'pr_status', 'age_at_index', 'survival_time'],
-  header: ['Case ID', 'Program Code', 'Program ID', 'Arm', 'Diagnosis', 'Tumor Size', 'ER Status', 'PR Status', 'Age', 'Survival'],
+  keysToInclude: ['subject_id', 'trial_name', 'trial_id', 'site_name', 'diagnosis', 'tumor_size', 'er_status', 'pr_status', 'age_at_index', 'survival_time'],
+  header: ['Case ID', 'Trial Name', 'Trial ID', 'Site', 'Diagnosis', 'Tumor Size', 'ER Status', 'PR Status', 'Age', 'Survival'],
   query: GET_CASES_TAB,
   apiVariable: 'subjectOverViewPaged',
   fileName: 'tableDownload',
