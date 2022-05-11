@@ -12,6 +12,7 @@ import {
   SEARCH_PAGE_RESULT_TRIAL,
   SEARCH_PAGE_RESULT_SUBJECTS,
   SEARCH_PAGE_RESULT_FILES,
+  SEARCH_PAGE_RESULT_SITES,
   SEARCH_PAGE_RESULT_MODEL,
   SEARCH_PAGE_RESULT_ABOUT,
 } from '../../bento/search';
@@ -63,8 +64,8 @@ function searchComponent({ classes, searchparam = '' }) {
     }
     setInputValue(newValue);
     const searchResp = await getSearch(newValue);
-    const keys = ['trials', 'subjects', 'files', 'model'];
-    const datafields = ['clinical_trial_id', 'subject_id', 'file_id', 'node_name'];
+    const keys = ['trials', 'subjects', 'files', 'sites', 'model'];
+    const datafields = ['clinical_trial_id', 'subject_id', 'file_id', 'site_id', 'node_name'];
 
     const mapOption = keys.map(
       (key, index) => searchResp[key].map((id) => (id[datafields[index]])),
@@ -155,17 +156,19 @@ function searchComponent({ classes, searchparam = '' }) {
                 <Tab label={AllLabel()} classes={{ root: classes.buttonRoot, wrapper: classes.allTab }} value="1" />
                 <Tab classes={{ root: classes.buttonRoot, wrapper: classes.subjectTab }} label={`Cases ${searchResults.subject_count || 0}`} value="2" />
                 <Tab classes={{ root: classes.buttonRoot, wrapper: classes.fileTab }} label={`Files ${searchResults.file_count || 0}`} value="3" />
-                <Tab classes={{ root: classes.buttonRoot, wrapper: classes.programTab }} label={`Trials ${searchResults.trial_count || 0}`} value="4" />
-                <Tab classes={{ root: classes.buttonRoot, wrapper: classes.dataTab }} label={`Data Model ${searchResults.model_count || 0}`} value="5" />
-                <Tab classes={{ root: classes.buttonRoot, wrapper: classes.aboutTab }} label={`About ${searchResults.about_count || 0}`} value="6" />
+                <Tab classes={{ root: classes.buttonRoot, wrapper: classes.trialTab }} label={`Trials ${searchResults.trial_count || 0}`} value="4" />
+                <Tab classes={{ root: classes.buttonRoot, wrapper: classes.siteTab }} label={`Sites ${searchResults.site_count || 0}`} value="5" />
+                <Tab classes={{ root: classes.buttonRoot, wrapper: classes.dataTab }} label={`Data Model ${searchResults.model_count || 0}`} value="6" />
+                <Tab classes={{ root: classes.buttonRoot, wrapper: classes.aboutTab }} label={`About ${searchResults.about_count || 0}`} value="7" />
               </TabList>
             </Box>
             <TabPanel value="1"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_SUBJECTS} count={allCount() || 0} datafield="all" /></TabPanel>
             <TabPanel value="2"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_SUBJECTS} count={searchResults.subject_count || 0} datafield="subjects" /></TabPanel>
             <TabPanel value="3"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_FILES} count={searchResults.file_count || 0} datafield="files" /></TabPanel>
             <TabPanel value="4"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_TRIAL} count={searchResults.trial_count || 0} datafield="trials" /></TabPanel>
-            <TabPanel value="5"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_MODEL} count={searchResults.model_count || 0} datafield="model" /></TabPanel>
-            <TabPanel value="6"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_ABOUT} count={searchResults.about_count || 0} datafield="about_page" /></TabPanel>
+            <TabPanel value="5"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_SITES} count={searchResults.site_count || 0} datafield="sites" /></TabPanel>
+            <TabPanel value="6"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_MODEL} count={searchResults.model_count || 0} datafield="model" /></TabPanel>
+            <TabPanel value="7"><Subsection searchText={searchText} queryforAPI={SEARCH_PAGE_RESULT_ABOUT} count={searchResults.about_count || 0} datafield="about_page" /></TabPanel>
 
           </TabContext>
         </Box>
@@ -191,8 +194,8 @@ const styles = () => ({
   },
   sampleTab: { color: '#142D64' },
   fileTab: { color: '#142D64' },
-  programTab: { color: '#142D64' },
-  studyTab: { color: '#142D64' },
+  trialTab: { color: '#142D64' },
+  siteTab: { color: '#142D64' },
   dataTab: { color: '#142D64' },
   aboutTab: { color: '#142D64' },
   allTab: { color: '#142D64' },

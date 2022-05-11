@@ -23,10 +23,6 @@ const ValueCard = ({ data, classes, index }) => {
     },
     {
       label: 'Property Type',
-      dataField: 'property_description',
-    },
-    {
-      label: 'Property Type',
       dataField: 'value',
     },
     {

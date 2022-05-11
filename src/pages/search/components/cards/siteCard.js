@@ -7,17 +7,21 @@ import PropertyItem from '../propertyItem';
 const SiteCard = ({ data, classes, index }) => {
   const properties = [
     {
-      label: 'Program ID',
-      dataField: 'program_id',
-      link: '/program/{program_id}',
+      label: 'Site Name',
+      dataField: 'site_name',
     },
     {
-      label: 'Study Name',
-      dataField: 'study_name',
+      label: 'Site Address',
+      dataField: 'site_address',
     },
     {
-      label: 'Study Type',
-      dataField: 'study_type',
+      label: 'Site Status',
+      dataField: 'site_status',
+    },
+    {
+      label: 'Trial ID',
+      dataField: 'clinical_trial_id',
+      link: '/trial/{clinical_trial_id}',
     },
   ];
   const propertiesWithLinks = prepareLinks(properties, data);

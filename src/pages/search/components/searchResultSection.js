@@ -8,6 +8,7 @@ import {
   SEARCH_PAGE_RESULT_ABOUT,
   SEARCH_PAGE_RESULT_FILES,
   SEARCH_PAGE_RESULT_MODEL,
+  SEARCH_PAGE_RESULT_SITES,
   SEARCH_PAGE_RESULT_SUBJECTS,
   SEARCH_PAGE_RESULT_TRIAL,
 } from '../../../bento/search';
@@ -28,6 +29,7 @@ function SearchPagination({
     const custodianConfigForTabData = [
       { countField: 'subject_count', nameField: 'subjects' },
       { countField: 'file_count', nameField: 'files' },
+      { countField: 'site_count', nameField: 'sites' },
       { countField: 'trial_count', nameField: 'trials' },
       { countField: 'model_count', nameField: 'model' },
       { countField: 'about_count', nameField: 'about_page' },
@@ -60,8 +62,10 @@ function SearchPagination({
         return { QUERY: SEARCH_PAGE_RESULT_SUBJECTS, field: 'subjects' };
       case 'files':
         return { QUERY: SEARCH_PAGE_RESULT_FILES, field: 'files' };
+      case 'sites':
+        return { QUERY: SEARCH_PAGE_RESULT_SITES, field: 'sites' };
       case 'trials':
-        return { QUERY: SEARCH_PAGE_RESULT_TRIAL, field: 'trials', type: 'trials' };
+        return { QUERY: SEARCH_PAGE_RESULT_TRIAL, field: 'trials' };
       case 'model':
         return { QUERY: SEARCH_PAGE_RESULT_MODEL, field: 'model' };
       case 'about_page':

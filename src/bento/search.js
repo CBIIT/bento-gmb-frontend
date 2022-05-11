@@ -17,6 +17,9 @@ export const SEARCH = gql`
             subjects {
                 subject_id
             }
+            sites {
+                site_id
+            }
             files {
                 file_id
             }
@@ -55,6 +58,27 @@ export const SEARCH_PAGE_RESULT_SUBJECTS = gql`
         ) {
             subjects {
                 subject_id
+                registering_institution
+                disease_term
+                type: __typename
+            }
+        }
+    }
+`;
+
+export const SEARCH_PAGE_RESULT_SITES = gql`
+    query globalSearch($input: String, $first: Int, $offset: Int) {
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            sites{
+                site_id
+                site_name
+                site_address
+                site_status
+                clinical_trial_id
                 type: __typename
             }
         }
@@ -72,6 +96,9 @@ export const SEARCH_PAGE_RESULT_FILES = gql`
                 file_id
                 file_name
                 file_description
+                file_format
+                subject_id
+                clinical_trial_id
                 type: __typename
             }
         }
@@ -127,6 +154,7 @@ export const SEARCH_PAGE_RESULTS = gql`
             trial_count
             subject_count
             file_count
+            site_count
             model_count
             about_count
         }
