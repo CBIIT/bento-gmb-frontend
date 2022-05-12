@@ -7,19 +7,26 @@ import PropertyItem from '../propertyItem';
 const FileCard = ({ data, classes, index }) => {
   const properties = [
     {
-      label: 'File Name',
-      dataField: 'file_name',
+      label: 'File ID',
+      dataField: 'file_id',
+    },
+    {
+      label: 'File Format',
+      dataField: 'file_format',
+    },
+    {
+      label: 'File Description',
+      dataField: 'file_description',
     },
     {
       label: 'Trial ID',
       dataField: 'clinical_trial_id',
       link: '/trial/{clinical_trial_id}',
-
     },
     {
-      label: 'Case ID',
+      label: 'Subject ID',
       dataField: 'subject_id',
-      link: '/case/{subject_id}',
+      link: '/subject/{subject_id}',
     },
   ];
   const propertiesWithLinks = prepareLinks(properties, data);
@@ -34,8 +41,8 @@ const FileCard = ({ data, classes, index }) => {
           <div>
             <span className={classes.detailContainerHeader}>FILE</span>
             <span className={classes.cardTitle}>
-              <Link to={`/case/${data.subject_id}`} className={classes.cardTitle}>
-                {data.file_id}
+              <Link to="/subjects" className={classes.cardTitle}>
+                {data.file_name}
               </Link>
             </span>
 
