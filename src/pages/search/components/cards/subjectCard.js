@@ -12,8 +12,12 @@ const CaseCard = ({ data, classes, index }) => {
       link: '/trial/{clinical_trial_id}',
     },
     {
-      label: 'Subject ID',
-      dataField: 'subject_id',
+      label: 'Registering Institution',
+      dataField: 'registering_institution',
+    },
+    {
+      label: 'Disease Term',
+      dataField: 'disease_term',
     },
   ];
 

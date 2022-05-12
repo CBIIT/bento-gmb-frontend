@@ -18,8 +18,8 @@ const Trials = ({ classes, data }) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'programs',
-      groupName: 'Program',
+      datafield: 'trials',
+      groupName: 'Trial',
       isChecked: true,
       name: trial.rowData[0],
       section: 'Filter By Subject',

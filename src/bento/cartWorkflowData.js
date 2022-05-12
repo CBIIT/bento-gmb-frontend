@@ -26,10 +26,10 @@ export const myFilesPageData = {
   subTitle: 'Files',
   buttonText: 'DOWNLOAD MANIFEST',
   headerIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Icon-Cart-Workflow.svg',
-  headerIconAlt: 'Bento MyFiles header logo',
+  headerIconAlt: 'GMB MyFiles header logo',
   wizardIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Cart-Wizard-Step3.svg',
-  wizardIconAlt: 'Bento MyFiles Wizard',
-  manifestFileName: 'BENTO File Manifest',
+  wizardIconAlt: 'GMB MyFiles Wizard',
+  manifestFileName: 'GMB File Manifest',
 };
 
 export const cartSelectionMessages = {

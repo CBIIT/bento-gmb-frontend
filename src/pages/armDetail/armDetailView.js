@@ -158,7 +158,7 @@ const ArmDetail = ({ data, classes }) => {
                   </Widget>
                 </div>
                 {/* File count */}
-                <NumberOfThings classes={classes} number={data.num_files} icon={fileCountIcon} title="NUMBER OF FILES" alt="Bento file count icon" />
+                <NumberOfThings classes={classes} number={data.num_files} icon={fileCountIcon} title="NUMBER OF FILES" alt="GMB file count icon" />
               </div>
             </Grid>
             {/* Right panel end */}
