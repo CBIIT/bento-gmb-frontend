@@ -17,8 +17,8 @@ export const myFilesPageData = {
   subTitle: 'Selected Files',
   downButtonText: 'DOWNLOAD MANIFEST',
   headerIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Icon-Cart-Workflow.svg',
-  headerIconAlt: 'Bento MyFiles header logo',
-  manifestFileName: 'BENTO File Manifest',
+  headerIconAlt: 'GMB Files header logo',
+  manifestFileName: 'GMB File Manifest',
   tooltipIcon: 'https://raw.githubusercontent.com/google/material-design-icons/master/src/action/help/materialicons/24px.svg',
   tooltipAlt: 'tooltip icon',
   tooltipMessage: 'To access and analyze files: select and remove unwanted files,  click the “Download Manifest” button, and upload the resulting Manifest file to your Seven Bridges Genomics account.',
@@ -36,8 +36,8 @@ export const myFilesPageData = {
 };
 
 export const manifestData = {
-  keysToInclude: ['study_code', 'subject_id', 'file_name', 'file_id', 'md5sum'],
-  header: ['Study Code', 'Case ID', 'File Name', 'File ID', 'Md5sum', 'User Comments'],
+  keysToInclude: ['file_name', 'subject_id', 'file_id', 'description', 'fileFormat', 'size', 'md5sum'],
+  header: ['File Name', 'Subject ID', 'File ID', 'File Description', 'File Format', 'File Size', 'Md5sum', 'User Comments'],
 };
 
 // --------------- File table configuration --------------
@@ -50,7 +50,6 @@ export const table = {
   defaultSortDirection: 'asc',
   paginationAPIField: 'filesInList',
   tableDownloadCSV: customMyFilesTabDownloadCSV,
-
   columns: [
     {
       dataField: 'file_name',

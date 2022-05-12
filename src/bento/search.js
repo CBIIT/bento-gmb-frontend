@@ -40,7 +40,7 @@ export const SEARCH_PAGE_RESULT_TRIAL = gql`
                 clinical_trial_long_name
                 clinical_trial_description
                 clinical_trial_type
-                type: __typename
+                type
             }
         }
     }
