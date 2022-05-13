@@ -41,7 +41,7 @@ const FileCard = ({ data, classes, index }) => {
           <div>
             <span className={classes.detailContainerHeader}>FILE</span>
             <span className={classes.cardTitle}>
-              <Link to="/subjects" className={classes.cardTitle}>
+              <Link to="/subjects/{subject_id}" className={classes.cardTitle}>
                 {data.file_name}
               </Link>
             </span>
