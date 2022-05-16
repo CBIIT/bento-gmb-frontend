@@ -30,6 +30,7 @@ const FileCard = ({ data, classes, index }) => {
     },
   ];
   const propertiesWithLinks = prepareLinks(properties, data);
+  const to = `/subject/${data.subject_id}`;
 
   return (
     <>
@@ -41,7 +42,7 @@ const FileCard = ({ data, classes, index }) => {
           <div>
             <span className={classes.detailContainerHeader}>FILE</span>
             <span className={classes.cardTitle}>
-              <Link to="/subjects" className={classes.cardTitle}>
+              <Link to={to} className={classes.cardTitle}>
                 {data.file_name}
               </Link>
             </span>

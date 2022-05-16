@@ -870,6 +870,7 @@ export const FILTER_QUERY = gql`
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
     query fileOverview(
+        $subject_id: [String],
         $file_id: [String],
         $file_name: [String],
         $race: [String],
@@ -893,6 +894,7 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
         $sort_direction: String
     ){
         fileOverview(
+            subject_id: $subject_id,
             file_id:$file_id,
             file_name:$file_name,
             race:$race,

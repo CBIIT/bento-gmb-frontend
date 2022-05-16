@@ -38,7 +38,6 @@ import {
   widgetsSearchData,
   SUBJECT_OVERVIEW_QUERY,
   GET_SEARCH_NODES_BY_FACET,
-  ageAtIndex,
 } from '../../../bento/localSearchData';
 
 const storeKey = 'dashboardTab';
@@ -363,7 +362,7 @@ const convertResultInPrevType = (result) => {
     nodeCountsFromLists: {
       numberOfFiles: result.data.searchSubjects.numberOfFiles,
       numberOfLabProcedures: result.data.searchSubjects.numberOfLabProcedures,
-      numberOfPrograms: result.data.searchSubjects.numberOfPrograms,
+      numberOfTrials: result.data.searchSubjects.numberOfTrials,
       numberOfSamples: result.data.searchSubjects.numberOfSamples,
       numberOfStudies: result.data.searchSubjects.numberOfStudies,
       numberOfSubjects: result.data.searchSubjects.numberOfSubjects,
@@ -383,16 +382,18 @@ async function getCaseData(variables) {
 }
 
 const getSubjectDetails = async (variables) => {
-  const result = await client.query({
-    query: SUBJECT_OVERVIEW_QUERY,
-    variables: {
+  const getVariables = () => {
+    return {
       offset: 0,
       first: 100,
       sort_direction: 'desc',
-      order_by: 'age_at_index',
-      age_at_index: [ageAtIndex, null],
+      order_by: 'subject_id',
       ...variables,
-    },
+    };
+  };
+  const result = await client.query({
+    query: SUBJECT_OVERVIEW_QUERY,
+    variables: getVariables(),
   });
   return result;
 };

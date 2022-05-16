@@ -60,6 +60,7 @@ export const SEARCH_PAGE_RESULT_SUBJECTS = gql`
                 subject_id
                 registering_institution
                 disease_term
+                clinical_trial_id
                 type: __typename
             }
         }
