@@ -894,7 +894,7 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
         $sort_direction: String
     ){
         fileOverview(
-            subject_id: $subject_ids,
+            subject_id: $subject_id,
             file_id:$file_id,
             file_name:$file_name,
             race:$race,
