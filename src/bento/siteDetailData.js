@@ -197,7 +197,6 @@ const table2 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
-    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -219,7 +218,7 @@ const table2 = {
   // downloaded File Name
   downloadFileName: 'Files_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: false,
+  selectableRows: true,
   // A maximum of 10 columns are allowed
   columns: [
     {
