@@ -26,7 +26,7 @@ const table = {
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // viewColumns 'true' or 'false'
-  viewColumns: false,
+  viewColumns: true,
   // download csv 'true' or 'false'
   download: true,
   // downloaded File Name
