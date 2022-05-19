@@ -12,7 +12,8 @@ const ICDCFooter = () => {
     const fetchFileService = () => fetch(`${FILE_SERVICE_API}version`)
       .then((resp) => (resp.json())).catch(() => ({ version: '' }));
 
-    const [fileServiceRes, backendServiceRes] = await Promise.all([fetchFileService(),
+    const [fileServiceRes, backendServiceRes] = await Promise.all([
+      fetchFileService(),
       getBackendVersion()]);
     const fileServData = fileServiceRes;
     setFooterUpdatedData({
