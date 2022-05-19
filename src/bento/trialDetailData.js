@@ -130,7 +130,7 @@ const table = {
       header: 'Status',
     },
     {
-      dataField: 'subjectCount',
+      dataField: 'num_subjects',
       header: 'Subjects',
     },
   ],
@@ -138,30 +138,31 @@ const table = {
 
 // --------------- GraphQL query - Retrieve trial details --------------
 const GET_TRIAL_DETAIL_DATA_QUERY = gql`
-query trialDetail($trial_id: String){
-    trialDetail(trial_id: $trial_id){
-        trial_id
-        trialName
-        trialLongName
-        trialDesription
-        leadOrganization
-        trialType
-        trialPrincipalInvestigator
-        num_subjects
-        num_files
-        sites{
-          site_id
-          siteName
-          siteAddress
-          siteStatus
-          subjectCount
+    query trialDetail($trial_id: String){
+        trialDetail(trial_id: $trial_id){
+            trial_id
+            trialName
+            trialLongName
+            trialDesription
+            leadOrganization
+            trialType
+            trialPrincipalInvestigator
+            num_subjects
+            num_files
+            sites{
+                site_id
+                siteName
+                siteAddress
+                siteStatus
+                subjectCount
+                num_subjects: subjectCount
+            }
         }
-    }
-    trialSubjectCountByStageAtEntry(trial_id: $trial_id){
-        group
-        subjects
-    }
-}`;
+        trialSubjectCountByStageAtEntry(trial_id: $trial_id){
+            group
+            subjects
+        }
+    }`;
 
 export {
   pageTitle,

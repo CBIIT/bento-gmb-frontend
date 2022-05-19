@@ -84,5 +84,5 @@ export const customMyFilesTabDownloadCSV = {
   query: MY_CART,
   apiVariable: 'filesInList',
   fileName: 'GMB File Manifest',
-  defaultFullTableDownload: true,
+  defaultFullTableDownload: false,
 };

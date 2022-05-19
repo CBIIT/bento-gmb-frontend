@@ -18,7 +18,7 @@ const LocalSearchComponent = ({ classes, type }, ref) => {
   const [value, setValue] = React.useState([]);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
-  const selectionType = type === 'subjectIds' ? 'subject_ids' : type;
+  const selectionType = type === 'subjectIds' ? 'subject_id' : type;
   const allFilters = useSelector((state) => (state.dashboardTab
     && state.dashboardTab.autoCompleteSelection ? state.dashboardTab.autoCompleteSelection : {}));
 
