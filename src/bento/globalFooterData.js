@@ -70,3 +70,7 @@ export default {
     },
   ],
 };
+
+export const getBackendVersion = async () => fetch(env.REACT_APP_BACKEND_VERSION)
+  .then((res) => res.json())
+  .catch(() => ({ version: '' }));
