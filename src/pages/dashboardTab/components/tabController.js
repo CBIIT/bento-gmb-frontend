@@ -226,7 +226,7 @@ const tabController = (classes) => {
         defaultSortDirection={container.defaultSortDirection || 'asc'}
         dataKey={container.dataKey}
         filteredFileIds={filteredFileIds}
-        allFilters={{ ...allFilters, ...{ subject_ids: subjectIds, subject_id: subjectIds } }}
+        allFilters={{ ...allFilters, ...{ /* subject_ids: subjectIds, */ subject_id: subjectIds } }}
         tableHasSelections={tableHasSelections}
         setRowSelection={getTableRowSelectionEvent()}
         selectedRowInfo={tableRowSelectionData[container.tabIndex].selectedRowInfo}

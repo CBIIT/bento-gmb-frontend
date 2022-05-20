@@ -34,23 +34,23 @@ const TrialView = ({ classes, data, theme }) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'programs',
-      groupName: 'Program',
+      datafield: 'clinical_trial_id',
+      groupName: 'Trial',
       isChecked: true,
-      name: trialData.program_acronym,
-      section: 'Filter By Cases',
+      name: trialData.trial_id,
+      section: 'Filter By Subject',
     }]);
   };
 
-  const redirectToArm = (programArm) => {
+  const redirectToRegistering = (programArm) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'studies',
-      groupName: 'Arm',
+      datafield: 'registering_institution',
+      groupName: 'Registering Institution',
       isChecked: true,
-      name: `${programArm.rowData[0]}: ${programArm.rowData[1]}`,
-      section: 'Filter By Cases',
+      name: `${programArm.rowData[0]} : ${programArm.rowData[1]}`,
+      section: 'Filter By Subject',
     }]);
   };
 
@@ -333,7 +333,7 @@ const TrialView = ({ classes, data, theme }) => {
                   <Typography>
                     <CustomDataTable
                       data={trialData[table.dataField]}
-                      columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectToArm)}
+                      columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectToRegistering)}
                       options={getOptions(table, classes)}
                     />
                   </Typography>

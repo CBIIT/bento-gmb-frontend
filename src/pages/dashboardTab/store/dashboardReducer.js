@@ -389,6 +389,7 @@ const getSubjectDetails = async (variables) => {
       sort_direction: 'desc',
       order_by: 'subject_id',
       ...variables,
+      ...{ subject_id: variables.subject_ids || [] },
     };
   };
   const result = await client.query({
@@ -413,6 +414,7 @@ export async function uploadBulkModalSearch(searchcriteria, type) {
   addBulkModalSearchData(searchcriteria, type);
   const variables = {
     ...getState().allActiveFilters,
+    ...{ subject_id: getState().allActiveFilters.subject_ids },
     ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
   };
 
@@ -444,8 +446,10 @@ export async function localSearch(searchcriteria, isQuery = false) {
   if (searchcriteria.length === 0 && !isQuery) {
     clearAllFilters();
   } else {
+    const filtersAll = getState().allActiveFilters;
     const variables = {
-      ...getState().allActiveFilters,
+      ...filtersAll,
+      ...{ subject_id: filtersAll.subject_ids },
       ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
     };
 
@@ -586,6 +590,7 @@ export function fetchDataForDashboardTab(
       query: QUERY,
       variables: {
         ...activeFilters,
+        ...{ subject_id: activeFilters.subject_ids || [] },
         order_by: sortfield || '',
         sort_direction: sortDirection || 'asc',
       },

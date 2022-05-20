@@ -57,17 +57,17 @@ const SiteView = ({ classes, data, theme }) => {
     }]);
   };
 
-  // const redirectToArm = (programArm) => {
-  //   setSideBarToLoading();
-  //   setDashboardTableLoading();
-  //   singleCheckBox([{
-  //     datafield: 'studies',
-  //     groupName: 'Arm',
-  //     isChecked: true,
-  //     name: `${programArm.rowData[0]}: ${programArm.rowData[1]}`,
-  //     section: 'Filter By Cases',
-  //   }]);
-  // };
+  /* const redirectToArm = (programArm) => {
+    setSideBarToLoading();
+    setDashboardTableLoading();
+    singleCheckBox([{
+      datafield: 'registering_institution',
+      groupName: 'Registering Institution',
+      isChecked: true,
+      name: `${programArm.rowData[0]}: ${programArm.rowData[1]}`,
+      section: 'Filter By Subject',
+    }]);
+  }; */
 
   const stat = {
     numberOfTrials: 1,
