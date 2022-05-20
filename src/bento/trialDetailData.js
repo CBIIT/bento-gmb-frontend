@@ -119,11 +119,11 @@ const table = {
     },
     {
       dataField: 'siteName',
-      header: 'Name',
+      header: 'Site Name',
     },
     {
       dataField: 'siteAddress',
-      header: 'Address',
+      header: 'Site Address',
     },
     {
       dataField: 'siteStatus',
@@ -131,7 +131,7 @@ const table = {
     },
     {
       dataField: 'num_subjects',
-      header: 'Subjects',
+      header: 'Associated Subjects',
     },
   ],
 };
