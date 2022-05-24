@@ -107,7 +107,7 @@ const table = {
   // download csv 'true' or 'false'
   download: true,
   // downloaded File Name
-  downloadFileName: 'samples_download',
+  downloadFileName: 'sites_download',
   // Set 'selectableRows' to true to show the row selection
   selectableRows: false,
   // A maximum of 10 columns are allowed
