@@ -138,7 +138,6 @@ export const FacetPanelComponent = ({ classes }, ref) => {
       && state.dashboardTab.bulkUpload
       ? state.dashboardTab.bulkUpload : {
         subject_ids: [],
-        sample_ids: [],
         file_ids: [],
       }));
 
@@ -147,7 +146,6 @@ export const FacetPanelComponent = ({ classes }, ref) => {
           && state.dashboardTab.autoCompleteSelection
       ? state.dashboardTab.autoCompleteSelection : {
         subject_ids: [],
-        sample_ids: [],
         file_ids: [],
       }));
 
