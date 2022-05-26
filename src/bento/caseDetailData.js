@@ -457,7 +457,7 @@ const caseIDField = 'subject_id';
 // GraphQL query to retrieve detailed info for a case
 const GET_CASE_DETAIL_DATA_QUERY = gql`
   query subjectDetail($subject_id: String!) {
-    subjectDetail(subject_ids: $subject_id) {
+    subjectDetail(subject_id: $subject_id) {
       subject_id
       gender
       ageAtEntry
