@@ -44,108 +44,9 @@ const leftPanel = [
       },
     ],
   },
-  // {
-  //   sectionHeader: 'Diagnosis',
-  //   // sectionDesc: 'Diagnosis Related Info',
-  //   properties: [
-  //     {
-  //       label: 'Diagnosis',
-  //       dataField: 'disease_type',
-  //     },
-  //     {
-  //       label: 'Diagnosis Subtype',
-  //       dataField: 'disease_subtype',
-  //     },
-  //     {
-  //       label: 'Tumor Grade',
-  //       dataField: 'tumor_grade',
-  //     },
-  //     {
-  //       label: 'Tumor Grade (mm)',
-  //       dataField: 'tumor_largest_dimension_diameter',
-  //     },
-  //     {
-  //       label: 'ER Status',
-  //       dataField: 'er_status',
-  //     },
-  //     {
-  //       label: 'PR Status',
-  //       dataField: 'pr_status',
-  //     },
-  //     {
-  //       label: 'Nuclear Grade',
-  //       dataField: 'nuclear_grade',
-  //     },
-  //     {
-  //       label: 'Recurrence Score',
-  //       dataField: 'recurrence_score',
-  //     },
-  //   ],
-  // },
 ];
 
-const rightPanel = [
-  // Each object here represents a subsection in the panel
-  // A maximum of 3 subsections are allowed
-  // {
-  //   sectionHeader: 'Treatment',
-  //   // sectionDesc: 'Treatment Related Info',
-  //   properties: [
-  //     // A maximum of 10 properties are allowed
-  //     {
-  //       label: 'Primary Surgical Procedure',
-  //       dataField: 'primary_surgical_procedure',
-  //     },
-  //     {
-  //       label: 'Chemotherapy Regimen Group',
-  //       dataField: 'chemotherapy_regimen_group',
-  //     },
-  //     {
-  //       label: 'Chemotherapy Regimen',
-  //       dataField: 'chemotherapy_regimen',
-  //     },
-  //     {
-  //       label: 'Endocrine Therapy Type',
-  //       dataField: 'endocrine_therapy_type',
-  //     },
-  //   ],
-  // },
-  // {
-  //   sectionHeader: 'Follow Up',
-  //   // sectionDesc: 'Follow Up Related Info',
-  //   properties: [
-  //     // A maximum of 10 properties are allowed
-  //     {
-  //       label: 'Is Disease Free',
-  //       dataField: 'dfs_event_indicator',
-  //     },
-  //     {
-  //       label: 'Is Recurrence Free',
-  //       dataField: 'recurrence_free_indicator',
-  //     },
-  //     {
-  //       label: 'Is Distant Recurrence Free',
-  //       dataField: 'distant_recurrence_indicator',
-  //     },
-  //     {
-  //       label: 'Disease Free Event Type',
-  //       dataField: 'dfs_event_type',
-  //     },
-  //     {
-  //       label: 'Recurrence Event Type',
-  //       dataField: 'first_recurrence_type',
-  //     },
-  //     {
-  //       label: 'Days to Progression',
-  //       dataField: 'days_to_progression',
-  //     },
-  //     {
-  //       label: 'Days to Recurrence',
-  //       dataField: 'days_to_recurrence',
-  //     },
-  //   ],
-  // },
-];
+const rightPanel = [];
 
 // --------------- Dahboard Table external link configuration --------------
 // Ideal size for externalLinkIcon is 16x16 px
@@ -457,7 +358,7 @@ const caseIDField = 'subject_id';
 // GraphQL query to retrieve detailed info for a case
 const GET_CASE_DETAIL_DATA_QUERY = gql`
   query subjectDetail($subject_id: String!) {
-    subjectDetail(subject_ids: $subject_id) {
+    subjectDetail(subject_id: $subject_id) {
       subject_id
       gender
       ageAtEntry
