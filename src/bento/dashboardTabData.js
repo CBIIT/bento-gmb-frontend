@@ -320,7 +320,7 @@ export const DASHBOARD_QUERY_NEW = gql`
         $germline_pathogenicity: [String],
         $file_type: [String]) {
         searchSubjects(
-            subject_id:$subject_id,
+            subject_ids:$subject_id,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,
@@ -894,7 +894,7 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
         $sort_direction: String
     ){
         fileOverview(
-            subject_id: $subject_id,
+            subject_ids: $subject_id,
             file_id:$file_id,
             file_name:$file_name,
             race:$race,
@@ -951,7 +951,7 @@ export const GET_CASES_OVERVIEW_QUERY = gql`
         $sort_direction: String
     ){
         subjectOverview(
-            subject_id:$subject_id,
+            subject_ids:$subject_id,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,
@@ -1041,7 +1041,7 @@ export const GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART = gql`
         $sort_direction: String
     ){
         subjectOverview(
-            subject_id:$subject_ids,
+            subject_ids:$subject_ids,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,

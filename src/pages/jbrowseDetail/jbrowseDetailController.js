@@ -55,7 +55,7 @@ const JbrowseDetailContainer = ({ match }) => {
   if (error || !data) {
     return (
       <Typography variant="h5" color="error" size="sm">
-        {error ? `An error has occurred in loading stats component: ${error}` : 'Recieved wrong data'}
+        {error ? `An error has occurred in loading stats component: ${error}` : 'Received wrong data'}
       </Typography>
     );
   }
