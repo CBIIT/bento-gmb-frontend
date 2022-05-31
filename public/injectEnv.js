@@ -7,6 +7,6 @@ window.injectedEnv = {
   REACT_APP_GOOGLE_CLIENT_ID: 'Please insert client ID here',
   REACT_APP_APPLICATION_VERSION: 'YYYY_MM_DD/HH:MM',
   REACT_APP_ABOUT_CONTENT_URL: 'https://raw.githubusercontent.com/CBIIT/bento-frontend/master/src/content/dev/aboutPagesContent.yaml',
-  REACT_APP_FILE_SERVICE_API: 'https://bento-dev.bento-tools.org/api/files/',
+  REACT_APP_FILE_SERVICE_API: 'https://gmb-dev.bento-tools.org/api/files/',
   REACT_APP_BACKEND_VERSION: 'https://gmb-dev.bento-tools.org/version/',
 };
