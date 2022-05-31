@@ -304,14 +304,14 @@ export const resetIconFilter = {
 
 // --------------- Dashboard Table configuration --------------
 export const dashboardTable = {
-  tableTitle: 'Cases',
+  tableTitle: 'Subjects',
   tableData: [
     // A maximum of 10 columns (tableData) are allowed
     {
       dataField: 'subject_id',
-      header: 'Case ID',
+      header: 'Subject ID',
       sort: 'asc',
-      link: '/case/{subject_id}',
+      link: '/subject/{subject_id}',
       primary: true,
       display: true,
     },

@@ -31,7 +31,7 @@ const CaseCard = ({ data, classes, index }) => {
         </Grid>
         <Grid item xs={11} className={classes.propertyContainer}>
           <div>
-            <span className={classes.detailContainerHeader}>CASE</span>
+            <span className={classes.detailContainerHeader}>SUBJECT</span>
             <span>
               <Link to={`/subject/${data.subject_id}`} className={classes.cardTitle}>
                 {data.subject_id}

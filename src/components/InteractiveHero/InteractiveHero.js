@@ -19,7 +19,7 @@ const CasesInActiveText = ({ classes, heroData }) => (
     <div className={classes.whiteTextInactive}>
       {heroData ? heroData.numberOfCases : 'NA'}
       {' '}
-      CASES
+      SUBJECTS
     </div>
   </div>
 );
@@ -29,7 +29,7 @@ const CasesActiveText = ({ classes, heroData }) => (
     <div className={classes.whiteText}>
       {heroData ? heroData.numberOfCases : 'NA'}
       {' '}
-      CASES
+      SUBJECTS
     </div>
     <div className={classes.blueText}>
       from
@@ -120,11 +120,11 @@ const InteractiveHero = ({ classes, heroData }) => {
   });
   return (
     <div className={classes.animationWrapper}>
-      <div className={classes.casesIcon} onMouseEnter={() => { setActiveState({ isActive: 'cases', transformedHorseShoe: FacingUp }); }} onMouseLeave={() => { setActiveState({ isActive: '', transformedHorseShoe: FacingLeft }); }}>
-        <CircularIcon isActive={activeState.isActive === 'cases'} InactiveImage={InActiveCases} activeImage={ActiveCases} />
+      <div className={classes.casesIcon} onMouseEnter={() => { setActiveState({ isActive: 'subjects', transformedHorseShoe: FacingUp }); }} onMouseLeave={() => { setActiveState({ isActive: '', transformedHorseShoe: FacingLeft }); }}>
+        <CircularIcon isActive={activeState.isActive === 'subjects'} InactiveImage={InActiveCases} activeImage={ActiveCases} />
       </div>
       <div className={classes.casesText}>
-        {activeState.isActive === 'cases' ? <CasesActiveText heroData={heroData} classes={classes} /> : <CasesInActiveText heroData={heroData} classes={classes} />}
+        {activeState.isActive === 'subjects' ? <CasesActiveText heroData={heroData} classes={classes} /> : <CasesInActiveText heroData={heroData} classes={classes} />}
       </div>
       <HorseShoe transformedHorseShoe={activeState.transformedHorseShoe} />
       <div className={classes.filesIcon} onMouseEnter={() => { setActiveState({ isActive: 'files', transformedHorseShoe: FacingRight }); }} onMouseLeave={() => { setActiveState({ isActive: '', transformedHorseShoe: FacingLeft }); }}>

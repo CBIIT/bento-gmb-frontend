@@ -97,7 +97,7 @@ const ActiveFiltersQuery = ({ classes }) => {
             }}
             onClick={onDeleteInputSet}
           >
-            INPUT CASE SET
+            INPUT SUBJECT SET
           </span>
           {' '}
         </>
@@ -195,7 +195,7 @@ const ActiveFiltersQuery = ({ classes }) => {
                       }}
                       onClick={onDeleteInputSet}
                     >
-                      INPUT CASE SET
+                      INPUT SUBJECT SET
                     </span>
                   ) : null}
                 {autoCompleteSelection.length
@@ -209,7 +209,7 @@ const ActiveFiltersQuery = ({ classes }) => {
                         }}
                         onClick={removeCaseIds}
                       >
-                        Case IDs
+                        Subject IDs
                       </span>
                       {' '}
                       {' '}

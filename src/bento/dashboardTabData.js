@@ -6,7 +6,7 @@ import {customCasesTabDownloadCSV, customFilesTabDownloadCSV, customSamplesTabDo
 export const tooltipContent = {
   icon: 'https://raw.githubusercontent.com/google/material-design-icons/master/src/action/help/materialicons/24px.svg',
   alt: 'tooltipIcon',
-  0: 'Click button to add selected files associated with the selected case(s).',
+  0: 'Click button to add selected files associated with the selected subject(s).',
   1: 'Click button to add selected files.',
 };
 
@@ -182,7 +182,7 @@ export const tabContainers = [
         dataField: 'subject_id',
         header: 'Subject ID',
         sort: 'asc',
-        link: '/case/{subject_id}',
+        link: '/subject/{subject_id}',
         display: false,
       },
       // {
