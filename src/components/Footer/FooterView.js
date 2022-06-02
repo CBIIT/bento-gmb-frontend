@@ -25,13 +25,16 @@ const ICDCFooter = () => {
   }
   useEffect(() => {
     const getSystems = async () => {
-      const response = await fetch(
-        `${FILE_SERVICE_API}version`,
-      ).then((resp) => (resp))
-        .catch(() => ({ version: '' }));
-      const data = response.json();
+      const fsVersion = await fetch(`${FILE_SERVICE_API}version`)
+        .then((resp) => (resp.json()))
+        .then((data) => data.version)
+        .catch(() => ('0.0.0'));
       const beVersion = await getBEVersion();
-      setFooterUpdatedData({ ...FooterData, ...{ FileServiceVersion: data.version || '0.0.0' }, ...{ BEversion: beVersion } });
+      setFooterUpdatedData({
+        ...FooterData,
+        ...{ FileServiceVersion: fsVersion },
+        ...{ BEversion: beVersion },
+      });
     };
     getSystems();
   }, [FooterData]);
