@@ -588,7 +588,6 @@ export function fetchDataForDashboardTab(
       query: QUERY,
       variables: {
         ...activeFilters,
-        ...{ subject_id: activeFilters.subject_ids || [] },
         order_by: sortfield || '',
         sort_direction: sortDirection || 'asc',
       },
