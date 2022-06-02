@@ -27,11 +27,6 @@ class FileCard extends React.Component {
       dataField: 'clinical_trial_id',
       link: '/trial/{clinical_trial_id}',
     },
-    {
-      label: 'Subject ID',
-      dataField: 'subject_id',
-      link: '/subject/{subject_id}',
-    },
   ]
 
   constructor({ data, classes, index }) {
