@@ -7,11 +7,15 @@ import SearchAutoFill from '../Search/searchAutoFillComponent';
 const customStyle = {
   nihLogoImg: {
     width: '463px',
-    height: '70px',
+    height: '100px',
     marginLeft: '0px',
     minHeight: '54px',
     maxHeight: '100px',
-    marginBottom: '15px',
+  },
+  headerBar: {
+    top: '0px',
+    zIndex: '999',
+    alignItems: 'center',
   },
 };
 
@@ -20,6 +24,7 @@ const ICDCHeader = (props) => {
   return location.pathname.match('/search') ? (
     <Header
       logo={headerData.globalHeaderLogo}
+      easter={headerData.globalHeaderImage}
       alt={headerData.globalHeaderLogoAltText}
       homeLink={headerData.globalHeaderLogoLink}
       customStyle={customStyle}
