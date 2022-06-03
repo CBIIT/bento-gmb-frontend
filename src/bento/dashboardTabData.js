@@ -303,7 +303,7 @@ export const tabIndex = [
 
 export const DASHBOARD_QUERY_NEW = gql`
     query searchSubjects(
-        $subject_id: [String],
+        $subject_ids: [String],
         $race: [String],
         $disease_term: [String],
         $registering_institution: [String],
@@ -320,7 +320,7 @@ export const DASHBOARD_QUERY_NEW = gql`
         $germline_pathogenicity: [String],
         $file_type: [String]) {
         searchSubjects(
-            subject_ids:$subject_id,
+            subject_ids:$subject_ids,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,
@@ -929,7 +929,7 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
 
 export const GET_CASES_OVERVIEW_QUERY = gql`
     query subjectOverview(
-        $subject_id: [String],
+        $subject_ids: [String],
         $race: [String],
         $disease_term: [String],
         $registering_institution: [String],
@@ -951,7 +951,7 @@ export const GET_CASES_OVERVIEW_QUERY = gql`
         $sort_direction: String
     ){
         subjectOverview(
-            subject_ids:$subject_id,
+            subject_ids:$subject_ids,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,
