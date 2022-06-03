@@ -77,7 +77,7 @@ const Dashboard = ({
                             >
                               <ProgramSunburst
                                 data={data[widget.dataName]}
-                                titleText={widget.titleText || 'Cases'}
+                                titleText={widget.titleText || 'Subjects'}
                                 width={250}
                                 height={173}
                                 innerRadius={40}
@@ -106,7 +106,7 @@ const Dashboard = ({
                             >
                               <CustomActiveDonut
                                 data={data[widget.dataName]}
-                                titleText={widget.titleText || 'Cases'}
+                                titleText={widget.titleText || 'Subjects'}
                                 width={400}
                                 height={225}
                                 innerRadius={50}

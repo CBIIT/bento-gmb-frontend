@@ -9,7 +9,7 @@ const columns = [{ name: 'program_id', label: 'Program' },
   { name: 'clinical_study_designation', label: 'Study Code' },
   { name: 'clinical_study_name', label: 'Study Name' },
   { name: 'clinical_study_type', label: 'Study Type' },
-  { name: 'numberOfCases', label: 'Cases' },
+  { name: 'numberOfSubjects', label: 'Subjects' },
 ];
 const data = [
   ['COP', 'COTC007B', 'Preclinical Evaluation of three indenoisquinoline Candidated in Tumor Bearing Dogs', 'Clinical Trial', '85'],

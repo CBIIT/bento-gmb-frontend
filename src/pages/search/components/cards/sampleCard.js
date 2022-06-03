@@ -14,9 +14,9 @@ const SampleCard = ({ data, classes, index }) => {
     },
 
     {
-      label: 'Case ID',
+      label: 'Subject ID',
       dataField: 'subject_id',
-      link: '/case/{subject_id}',
+      link: '/subject/{subject_id}',
 
     },
     {
@@ -47,7 +47,7 @@ const SampleCard = ({ data, classes, index }) => {
           <div>
             <span className={classes.detailContainerHeader}>Sample</span>
             <span className={classes.cardTitle}>
-              <Link to={`/case/${data.subject_id}`} className={classes.cardTitle}>
+              <Link to={`/subject/${data.subject_id}`} className={classes.cardTitle}>
                 {data.sample_id}
               </Link>
             </span>

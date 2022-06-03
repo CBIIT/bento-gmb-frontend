@@ -49,7 +49,7 @@ const SideBarContent = ({
             </div>
             <List
               component="nav"
-              aria-label="filter cases"
+              aria-label="filter subjects"
               classes={{
                 root: listRoot,
                 divider: dividerRoot,

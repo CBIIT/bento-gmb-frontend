@@ -20,7 +20,7 @@ export const landingPageData = {
       statAPI: 'searchSubjects.numberOfTrials',
     },
     {
-      statTitle: 'Cases',
+      statTitle: 'Subjects',
       type: 'field',
       statAPI: 'searchSubjects.numberOfSubjects',
     },
@@ -57,10 +57,10 @@ export const landingPageData = {
   tile4: {
     alt: '',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_tileCases.png',
-    titleText: 'Cases',
-    descriptionText: 'Analyze cases from the TAILORx clinical trial.',
+    titleText: 'Subjects',
+    descriptionText: 'Analyze subjects from the TAILORx clinical trial.',
     callToActionText: 'Explore',
-    callToActionLink: '/subjects', // This links to the cases dashboard.
+    callToActionLink: '/subjects', // This links to the subjects dashboard.
   },
 };
 
