@@ -27,6 +27,11 @@ class FileCard extends React.Component {
       dataField: 'clinical_trial_id',
       link: '/trial/{clinical_trial_id}',
     },
+    {
+      label: 'Subject ID',
+      dataField: 'subject_id',
+      link: '/subject/{subject_id}',
+    },
   ]
 
   constructor({ data, classes, index }) {
@@ -54,7 +59,7 @@ class FileCard extends React.Component {
               <span className={classes.detailContainerHeader}>FILE</span>
               <span className={classes.cardTitle}>
                 <Link to={to} className={classes.cardTitle}>
-                  {data.subject_id}
+                  {data.file_name}
                 </Link>
               </span>
 
