@@ -59,7 +59,7 @@ class FileCard extends React.Component {
               <span className={classes.detailContainerHeader}>FILE</span>
               <span className={classes.cardTitle}>
                 <Link to={to} className={classes.cardTitle}>
-                  {data.subject_id}
+                  {data.file_name}
                 </Link>
               </span>
 
