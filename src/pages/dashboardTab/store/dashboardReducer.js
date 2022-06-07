@@ -39,6 +39,7 @@ import {
   SUBJECT_OVERVIEW_QUERY,
   GET_SEARCH_NODES_BY_FACET,
 } from '../../../bento/localSearchData';
+import { utilities } from '../../../utils/objectUtils';
 
 const storeKey = 'dashboardTab';
 
@@ -476,15 +477,24 @@ export async function localSearch(searchcriteria, isQuery = false) {
  * @return distpatcher
  */
 function toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables) {
+  function getQueryVariables() {
+    let base = {
+      first: 100,
+      ...currentAllFilterVariables,
+      ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+    };
+
+    if (!utilities.hasOwnProp(base, 'subject_ids') && utilities.hasOwnProp(base, 'subject_id')) {
+      base = Object.assign(base, { subject_ids: base.subject_id });
+    }
+
+    return base;
+  }
+
   return client
     .query({ // request to get the filtered subjects
       query: DASHBOARD_QUERY_NEW,
-      variables: {
-        first: 100,
-        ...currentAllFilterVariables,
-        ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
-
-      },
+      variables: getQueryVariables(),
     })
     .then((result) => store.dispatch({
       type: 'TOGGGLE_CHECKBOX_WITH_API',
@@ -588,6 +598,7 @@ export function fetchDataForDashboardTab(
       query: QUERY,
       variables: {
         ...activeFilters,
+        ...{ subject_ids: activeFilters.subject_ids || [] },
         order_by: sortfield || '',
         sort_direction: sortDirection || 'asc',
       },
