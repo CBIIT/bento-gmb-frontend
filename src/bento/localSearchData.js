@@ -30,6 +30,7 @@ export const GET_IDS_BY_TYPE = (type) => gql`{
 export const GET_SEARCH_NODES_BY_FACET = gql`
 query searchSubjects(
     $subject_ids: [String],
+    $clinical_trial_id: [String],
     $race: [String],
     $disease_term: [String],
     $registering_institution: [String],
@@ -48,6 +49,7 @@ query searchSubjects(
 ){
     searchSubjects(
         subject_ids:$subject_ids,
+        clinical_trial_id: $clinical_trial_id,
         race:$race,
         disease_term:$disease_term,
         registering_institution:$registering_institution,
@@ -124,6 +126,14 @@ query searchSubjects(
             subjects
         }
         subjectCountByFileType{
+            group
+            subjects
+        }
+        subjectCountByClinicalTrialId {
+            group
+            subjects
+        }
+        filterSubjectCountByClinicalTrialId{
             group
             subjects
         }
