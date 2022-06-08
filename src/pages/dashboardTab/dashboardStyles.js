@@ -1,6 +1,7 @@
 const styles = (theme) => ({
   dashboardContainer: {
     backgroundColor: '#FFFFFF',
+    paddingTop: '12px',
   },
   dashboardDivider: {
     height: 16,
