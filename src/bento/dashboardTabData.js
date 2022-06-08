@@ -304,6 +304,7 @@ export const tabIndex = [
 export const DASHBOARD_QUERY_NEW = gql`
     query searchSubjects(
         $subject_ids: [String],
+        $clinical_trial_id: [String],
         $race: [String],
         $disease_term: [String],
         $registering_institution: [String],
@@ -321,6 +322,7 @@ export const DASHBOARD_QUERY_NEW = gql`
         $file_type: [String]) {
         searchSubjects(
             subject_ids:$subject_ids,
+            clinical_trial_id: $clinical_trial_id,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,
@@ -399,6 +401,14 @@ export const DASHBOARD_QUERY_NEW = gql`
                 group
                 subjects
             }
+            subjectCountByClinicalTrialId {
+                group
+                subjects
+            }
+            filterSubjectCountByClinicalTrialId {
+                group
+                subjects
+            }
             filterSubjectCountByRace{
                 group
                 subjects
@@ -414,7 +424,6 @@ export const DASHBOARD_QUERY_NEW = gql`
             filterSubjectCountByPatientSubgroup{
                 group
                 subjects
-
             }
             filterSubjectCountByStageAtEntry{
                 group

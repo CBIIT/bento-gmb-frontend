@@ -9,6 +9,15 @@ export const searchTabTitleText = 'Search';
 // A maximum of 12 facetSearchData are allowed
 export const facetSearchData = [
   {
+    label: 'Trial ID',
+    field: 'group',
+    api: 'subjectCountByClinicalTrialId',
+    apiForFiltering: 'filterSubjectCountByClinicalTrialId',
+    datafield: 'clinical_trial_id',
+    section: 'Filter By Subject',
+    show: true,
+  },
+  {
     label: 'Race',
     field: 'group',
     api: 'subjectCountByRace',
