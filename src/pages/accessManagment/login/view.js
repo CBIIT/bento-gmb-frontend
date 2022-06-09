@@ -1,7 +1,8 @@
 import React from 'react';
 import { Grid, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+// import LockIcon from '@material-ui/icons/Lock';
 import {
   loginProvidersData,
   loginGovCreateAccountURL,
@@ -11,10 +12,21 @@ import {
 import { useGoogleAuth } from '../../../components/GoogleAuth/GoogleAuthProvider';
 import { afterLoginRedirect } from '../../../components/Layout/privateRoute';
 
-// eslint-disable-next-line no-unused-vars
-function loginView({ data, classes }) {
+function loginView(props) {
+  const { classes } = props;
   const { signIn } = useGoogleAuth();
   const history = useHistory();
+
+  function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+
+  const query = useQuery();
+  function getRedirectPath() {
+    const path = query.get('redirect') || '/';
+    return path;
+  }
 
   return (
     <div className={classes.Container}>
@@ -36,6 +48,10 @@ function loginView({ data, classes }) {
 
             {/* Login Box */}
             <Grid container item sm={4} justifyContent="center" className={[classes.Box, classes.LoginBox]}>
+              {/* <Grid container item xs={12} justifyContent="center">
+                <LockIcon size="large" alt="alt coming" />
+              </Grid> */}
+
               <div className={classes.LoginBoxTitle}>
                 Log in with either of these Identity providers:
               </div>
@@ -48,7 +64,7 @@ function loginView({ data, classes }) {
                       className={[classes.LoginButton, classes.Color_092E50]}
                       disableRipple
                       onClick={() => {
-                        signIn(() => afterLoginRedirect(history, '/subjects'));
+                        signIn(() => afterLoginRedirect(history, getRedirectPath()));
                       }}
                     >
                       <Grid container item xs={1} justifyContent="center">
@@ -162,7 +178,7 @@ const styles = () => ({
     letterSpacing: '0',
     lineHeight: '22px',
     textAlign: 'center',
-    marginTop: '35px',
+    marginTop: '10px',
     marginBottom: '25px',
   },
   LoginButtonGroup: {
