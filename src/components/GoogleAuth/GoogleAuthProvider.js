@@ -31,7 +31,8 @@ export const GoogleAuthProvider = ({ children }) => {
     clientId: GOOGLE_CLIENT_ID,
   });
 
-  const onSignInClick = (afterSignIn = () => {}) => {
+  // eslint-disable-next-line no-unused-vars
+  const onSignInClick = (afterSignIn = () => {}, signInError = () => {}) => {
     grantOfflineAccess().then((resp) => {
       if (resp) {
         // Hide the sign-in button now that the user is authorized, for example:
@@ -45,14 +46,19 @@ export const GoogleAuthProvider = ({ children }) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ code: resp }),
-          }).then((response) => response.json()).catch(() => {
+          }).then((response) => response).catch(() => {
           });
 
-          if (!rawResponse) return;
-          const content = await rawResponse;
-          localStorage.setItem('username', content.name);
-          signInRed(content.name);
-          afterSignIn();
+          const responseData = rawResponse.json();
+          if (!responseData) return;
+          if (rawResponse.status === 200) {
+            const content = await responseData;
+            localStorage.setItem('username', content.name);
+            signInRed(content.name);
+            afterSignIn();
+          } else if (rawResponse.status === 400) signInError('User not registered or not found');
+          else if (rawResponse.status === 403) signInError('User has not been approved');
+          else signInError('Internal Error');
         })();
       } else {
         // There was an error.
