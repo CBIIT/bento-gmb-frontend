@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { useHistory, useLocation } from 'react-router-dom';
 // import LockIcon from '@material-ui/icons/Lock';
+import Snackbar from '@material-ui/core/Snackbar';
 import {
   loginProvidersData,
   loginGovCreateAccountURL,
@@ -12,24 +13,60 @@ import {
 import { useGoogleAuth } from '../../../components/GoogleAuth/GoogleAuthProvider';
 import { afterLoginRedirect } from '../../../components/Layout/privateRoute';
 
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+function getRedirectPath(query) {
+  const path = query.get('redirect') || '/';
+  return path;
+}
+
 function loginView(props) {
   const { classes } = props;
   const { signIn } = useGoogleAuth();
   const history = useHistory();
-
-  function useQuery() {
-    const { search } = useLocation();
-    return React.useMemo(() => new URLSearchParams(search), [search]);
-  }
-
   const query = useQuery();
-  function getRedirectPath() {
-    const path = query.get('redirect') || '/';
-    return path;
-  }
+  const redirectPath = getRedirectPath(query);
+  const redirectMessage = `Please sign in to access ${redirectPath}`;
+
+  const [state, setState] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'right',
+    message: '',
+  });
+
+  const {
+    vertical, horizontal, open, message,
+  } = state;
+
+  // Functions
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+  const signInError = (errorMessage) => {
+    setState({ ...state, open: true, message: errorMessage });
+  };
+
+  const signInSuccess = () => afterLoginRedirect(history, redirectPath);
+
+  useEffect(() => {
+    if (redirectPath) setState({ ...state, open: true, message: redirectMessage });
+  }, []);
 
   return (
     <div className={classes.Container}>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        message={message}
+        key={vertical + horizontal}
+        autoHideDuration={3000}
+      />
       {/* ROW 1 */}
       <Grid
         container
@@ -64,7 +101,7 @@ function loginView(props) {
                       className={[classes.LoginButton, classes.Color_092E50]}
                       disableRipple
                       onClick={() => {
-                        signIn(() => afterLoginRedirect(history, getRedirectPath()));
+                        signIn(signInSuccess, signInError);
                       }}
                     >
                       <Grid container item xs={1} justifyContent="center">
