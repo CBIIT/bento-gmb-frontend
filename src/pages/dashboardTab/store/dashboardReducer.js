@@ -39,6 +39,7 @@ import {
   SUBJECT_OVERVIEW_QUERY,
   GET_SEARCH_NODES_BY_FACET,
 } from '../../../bento/localSearchData';
+import { utilities } from '../../../utils/objectUtils';
 
 const storeKey = 'dashboardTab';
 
@@ -46,12 +47,10 @@ const initialState = {
   dashboardTab: {
     autoCompleteSelection: {
       subject_ids: [],
-      sample_ids: [],
       file_ids: [],
     },
     bulkUpload: {
       subject_ids: [],
-      sample_ids: [],
       file_ids: [],
     },
     isDataTableUptoDate: false,
@@ -228,13 +227,15 @@ function getSearchWidgetsData(data, widgetsInfoFromCustConfig) {
 function fetchDashboardTab() {
   return () => {
     store.dispatch({ type: 'REQUEST_DASHBOARDTAB' });
+    const variables = {
+      ...allFilters(),
+      ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+    };
+
     return client
       .query({
         query: DASHBOARD_QUERY_NEW,
-        variables: {
-          ...allFilters(),
-          ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
-        },
+        variables,
       })
       .then((result) => store.dispatch({ type: 'RECEIVE_DASHBOARDTAB', payload: _.cloneDeep(result) }))
       .catch((error) => store.dispatch(
@@ -389,7 +390,6 @@ const getSubjectDetails = async (variables) => {
       sort_direction: 'desc',
       order_by: 'subject_id',
       ...variables,
-      ...{ subject_id: variables.subject_ids || [] },
     };
   };
   const result = await client.query({
@@ -414,7 +414,6 @@ export async function uploadBulkModalSearch(searchcriteria, type) {
   addBulkModalSearchData(searchcriteria, type);
   const variables = {
     ...getState().allActiveFilters,
-    ...{ subject_id: getState().allActiveFilters.subject_ids },
     ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
   };
 
@@ -446,11 +445,11 @@ export async function localSearch(searchcriteria, isQuery = false) {
   if (searchcriteria.length === 0 && !isQuery) {
     clearAllFilters();
   } else {
-    const filtersAll = getState().allActiveFilters;
+    const state = getState();
+    const filtersAll = state.allActiveFilters;
     const variables = {
       ...filtersAll,
-      ...{ subject_id: filtersAll.subject_ids },
-      ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+      ..._.mergeWith({}, state.bulkUpload, state.autoCompleteSelection, customizer),
     };
 
     const [
@@ -478,15 +477,24 @@ export async function localSearch(searchcriteria, isQuery = false) {
  * @return distpatcher
  */
 function toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables) {
+  function getQueryVariables() {
+    let base = {
+      first: 100,
+      ...currentAllFilterVariables,
+      ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
+    };
+
+    if (!utilities.hasOwnProp(base, 'subject_ids') && utilities.hasOwnProp(base, 'subject_id')) {
+      base = Object.assign(base, { subject_ids: base.subject_id });
+    }
+
+    return base;
+  }
+
   return client
     .query({ // request to get the filtered subjects
       query: DASHBOARD_QUERY_NEW,
-      variables: {
-        first: 100,
-        ...currentAllFilterVariables,
-        ..._.mergeWith({}, getState().bulkUpload, getState().autoCompleteSelection, customizer),
-
-      },
+      variables: getQueryVariables(),
     })
     .then((result) => store.dispatch({
       type: 'TOGGGLE_CHECKBOX_WITH_API',
@@ -590,7 +598,7 @@ export function fetchDataForDashboardTab(
       query: QUERY,
       variables: {
         ...activeFilters,
-        ...{ subject_id: activeFilters.subject_ids || [] },
+        ...{ subject_ids: activeFilters.subject_ids || [] },
         order_by: sortfield || '',
         sort_direction: sortDirection || 'asc',
       },

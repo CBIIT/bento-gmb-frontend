@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 import { prepareLinks } from 'bento-components';
 import PropertyItem from '../propertyItem';
 
-const FileCard = ({ data, classes, index }) => {
-  const properties = [
+class FileCard extends React.Component {
+  properties = [
     {
       label: 'File ID',
       dataField: 'file_id',
+    },
+    {
+      label: 'File Name',
+      dataField: 'file_name',
     },
     {
       label: 'File Format',
@@ -28,41 +32,51 @@ const FileCard = ({ data, classes, index }) => {
       dataField: 'subject_id',
       link: '/subject/{subject_id}',
     },
-  ];
-  const propertiesWithLinks = prepareLinks(properties, data);
-  const to = `/subject/${data.subject_id}`;
+  ]
 
-  return (
-    <>
-      <Grid item container className={classes.card}>
-        <Grid item xs={1} className={classes.indexContainer}>
-          {index + 1 }
+  constructor({ data, classes, index }) {
+    // eslint-disable-next-line prefer-rest-params
+    super();
+    this.data = data || [];
+    this.classes = classes;
+    this.index = index;
+  }
+
+  render() {
+    const {
+      classes, data, properties, index,
+    } = this;
+    const propertiesWithLinks = prepareLinks(properties, data);
+    const to = `/subject/${data.subject_id}`;
+    return (
+      <>
+        <Grid item container className={classes.card}>
+          <Grid item xs={1} className={classes.indexContainer}>
+            {index + 1 }
+          </Grid>
+          <Grid item xs={11} className={classes.propertyContainer}>
+            <div>
+              <span className={classes.detailContainerHeader}>FILE</span>
+              <span className={classes.cardTitle}>
+                <Link to={to} className={classes.cardTitle}>
+                  {data.file_name}
+                </Link>
+              </span>
+
+            </div>
+            {propertiesWithLinks.map((prop) => (
+              <PropertyItem
+                label={prop.label}
+                value={data[prop.dataField]}
+                link={prop.link}
+              />
+            ))}
+          </Grid>
         </Grid>
-        <Grid item xs={11} className={classes.propertyContainer}>
-          <div>
-            <span className={classes.detailContainerHeader}>FILE</span>
-            <span className={classes.cardTitle}>
-              <Link to={to} className={classes.cardTitle}>
-                {data.file_name}
-              </Link>
-            </span>
-
-          </div>
-          {propertiesWithLinks.map((prop) => (
-            <PropertyItem
-              label={prop.label}
-              value={data[prop.dataField]}
-              link={prop.link}
-              // labelLink={prop.labelLink}
-              // classes={classes}
-            />
-          ))}
-        </Grid>
-      </Grid>
-
-    </>
-  );
-};
+      </>
+    );
+  }
+}
 
 const styles = () => ({
   cartIcon: {

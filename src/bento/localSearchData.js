@@ -12,8 +12,8 @@ export const GET_ALL_IDS = gql`{
   `;
 
 export const GET_SUBJECT_IDS = gql`
-  query search ($subject_ids: [String]){
-    findSubjectIdsInList (subject_id: $subject_ids) {
+  query search ($subject_id: [String]){
+    findSubjectIdsInList (subject_ids: $subject_id) {
         subject_id
         trial_id
     }
@@ -30,6 +30,7 @@ export const GET_IDS_BY_TYPE = (type) => gql`{
 export const GET_SEARCH_NODES_BY_FACET = gql`
 query searchSubjects(
     $subject_ids: [String],
+    $clinical_trial_id: [String],
     $race: [String],
     $disease_term: [String],
     $registering_institution: [String],
@@ -47,7 +48,8 @@ query searchSubjects(
     $file_type: [String]
 ){
     searchSubjects(
-        subject_id:$subject_ids,
+        subject_ids:$subject_ids,
+        clinical_trial_id: $clinical_trial_id,
         race:$race,
         disease_term:$disease_term,
         registering_institution:$registering_institution,
@@ -124,6 +126,14 @@ query searchSubjects(
             subjects
         }
         subjectCountByFileType{
+            group
+            subjects
+        }
+        subjectCountByClinicalTrialId {
+            group
+            subjects
+        }
+        filterSubjectCountByClinicalTrialId{
             group
             subjects
         }
@@ -331,7 +341,7 @@ query subjectOverview(
     $sort_direction: String
 ){
     subjectOverview(
-        subject_id:$subject_ids,
+        subject_ids:$subject_ids,
         race:$race,
         disease_term:$disease_term,
         registering_institution:$registering_institution,

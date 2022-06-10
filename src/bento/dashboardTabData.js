@@ -6,7 +6,7 @@ import {customCasesTabDownloadCSV, customFilesTabDownloadCSV, customSamplesTabDo
 export const tooltipContent = {
   icon: 'https://raw.githubusercontent.com/google/material-design-icons/master/src/action/help/materialicons/24px.svg',
   alt: 'tooltipIcon',
-  0: 'Click button to add selected files associated with the selected case(s).',
+  0: 'Click button to add selected files associated with the selected subject(s).',
   1: 'Click button to add selected files.',
 };
 
@@ -182,7 +182,7 @@ export const tabContainers = [
         dataField: 'subject_id',
         header: 'Subject ID',
         sort: 'asc',
-        link: '/case/{subject_id}',
+        link: '/subject/{subject_id}',
         display: false,
       },
       // {
@@ -303,7 +303,8 @@ export const tabIndex = [
 
 export const DASHBOARD_QUERY_NEW = gql`
     query searchSubjects(
-        $subject_id: [String],
+        $subject_ids: [String],
+        $clinical_trial_id: [String],
         $race: [String],
         $disease_term: [String],
         $registering_institution: [String],
@@ -320,7 +321,8 @@ export const DASHBOARD_QUERY_NEW = gql`
         $germline_pathogenicity: [String],
         $file_type: [String]) {
         searchSubjects(
-            subject_id:$subject_id,
+            subject_ids:$subject_ids,
+            clinical_trial_id: $clinical_trial_id,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,
@@ -399,6 +401,14 @@ export const DASHBOARD_QUERY_NEW = gql`
                 group
                 subjects
             }
+            subjectCountByClinicalTrialId {
+                group
+                subjects
+            }
+            filterSubjectCountByClinicalTrialId {
+                group
+                subjects
+            }
             filterSubjectCountByRace{
                 group
                 subjects
@@ -414,7 +424,6 @@ export const DASHBOARD_QUERY_NEW = gql`
             filterSubjectCountByPatientSubgroup{
                 group
                 subjects
-
             }
             filterSubjectCountByStageAtEntry{
                 group
@@ -894,7 +903,7 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
         $sort_direction: String
     ){
         fileOverview(
-            subject_id: $subject_id,
+            subject_ids: $subject_id,
             file_id:$file_id,
             file_name:$file_name,
             race:$race,
@@ -929,7 +938,7 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
 
 export const GET_CASES_OVERVIEW_QUERY = gql`
     query subjectOverview(
-        $subject_id: [String],
+        $subject_ids: [String],
         $race: [String],
         $disease_term: [String],
         $registering_institution: [String],
@@ -951,7 +960,7 @@ export const GET_CASES_OVERVIEW_QUERY = gql`
         $sort_direction: String
     ){
         subjectOverview(
-            subject_id:$subject_id,
+            subject_ids:$subject_ids,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,
@@ -1041,7 +1050,7 @@ export const GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART = gql`
         $sort_direction: String
     ){
         subjectOverview(
-            subject_id:$subject_ids,
+            subject_ids:$subject_ids,
             race:$race,
             disease_term:$disease_term,
             registering_institution:$registering_institution,

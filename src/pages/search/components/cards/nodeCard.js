@@ -8,7 +8,7 @@ const NodeCard = ({ data, classes, index }) => {
     {
       label: 'Node Name',
       dataField: 'node_name',
-      link: '/case/{subject_id}',
+      link: '/subject/{subject_id}',
     },
     {
       label: 'Property Name',

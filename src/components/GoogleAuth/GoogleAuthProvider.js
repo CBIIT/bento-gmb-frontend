@@ -31,7 +31,7 @@ export const GoogleAuthProvider = ({ children }) => {
     clientId: GOOGLE_CLIENT_ID,
   });
 
-  const onSignInClick = () => {
+  const onSignInClick = (afterSignIn = () => {}) => {
     grantOfflineAccess().then((resp) => {
       if (resp) {
         // Hide the sign-in button now that the user is authorized, for example:
@@ -52,6 +52,7 @@ export const GoogleAuthProvider = ({ children }) => {
           const content = await rawResponse;
           localStorage.setItem('username', content.name);
           signInRed(content.name);
+          afterSignIn();
         })();
       } else {
         // There was an error.

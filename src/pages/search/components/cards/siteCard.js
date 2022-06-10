@@ -7,6 +7,10 @@ import PropertyItem from '../propertyItem';
 const SiteCard = ({ data, classes, index }) => {
   const properties = [
     {
+      label: 'Site ID',
+      dataField: 'site_id',
+    },
+    {
       label: 'Site Name',
       dataField: 'site_name',
     },
@@ -36,8 +40,8 @@ const SiteCard = ({ data, classes, index }) => {
           <div>
             <span className={classes.detailContainerHeader}>SITE</span>
             <span className={classes.cardTitle}>
-              <Link to={`/site/${data.site_id}`} className={classes.cardTitle}>
-                {data.site_id}
+              <Link to={`/site/${data.site_name}`} className={classes.cardTitle}>
+                {data.site_name}
               </Link>
 
             </span>

@@ -71,7 +71,7 @@ function searchComponent({ classes }) {
         onInputChange={(event, newInputValue) => {
           getAutoCompleteRes(newInputValue);
         }}
-        style={{ width: 260, height: 37 }}
+        style={{ width: 260, height: 40 }}
         filterOptions={(optionSlice) => optionSlice}
         getOptionLabel={(option) => option}
         options={options}
@@ -127,7 +127,6 @@ const styles = () => ({
   },
   autocomplete: {
     margin: '0 auto',
-    paddingTop: '1em',
   },
   input: {
     borderRadius: '8px',

@@ -33,7 +33,7 @@ export const customCasesTabDownloadCSV = {
   query: GET_CASES_TAB,
   apiVariable: 'subjectOverViewPaged',
   fileName: 'GMB_Cases_download',
-  defaultFullTableDownload: true,
+  defaultFullTableDownload: false,
 };
 
 export const GET_FILES_TAB = gql`

@@ -25,6 +25,10 @@ import JBrowseDetail from '../../pages/jbrowseDetail/jbrowseDetailController';
 import GlobalSearch from '../../pages/search/searchView';
 import GlobalSearchController from '../../pages/search/searchViewController';
 
+// Access control imports
+import PrivateRoute, { LoginRoute } from './privateRoute';
+import Login from '../../pages/accessManagment/login';
+
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
   return null;
@@ -45,22 +49,36 @@ const Layout = ({ classes, isSidebarOpened }) => (
         >
           <Route component={ScrollToTop} />
           <Switch>
-            <Route exact path="/ICDC/" component={Home} />
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
-            <Route path="/subjects" component={Dashboard} />
-            <Route path="/trials" component={Trials} />
-            <Route path="/sites" component={Sites} />
+            {/* <Route path="/subjects" component={Dashboard} /> */}
+
+            {/* START: Private Routes */}
+            <PrivateRoute exact path="/subjects" component={Dashboard} />
+            <PrivateRoute exact path="/subject/:id" component={CaseDetail} />
+            <PrivateRoute exact path="/trials" component={Trials} />
+            <PrivateRoute exact path="/sites" component={Sites} />
+            <PrivateRoute exact path="/fileCentricCart" component={fileCentricCart} />
+            <PrivateRoute exact path="/trial/:id" component={TrialDetail} />
+            <PrivateRoute exact path="/site/:id" component={SiteDetail} />
+            <PrivateRoute exact path="/fileViewer/:id" component={JBrowseDetail} />
+            <PrivateRoute exact path="/search" component={GlobalSearch} />
+            <PrivateRoute path="/search/:id" component={GlobalSearchController} />
+            <PrivateRoute exact path="/sites" component={Sites} />
+            <PrivateRoute path="/table" component={table} />
+            <PrivateRoute path="/graphql" component={GraphqlClient} />
+            {/* END: Private Routes */}
+
+            {/* <Route path="/trials" component={Trials} />
+            <Route path="/sites" component={Sites} /> */}
             <Route path="/model" component={modelPage} />
-            <Route path="/table" component={table} />
-            <Route path="/fileCentricCart" component={fileCentricCart} />
-            <Route path="/trial/:id" component={TrialDetail} />
-            <Route path="/site/:id" component={SiteDetail} />
-            <Route path="/subject/:id" component={CaseDetail} />
+            {/* <Route path="/fileCentricCart" component={fileCentricCart} /> */}
+            {/* <Route path="/trial/:id" component={TrialDetail} /> */}
+            {/* <Route path="/site/:id" component={SiteDetail} /> */}
+            {/* <Route path="/subject/:id" component={CaseDetail} /> */}
             <Route path="/JBrowse" component={JBrowse} />
-            <Route exact path="/search" component={GlobalSearch} />
-            <Route path="/search/:id" component={GlobalSearchController} />
-            <Route path="/fileViewer/:id" component={JBrowseDetail} />
+            {/* <Route exact path="/search" component={GlobalSearch} /> */}
+            {/* <Route path="/fileViewer/:id" component={JBrowseDetail} /> */}
             {aboutPageRoutes.map(
               (aboutPageRoute, index) => (
                 <Route
@@ -71,7 +89,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
               ),
             )}
             <Route path="/data-dictionary" component={DataDictonary} />
-            <Route path="/graphql" component={GraphqlClient} />
+            <LoginRoute path="/login" component={Login} />
             <Route component={Error} />
           </Switch>
           <Footer data={{ isSidebarOpened }} />
@@ -92,7 +110,7 @@ const styles = (theme) => ({
     // width: `calc(100vw - 240px)`,   // Ajay need to add this on addung side bar
     width: 'calc(100%)', // Remove this on adding sidebar
     background: theme.custom.bodyBackGround,
-    marginTop: '185px',
+    marginTop: '205px',
   },
   '@global': {
     '*::-webkit-scrollbar': {
