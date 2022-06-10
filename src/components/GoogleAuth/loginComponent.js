@@ -47,6 +47,10 @@ const IndexPage = ({ classes }) => {
     setSnackbarState({ ...snackbarState, open: true, message: errorMessage });
   };
 
+  const handleClose = () => {
+    setSnackbarState({ ...snackbarState, open: false });
+  };
+
   const {
     vertical, horizontal, open, message,
   } = snackbarState;
@@ -72,6 +76,7 @@ const IndexPage = ({ classes }) => {
               open={open}
               message={message}
               key={vertical + horizontal}
+              onClose={handleClose}
               autoHideDuration={3000}
             />
           </>
