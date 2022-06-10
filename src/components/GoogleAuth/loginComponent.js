@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   withStyles,
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import Snackbar from '@material-ui/core/Snackbar';
 import { useGoogleAuth } from './GoogleAuthProvider';
 import AfterSignInComponent from './components/afterSignInComponent';
 import globalData from '../../bento/siteWideConfig';
@@ -35,6 +36,21 @@ const IndexPage = ({ classes }) => {
   const userName = useSelector((state) => state.login.userId);
   const isSignedIn = useSelector((state) => state.login.isSignedIn);
 
+  const [snackbarState, setSnackbarState] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'right',
+    message: '',
+  });
+
+  const signInError = (errorMessage) => {
+    setSnackbarState({ ...snackbarState, open: true, message: errorMessage });
+  };
+
+  const {
+    vertical, horizontal, open, message,
+  } = snackbarState;
+
   return (
     <>
       {globalData.enableAuthentication && (typeof globalData.authEndPoint === 'undefined' || globalData.authEndPoint.includes('google') || globalData.authEndPoint.includes('Google') || globalData.authEndPoint === []) && (
@@ -44,12 +60,21 @@ const IndexPage = ({ classes }) => {
             <AfterSignInComponent userName={userName} signoutLink={signOut} />
           </>
         ) : (
-          <Button
-            onClick={() => signIn()}
-            classes={{ label: classes.logotype, text: classes.buttonRootNoRightPadding }}
-          >
-            Login
-          </Button>
+          <>
+            <Button
+              onClick={() => signIn(() => {}, signInError)}
+              classes={{ label: classes.logotype, text: classes.buttonRootNoRightPadding }}
+            >
+              Login
+            </Button>
+            <Snackbar
+              anchorOrigin={{ vertical, horizontal }}
+              open={open}
+              message={message}
+              key={vertical + horizontal}
+              autoHideDuration={3000}
+            />
+          </>
         )}
       </>
       )}

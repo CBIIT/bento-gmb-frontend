@@ -31,7 +31,7 @@ function loginView(props) {
   const redirectPath = getRedirectPath(query);
   const redirectMessage = `Please sign in to access ${redirectPath}`;
 
-  const [state, setState] = useState({
+  const [snackbarState, setSnackbarState] = useState({
     open: false,
     vertical: 'top',
     horizontal: 'right',
@@ -40,21 +40,21 @@ function loginView(props) {
 
   const {
     vertical, horizontal, open, message,
-  } = state;
+  } = snackbarState;
 
   // Functions
   const handleClose = () => {
-    setState({ ...state, open: false });
+    setSnackbarState({ ...snackbarState, open: false });
   };
 
   const signInError = (errorMessage) => {
-    setState({ ...state, open: true, message: errorMessage });
+    setSnackbarState({ ...snackbarState, open: true, message: errorMessage });
   };
 
   const signInSuccess = () => afterLoginRedirect(history, redirectPath);
 
   useEffect(() => {
-    if (redirectPath) setState({ ...state, open: true, message: redirectMessage });
+    if (redirectPath) setSnackbarState({ ...snackbarState, open: true, message: redirectMessage });
   }, []);
 
   return (
