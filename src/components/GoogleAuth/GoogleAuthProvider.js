@@ -56,8 +56,8 @@ export const GoogleAuthProvider = ({ children }) => {
             localStorage.setItem('username', content.name);
             signInRed(content.name);
             afterSignIn();
-          } else if (rawResponse.status === 400) signInError('User not registered or not found');
-          else if (rawResponse.status === 403) signInError('User has not been approved');
+          } else if (rawResponse.status === 400) signInError('⛔️ User not registered or not found!');
+          else if (rawResponse.status === 403) signInError('❌ User has not been approved!');
           else signInError('Internal Error');
         })();
       } else {
