@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 // Tile4 image optimum size 600x 436 px
 export const landingPageData = {
   callToActionTitle: 'Prostate Cancer Natual History Study- data portal',
-  callToActionDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  callToActionDescription: '',
   callToActionButtonText: 'EXPLORE THE SITE',
   callToActionLink: '/subjects',
   landingPageHero: {
