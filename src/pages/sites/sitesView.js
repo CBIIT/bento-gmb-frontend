@@ -14,8 +14,9 @@ import {
 } from '../dashboardTab/store/dashboardReducer';
 
 const Sites = ({ classes, data }) => {
+  // eslint-disable-next-line no-unused-vars
   const redirectTo = (tableData) => {
-    const name = `${tableData.rowData[0]} : ${tableData.rowData[1]}`;
+    const name = `${tableData.rowData[1]}`;
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{

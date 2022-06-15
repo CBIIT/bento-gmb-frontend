@@ -119,6 +119,10 @@ const table1 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
+  // add other options that may have been missed in the original function.
+  options: {
+    excludeFooterButtons: true,
+  },
   // viewColumns 'true' or 'false'
   viewColumns: true,
   // download csv 'true' or 'false'
@@ -182,6 +186,10 @@ const table2 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
+  // add other options that may have been missed in the original function.
+  options: {
+    excludeFooterButtons: true,
+  },
   // viewColumns 'true' or 'false'
   viewColumns: true,
   // download csv 'true' or 'false'
@@ -253,6 +261,10 @@ const table3 = {
   downloadFileName: 'Somatic_Variant_CSV_download',
   // Set 'selectableRows' to true to show the row selection
   selectableRows: false,
+  // add other options that may have been missed in the original function.
+  options: {
+    excludeFooterButtons: true,
+  },
   // A maximum of 10 columns are allowed
   columns: [
     {
@@ -293,7 +305,6 @@ const table4 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
-    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -315,7 +326,7 @@ const table4 = {
   // downloaded File Name
   downloadFileName: 'Files_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: false,
+  selectableRows: true,
   // A maximum of 10 columns are allowed
   columns: [
     {
