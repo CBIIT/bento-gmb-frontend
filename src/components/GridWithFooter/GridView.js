@@ -11,7 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { addToCart, cartWillFull } from '../../pages/fileCentricCart/store/cart';
 import Message from '../Message';
 import AddToCartAlertDialog from '../AddToCartDialog';
-import { utilities } from '../../utils/objectUtils';
 
 const GridView = ({
   classes,
@@ -231,7 +230,6 @@ const GridView = ({
         >
           { buttonText }
         </button>
-        {(utilities.log(`${finalOptions.excludeFooterButtons}`))}
         <IconButton aria-label="help" className={classes.helpIconButton + (!finalOptions.excludeFooterButtons ? '' : ` ${classes.hidden}`)} onMouseOver={() => toggleMessageStatus('top', 'open')} onMouseEnter={() => toggleMessageStatus('top', 'open')} onMouseLeave={() => toggleMessageStatus('top', 'close')}>
           {tooltipContent.src ? (
             <img
