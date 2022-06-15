@@ -167,64 +167,64 @@ type QueryType {
         OPTIONAL MATCH (s)<--(gv:GERMLINE_VARIANT)
         WITH s,
             COLLECT(DISTINCT f {
-                subject_id: s.PT_ID,
-                file_name: f.FILE_NAME,
-                file_type: f.FILE_TYPE,
-                file_description: f.FILE_DESCRIPTION,
-                file_format: f.FILE_FORMAT,
-                file_size: f.FILE_SIZE,
-                file_id: f.UUID,
-                md5sum: f.MD5SUM
+                subject_id: COALESCE(s.PT_ID, ""),
+                file_name: COALESCE(f.FILE_NAME, ""),
+                file_type: COALESCE(f.FILE_TYPE, ""),
+                file_description: COALESCE(f.FILE_DESCRIPTION, ""),
+                file_format: COALESCE(f.FILE_FORMAT, ""),
+                file_size: COALESCE(f.FILE_SIZE, ""),
+                file_id: COALESCE(f.UUID, ""),
+                md5sum: COALESCE(f.MD5SUM, "")
             }) AS files,
             COLLECT(DISTINCT e {
-                dateOfDiagnosis: e.DX_DT,
-                histology: e.HIST_CYTPATH_DESC,
-                eligibility: e.PT_ELIG_IND,
-                gleasonScore: e.GLESNSC_GD_PRSCA_VAL,
-                consentSignedDate: e.ICF_SIG_DT,
-                consentVersionDate: e.PROT_AMDT_DT,
-                stageAtEntry: e.DISEAS_STG,
-                labsInclusionStartDate: e.PRESTUDY_LAB_DT
+                dateOfDiagnosis: COALESCE(e.DX_DT, ""),
+                histology: COALESCE(e.HIST_CYTPATH_DESC, ""),
+                eligibility: COALESCE(e.PT_ELIG_IND, ""),
+                gleasonScore: COALESCE(e.GLESNSC_GD_PRSCA_VAL, ""),
+                consentSignedDate: COALESCE(e.ICF_SIG_DT, ""),
+                consentVersionDate: COALESCE(e.PROT_AMDT_DT, ""),
+                stageAtEntry: COALESCE(e.DISEAS_STG, ""),
+                labsInclusionStartDate: COALESCE(e.PRESTUDY_LAB_DT, "")
             }) AS enrollments,
             COLLECT(DISTINCT ae {
-                course: ae.CRSE_NUM,
-                courseDay: ae.CRSE_DAY_NUM,
-                onsetDate: ae.AE_ONSET_DT,
-                resolvedDate: ae.RESOLV_DT,
-                term: ae.CTCAE5_LLT_NM,
-                organClass: ae.MEDDRA_SOC_TRM_NM,
-                eventDescription: ae.AE_DESC_TXT,
-                grade: ae.AE_SEV_GD,
-                researchAttribution: ae.AE_RESRCH_ATRB_CAT,
-                diseaseAttriibution: ae.AE_DZ_ATRB_CAT,
-                otherAttribution: ae.AE_OTH_COND_ATRB_CAT,
-                otherExtra: ae.OTX_AE_SHORT_TXT,
-                unexpectedAdverseEvents: ae.UNEXP_AE_OCC_CD_IND,
-                serious: ae.SAE_RSN,
-                action: ae.AE_ACTION,
-                therapy: ae.AE_THERAPY,
-                outcome: ae.AE_OUTCOME,
-                expeditedReportToIRB: ae.AER_IND,
-                expeditedReportToCCR: ae.CCR_EP_AE_SUBM_IND
+                course: COALESCE(ae.CRSE_NUM, ""),
+                courseDay: COALESCE(ae.CRSE_DAY_NUM, ""),
+                onsetDate: COALESCE(ae.AE_ONSET_DT, ""),
+                resolvedDate: COALESCE(ae.RESOLV_DT, ""),
+                term: COALESCE(ae.CTCAE5_LLT_NM, ""),
+                organClass: COALESCE(ae.MEDDRA_SOC_TRM_NM, ""),
+                eventDescription: COALESCE(ae.AE_DESC_TXT, ""),
+                grade: COALESCE(ae.AE_SEV_GD, ""),
+                researchAttribution: COALESCE(ae.AE_RESRCH_ATRB_CAT, ""),
+                diseaseAttriibution: COALESCE(ae.AE_DZ_ATRB_CAT, ""),
+                otherAttribution: COALESCE(ae.AE_OTH_COND_ATRB_CAT, ""),
+                otherExtra: COALESCE(ae.OTX_AE_SHORT_TXT, ""),
+                unexpectedAdverseEvents: COALESCE(ae.UNEXP_AE_OCC_CD_IND, ""),
+                serious: COALESCE(ae.SAE_RSN, ""),
+                action: COALESCE(ae.AE_ACTION, ""),
+                therapy: COALESCE(ae.AE_THERAPY, ""),
+                outcome: COALESCE(ae.AE_OUTCOME, ""),
+                expeditedReportToIRB: COALESCE(ae.AER_IND, ""),
+                expeditedReportToCCR: COALESCE(ae.CCR_EP_AE_SUBM_IND, "")
             }) AS adverseEvents,
             COLLECT(DISTINCT sv {
-                genePanel500: sv.TUMR_GENE_SEQ_TSO_CD,
-                genePathogenicVariant: sv.GENE_PATH_VAR_NM,
-                somaticPathogenicity: sv.SOMATIC_VAR_PTHGNC_CAT
+                genePanel500: COALESCE(sv.TUMR_GENE_SEQ_TSO_CD, ""),
+                genePathogenicVariant: COALESCE(sv.GENE_PATH_VAR_NM, ""),
+                somaticPathogenicity: COALESCE(sv.SOMATIC_VAR_PTHGNC_CAT, "")
             }) AS somaticVariant,
             COLLECT(DISTINCT gv {
-                panelCode: gv.HERED_GENE_PANL_CD,
-                genePathogenicVariant: gv.GENE_PATH_VAR_NM,
-                germlinePathogenicity: gv.GRMLN_VAR_PTHGNC_CAT
+                panelCode: COALESCE(gv.HERED_GENE_PANL_CD, ""),
+                genePathogenicVariant: COALESCE(gv.GENE_PATH_VAR_NM, ""),
+                germlinePathogenicity: COALESCE(gv.GRMLN_VAR_PTHGNC_CAT, "")
             }) AS germlineVariant
         RETURN {
-            subject_id: s.PT_ID,
-            gender: s.PRSN_GENDER_TXT_TP,
-            ageAtEntry: s.PT_AGE_VAL,
-            race: s.PT_RACE_CD_1,
-            registeringInstitution: s.REG_INST_ID_CD,
-            diseaseTerm: s.DZ_DX_NM,
-            patientSubgroup: s.PT_SUBGRP_ASSIGN_TP,
+            subject_id: COALESCE(s.PT_ID, ""),
+            gender: COALESCE(s.PRSN_GENDER_TXT_TP, ""),
+            ageAtEntry: COALESCE(s.PT_AGE_VAL, 0),
+            race: COALESCE(s.PT_RACE_CD_1, ""),
+            registeringInstitution: COALESCE(s.REG_INST_ID_CD, ""),
+            diseaseTerm: COALESCE(s.DZ_DX_NM, ""),
+            patientSubgroup: COALESCE(s.PT_SUBGRP_ASSIGN_TP, ""),
             files: files,
             enrollments: enrollments,
             adverseEvents: adverseEvents,
@@ -237,10 +237,10 @@ type QueryType {
         MATCH (ct:CLINICALTRIAL)
         OPTIONAL MATCH (ct)<--(s:SUBJECT)
         RETURN {
-            trialName: ct.CLINICAL_TRIAL_SHORT_NAME,
-            trial_id: ct.CLINICAL_TRIAL_ID,
-            trialDescription: ct.CLINICAL_TRIAL_DESCRIPTION,
-            trialType: ct.CLINICAL_TRIAL_TYPE,
+            trialName: COALESCE(ct.CLINICAL_TRIAL_SHORT_NAME, ""),
+            trial_id: COALESCE(ct.CLINICAL_TRIAL_ID, ""),
+            trialDescription: COALESCE(ct.CLINICAL_TRIAL_DESCRIPTION, ""),
+            trialType: COALESCE(ct.CLINICAL_TRIAL_TYPE, ""),
             num_subjects: COUNT(s.PT_ID)
         }
     """, passThrough: true)
@@ -257,20 +257,20 @@ type QueryType {
             COUNT(DISTINCT s) AS num_site_subjects
         WITH num_subjects, num_files, ct,
             COLLECT(DISTINCT site {
-                site_id: site.REG_INST_ID,
-                siteName: site.REG_INST_ID_CD,
-                siteAddress: site.LOCATION,
-                siteStatus: site.STATUS,
+                site_id: COALESCE(site.REG_INST_ID, ""),
+                siteName: COALESCE(site.REG_INST_ID_CD, ""),
+                siteAddress: COALESCE(site.LOCATION, ""),
+                siteStatus: COALESCE(site.STATUS, ""),
                 subjectCount: num_site_subjects
             }) AS sites
         RETURN {
-            trial_id: ct.CLINICAL_TRIAL_ID,
-            trialName: ct.CLINICAL_TRIAL_SHORT_NAME,
-            trialLongName: ct.CLINICAL_TRIAL_LONG_NAME,
-            trialDesription: ct.CLINICAL_TRIAL_DESCRIPTION,
-            leadOrganization: ct.LEAD_ORGANIZATION,
-            trialType: ct.CLINICAL_TRIAL_TYPE,
-            trialPrincipalInvestigator: ct.PRINCIPAL_INVESTIGATOR,
+            trial_id: COALESCE(ct.CLINICAL_TRIAL_ID, ""),
+            trialName: COALESCE(ct.CLINICAL_TRIAL_SHORT_NAME, ""),
+            trialLongName: COALESCE(ct.CLINICAL_TRIAL_LONG_NAME, ""),
+            trialDesription: COALESCE(ct.CLINICAL_TRIAL_DESCRIPTION, ""),
+            leadOrganization: COALESCE(ct.LEAD_ORGANIZATION, ""),
+            trialType: COALESCE(ct.CLINICAL_TRIAL_TYPE, ""),
+            trialPrincipalInvestigator: COALESCE(ct.PRINCIPAL_INVESTIGATOR, ""),
             num_subjects: num_subjects,
             num_files: num_files,
             sites: sites
@@ -304,28 +304,28 @@ type QueryType {
         OPTIONAL MATCH (s)<--(f:FILE)
         WITH site, num_subjects, num_files,
             COLLECT(DISTINCT s{
-                    subject_id: s.PT_ID,
-                    race: s.PT_RACE_CD_1,
-                    diseaseTerm: s.DZ_DX_NM
+                    subject_id: COALESCE(s.PT_ID, ""),
+                    race: COALESCE(s.PT_RACE_CD_1, ""),
+                    diseaseTerm: COALESCE(s.DZ_DX_NM, "")
             }) AS subjects,
             COLLECT(DISTINCT {
-                subject_id: s.PT_ID,
-                file_name: f.FILE_NAME,
-                file_type: f.FILE_TYPE,
-                file_description: f.FILE_DESCRIPTION,
-                file_format: f.FILE_FORMAT,
-                file_size: f.FILE_SIZE,
-                file_id: f.UUID,
-                file_md5sum: f.MD5SUM
+                subject_id: COALESCE(s.PT_ID, ""),
+                file_name: COALESCE(f.FILE_NAME, ""),
+                file_type: COALESCE(f.FILE_TYPE, ""),
+                file_description: COALESCE(f.FILE_DESCRIPTION, ""),
+                file_format: COALESCE(f.FILE_FORMAT, ""),
+                file_size: COALESCE(f.FILE_SIZE, ""),
+                file_id: COALESCE(f.UUID, ""),
+                md5sum: COALESCE(f.MD5SUM, "")
             }) AS files
         RETURN{
-            site_id: site.REG_INST_ID,
-            siteName: site.REG_INST_ID_CD,
-            siteAddress: site.LOCATION,
-            siteContact: site.CONTACT,
-            sitePhone: site.PHONE,
-            siteEmail: site.EMAIL,
-            siteStatus: site.STATUS,
+            site_id: COALESCE(site.REG_INST_ID, ""),
+            siteName: COALESCE(site.REG_INST_ID_CD, ""),
+            siteAddress: COALESCE(site.LOCATION, ""),
+            siteContact: COALESCE(site.CONTACT, ""),
+            sitePhone: COALESCE(site.PHONE, ""),
+            siteEmail: COALESCE(site.EMAIL, ""),
+            siteStatus: COALESCE(site.STATUS, ""),
             subjects: subjects,
             num_subjects: num_subjects,
             num_files: num_files,
@@ -337,10 +337,10 @@ type QueryType {
         MATCH (site:SITE)
         OPTIONAL MATCH (site)<--(s:SUBJECT)
         RETURN {
-            site_id: site.REG_INST_ID,
-            siteName: site.REG_INST_ID_CD,
-            siteAddress: site.LOCATION,
-            siteStatus: site.STATUS,
+            site_id: COALESCE(site.REG_INST_ID, ""),
+            siteName: COALESCE(site.REG_INST_ID_CD, ""),
+            siteAddress: COALESCE(site.LOCATION, ""),
+            siteStatus: COALESCE(site.STATUS, ""),
             num_subjects: COUNT(DISTINCT s)
         }
     """, passThrough: true)
