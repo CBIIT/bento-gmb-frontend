@@ -86,7 +86,7 @@ const CaseDetail = ({ data, classes }) => {
                     </div>
                       )}
                   columns={getColumns(tableData, classes, data)}
-                  options={getOptions(tableData, classes)}
+                  options={Object.assign(getOptions(tableData, classes), tableData.options || {})}
                   customOnRowsSelect={tableData.customOnRowsSelect}
                   openSnack={openSnack}
                   closeSnack={closeSnack}
