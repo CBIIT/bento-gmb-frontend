@@ -45,7 +45,7 @@ const SiteView = ({ classes, data, theme }) => {
   };
 
   const redirectTo = () => {
-    const name = `${siteData.site_id} : ${siteData.siteName}`;
+    const name = `${siteData.siteName}`;
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
