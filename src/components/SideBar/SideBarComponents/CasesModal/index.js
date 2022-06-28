@@ -231,6 +231,8 @@ const FacetModal = ({
     closeModal();
   };
 
+  const isUniqueArray = (value, index, self) => self.indexOf(value) === index;
+
   async function handleContent(content) {
     if (content.trim()) {
       const fileData = content && content.toString().split('\n');
@@ -251,22 +253,28 @@ const FacetModal = ({
       });
       const unmatchData = [...newArr];
       const unMatchedContent = [];
-      const matchedSubIds = await getAllSubjectIds(unmatchData);
+      const allSubIds = await getAllSubjectIds(unmatchData);
+      const matchedIndex = [];
+      const matchedSubIds = [];
       unmatchData.map((subId) => {
         const trimSubId = subId.trim();
-        const isExist = matchedSubIds.findIndex((item) => (
+        const isExist = allSubIds.findIndex((item) => (
           item.subject_id.trim().toLowerCase() === trimSubId.toLowerCase()
         ));
-        if (isExist <= -1) {
-          const isItemExist = unMatchedContent.findIndex((item) => (
+        if (isExist < 0) {
+          const isItemExist = unMatchedContent.some((item) => (
             item.toLowerCase() === trimSubId.toLowerCase()
           ));
-          if (isItemExist <= -1) {
+
+          if (!isItemExist) {
             unMatchedContent.push(trimSubId);
           }
+        } else {
+          matchedIndex.push(isExist);
         }
         return unmatchData;
       });
+      matchedIndex.filter(isUniqueArray).forEach((x) => matchedSubIds.push(allSubIds[x]));
       setMatchIds(matchedSubIds || []);
       setUnmatchedIds(unMatchedContent || []);
     } else {

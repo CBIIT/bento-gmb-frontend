@@ -119,7 +119,7 @@ const SummaryTable = (props) => {
       id="uploadCaseSetSummarySection"
     >
       <p className={classes.summary} id="uploadCaseSetSummaryCount">
-        {`${matchedContent.length + unmatchedContent.length} submitted Subject IDs mapped to ${matchedContent.length} unique GMB Subject IDs`}
+        {`${matchedContent.length + unmatchedContent.length} submitted unique Subject ID(s) mapped to ${matchedContent.length} unique GMB Subject IDs`}
       </p>
       <p className={classes.title}>
         Summary Table
