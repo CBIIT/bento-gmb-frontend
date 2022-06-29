@@ -3,8 +3,10 @@ import env from '../utils/env';
 
 export default {
   bg: '#0F253A',
-  footerLogoImage: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/footer_FNL_logo.png',
+  footerLogoImage: 'https://raw.githubusercontent.com/cbiit/datacommons-assets/main/bento/images/icons/png/footerlogo.png',
   footerLogoAltText: 'Footer Logo',
+  footerLogoText: 'National Cancer Institute',
+  footerLogoSubText: 'Learn to Love',
   footerLogoHyperlink: 'https://frederick.cancer.gov/',
   footerStaticText: 'NIH … Turning Discovery Into Health®',
   version: env.REACT_APP_FE_VERSION,
