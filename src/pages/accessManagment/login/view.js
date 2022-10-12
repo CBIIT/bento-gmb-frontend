@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { useHistory, useLocation } from 'react-router-dom';
-// import LockIcon from '@material-ui/icons/Lock';
-import Snackbar from '@material-ui/core/Snackbar';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { useAuth } from '../../../components/Auth/AuthProvider';
+import AlertMessage from '../../../components/alertMessage';
+import Stats from '../../../components/Stats/AllStatsController';
+
+// Custodian data imports
 import {
+  pageTitle,
   loginProvidersData,
-  loginGovCreateAccountURL,
-  bentoHelpEmail,
-  RegistrationConfigs,
-} from '../../../bento/LoginData';
-import { useGoogleAuth } from '../../../components/GoogleAuth/GoogleAuthProvider';
+} from '../../../bento/userLoginData';
+import globalData from '../../../bento/siteWideConfig';
 import { afterLoginRedirect } from '../../../components/Layout/privateRoute';
 
 function useQuery() {
@@ -23,50 +25,83 @@ function getRedirectPath(query) {
   return path;
 }
 
-function loginView(props) {
-  const { classes } = props;
-  const { signIn } = useGoogleAuth();
+function loginView({ classes }) {
+  const { signInWithGoogle, signInWithNIH } = useAuth();
+  const { authProviders } = globalData;
   const history = useHistory();
   const query = useQuery();
-  const redirectPath = getRedirectPath(query);
-  const redirectMessage = `Please sign in to access ${redirectPath}`;
+  const internalRedirectPath = getRedirectPath(query);
+  const [error, setError] = React.useState('');
 
-  const [snackbarState, setSnackbarState] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'right',
-    message: '',
-  });
+  const onSuccess = () => afterLoginRedirect(history, internalRedirectPath);
+  const onError = () => {};
 
-  const {
-    vertical, horizontal, open, message,
-  } = snackbarState;
-
-  // Functions
-  const handleClose = () => {
-    setSnackbarState({ ...snackbarState, open: false });
+  const defaultIdP = {
+    google: {
+      key: 'google',
+      icon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/google.png',
+      loginButtonText: 'Sign in with Google',
+    },
   };
 
-  const signInError = (errorMessage) => {
-    setSnackbarState({ ...snackbarState, open: true, message: errorMessage });
+  function filterObject(obj, callback) {
+    return Object.fromEntries(Object.entries(obj).filter(([key]) => callback(key)));
+  }
+
+  let idps = filterObject(loginProvidersData, (key) => authProviders.includes(key));
+
+  if (typeof (idps) === 'undefined' || Object.values(idps).length === 0) {
+    idps = defaultIdP;
+  }
+
+  const showAlert = (alertType, errorMsg = '') => {
+    const key = Math.random();
+    if (alertType === 'error') {
+      setError(
+        <AlertMessage key={key} severity="error" borderColor="#f44336" backgroundColor="#f44336" timeout={5000}>
+          {errorMsg}
+        </AlertMessage>,
+      );
+    }
+
+    if (alertType === 'redirect') {
+      setError(
+        <AlertMessage key={key} severity="error" timeout={5000}>
+          Please login to access protected data
+        </AlertMessage>,
+      );
+    }
+
+    return null;
   };
 
-  const signInSuccess = () => afterLoginRedirect(history, redirectPath);
+  const signInCall = (provider) => {
+    if (provider) {
+      switch (provider.key) {
+        case 'google':
+          signInWithGoogle(onSuccess, onError);
+          break;
+        case 'nih':
+          signInWithNIH({ internalRedirectPath });
+          break;
+        case 'loginGov':
+          signInWithNIH({ internalRedirectPath });
+          break;
+        default:
+          showAlert('error', `The selected Identity Provider, ${provider.key}, is not currently supported. Please contact bento-help@nih.gov for more information.`);
+      }
+    }
+  };
 
   useEffect(() => {
-    if (redirectPath) setSnackbarState({ ...snackbarState, open: true, message: redirectMessage });
+    if (internalRedirectPath !== '/') {
+      showAlert('redirect');
+    }
   }, []);
 
   return (
     <div className={classes.Container}>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        message={message}
-        key={vertical + horizontal}
-        autoHideDuration={3000}
-      />
+      <Stats />
       {/* ROW 1 */}
       <Grid
         container
@@ -75,7 +110,9 @@ function loginView(props) {
         alignItems="center"
       >
         {/* Top Space */}
-        <Grid container item justifyContent="center" className={classes.emptySpace} />
+        <Grid container item justifyContent="center" className={classes.emptySpace}>
+          {error}
+        </Grid>
 
         {/* ROW 2 */}
         <Grid container item justifyContent="center">
@@ -83,105 +120,51 @@ function loginView(props) {
             {/* Spacing */}
             <Grid container item sm={4} />
 
-            {/* Login Box */}
-            <Grid container item sm={4} justifyContent="center" className={[classes.Box, classes.LoginBox]}>
-              {/* <Grid container item xs={12} justifyContent="center">
-                <LockIcon size="large" alt="alt coming" />
-              </Grid> */}
+            <Grid container item sm={4} justifyContent="center">
+              {/* Page Title */}
+              <Grid container xs={12} alignItems="center" justify="center" direction="column" className={classes.pageTitle}>
+                {pageTitle}
+              </Grid>
 
-              <div className={classes.LoginBoxTitle}>
-                Log in with either of these Identity providers:
-              </div>
-              <Grid container item xs={12} justifyContent="center" className={classes.LoginButtonGroup}>
+              {/* Login Box */}
+              <Grid container xs={12} alignItems="center" justify="center" direction="column" className={classes.Box}>
+                <Grid container item justifyContent="center" className={classes.LoginBoxTitle}>
+                  Log in with either of these Identity providers:
+                </Grid>
+                <Grid container item justifyContent="center" className={classes.LoginButtonGroup}>
+                  {Object.values(idps).map((provider) => (
+                    <Grid container item xs={12} justifyContent="center">
+                      <Button
+                        variant="outlined"
+                        disabled={provider.isDisabled}
+                        className={[classes.LoginButton, classes.Color_092E50]}
+                        disableRipple
+                        onClick={() => signInCall(provider)}
+                      >
+                        <Grid container item xs={1} justifyContent="center">
+                          {provider.icon
+                            ? <img src={provider.icon} className={classes.root} alt="alt coming" />
+                            : <VpnKeyIcon />}
 
-                {Object.values(loginProvidersData).map((provider) => (provider.enabled
-                  ? (
-                    <Button
-                      variant="outlined"
-                      className={[classes.LoginButton, classes.Color_092E50]}
-                      disableRipple
-                      onClick={() => {
-                        signIn(signInSuccess, signInError);
-                      }}
-                    >
-                      <Grid container item xs={1} justifyContent="center">
-                        <img src={provider.icon} className={classes.root} alt="alt coming" />
-                      </Grid>
-                      <Grid container item xs={11} justifyContent="center">
-                        {provider.loginButtonText}
-                      </Grid>
-                    </Button>
-                  )
-                  : ''))}
-
-                {loginProvidersData.loginGov && loginProvidersData.loginGov.enabled ? (
-                  <Grid item xs={12} justifyContent="center" className={[classes.helperMessage, classes.createAccountMessage]}>
-                    If you don't have a login.gov account, click
-                    {' '}
-                    <span className={classes.supportEmail}>
-                      <a href={loginGovCreateAccountURL}>
-                        here
-                      </a>
-                    </span>
-                    {' '}
-                    to sign up.
-                  </Grid>
-                ) : null}
+                        </Grid>
+                        <Grid container item xs={11} justifyContent="center">
+                          {provider.loginButtonText}
+                        </Grid>
+                      </Button>
+                    </Grid>
+                  ))}
+                </Grid>
               </Grid>
             </Grid>
+
             {/* Spacing */}
             <Grid container item sm={4} />
           </Grid>
         </Grid>
       </Grid>
 
-      {/* ROW 4 */}
-      {RegistrationConfigs && RegistrationConfigs.enabled ? (
-        <Grid
-          container
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="center"
-        >
-          <Grid container item justifyContent="center">
-            <h3>OR</h3>
-          </Grid>
-          <Grid container item justifyContent="center">
-            <Grid container spacing={1}>
-              <Grid container item sm={4} />
-              <Grid
-                container
-                item
-                sm={4}
-                justifyContent="center"
-                direction="row"
-                className={[classes.Box, classes.RegisterBox, classes.Color_092E50]}
-              >
-                <Grid container item xs={12} justifyContent="center">
-                  <div className={classes.RegisterBoxTitle}>
-                    Register and create a new account
-                  </div>
-                </Grid>
-                <Grid container item xs={12} justifyContent="center">
-                  <Button variant="contained" className={classes.registerButtton}>
-                    REGISTER
-                  </Button>
-                </Grid>
-                <Grid item xs={12} justifyContent="center" className={[classes.helperMessage, classes.registerHelpMessage]}>
-                  If you have any questions about access or the registration process,
-                  please contact
-                  {' '}
-                  <span className={classes.supportEmail}><a href={`mailto:${bentoHelpEmail}`}>{bentoHelpEmail}</a></span>
-                </Grid>
-              </Grid>
-              <Grid container item sm={4} />
-            </Grid>
-          </Grid>
-        </Grid>
-      ) : ''}
-
       {/* Bottom Space */}
-      <Grid container item justifyContent="center" className={classes.emptySpace} />
+      <Grid container item justifyContent="center" className={[classes.emptySpace, classes.extraSpaceInBorrom]} />
 
     </div>
   );
@@ -190,11 +173,20 @@ function loginView(props) {
 const styles = () => ({
   Container: {
     backgroundColor: '#FFFFFF',
-    marginTop: '-47px',
     fontFamily: 'Nunito',
   },
   NoBold: {
     fontWeight: 'normal',
+  },
+  pageTitle: {
+    color: '#3974A8',
+    fontSize: '30px',
+    textAlign: 'center',
+    fontFamily: 'Nunito',
+    fontWeight: '500',
+    lineHeight: '40px',
+    marginBottom: '10px',
+    marginTop: '10px',
   },
   Box: {
     boxShadow: '-4px 8px 27px 4px rgba(27,28,28,0.09);',
@@ -204,9 +196,6 @@ const styles = () => ({
     padding: '5px !important',
     backgroundColor: '#F2F6FA',
   },
-  LoginBox: {
-    // height: '150px',
-  },
   LoginBoxTitle: {
     height: '16px',
     width: '350px',
@@ -215,7 +204,7 @@ const styles = () => ({
     letterSpacing: '0',
     lineHeight: '22px',
     textAlign: 'center',
-    marginTop: '10px',
+    marginTop: '35px',
     marginBottom: '25px',
   },
   LoginButtonGroup: {
@@ -266,6 +255,9 @@ const styles = () => ({
     height: '40px',
     color: '#FFFFFF',
     backgroundColor: '#5D53F6',
+    '&:hover': {
+      backgroundColor: '#5D53F6',
+    },
   },
   registerHelpMessage: {
     marginTop: '18px',
@@ -277,6 +269,9 @@ const styles = () => ({
   },
   emptySpace: {
     height: '50px',
+  },
+  extraSpaceInBorrom: {
+    height: '150px',
   },
   Color_092E50: {
     color: '#092E50 !important',
