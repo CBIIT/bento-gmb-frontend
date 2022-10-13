@@ -11,6 +11,7 @@ import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import icon from '../../assets/icons/Arms.Icon.svg';
 import fileCountIcon from '../../assets/icons/Program_Detail.FileCount.svg';
+import globalData from '../../bento/siteWideConfig';
 import {
   header,
   subsections,
@@ -105,7 +106,7 @@ const ArmDetail = ({ data, classes }) => {
                 <span className={classes.headerButtonLinkText}>Number of cases:</span>
                 <Link
                   className={classes.headerButtonLink}
-                  to={(location) => ({ ...location, pathname: '/cases' })}
+                  to={(location) => ({ ...location, pathname: '/explore' })}
                   onClick={() => redirectTo()}
                 >
                   <span className={classes.headerButtonLinkNumber} id="arm_detail_header_file_count">
@@ -153,12 +154,11 @@ const ArmDetail = ({ data, classes }) => {
                       colors={colors}
                       titleLocation="bottom"
                       titleAlignment="center"
-                      showTotalCount
                     />
                   </Widget>
                 </div>
                 {/* File count */}
-                <NumberOfThings classes={classes} number={data.num_files} icon={fileCountIcon} title="NUMBER OF FILES" alt="Bento file count icon" />
+                <NumberOfThings classes={classes} number={data.num_files} icon={fileCountIcon} title="NUMBER OF FILES" alt="GMB file count icon" />
               </div>
             </Grid>
             {/* Right panel end */}
@@ -177,7 +177,7 @@ const ArmDetail = ({ data, classes }) => {
                           <GridWithFooter
                             tableConfig={table}
                             data={data[table.filesField]}
-                            columns={getColumns(table, classes, data)}
+                            columns={getColumns(table, classes, data, '', '', () => {}, '', globalData.replaceEmptyValueWith)}
                             options={getOptions(table, classes)}
                             customOnRowsSelect={table.customOnRowsSelect}
                             openSnack={openSnack}

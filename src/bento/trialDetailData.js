@@ -17,9 +17,9 @@ const breadCrumb = {
 
 // --------------- Aggregated count configuration --------------
 const aggregateCount = {
-  labelText: 'Cases',
+  labelText: 'Subjects',
   dataField: 'num_subjects',
-  link: '/cases',
+  link: '/subjects',
   display: true,
 };
 
@@ -51,6 +51,7 @@ const leftPanel = {
     {
       dataField: 'trial_id',
       label: 'Trial Id',
+      externalLinkToDataField: true,
     },
     {
       dataField: 'trialDesription',
@@ -75,6 +76,7 @@ const rightPanel = {
       dataField: 'N/A',
       label: 'Stage at Entry Distribution',
       display: true,
+      titleText: 'Subjects',
     },
   ],
   files: [
@@ -100,6 +102,12 @@ const table = {
   defaultSortField: 'site_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
+  // download csv 'true' or 'false'
+  download: true,
+  // downloaded File Name
+  downloadFileName: 'sites_download',
   // Set 'selectableRows' to true to show the row selection
   selectableRows: false,
   // A maximum of 10 columns are allowed
@@ -111,49 +119,50 @@ const table = {
     },
     {
       dataField: 'siteName',
-      header: 'Name',
+      header: 'Site Name',
     },
     {
       dataField: 'siteAddress',
-      header: 'Address',
+      header: 'Site Address',
     },
     {
       dataField: 'siteStatus',
       header: 'Status',
     },
     {
-      dataField: 'subjectCount',
-      header: 'Cases',
+      dataField: 'num_subjects',
+      header: 'Associated Subjects',
     },
   ],
 };
 
 // --------------- GraphQL query - Retrieve trial details --------------
 const GET_TRIAL_DETAIL_DATA_QUERY = gql`
-query trialDetail($trial_id: String){
-    trialDetail(trial_id: $trial_id){
-        trial_id
-        trialName
-        trialLongName
-        trialDesription
-        leadOrganization
-        trialType
-        trialPrincipalInvestigator
-        num_subjects
-        num_files
-        sites{
-          site_id
-          siteName
-          siteAddress
-          siteStatus
-          subjectCount
+    query trialDetail($trial_id: String){
+        trialDetail(trial_id: $trial_id){
+            trial_id
+            trialName
+            trialLongName
+            trialDesription
+            leadOrganization
+            trialType
+            trialPrincipalInvestigator
+            num_subjects
+            num_files
+            sites{
+                site_id
+                siteName
+                siteAddress
+                siteStatus
+                subjectCount
+                num_subjects: subjectCount
+            }
         }
-    }
-    subjectCountByStageAtEntry(trial_id: $trial_id){
-        group
-        subjects
-    }
-}`;
+        trialSubjectCountByStageAtEntry(trial_id: $trial_id){
+            group
+            subjects
+        }
+    }`;
 
 export {
   pageTitle,

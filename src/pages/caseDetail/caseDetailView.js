@@ -66,8 +66,8 @@ const CaseDetail = ({ data, classes }) => {
   };
 
   const breadCrumbJson = [{
-    name: 'ALL CASES /',
-    to: '/cases',
+    name: 'ALL SUBJECTS /',
+    to: '/subjects',
     isALink: true,
   }];
 
@@ -86,7 +86,7 @@ const CaseDetail = ({ data, classes }) => {
                     </div>
                       )}
                   columns={getColumns(tableData, classes, data)}
-                  options={getOptions(tableData, classes)}
+                  options={Object.assign(getOptions(tableData, classes), tableData.options || {})}
                   customOnRowsSelect={tableData.customOnRowsSelect}
                   openSnack={openSnack}
                   closeSnack={closeSnack}
@@ -122,7 +122,7 @@ const CaseDetail = ({ data, classes }) => {
               <img
                 className={classes.caseIcon}
                 src={icon}
-                alt="Bento case detail header logo"
+                alt="Bento subject detail header logo"
               />
 
             </div>

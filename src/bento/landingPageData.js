@@ -5,10 +5,10 @@ import gql from 'graphql-tag';
 // Tile1 Tile2 Tile3 images 293x349 px
 // Tile4 image optimum size 600x 436 px
 export const landingPageData = {
-  callToActionTitle: 'Prostate Cancer Natual History Study- data portal',
-  callToActionDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  callToActionTitle: 'Prostate Cancer Natural History Study- data portal',
+  callToActionDescription: '',
   callToActionButtonText: 'EXPLORE THE SITE',
-  callToActionLink: '/cases',
+  callToActionLink: '/subjects',
   landingPageHero: {
     alt: 'Alt tag1',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_Hero_Graphic.png',
@@ -17,17 +17,17 @@ export const landingPageData = {
     {
       statTitle: 'Trials',
       type: 'field',
-      statAPI: 'numberOfTrials',
+      statAPI: 'searchSubjects.numberOfTrials',
     },
     {
-      statTitle: 'Cases',
+      statTitle: 'Subjects',
       type: 'field',
-      statAPI: 'numberOfSubjects',
+      statAPI: 'searchSubjects.numberOfSubjects',
     },
     {
       statTitle: 'files',
       type: 'field',
-      statAPI: 'numberOfFiles',
+      statAPI: 'searchSubjects.numberOfFiles',
     },
   ],
   tile1: {
@@ -57,17 +57,19 @@ export const landingPageData = {
   tile4: {
     alt: '',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_tileCases.png',
-    titleText: 'Cases',
-    descriptionText: 'Analyze cases from the TAILORx clinical trial.',
+    titleText: 'Subjects',
+    descriptionText: 'Analyze subjects from the TAILORx clinical trial.',
     callToActionText: 'Explore',
-    callToActionLink: '/cases', // This links to the cases dashboard.
+    callToActionLink: '/subjects', // This links to the subjects dashboard.
   },
 };
 
 // --------------- GraphQL query - Retrieve Landing page data --------------
 export const GET_LANDING_PAGE_DATA_QUERY = gql`{
-  numberOfTrials
-  numberOfSubjects
-  numberOfFiles
+    searchSubjects{
+        numberOfTrials
+        numberOfSubjects
+        numberOfFiles   
+    }
   }
   `;

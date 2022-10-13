@@ -28,29 +28,29 @@ import colors from '../../utils/colors';
 
 const TrialView = ({ classes, data, theme }) => {
   const trialData = data.trialDetail;
-  const widgetData = data.subjectCountByStageAtEntry;
+  const widgetData = data.trialSubjectCountByStageAtEntry;
 
   const redirectTo = () => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'programs',
-      groupName: 'Program',
+      datafield: 'clinical_trial_id',
+      groupName: 'Trial',
       isChecked: true,
-      name: trialData.program_acronym,
-      section: 'Filter By Cases',
+      name: trialData.trial_id,
+      section: 'Filter By Subject',
     }]);
   };
 
-  const redirectToArm = (programArm) => {
+  const redirectToRegistering = (programArm) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'studies',
-      groupName: 'Arm',
+      datafield: 'registering_institution',
+      groupName: 'Registering Institution',
       isChecked: true,
-      name: `${programArm.rowData[0]}: ${programArm.rowData[1]}`,
-      section: 'Filter By Cases',
+      name: `${programArm.rowData[0]} : ${programArm.rowData[1]}`,
+      section: 'Filter By Subject',
     }]);
   };
 
@@ -205,23 +205,44 @@ const TrialView = ({ classes, data, theme }) => {
                                   </span>
                                 </div>
                               )
-                              : (
-                                <div>
-                                  <span
-                                    className={classes.detailContainerHeader}
-                                    id={`program_detail_left_section_title_${index + 1}`}
-                                  >
-                                    {attribute.label}
-                                  </span>
+                              : attribute.externalLinkToDataField
+                                ? (
                                   <div>
-                                    <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
-                                      {' '}
-                                      {trialData[attribute.dataField]}
-                                      {' '}
+                                    <span
+                                      className={classes.detailContainerHeader}
+                                      id={`program_detail_left_section_title_${index + 1}`}
+                                    >
+                                      {attribute.label}
                                     </span>
+                                    <div>
+                                      <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
+                                        <a href="https://clinicaltrials.gov/ct2/show/NCT04706663" target="_blank" rel="noopener noreferrer">{trialData[attribute.dataField]}</a>
+                                        <img
+                                          src={externalLinkIcon.src}
+                                          alt={externalLinkIcon.alt}
+                                          className={classes.externalLinkIcon}
+                                        />
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              )
+                                )
+                                : (
+                                  <div>
+                                    <span
+                                      className={classes.detailContainerHeader}
+                                      id={`program_detail_left_section_title_${index + 1}`}
+                                    >
+                                      {attribute.label}
+                                    </span>
+                                    <div>
+                                      <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
+                                        {' '}
+                                        {trialData[attribute.dataField]}
+                                        {' '}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )
 }
                     </div>
                   </Grid>
@@ -265,6 +286,7 @@ const TrialView = ({ classes, data, theme }) => {
                         titleLocation="bottom"
                         titleAlignment="center"
                         showTotalCount
+                        titleText={rightPanel.widget[0].titleText}
                       />
                     </Widget>
                   </Grid>
@@ -311,7 +333,7 @@ const TrialView = ({ classes, data, theme }) => {
                   <Typography>
                     <CustomDataTable
                       data={trialData[table.dataField]}
-                      columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectToArm)}
+                      columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectToRegistering)}
                       options={getOptions(table, classes)}
                     />
                   </Typography>

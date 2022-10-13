@@ -6,7 +6,7 @@ export const statsStyling = {
     statTitleFirst: true,
     height: '47px',
     background: '#8DCAFF',
-    top: '145px',
+    top: '171px',
   },
 };
 
@@ -18,7 +18,7 @@ export const globalStatsData = [
     statAPI: 'numberOfTrials',
   },
   {
-    statTitle: 'Cases',
+    statTitle: 'Subjects',
     type: 'field',
     statAPI: 'numberOfSubjects',
   },
@@ -31,8 +31,9 @@ export const globalStatsData = [
 
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
-  numberOfTrials
-  numberOfSubjects
-  numberOfFiles
+  searchSubjects{
+      numberOfTrials
+      numberOfSubjects
+      numberOfFiles
   }
-  `;
+}`;

@@ -3,8 +3,10 @@ import env from '../utils/env';
 
 export default {
   bg: '#0F253A',
-  footerLogoImage: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/footer_FNL_logo.png',
+  footerLogoImage: 'https://raw.githubusercontent.com/cbiit/datacommons-assets/main/bento/images/icons/png/footerlogo.png',
   footerLogoAltText: 'Footer Logo',
+  footerLogoText: 'National Cancer Institute',
+  footerLogoSubText: 'Learn to Love',
   footerLogoHyperlink: 'https://frederick.cancer.gov/',
   footerStaticText: 'NIH … Turning Discovery Into Health®',
   version: env.REACT_APP_FE_VERSION,
@@ -18,34 +20,8 @@ export default {
       title: 'About GMB',
       items: [
         {
-          text: 'Purpose',
-          link: '/purpose',
-        },
-        {
-          text: 'CRDC',
-          link: '/crdc',
-        },
-        {
           text: 'Contact Us',
           link: 'CTDCHelpDesk@mail.nih.gov',
-        },
-      ],
-    },
-
-    {
-      title: 'About the Data',
-      items: [
-        {
-          text: 'CTDC Data & Model',
-          link: '/model',
-        },
-        {
-          text: 'Analyzing Data',
-          link: '/crdc',
-        },
-        {
-          text: 'Developers (APIs)',
-          link: '/developers',
         },
       ],
     },
@@ -70,6 +46,10 @@ export default {
           text: 'FOIA',
           link: 'https://www.cancer.gov/policies/foia',
         },
+        {
+          text: 'HHS Vulnerability Disclosure',
+          link: 'https://www.hhs.gov/vulnerability-disclosure-policy/index.html',
+        },
       ],
     },
   ],
@@ -92,3 +72,7 @@ export default {
     },
   ],
 };
+
+export const getBackendVersion = async () => fetch(env.REACT_APP_BACKEND_VERSION)
+  .then((res) => res.json())
+  .catch(() => ({ version: '' }));

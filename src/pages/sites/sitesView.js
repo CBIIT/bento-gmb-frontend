@@ -14,15 +14,17 @@ import {
 } from '../dashboardTab/store/dashboardReducer';
 
 const Sites = ({ classes, data }) => {
+  // eslint-disable-next-line no-unused-vars
   const redirectTo = (tableData) => {
+    const name = `${tableData.rowData[1]}`;
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'registeringInstitution',
+      datafield: 'registering_institution',
       groupName: 'Registering Institution',
       isChecked: true,
-      name: tableData.rowData[1],
-      section: 'Filter By Cases',
+      name,
+      section: 'Filter By Subject',
     }]);
   };
 
@@ -56,7 +58,7 @@ const Sites = ({ classes, data }) => {
                 <Grid item xs={12}>
                   <CustomDataTable
                     data={data[table.dataField]}
-                    columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectTo)}
+                    columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectTo)}
                     options={getOptions(table, classes)}
                   />
                 </Grid>

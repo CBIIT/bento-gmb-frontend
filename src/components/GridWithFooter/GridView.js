@@ -122,7 +122,7 @@ const GridView = ({
       // throw an alert
       setCartIsFull(true);
       AddToCartAlertDialogRef.current.open();
-    } else if (newFileIDS > 0) {
+    } else if (newFileIDS >= 0) {
       addToCart({ fileIds: selectedIDs });
       openSnack(newFileIDS);
       setSelectedIDs([]);
@@ -230,7 +230,7 @@ const GridView = ({
         >
           { buttonText }
         </button>
-        <IconButton aria-label="help" className={classes.helpIconButton} onMouseOver={() => toggleMessageStatus('top', 'open')} onMouseEnter={() => toggleMessageStatus('top', 'open')} onMouseLeave={() => toggleMessageStatus('top', 'close')}>
+        <IconButton aria-label="help" className={classes.helpIconButton + (!finalOptions.excludeFooterButtons ? '' : ` ${classes.hidden}`)} onMouseOver={() => toggleMessageStatus('top', 'open')} onMouseEnter={() => toggleMessageStatus('top', 'open')} onMouseLeave={() => toggleMessageStatus('top', 'close')}>
           {tooltipContent.src ? (
             <img
               onMouseEnter={() => toggleMessageStatus('top', 'open')}
@@ -343,6 +343,9 @@ const styles = () => ({
   helpIconButton: {
     verticalAlign: 'top',
     marginLeft: '-5px',
+  },
+  hidden: {
+    display: 'none',
   },
 });
 

@@ -9,7 +9,7 @@ export const tooltipContent = {
 
 // -------------- Case ID area configurations --------------
 const caseHeader = {
-  label: 'Case ID',
+  label: 'Subject ID',
   dataField: 'subject_id',
 };
 
@@ -22,10 +22,6 @@ const leftPanel = [
     // sectionDesc: 'Demographic Related Info',
     properties: [
       // A maximum of 10 properties are allowed
-      {
-        label: 'Gender',
-        dataField: 'gender',
-      },
       {
         label: 'Race',
         dataField: 'race',
@@ -48,108 +44,9 @@ const leftPanel = [
       },
     ],
   },
-  // {
-  //   sectionHeader: 'Diagnosis',
-  //   // sectionDesc: 'Diagnosis Related Info',
-  //   properties: [
-  //     {
-  //       label: 'Diagnosis',
-  //       dataField: 'disease_type',
-  //     },
-  //     {
-  //       label: 'Diagnosis Subtype',
-  //       dataField: 'disease_subtype',
-  //     },
-  //     {
-  //       label: 'Tumor Grade',
-  //       dataField: 'tumor_grade',
-  //     },
-  //     {
-  //       label: 'Tumor Grade (mm)',
-  //       dataField: 'tumor_largest_dimension_diameter',
-  //     },
-  //     {
-  //       label: 'ER Status',
-  //       dataField: 'er_status',
-  //     },
-  //     {
-  //       label: 'PR Status',
-  //       dataField: 'pr_status',
-  //     },
-  //     {
-  //       label: 'Nuclear Grade',
-  //       dataField: 'nuclear_grade',
-  //     },
-  //     {
-  //       label: 'Recurrence Score',
-  //       dataField: 'recurrence_score',
-  //     },
-  //   ],
-  // },
 ];
 
-const rightPanel = [
-  // Each object here represents a subsection in the panel
-  // A maximum of 3 subsections are allowed
-  // {
-  //   sectionHeader: 'Treatment',
-  //   // sectionDesc: 'Treatment Related Info',
-  //   properties: [
-  //     // A maximum of 10 properties are allowed
-  //     {
-  //       label: 'Primary Surgical Procedure',
-  //       dataField: 'primary_surgical_procedure',
-  //     },
-  //     {
-  //       label: 'Chemotherapy Regimen Group',
-  //       dataField: 'chemotherapy_regimen_group',
-  //     },
-  //     {
-  //       label: 'Chemotherapy Regimen',
-  //       dataField: 'chemotherapy_regimen',
-  //     },
-  //     {
-  //       label: 'Endocrine Therapy Type',
-  //       dataField: 'endocrine_therapy_type',
-  //     },
-  //   ],
-  // },
-  // {
-  //   sectionHeader: 'Follow Up',
-  //   // sectionDesc: 'Follow Up Related Info',
-  //   properties: [
-  //     // A maximum of 10 properties are allowed
-  //     {
-  //       label: 'Is Disease Free',
-  //       dataField: 'dfs_event_indicator',
-  //     },
-  //     {
-  //       label: 'Is Recurrence Free',
-  //       dataField: 'recurrence_free_indicator',
-  //     },
-  //     {
-  //       label: 'Is Distant Recurrence Free',
-  //       dataField: 'distant_recurrence_indicator',
-  //     },
-  //     {
-  //       label: 'Disease Free Event Type',
-  //       dataField: 'dfs_event_type',
-  //     },
-  //     {
-  //       label: 'Recurrence Event Type',
-  //       dataField: 'first_recurrence_type',
-  //     },
-  //     {
-  //       label: 'Days to Progression',
-  //       dataField: 'days_to_progression',
-  //     },
-  //     {
-  //       label: 'Days to Recurrence',
-  //       dataField: 'days_to_recurrence',
-  //     },
-  //   ],
-  // },
-];
+const rightPanel = [];
 
 // --------------- Dahboard Table external link configuration --------------
 // Ideal size for externalLinkIcon is 16x16 px
@@ -207,6 +104,7 @@ const table1 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
+    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -221,14 +119,18 @@ const table1 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // add other options that may have been missed in the original function.
+  options: {
+    excludeFooterButtons: true,
+  },
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Adverse_Events_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
+  selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {
@@ -269,6 +171,7 @@ const table2 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
+    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -283,14 +186,18 @@ const table2 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // add other options that may have been missed in the original function.
+  options: {
+    excludeFooterButtons: true,
+  },
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Germline_Variant_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
+  selectableRows: false,
   // A maximum of 10 columns are allowed
   columns: [
     {
@@ -331,6 +238,7 @@ const table3 = {
     opacity: '1',
     border: '0px',
     cursor: 'pointer',
+    display: 'none',
   },
   ActiveSaveButtonDefaultStyle: {
     disabled: 'true',
@@ -345,14 +253,18 @@ const table3 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Somatic_Variant_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
+  selectableRows: false,
+  // add other options that may have been missed in the original function.
+  options: {
+    excludeFooterButtons: true,
+  },
   // A maximum of 10 columns are allowed
   columns: [
     {
@@ -373,7 +285,7 @@ const table3 = {
   customOnRowsSelect: FileOnRowsSelect,
 };
 
-// --------------- Table 4 configuration --------------
+// --------------- Table 4: ASSOCIATED FILES --------------
 const table4 = {
   // Set 'display' to false to hide the table entirely
   display: true,
@@ -407,12 +319,12 @@ const table4 = {
   // Help Icon Message
   tooltipMessage: 'Click button to add selected files.',
   helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
   // download csv 'true' or 'false'
-  download: false,
+  download: true,
   // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
+  downloadFileName: 'Files_CSV_download',
   // Set 'selectableRows' to true to show the row selection
   selectableRows: true,
   // A maximum of 10 columns are allowed

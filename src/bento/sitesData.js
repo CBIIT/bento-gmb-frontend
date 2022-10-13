@@ -25,6 +25,12 @@ const table = {
   defaultSortField: 'site_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
+  // download csv 'true' or 'false'
+  download: true,
+  // downloaded File Name
+  downloadFileName: 'Sites_List_CSV',
   // Set 'selectableRows' to true to show the row selection
   selectableRows: false,
   // A maximum of 10 columns are allowed
@@ -48,7 +54,7 @@ const table = {
     },
     {
       dataField: 'num_subjects',
-      header: 'Associated Cases',
+      header: 'Associated Subjects',
     },
   ],
 };

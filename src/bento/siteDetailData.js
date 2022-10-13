@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { FileOnRowsSelect } from '../utils/fileTable';
 
 // --------------- Page title configuration --------------
 const pageTitle = {
@@ -11,15 +12,15 @@ const pageSubTitle = {
 };
 
 const breadCrumb = {
-  label: 'ALL Trials',
-  link: '/trials',
+  label: 'ALL SITES',
+  link: '/sites',
 };
 
 // --------------- Aggregated count configuration --------------
 const aggregateCount = {
-  labelText: 'Cases',
+  labelText: 'subjects',
   dataField: 'num_subjects',
-  link: '/cases',
+  link: '/subjects',
   display: true,
 };
 
@@ -34,6 +35,29 @@ const siteDetailIcon = {
 const externalLinkIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/externalLinkIcon.svg',
   alt: 'External link icon',
+};
+
+// --------------- Tooltip configuration --------------
+export const tooltipContent = {
+  src: 'https://raw.githubusercontent.com/google/material-design-icons/master/src/action/help/materialicons/24px.svg',
+  alt: 'tooltipIcon',
+};
+
+export const tab = {
+  items: [
+    {
+      index: 0,
+      label: 'ASSOCIATED SUBJECTS',
+      value: 'table1',
+      primaryColor: '#D6F2EA',
+    },
+    {
+      index: 1,
+      label: 'ASSOCIATED FILES',
+      value: 'table2',
+      primaryColor: '#F7D7F7',
+    },
+  ],
 };
 
 // --------------- Left Pannel configuration --------------
@@ -72,9 +96,10 @@ const leftPanel = {
 const rightPanel = {
   widget: [
     {
-      dataField: 'diagnoses',
-      label: 'Diagnosis',
+      dataField: 'N/A',
+      label: 'Stage at Entry Distribution',
       display: true,
+      titleText: 'Subjects',
     },
   ],
   files: [
@@ -88,26 +113,54 @@ const rightPanel = {
   ],
 };
 
-// --------------- Table configuration --------------
-const table = {
+// --------------- Table 1: ASSOCIATED SUBJECTS --------------
+const table1 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'Cases',
-  // Field name for table data, need to be updated only when using a different GraphQL query
+  tableTitle: 'ASSOCIATED SUBJECTS',
+  // Field name for files data, need to be updated only when using a different GraphQL query
   dataField: 'subjects',
-  // Value must be one of the 'field' in columns
+  // Value must be one of the 'dataField's in fileTableColumns
   defaultSortField: 'subject_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
+  // Text to appear on Add to cart button
+  buttonText: 'Add Selected Files',
+  saveButtonDefaultStyle: {
+    color: '#fff',
+    backgroundColor: '#09A175',
+    opacity: '1',
+    border: '0px',
+    cursor: 'pointer',
+  },
+  ActiveSaveButtonDefaultStyle: {
+    disabled: 'true',
+    opacity: '0.3',
+    cursor: 'auto',
+  },
+  DeactiveSaveButtonDefaultStyle: {
+    cursor: 'pointer',
+    opacity: 'unset',
+    border: 'unset',
+  },
+  // Help Icon Message
+  tooltipMessage: 'Click button to add selected files.',
+  helpMessage: 'Here help message',
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
+  // download csv 'true' or 'false'
+  download: true,
+  // downloaded File Name
+  downloadFileName: 'SUBJECTS_CSV_download',
   // Set 'selectableRows' to true to show the row selection
-  selectableRows: false,
+  selectableRows: true,
   // A maximum of 10 columns are allowed
   columns: [
     {
       dataField: 'subject_id',
-      header: 'Case ID',
-      link: '/case/{subject_id}',
+      header: 'Subject ID',
+      link: '/subject/{subject_id}',
     },
     {
       dataField: 'race',
@@ -118,6 +171,81 @@ const table = {
       header: 'DiseaseTerm',
     },
   ],
+  // Util Functions
+  // Custom function on selct checkbox is selected.
+  customOnRowsSelect: FileOnRowsSelect,
+};
+
+// --------------- Table 2: ASSOCIATED FILES --------------
+const table2 = {
+  // Set 'display' to false to hide the table entirely
+  display: true,
+  // Table title
+  tableTitle: 'ASSOCIATED FILES',
+  // Field name for files data, need to be updated only when using a different GraphQL query
+  dataField: 'files',
+  // Value must be one of the 'dataField's in fileTableColumns
+  defaultSortField: 'file_name',
+  // 'asc' or 'desc'
+  defaultSortDirection: 'asc',
+  // Text to appear on Add to cart button
+  buttonText: 'Add Selected Files',
+  saveButtonDefaultStyle: {
+    color: '#fff',
+    backgroundColor: '#09A175',
+    opacity: '1',
+    border: '0px',
+    cursor: 'pointer',
+  },
+  ActiveSaveButtonDefaultStyle: {
+    disabled: 'true',
+    opacity: '0.3',
+    cursor: 'auto',
+  },
+  DeactiveSaveButtonDefaultStyle: {
+    cursor: 'pointer',
+    opacity: 'unset',
+    border: 'unset',
+  },
+  // Help Icon Message
+  tooltipMessage: 'Click button to add selected files.',
+  helpMessage: 'Here help message',
+  // viewColumns 'true' or 'false'
+  viewColumns: true,
+  // download csv 'true' or 'false'
+  download: true,
+  // downloaded File Name
+  downloadFileName: 'Files_CSV_download',
+  // Set 'selectableRows' to true to show the row selection
+  selectableRows: true,
+  // A maximum of 10 columns are allowed
+  columns: [
+    {
+      dataField: 'file_name',
+      header: 'File Name',
+    },
+    {
+      dataField: 'file_type',
+      header: 'File Type',
+    },
+    {
+      dataField: 'file_description',
+      header: 'Description',
+    },
+    {
+      dataField: 'file_format',
+      header: 'Format',
+    },
+    {
+      dataField: 'file_size',
+      header: 'Size',
+      // set formatBytes to true to display file size (in bytes) in a more human readable format
+      formatBytes: true,
+    },
+  ],
+  // Util Functions
+  // Custom function on selct checkbox is selected.
+  customOnRowsSelect: FileOnRowsSelect,
 };
 
 // --------------- GraphQL query - Retrieve program details --------------
@@ -138,6 +266,20 @@ query siteDetail($site_id: String){
             race
             diseaseTerm
         }
+        files {
+        subject_id
+        file_name
+        file_type
+        file_description
+        file_format
+        file_size
+        file_id
+        md5sum
+      }
+    }
+    siteSubjectCountByStageAtEntry(site_id: $site_id){
+        group
+        subjects
     }
 }`;
 
@@ -151,5 +293,6 @@ export {
   externalLinkIcon,
   breadCrumb,
   GET_SITE_DETAIL_DATA_QUERY,
-  table,
+  table1,
+  table2,
 };

@@ -5,6 +5,7 @@ export const navBarstyling = {
     padding: '14px 20px 0px 20px',
     fontColor: '#B3E4F3',
     activeLabel: '2px solid #B3E4F3',
+    marginTop: 120,
   },
   dropDownIcon: {
     displayIcon: false,
@@ -59,9 +60,9 @@ export const navBarData = [
     link: '/sites',
   },
   {
-    labelText: 'cases',
+    labelText: 'Subjects',
     type: 'link',
-    link: '/cases',
+    link: '/subjects',
   },
   {
     labelText: 'about',
@@ -86,6 +87,6 @@ export const navBarData = [
 export const navBarCartData = {
   cartLabel: '',
   cartLink: '/fileCentricCart',
-  cartIcon: 'https://raw.githubusercontent.com/CBIIT/bento-gmb-frontend/develop/src/assets/cartIcon.svg',
+  cartIcon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/gmb/images/logos/svgs/cartIcon.svg',
   cartIconAlt: 'cart_logo',
 };
