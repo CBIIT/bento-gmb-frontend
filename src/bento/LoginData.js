@@ -1,25 +1,24 @@
-import Google from '../assets/login/google.png';
 import LoginGov from '../assets/login/login.gov.png';
 import NihItrust from '../assets/login/nih_itrust.png';
 
 export const loginProvidersData = {
-  google: {
+  /* google: {
     name: 'google',
     icon: Google,
     loginButtonText: 'Sign in with Google',
-    enabled: true,
-  },
+    enabled: false,
+  }, */
   loginGov: {
     name: 'loginGov',
     icon: LoginGov,
     loginButtonText: 'Sign in Login.gov',
-    enabled: false,
+    enabled: true,
   },
   'NIH Login': {
     name: 'NIH Login',
     icon: NihItrust,
     loginButtonText: 'Sign in NIH iTrust',
-    enabled: false,
+    enabled: true,
   },
 };
 

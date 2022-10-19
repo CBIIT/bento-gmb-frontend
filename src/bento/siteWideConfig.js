@@ -4,7 +4,8 @@ export default {
   // Enable authenication
   enableAuthentication: true,
   // List for options for authentication empty array defaults to google
-  authProviders: ['google', 'nih', 'loginGov'],
+  // authProviders: ['google', 'nih', 'loginGov'],
+  authProviders: ['nih', 'loginGov'],
 };
 
 export const loginRoute = '/login';

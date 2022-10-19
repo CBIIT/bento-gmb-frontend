@@ -1,12 +1,12 @@
 export const pageTitle = 'Login';
 
 export const loginProvidersData = {
-  google: {
+  /* google: {
     key: 'google',
     icon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/google.png',
     loginButtonText: 'Google',
     isDisabled: true,
-  },
+  }, */
   loginGov: {
     key: 'loginGov',
     icon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/login.gov.png',

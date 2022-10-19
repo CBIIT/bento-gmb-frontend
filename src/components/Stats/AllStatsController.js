@@ -6,6 +6,12 @@ import { fetchDataForStats } from './StatsState';
 import { utilities as utils } from '../../utils/objectUtils';
 
 const Stats = () => {
+  const isSignedIn = useSelector(
+    (state) => state.login.isSignedIn,
+  );
+  if (!isSignedIn) {
+    return '';
+  }
   const data = useSelector((state) => {
     if (!state.stats.isFetched) {
       const dispatch = useDispatch();
