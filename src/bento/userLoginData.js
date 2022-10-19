@@ -11,7 +11,7 @@ export const loginProvidersData = {
     key: 'loginGov',
     icon: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/login.gov.png',
     loginButtonText: 'Login.gov',
-    isDisabled: true,
+    isDisabled: false,
   },
   nih: {
     key: 'nih',
