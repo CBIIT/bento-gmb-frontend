@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { useSelector } from 'react-redux';
 import { useAuth } from '../../../components/Auth/AuthProvider';
 import AlertMessage from '../../../components/alertMessage';
 import Stats from '../../../components/Stats/AllStatsController';
@@ -54,6 +55,8 @@ function loginView({ classes }) {
     idps = defaultIdP;
   }
 
+  const isSignedIn = useSelector((state) => state.login.isSignedIn);
+
   const showAlert = (alertType, errorMsg = '') => {
     const key = Math.random();
     if (alertType === 'error') {
@@ -101,7 +104,8 @@ function loginView({ classes }) {
 
   return (
     <div className={classes.Container}>
-      <Stats />
+
+      {isSignedIn ? <Stats /> : ''}
       {/* ROW 1 */}
       <Grid
         container
