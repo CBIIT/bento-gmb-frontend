@@ -24,9 +24,16 @@ import JBrowse from '../JBrowse/JBrowseView';
 import JBrowseDetail from '../../pages/jbrowseDetail/jbrowseDetailController';
 import GlobalSearch from '../../pages/search/searchView';
 import GlobalSearchController from '../../pages/search/searchViewController';
+import RequestAccess from '../../pages/requestAccess/requestAccessController';
+import SysInfoView from '../../pages/sysInfo/view';
+import editUserController from '../../pages/admin/userDetails/editUserController';
+import viewUserController from '../../pages/admin/userDetails/viewUserController';
+import ProfileController from '../../pages/profile/profileController';
+import AdminController from '../../pages/admin/adminController';
+import reviewRequestController from '../../pages/admin/reviewPendingDAR/reviewRequestController';
 
 // Access control imports
-import PrivateRoute, { LoginRoute } from './privateRoute';
+import PrivateRoute, { LoginRoute, MixedRoute, AdminRoute } from './privateRoute';
 import Login from '../../pages/accessManagment/login';
 
 const ScrollToTop = () => {
@@ -49,36 +56,51 @@ const Layout = ({ classes, isSidebarOpened }) => (
         >
           <Route component={ScrollToTop} />
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/home" component={Home} />
-            {/* <Route path="/subjects" component={Dashboard} /> */}
+            <MixedRoute exact path="/" component={Home} />
+            <MixedRoute exact path="/home" component={Home} />
 
             {/* START: Private Routes */}
-            <PrivateRoute exact path="/subjects" component={Dashboard} />
-            <PrivateRoute exact path="/subject/:id" component={CaseDetail} />
-            <PrivateRoute exact path="/trials" component={Trials} />
-            <PrivateRoute exact path="/sites" component={Sites} />
-            <PrivateRoute exact path="/fileCentricCart" component={fileCentricCart} />
-            <PrivateRoute exact path="/trial/:id" component={TrialDetail} />
-            <PrivateRoute exact path="/site/:id" component={SiteDetail} />
-            <PrivateRoute exact path="/fileViewer/:id" component={JBrowseDetail} />
-            <PrivateRoute exact path="/search" component={GlobalSearch} />
-            <PrivateRoute path="/search/:id" component={GlobalSearchController} />
-            <PrivateRoute exact path="/sites" component={Sites} />
+            {/* SECTION: Non-Member & Member only Path */}
+            <PrivateRoute path="/request" requiuredSignIn access={['member', 'non-member']} component={RequestAccess} />
+            <PrivateRoute
+              path="/profile"
+              requiuredSignIn
+              access={['member', 'non-member', 'admin']}
+              component={ProfileController}
+            />
+            {/* END SECTION */}
+
+            {/* SECTION: Member & Admin only Path */}
+            <PrivateRoute path="/subjects" access={['admin', 'member']} component={Dashboard} />
+            <PrivateRoute path="/sites" access={['admin', 'member']} component={Sites} />
+            <PrivateRoute path="/trials" access={['admin', 'member']} component={Trials} />
+            <PrivateRoute path="/model" access={['admin', 'member']} component={modelPage} />
+            <PrivateRoute path="/fileCentricCart" access={['admin', 'member']} component={fileCentricCart} />
+            <PrivateRoute path="/trial/:id" access={['admin', 'member']} component={TrialDetail} />
+            <PrivateRoute path="/case/:id" access={['admin', 'member']} component={CaseDetail} />
+            <PrivateRoute path="/site/:id" access={['admin', 'member']} component={SiteDetail} />
+            <PrivateRoute path="/fileViewer/:id" access={['admin', 'member']} component={JBrowseDetail} />
+            {/* END SECTION */}
+
+            {/* SECTION: Admin only Path */}
+            <AdminRoute path="/admin/edit/:id" requiuredSignIn access={['admin']} component={editUserController} />
+            <AdminRoute path="/admin/view/:id" requiuredSignIn access={['admin']} component={viewUserController} />
+            <AdminRoute path="/admin/review/:id" requiuredSignIn access={['admin']} component={reviewRequestController} />
+            <AdminRoute path="/admin" access={['admin']} requiuredSignIn component={AdminController} />
+            {/* END SECTION */}
+
+            {/* NOTE: Please check these below paths. if no longer needed please remove it */}
+            <PrivateRoute path="/JBrowse" access={['admin', 'member']} component={JBrowse} />
             <PrivateRoute path="/table" component={table} />
-            <PrivateRoute path="/graphql" component={GraphqlClient} />
+            {/* END NOTE */}
+
+            {/* Psuedo Private routes where minor
+            functionality can be accessed my unauthorized users */}
+            <Route exact path="/search" access={['admin', 'member', 'non-member']} component={GlobalSearch} />
+            <Route path="/search/:id" access={['admin', 'member', 'non-member']} component={GlobalSearchController} />
+
             {/* END: Private Routes */}
 
-            {/* <Route path="/trials" component={Trials} />
-            <Route path="/sites" component={Sites} /> */}
-            <Route path="/model" component={modelPage} />
-            {/* <Route path="/fileCentricCart" component={fileCentricCart} /> */}
-            {/* <Route path="/trial/:id" component={TrialDetail} /> */}
-            {/* <Route path="/site/:id" component={SiteDetail} /> */}
-            {/* <Route path="/subject/:id" component={CaseDetail} /> */}
-            <Route path="/JBrowse" component={JBrowse} />
-            {/* <Route exact path="/search" component={GlobalSearch} /> */}
-            {/* <Route path="/fileViewer/:id" component={JBrowseDetail} /> */}
             {aboutPageRoutes.map(
               (aboutPageRoute, index) => (
                 <Route
@@ -89,9 +111,12 @@ const Layout = ({ classes, isSidebarOpened }) => (
               ),
             )}
             <Route path="/data-dictionary" component={DataDictonary} />
+            <Route path="/graphql" component={GraphqlClient} />
             <LoginRoute path="/login" component={Login} />
+            <Route path="/sysinfo" component={SysInfoView} />
             <Route component={Error} />
           </Switch>
+
           <Footer data={{ isSidebarOpened }} />
         </div>
       </>
