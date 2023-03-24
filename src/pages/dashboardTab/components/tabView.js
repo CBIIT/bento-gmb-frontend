@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef, useEffect } from 'react';
 import {
   Grid,
@@ -11,19 +12,16 @@ import _ from 'lodash';
 import SelectAllModal from './modal';
 import {
   GET_FILES_OVERVIEW_QUERY,
+  GET_SAMPLES_OVERVIEW_QUERY,
   GET_CASES_OVERVIEW_QUERY,
-  GET_FILES_OVERVIEW_DESC_QUERY,
-  GET_CASES_OVERVIEW_DESC_QUERY,
 } from '../../../bento/dashboardTabData';
 import CustomDataTable from '../../../components/serverPaginatedTable/serverPaginatedTable';
 import { addToCart, getCart, cartWillFull } from '../../fileCentricCart/store/cart';
 import AddToCartAlertDialog from '../../../components/AddToCartDialog';
 import DocumentDownload from '../../../components/DocumentDownload/DocumentDownloadView';
+import globalData from '../../../bento/siteWideConfig';
 
-const getOverviewQuery = (api) => (api === 'GET_FILES_OVERVIEW_QUERY' ? GET_FILES_OVERVIEW_QUERY : GET_CASES_OVERVIEW_QUERY);
-
-// Due to cypher limitation we have to send seperate query get descending list
-const getOverviewDescQuery = (api) => (api === 'GET_FILES_OVERVIEW_QUERY' ? GET_FILES_OVERVIEW_DESC_QUERY : GET_CASES_OVERVIEW_DESC_QUERY);
+const getOverviewQuery = (api) => (api === 'GET_SAMPLES_OVERVIEW_QUERY' ? GET_SAMPLES_OVERVIEW_QUERY : api === 'GET_FILES_OVERVIEW_QUERY' ? GET_FILES_OVERVIEW_QUERY : GET_CASES_OVERVIEW_QUERY);
 
 const TabView = ({
   classes,
@@ -44,9 +42,8 @@ const TabView = ({
   paginationAPIField,
   paginationAPIFieldDesc,
   dataKey,
-  filteredSubjectIds,
-  filteredSampleIds,
   filteredFileIds,
+  allFilters,
   defaultSortCoulmn,
   defaultSortDirection,
   // tableHasSelections,
@@ -265,19 +262,15 @@ const TabView = ({
       <Grid container>
         <Grid item xs={12} id={tableID}>
           <CustomDataTable
+            key={data.length}
             data={data}
-            columns={getColumns(customColumn, classes, data, externalLinkIcon, '', () => {}, DocumentDownload)}
+            columns={getColumns(customColumn, classes, data, externalLinkIcon, '', () => {}, DocumentDownload, globalData.replaceEmptyValueWith)}
             options={finalOptions}
             count={count}
             overview={getOverviewQuery(api)}
-            overviewDesc={getOverviewDescQuery(api)}
             paginationAPIField={paginationAPIField}
             paginationAPIFieldDesc={paginationAPIFieldDesc}
-            queryCustomVaribles={{
-              subject_ids: filteredSubjectIds,
-              sample_ids: filteredSampleIds,
-              file_ids: filteredFileIds,
-            }}
+            queryCustomVaribles={allFilters}
             defaultSortCoulmn={defaultSortCoulmn}
             defaultSortDirection={defaultSortDirection}
             tableDownloadCSV={tableDownloadCSV}
@@ -331,10 +324,10 @@ const TabView = ({
   );
 };
 
-const styles = () => ({
+const styles = (theme) => ({
 
   link: {
-    color: '#7747ff',
+    color: theme.palette.text.link,
     textDecoration: 'none',
 
     '&:hover': {
