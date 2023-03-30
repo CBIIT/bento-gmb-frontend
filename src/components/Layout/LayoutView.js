@@ -3,6 +3,7 @@ import { withStyles, CssBaseline } from '@material-ui/core';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import aboutPageRoutes from '../../bento/aboutPagesRoutes';
 import Header from '../Header/HeaderView';
+import TextBar from '../TextBar/TextBarView';
 import NavBar from '../NavBar/NavBarContainer';
 import Footer from '../Footer/FooterView';
 import Error from '../../pages/error/Error';
@@ -15,6 +16,7 @@ import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
 import Programs from '../../pages/programs/programsController';
+import Sites from '../../pages/sites/sitesController';
 import ProgramDetail from '../../pages/programDetail/programDetailController';
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
@@ -53,6 +55,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
         <Notifactions />
         <InActivityDialog />
         <Header />
+        <TextBar />
         <OverlayWindow />
         <NavBar />
         {/* Reminder: Ajay need to replace the ICDC with env variable and
@@ -72,11 +75,13 @@ const Layout = ({ classes, isSidebarOpened }) => (
             {/* END SECTION */}
 
             {/* SECTION: Member & Admin only Path */}
-            <PrivateRoute path="/explore" access={['admin', 'member']} component={Dashboard} />
-            <PrivateRoute path="/programs" access={['admin', 'member']} component={Programs} />
+            <PrivateRoute path="/trials" access={['admin', 'member']} component={Programs} />
+            <PrivateRoute path="/sites" access={['admin', 'member']} component={Sites} />
+            <PrivateRoute path="/subjects" access={['admin', 'member']} component={Dashboard} />
             <PrivateRoute path="/model" access={['admin', 'member']} component={modelPage} />
             <PrivateRoute path="/fileCentricCart" access={['admin', 'member']} component={fileCentricCart} />
-            <PrivateRoute path="/program/:id" access={['admin', 'member']} component={ProgramDetail} />
+            <PrivateRoute path="/trials/:id" access={['admin', 'member']} component={ProgramDetail} />
+            <PrivateRoute path="/sites/:id" access={['admin', 'member']} component={ProgramDetail} />
             <PrivateRoute path="/case/:id" access={['admin', 'member']} component={CaseDetail} />
             <PrivateRoute path="/arm/:id" access={['admin', 'member']} component={ArmDetail} />
             <PrivateRoute path="/fileViewer/:id" requiuredSignIn access={['admin', 'member']} component={JBrowseDetail} />
