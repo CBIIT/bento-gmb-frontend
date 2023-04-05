@@ -66,9 +66,11 @@ const LandingView = ({ classes }) => (
                 />
               </div>
               <div className={classes.GMBWords} id="tile1_title">
-                {landingPageData.tile1.titleText.match(/\b(\w+)\b/g).map((word) => (
+                {landingPageData.tile1.titleText.split(' ').map((word, index) => (
                   <>
                     {word}
+                    {index === 0 && <br />}
+                    {' '}
                   </>
                 ))}
               </div>
