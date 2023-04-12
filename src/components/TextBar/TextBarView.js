@@ -4,6 +4,7 @@ import textBarData from '../../bento/globalTextBarData';
 
 const customStyle = {
   textBarStyle: {
+    fontSize: '16px',
     top: '90px',
     height: '30px',
   },

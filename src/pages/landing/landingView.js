@@ -43,12 +43,12 @@ const LandingView = ({ classes }) => (
     <div className={classes.container}>
       <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.bannerTexture}>
-          Find and explore protocol 48 data
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
         </div>
       </Grid>
       <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.ButtonSection}>
-          <Link to="/subjects" className={classes.grayButton}>View data</Link>
+          <Link to="/subjects" className={classes.grayButton}>Learn More</Link>
         </div>
       </Grid>
     </div>
@@ -170,7 +170,7 @@ const LandingView = ({ classes }) => (
                 <div className={classes.mountainMeadowContent} id="tile4_description">
                   {landingPageData.tile4.descriptionText}
                 </div>
-                <div className={classes.mountainMeadowButtonSection}>
+                <div className={classes.mountainMeadowButton}>
                   <div className={classes.blueButtonLeft}>
                     <img className={classes.mountainMeadowIcon} src={icon} alt="GMB Subjects" />
                     {' '}
@@ -213,10 +213,9 @@ const styles = () => ({
   },
   bannerTexture: {
     color: '#4898B4',
-    fontFamily: 'Raleway',
+    fontFamily: 'Nunito',
     fontSize: '19px',
-    fontWeight: '600',
-    lineHeight: '60px',
+    lineHeight: '30px',
     textAlign: 'center',
     margin: '0 auto',
     letterSpacing: '0.050pt',
@@ -234,7 +233,7 @@ const styles = () => ({
   grayButton: {
     height: '13px',
     color: '#FFFFFF',
-    fontFamily: 'Raleway',
+    fontFamily: 'Lato',
     fontSize: '16px',
     fontWeight: 'bold',
     lineHeight: '47px',
@@ -266,6 +265,7 @@ const styles = () => ({
   },
   headerTitle: {
     paddingTop: '94px',
+    width: '350px',
     fontFamily: 'Inter Light, Raleway, sans-serif',
     fontSize: '36px',
     fontWeight: '500',
@@ -279,8 +279,9 @@ const styles = () => ({
   },
   headerContent: {
     color: '#3390B6',
-    fontFamily: 'Lato, Raleway',
-    fontSize: '16px',
+    width: '360px',
+    fontFamily: 'Nunito,Lato, Raleway',
+    fontSize: '18px',
     fontWeight: '500',
     lineHeight: '27px',
     marginTop: '16px',
@@ -316,14 +317,13 @@ const styles = () => ({
     color: '#FFFFFF',
     fontSize: '26px',
     textTransform: 'uppercase',
-    lineHeight: '29px',
-    padding: '24px 75px 26px 26px',
-    fontFamily: 'Oswald',
+    lineHeight: '27px',
+    padding: '24px 18px 50px 33px',
+    fontFamily: 'Inter',
   },
   landingContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: '15px',
   },
   contentLeft: {
     float: 'left',
@@ -335,17 +335,18 @@ const styles = () => ({
   },
   image: {
     width: '293px',
-    height: '251px',
+    height: '249px',
   },
   aboutContent: {
     background: '#76C4E4',
-    minHeight: '372px',
-    width: '300px',
+    height: '405px',
+    width: '290px',
     padding: '30px 30px 32px 30px',
-    color: '#fff',
-    fontFamily: '"Open Sans"',
-    fontSize: '14px',
-    lineHeight: '22px',
+    color: '#0F253A',
+    fontFamily: 'Open Sans',
+    fontSize: '16px',
+    fontWeight: '300',
+    lineHeight: '23px',
   },
   aboutButtonSection: {
     background: '#76C4E4',
@@ -384,14 +385,14 @@ const styles = () => ({
     overflowY: 'auto',
     background: '#fff',
     paddingLeft: '30px',
-    paddingTop: '6px',
-    minHeight: '130px',
+    paddingTop: '5px',
+    minHeight: '138px',
   },
   contentHeader: {
     color: '#20506A',
-    fontFamily: 'Oswald',
-    fontSize: '26px',
-    fontWeight: '500',
+    fontFamily: 'Inter',
+    fontSize: '28px',
+    letterSpacing: '-1px',
     lineHeight: '27px',
     padding: '10px 0',
     textTransform: 'uppercase',
@@ -400,7 +401,7 @@ const styles = () => ({
     width: '215px',
     color: '#010101',
     fontFamily: 'Lato',
-    fontSize: '15px',
+    fontSize: '16px',
     lineHeight: '22px',
     paddingLeft: '2px',
     paddingBottom: '10px',
@@ -408,7 +409,7 @@ const styles = () => ({
 
   program: {
     float: 'left',
-    padding: '0 10px 8px 0px',
+    padding: '0 10px 6.8px 0px',
   },
   programImg: {
     background: '#fff',
@@ -427,9 +428,10 @@ const styles = () => ({
     backgroundSize: 'cover',
   },
   cases: {
-    height: '438px',
-    paddingLeft: '370px',
+    height: '436px',
+    paddingLeft: '340px',
     paddingTop: '70px',
+    marginLeft: '40px',
   },
   mountainMeadowButtonSection: {
     height: '46px',
@@ -486,16 +488,16 @@ const styles = () => ({
   },
   mountainMeadowContentHeader: {
     color: '#20506A',
-    fontFamily: 'Oswald',
-    fontSize: '31px',
-    fontWeight: '500',
+    fontFamily: 'Inter',
+    fontSize: '28px',
+    letterSpacing: '-1px',
     lineHeight: '32px',
     padding: '15px 0',
     textTransform: 'uppercase',
   },
   mountainMeadowContent: {
-    height: '173px',
-    width: '166px',
+    height: '143px',
+    width: '185px',
     color: '#010101',
     fontFamily: 'Lato',
     fontSize: '15px',
@@ -503,21 +505,22 @@ const styles = () => ({
   },
   mountainMeadowIcon: {
     width: '20px',
-    marginTop: '15px',
+    marginTop: '12px',
     marginLeft: '28px',
+    background: '#16688A',
   },
   mountainMeadowButton: {
-    padding: '15px 5px 0 0',
-    height: '9px',
-    width: '71px',
+    height: '46px',
+    width: '176px',
+    background: '#16688A',
     color: '#FFFFFF',
     fontFamily: 'Raleway',
-    fontSize: '12px',
+    fontSize: '14px',
     fontWeight: '600',
     lineHeight: '19.31px',
     textDecoration: 'none',
-    marginLeft: '8px',
     letterSpacing: '1px',
+    marginTop: '20px',
     '&:hover': {
       color: '#ffffff',
     },

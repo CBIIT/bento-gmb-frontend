@@ -4,5 +4,5 @@ export default {
   globalHeaderLogo: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/gmb/images/logos/svgs/GMB_logo.svg',
   globalHeaderLogoLink: '/',
   globalHeaderLogoAltText: 'GMB Logo',
-  globalHeaderImage: '',
+  globalHeaderImage: 'Easter',
 };

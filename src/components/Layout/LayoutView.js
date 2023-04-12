@@ -56,8 +56,8 @@ const Layout = ({ classes, isSidebarOpened }) => (
         <InActivityDialog />
         <Header />
         <TextBar />
-        <OverlayWindow />
         <NavBar />
+        <OverlayWindow />
         {/* Reminder: Ajay need to replace the ICDC with env variable and
           change build npm to read env variable */}
         <div

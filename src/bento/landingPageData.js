@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 // Tile1 Tile2 Tile3 images 293x349 px
 // Tile4 image optimum size 600x 436 px
 export const landingPageData = {
-  callToActionTitle: 'Prostate Cancer Natual History Study- data portal',
-  callToActionDescription: '',
+  callToActionTitle: 'gaining ACCESS TO data for prostate cancer research',
+  callToActionDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   callToActionButtonText: 'Search Subjects',
   callToActionLink: '/subjects',
   landingPageHero: {
@@ -38,7 +38,7 @@ export const landingPageData = {
     alt: '',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/gmb/images/icons/png/landing_tileAbout.png',
     titleText: 'About Prostate Cancer Natural History (PCNH)',
-    descriptionText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    descriptionText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud',
     callToActionText: 'Explore',
     callToActionLink: '/purpose', // This links to the "About" static page.
   },
@@ -53,8 +53,8 @@ export const landingPageData = {
   tile3: {
     alt: '',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/gmb/images/icons/png/landing_tileRequestAccess.png',
-    titleText: 'This Space Open',
-    descriptionText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dictum at purus.',
+    titleText: 'Request Access',
+    descriptionText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
     callToActionText: 'Read More',
     callToActionLink: '/request-access', // Link to the "Resources" Static Page
   },
@@ -63,7 +63,7 @@ export const landingPageData = {
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/gmb/images/icons/png/landing_tileSubjects.png',
     titleText: 'Subjects',
     descriptionText: 'Search all the subjects and build cohorts from all the Programs/Studies within the GMB. The data files from these cohorts can then be analyzed in the Cloud Resources.',
-    callToActionText: 'Explore',
+    callToActionText: 'Read More',
     callToActionLink: '/subjects', // This links to the cases dashboard.
   },
 };
