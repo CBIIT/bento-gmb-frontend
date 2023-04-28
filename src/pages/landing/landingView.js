@@ -41,12 +41,12 @@ const LandingView = ({ classes }) => (
       </div>
     </div>
     <div className={classes.container}>
-      <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
+      <Grid container spacing={16} direction="row" className={cn(classes.bannerBackground, classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.bannerTexture}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
         </div>
       </Grid>
-      <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
+      <Grid container spacing={16} direction="row" className={cn(classes.bannerBackground, classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.ButtonSection}>
           <Link to="/subjects" className={classes.grayButton}>Learn More</Link>
         </div>
@@ -199,7 +199,7 @@ const styles = () => ({
   },
   heroImage: {
     width: '100%',
-    height: '600px',
+    height: '750px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 100%',
     backgroundImage: `url(${landingPageData.landingPageHero.img})`,
@@ -210,6 +210,9 @@ const styles = () => ({
     backgroundRepeat: 'no-repeat',
     backgroundAttachment: 'fixed',
     padding: '120px 0 80px 0',
+  },
+  bannerBackground: {
+    backgroundColor: '#FFFFFF',
   },
   bannerTexture: {
     color: '#4898B4',
@@ -312,7 +315,7 @@ const styles = () => ({
     height: '249px',
   },
   GMBWords: {
-    height: '168px',
+    height: '200px',
     background: '#0B2731',
     color: '#FFFFFF',
     fontSize: '26px',
@@ -339,7 +342,7 @@ const styles = () => ({
   },
   aboutContent: {
     background: '#76C4E4',
-    height: '405px',
+    height: '373px',
     width: '290px',
     padding: '30px 30px 32px 30px',
     color: '#0F253A',
@@ -543,6 +546,8 @@ const styles = () => ({
     position: 'absolute',
     width: '400px',
     margin: 'auto',
+    marginTop: '120px',
+    marginLeft: '720px',
     left: '12px',
     right: 0,
     '@media (min-width: 900px)': {
