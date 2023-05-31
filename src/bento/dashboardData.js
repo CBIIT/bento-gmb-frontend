@@ -1,72 +1,128 @@
 import gql from 'graphql-tag';
 
+export const searchEnabled = true;
+
+export const filterTabTitleText = 'Filter';
+export const searchTabTitleText = 'Search';
+
 // --------------- Dashboard Sidebar Filters configuration --------------
 // A maximum of 12 facetSearchData are allowed
 export const facetSearchData = [
   {
-    label: 'Race', field: 'group', api: 'subjectCountByRace', apiForFiltering: 'filterSubjectCountByRace', datafield: 'race', section: 'Filter By Cases', show: true,
+    label: 'Program', field: 'group', api: 'subjectCountByProgram', apiForFiltering: 'filterSubjectCountByProgram', datafield: 'programs', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Disease Term', field: 'group', api: 'subjectCountByDiseaseTerm', apiForFiltering: 'filterSubjectCountByDiseaseTerm', datafield: 'race', section: 'Filter By Cases', show: true,
+    label: 'Arm', field: 'group', api: 'subjectCountByStudy', apiForFiltering: 'filterSubjectCountByStudy', datafield: 'studies', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Registering Institution', field: 'group', api: 'subjectCountByRegisteringInstitution', apiForFiltering: 'filterSubjectCountByRegisteringInstitution', datafield: 'registeringInstitution', section: 'Filter By Cases', show: true,
+    label: 'Diagnosis', field: 'group', api: 'subjectCountByDiagnoses', apiForFiltering: 'filterSubjectCountByDiagnoses', datafield: 'diagnoses', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Patient Subgroup', field: 'group', api: 'subjectCountByPatientSubgroup', apiForFiltering: 'filterSubjectCountByPatientSubgroup', datafield: 'patientSubgroup', section: 'Filter By Cases', show: true,
+    label: 'Recurrence Score', field: 'group', api: 'subjectCountByRecurrenceScore', apiForFiltering: 'filterSubjectCountByRecurrenceScore', datafield: 'rc_scores', section: 'Cases', show: true, customNumberSort: true, showCheckboxCount: 5,
   },
   {
-    label: 'Disease Stage at Entry', field: 'group', api: 'subjectCountByDiseaseStageAtEntry', apiForFiltering: 'filterSubjectCountByDiseaseStageAtEntry', datafield: 'stageAtEntry', section: 'Filter By Cases', show: true,
+    label: 'Tumor Size', field: 'group', api: 'subjectCountByTumorSize', apiForFiltering: 'filterSubjectCountByTumorSize', datafield: 'tumor_sizes', section: 'Cases', show: true, customNumberSort: true, showCheckboxCount: 5,
   },
   {
-    label: 'Cause of Death', field: 'group', api: 'subjectCountByCauseOfDeath', apiForFiltering: 'filterSubjectCountByCauseOfDeath', datafield: 'causeOfDeath', section: 'Filter By Cases', show: true,
+    label: 'Chemotherapy', field: 'group', api: 'subjectCountByChemotherapyRegimen', apiForFiltering: 'filterSubjectCountByChemotherapyRegimen', datafield: 'chemo_regimen', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Sites of Disease at Autopsy', field: 'group', api: 'subjectCountBySitesOfDiseaseAtAutopsy', apiForFiltering: 'filterSubjectCountBySitesOfDiseaseAtAutopsy', datafield: 'sitesOfDiseaseAtAutopsy', section: 'Filter By Cases', show: true,
+    label: 'Tumor Grade', field: 'group', api: 'subjectCountByTumorGrade', apiForFiltering: 'filterSubjectCountByTumorGrade', datafield: 'tumor_grades', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Source of the Lab Data', field: 'group', api: 'subjectCountBySourceOfTheLabData', apiForFiltering: 'filterSubjectCountBySourceOfTheLabData', datafield: 'sourceOfTheLabData', section: 'Filter By Cases', show: true,
+    label: 'ER Status', field: 'group', api: 'subjectCountByErStatus', apiForFiltering: 'filterSubjectCountByErStatus', datafield: 'er_status', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Lab Test', field: 'group', api: 'subjectCountByLabTest', apiForFiltering: 'filterSubjectCountByLabTest', datafield: 'labTest', section: 'Filter By Cases', show: true,
+    label: 'PR Status', field: 'group', api: 'subjectCountByPrStatus', apiForFiltering: 'filterSubjectCountByPrStatus', datafield: 'pr_status', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'System Organ Class', field: 'group', api: 'subjectCountBySystemOrganClass', apiForFiltering: 'filterSubjectCountBySystemOrganClass', datafield: 'systemOrganClass', section: 'Filter By Cases', show: true,
+    label: 'Endocrine Therapy', field: 'group', api: 'subjectCountByEndocrineTherapy', apiForFiltering: 'filterSubjectCountByEndocrineTherapy', datafield: 'endo_therapies', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Serious', field: 'group', api: 'subjectCountBySerious', apiForFiltering: 'filterSubjectCountBySerious', datafield: 'serious', section: 'Filter By Cases', show: true,
+    label: 'Menopause Status', field: 'group', api: 'subjectCountByMenopauseStatus', apiForFiltering: 'filterSubjectCountByMenopauseStatus', datafield: 'meno_status', section: 'Cases', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Outcome', field: 'group', api: 'subjectCountByOutcome', apiForFiltering: 'filterSubjectCountByOutcome', datafield: 'outcome', section: 'Filter By Cases', show: true,
+    label: 'Tissue Type', field: 'group', api: 'subjectCountByTissueType', apiForFiltering: 'filterSubjectCountByTissueType', datafield: 'tissue_type', section: 'Samples', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Somatic Pathogenicity', field: 'group', api: 'subjectCountBySomaticPathogenicity', apiForFiltering: 'filterSubjectCountBySomaticPathogenicity', datafield: 'somaticPathogenicity', section: 'Filter By Cases', show: true,
+    label: 'Tissue Composition', field: 'group', api: 'subjectCountByTissueComposition', apiForFiltering: 'filterSubjectCountByTissueComposition', datafield: 'composition', section: 'Samples', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'Germline Pathogenicity', field: 'group', api: 'subjectCountByGermlinePathogenicity', apiForFiltering: 'filterSubjectCountByGermlinePathogenicity', datafield: 'germlinePathogenicity', section: 'Filter By Cases', show: true,
+    label: 'File Association', field: 'group', api: 'subjectCountByFileAssociation', apiForFiltering: 'filterSubjectCountByFileAssociation', datafield: 'association', section: 'Files', show: true, showCheckboxCount: 5,
   },
   {
-    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'fileType', section: 'Filter By Files', show: true,
+    label: 'File Type', field: 'group', api: 'subjectCountByFileType', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'file_type', section: 'Files', show: true, showCheckboxCount: 5,
+  },
+  {
+    label: 'Age', api: 'filterSubjectCountByAge', apiForFiltering: 'filterSubjectCountByFileType', datafield: 'age_at_index', section: 'Cases', show: true, slider: true, quantifier: 'Years', showCheckboxCount: 5,
   },
 ];
 
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
-  'Filter By Cases': {
+  Cases: {
+    color: '#10A075',
+    backgroundColor: '#C0E9D7',
+    checkBoxColorsOne: '#E8F7DC',
+    checkBoxColorsTwo: '#F5FDEE',
+    height: '5px',
+    isExpanded: true,
+  },
+  Samples: {
+    color: '#10BEFF',
+    backgroundColor: '#C3EAF5',
+    checkBoxColorsOne: '#C9EBF7',
+    checkBoxColorsTwo: '#E8F8FE',
+    height: '5px',
+    isExpanded: true,
+  },
+  Files: {
+    color: '#E636E4',
+    backgroundColor: '#F5C3F1',
+    checkBoxColorsOne: '#FBE3FB',
+    checkBoxColorsTwo: '#FFF2FF',
+    height: '5px',
+    isExpanded: true,
+  },
+};
+
+// --------------- Dashboard Facet Local Find Configuration --------------
+
+export const facetSectionFindApi = {
+  Cases: {
+    api: 'subjectIds',
+  },
+  Samples: {
+    api: 'sampleIds',
+  },
+  Files: {
+    api: 'fileIds',
+  },
+};
+
+export const search = {
+  fileIds: {
+    color: '#E636E4',
+    checkBoxColorsOne: '#FBE3FB',
+    checkBoxColorsTwo: '#FFF2FF',
+    height: '5px',
+    isExpanded: false,
+  },
+  subjectIds: {
     color: '#10A075',
     checkBoxColorsOne: '#E8F7DC',
     checkBoxColorsTwo: '#F5FDEE',
     height: '5px',
     isExpanded: false,
   },
-  'Filter By Samples': {
+  sampleIds: {
     color: '#10BEFF',
     checkBoxColorsOne: '#C9EBF7',
     checkBoxColorsTwo: '#E8F8FE',
     height: '5px',
     isExpanded: false,
   },
-  'Filter By Files': {
+  fileNames: {
     color: '#E636E4',
     checkBoxColorsOne: '#FBE3FB',
     checkBoxColorsTwo: '#FFF2FF',
@@ -84,58 +140,16 @@ export const defaultFacetSectionVariables = {
   isExpanded: false,
 };
 
-// --------------- Dashboard Widgets configuration --------------
-// A maximum of 6 widgets are allowed
-export const widgetsData = [
-  {
-    type: 'donut',
-    label: 'Germline Pathogenicity',
-    dataName: 'subjectCountByGermlinePathogenicity',
-    datatable_field: 'germlinePathogenicity',
-    titleText: 'Cases',
-    show: true,
-  },
-  {
-    type: 'donut',
-    label: 'Somatic Pathogenicity',
-    dataName: 'subjectCountBySomaticPathogenicity',
-    datatable_field: 'somaticPathogenicity',
-    titleText: 'Cases',
-    show: true,
-  },
-  {
-    type: 'donut',
-    label: 'Registering Institution',
-    dataName: 'subjectCountByRegisteringInstitution',
-    datatable_field: 'registeringInstitution',
-    titleText: 'Cases',
-    show: true,
-  },
-  {
-    type: 'donut',
-    label: 'Race',
-    dataName: 'subjectCountByRace',
-    datatable_field: 'race',
-    titleText: 'Cases',
-    show: true,
-  },
-  {
-    type: 'donut',
-    label: 'Disease Stage at Entry',
-    dataName: 'subjectCountByDiseaseStageAtEntry',
-    datatable_field: 'stageAtEntry',
-    titleText: 'Cases',
-    show: true,
-  },
-  {
-    type: 'donut',
-    label: 'Serious',
-    dataName: 'subjectCountBySerious',
-    datatable_field: 'serious',
-    titleText: 'Cases',
-    show: true,
-  },
-];
+export const defaultSearch = {
+  color: '#000000',
+  checkBoxColorsOne: '#E8F7DC',
+  checkBoxColorsTwo: '#F5FDEE',
+  height: '5px',
+  isExpanded: false,
+};
+
+// --------------- Dashboard ActiveFiltersQuery configuration --------------
+export const displayActiveFiltersQuery = true;
 
 // --------------- Dahboard Table external link configuration --------------
 // Ideal size for externalLinkIcon is 16x16 px
@@ -247,6 +261,7 @@ export const showCheckboxCount = 5;
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_DATA_QUERY = gql`{
   numberOfPrograms
+  numberOfStudies
   numberOfSubjects
   numberOfSamples
   numberOfLabProcedures
@@ -310,6 +325,11 @@ subjectCountByFileAssociation {
 subjectCountByTissueComposition{
     group
     subjects
+}
+filterSubjectCountByAge{
+  lowerBound
+  upperBound
+  subjects
 }
 subjectCountByTissueType{
     group
