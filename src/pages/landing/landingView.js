@@ -4,7 +4,6 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import StatsView from './components/statsView';
 import { Button } from '../../components/Wrappers/Wrappers';
 import { landingPageData } from '../../bento/landingPageData';
 import icon from '../../assets/landing/LP_ReadMore.svg';
@@ -26,8 +25,11 @@ const LandingView = ({ classes, statsData }) => (
               </div>
               <div className={classes.headerButtonSection}>
                 <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
-                  <Button className={classes.buttonText} bgColor="neonBlue" color="white">
+                  <Button className={classes.transparentButton} bgColor="neonBlue" color="white">
                     {landingPageData.callToActionButtonText}
+                    <span className={classes.rightArrow}>
+                      ▶
+                    </span>
                   </Button>
                 </Link>
               </div>
@@ -37,7 +39,18 @@ const LandingView = ({ classes, statsData }) => (
       </div>
     </div>
     <div className={classes.whiteSection} />
-    <StatsView stats={landingPageData.landingPageStatsBar} statsData={statsData} />
+    <div className={classes.container}>
+      <Grid container spacing={16} direction="row" className={`${classes.bannerBackground} ${classes.paddingTop30} ${classes.paddingLeft50}`}>
+        <div className={classes.bannerTexture}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+        </div>
+      </Grid>
+      <Grid container spacing={16} direction="row" className={`${classes.bannerBackground} ${classes.paddingTop30} ${classes.paddingLeft50}`}>
+        <div className={classes.ButtonSection}>
+          <Link to="/subjects" className={classes.grayButton}>Learn More</Link>
+        </div>
+      </Grid>
+    </div>
     <div className={classes.container}>
       <div className={classes.texture}>
         <Grid container spacing={16} direction="row" className={classes.landingContainer}>
@@ -52,10 +65,11 @@ const LandingView = ({ classes, statsData }) => (
                 />
               </div>
               <div className={classes.DCWords} id="tile1_title">
-                {landingPageData.tile1.titleText.match(/\b(\w+)\b/g).map((word) => (
+                {landingPageData.tile1.titleText.split(' ').map((word, index) => (
                   <>
                     {word}
-                    <br />
+                    {index === 0 && <br />}
+                    {' '}
                   </>
                 ))}
               </div>
@@ -97,15 +111,15 @@ const LandingView = ({ classes, statsData }) => (
                   </div>
 
                 </div>
-                <div className={classes.blueButton}>
+                <div className={classes.yellowButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="CTDC about " />
+                    <img className={classes.icon} src={icon} alt="GMB Trials" />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight} id="tile2_button">
                     <Link
                       to={landingPageData.tile2.callToActionLink}
-                      className={classes.blueButton}
+                      className={classes.yellowButton}
                     >
                       {landingPageData.tile2.callToActionText}
                     </Link>
@@ -130,15 +144,15 @@ const LandingView = ({ classes, statsData }) => (
                   </div>
 
                 </div>
-                <div className={classes.blueButton}>
+                <div className={classes.brownButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="CTDC about " />
+                    <img className={classes.icon} src={icon} alt="GMB Request Access" />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight} id="tile3_button">
                     <Link
                       to={landingPageData.tile3.callToActionLink}
-                      className={classes.blueButton}
+                      className={classes.brownButton}
                     >
                       {landingPageData.tile3.callToActionText}
                     </Link>
@@ -184,13 +198,14 @@ const styles = () => ({
   },
   heroImage: {
     width: '100%',
-    height: '420px',
+    height: '562px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 100%',
     backgroundImage: `url(${landingPageData.landingPageHero.img})`,
   },
   texture: {
     backgroundSize: 'cover',
+    backgroundImage: `url(${landingPageData.landingPageTexture.img})`,
     background: '#CAE6FC',
     padding: '120px 0 80px 0',
   },
@@ -198,6 +213,41 @@ const styles = () => ({
     fontFamily: 'Raleway, sans-serif',
     margin: '0 auto',
 
+  },
+
+  bannerBackground: {
+    backgroundColor: '#FFFFFF',
+  },
+  bannerTexture: {
+    color: '#4898B4',
+    fontFamily: 'Nunito',
+    fontSize: '19px',
+    lineHeight: '30px',
+    textAlign: 'center',
+    margin: '0 auto',
+    letterSpacing: '0.050pt',
+    textTransform: 'uppercase',
+    width: '869px',
+  },
+  ButtonSection: {
+    margin: '0 auto -15px auto',
+    background: '#505050',
+    width: '179px',
+    height: '47px',
+    borderRadius: '50px',
+    textAlign: 'center',
+  },
+  grayButton: {
+    height: '13px',
+    color: '#FFFFFF',
+    fontFamily: 'Lato',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    lineHeight: '47px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'uppercase',
+    letterSpacing: '0.8px',
   },
 
   whiteSection: {
@@ -218,19 +268,20 @@ const styles = () => ({
   },
   headerTitle: {
     paddingTop: '94px',
-    fontFamily: 'Inter, Raleway, sans-serif',
+    fontFamily: 'Inter',
     fontSize: '38px',
-    fontWeight: '600',
+    fontWeight: '300',
     lineHeight: '35px',
-    color: '#0077E3',
+    color: '#0F253A',
     letterSpacing: '-0px',
+    textTransform: 'uppercase',
   },
   paddingLeft50: {
     paddingLeft: '50px',
   },
   headerContent: {
-    color: '#000000',
-    fontFamily: 'Lato, Raleway',
+    color: '#1E66A4',
+    fontFamily: 'Nunito',
     fontSize: '16px',
     fontWeight: '500',
     lineHeight: '27px',
@@ -263,14 +314,15 @@ const styles = () => ({
   },
   DCWords: {
     height: '200px',
-    background: '#274FA5',
+    background: '#0F253A',
     color: '#FFFFFF',
-    fontSize: '28px',
-    fontWeight: 'bold',
-    textTransform: 'capitalize',
-    lineHeight: '36px',
-    padding: '10px 75px 26px 26px',
-    fontFamily: 'Lato',
+    fontSize: '26px',
+    fontWeight: '300',
+    textTransform: 'uppercase',
+    lineHeight: '106.52%',
+    padding: '30px 29px 30px 24px',
+    fontFamily: 'Inter',
+    letterSpacing: '-0.02em',
   },
   landingContainer: {
     alignItems: 'center',
@@ -282,14 +334,14 @@ const styles = () => ({
   },
   about: {
     width: '300px',
-    backgroundColor: 'white',
+    backgroundColor: '#76C4E4',
   },
   image: {
     width: '293px',
     height: '249px',
   },
   aboutContent: {
-    background: 'white',
+    background: '#76C4E4',
     minHeight: '372px',
     width: '300px',
     padding: '30px 30px 32px 30px',
@@ -297,10 +349,10 @@ const styles = () => ({
     fontFamily: 'Nunito',
     fontSize: '16px',
     fontWeight: '500',
-    lineHeight: '22px',
+    lineHeight: '20.8px',
   },
   aboutButtonSection: {
-    background: 'white',
+    background: '#76C4E4',
     height: '71px',
   },
   imgIconAbout: {
@@ -308,12 +360,12 @@ const styles = () => ({
   },
   aboutButtonLeft: {
     float: 'left',
-    background: '#443CBB',
+    background: '#0F253A',
     height: '45px',
     width: '48px',
   },
   aboutButtonRight: {
-    background: '#7747FF',
+    background: '#1E66A4',
     float: 'left',
     height: '45px',
     width: '132px',
@@ -340,12 +392,14 @@ const styles = () => ({
     minHeight: '138px',
   },
   contentHeader: {
-    color: '#033D6F',
-    fontFamily: 'Lato',
-    fontSize: '28px',
-    fontWeight: 'bold',
-    lineHeight: '27px',
+    color: '#0F253A',
+    fontFamily: 'Inter',
+    fontSize: '26px',
+    fontWeight: '300',
+    lineHeight: '27.7px',
     padding: '10px 0',
+    textTransform: 'uppercase',
+    letterSpacing: '2%',
   },
   contentContainer: {
     width: '215px',
@@ -385,7 +439,7 @@ const styles = () => ({
   mountainMeadowButtonSection: {
     height: '46px',
     width: '176px',
-    backgroundColor: '#0E8662',
+    backgroundColor: '#1E66A4',
     marginTop: '20px',
 
   },
@@ -401,6 +455,28 @@ const styles = () => ({
     textDecoration: 'none',
     letterSpacing: '1px',
   },
+  yellowButton: {
+    height: '45px',
+    background: '#E5A553',
+    color: '#FFFFFF',
+    fontFamily: 'Raleway',
+    fontSize: '12px',
+    fontWeight: '600',
+    lineHeight: '14px',
+    paddingLeft: '8px',
+    textDecoration: 'none',
+  },
+  brownButton: {
+    height: '45px',
+    background: '#8C7D6B',
+    color: '#FFFFFF',
+    fontFamily: 'Raleway',
+    fontSize: '12px',
+    fontWeight: '600',
+    lineHeight: '14px',
+    paddingLeft: '8px',
+    textDecoration: 'none',
+  },
   blueButtonLeft: {
     float: 'left',
   },
@@ -414,19 +490,20 @@ const styles = () => ({
     textTransform: 'uppercase',
   },
   mountainMeadowContentHeader: {
-    color: '#033D6F',
-    fontFamily: 'Lato',
-    fontSize: '28px',
-    fontWeight: 'bold',
+    color: '#0F253A',
+    fontFamily: 'Inter',
+    fontSize: '26px',
+    fontWeight: '300',
     lineHeight: '32px',
     padding: '15px 0',
+    textTransform: 'uppercase',
   },
   mountainMeadowContent: {
     height: '143px',
     width: '230px',
-    color: '#010101',
+    color: '#000000',
     fontFamily: 'Nunito',
-    fontSize: '15px',
+    fontSize: '16px',
     lineHeight: '22px',
   },
   mountainMeadowIcon: {
@@ -480,6 +557,20 @@ const styles = () => ({
   buttonText: {
     padding: '12px 30px',
     height: '40px',
+  },
+  transparentButton: {
+    padding: '12px 15px',
+    height: '40px',
+    color: '#505050 !important',
+    backgroundColor: '#ffffff00 !important',
+    fontSize: '16px',
+    borderBottom: ' 2px #79C5E4 solid',
+    borderRadius: '0px',
+  },
+  rightArrow: {
+    marginLeft: '5px',
+    fontSize: '16px',
+    color: '#76C4E4',
   },
 });
 export default withStyles(styles, { withTheme: true })(LandingView);
