@@ -226,7 +226,7 @@ const styles = () => ({
     textAlign: 'center',
     margin: '0 auto',
     letterSpacing: '0.050pt',
-    textTransform: 'uppercase',
+    //textTransform: 'uppercase',
     width: '869px',
   },
   ButtonSection: {

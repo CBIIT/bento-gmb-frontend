@@ -1,6 +1,6 @@
 export const navBarstyling = {
   global: {
-    backgroundColor: '#142D64',
+    backgroundColor: '#003F74',
     height: '39px',
     padding: '9px 20px 0px 20px',
   },
@@ -11,7 +11,7 @@ export const navBarstyling = {
   },
   dropdownMenu: {
     paper: {
-      background: '#309EC4',
+      background: '#1E66A4',
       width: '200px',
       padding: '5px 18px 18px 18px',
       marginLeft: '15px',
@@ -22,17 +22,19 @@ export const navBarstyling = {
     link: {
       overflowWrap: 'normal',
       textDecoration: 'none',
-      color: 'black',
+      color: 'white',
       fontSize: '14px',
-      fontWeight: '600',
+      fontWeight: '400',
       lineSpacing: '1px',
       lineHeight: '18px',
-      fontFamily: 'Raleway, sans-serif',
+      fontFamily: 'Inter',
       display: 'block',
       marginTop: '10px',
       '&:hover': {
         cursor: 'pointer',
         color: 'white',
+        backgroundColor: '#003F74',
+        fontWeight: '800',
       },
     },
   },
@@ -51,14 +53,19 @@ export const navBarData = [
     link: '/home',
   },
   {
-    labelText: 'explore',
+    labelText: 'trials',
     type: 'link',
-    link: '/explore',
+    link: '/trials',
   },
   {
-    labelText: 'programs',
+    labelText: 'sites',
     type: 'link',
-    link: '/programs',
+    link: '/sites',
+  },
+  {
+    labelText: 'subjects',
+    type: 'link',
+    link: '/subjects',
   },
   {
     labelText: 'about',
