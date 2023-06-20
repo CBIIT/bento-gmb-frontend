@@ -1,5 +1,3 @@
-This is a front end repository of NCI's GMB project. It is based on FNLCR's Bento Framework
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

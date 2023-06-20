@@ -1,57 +1,50 @@
 import React from 'react';
-// import { useDispatch } from 'react-redux';
 import {
   Grid,
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { getOptions, getColumns, CustomActiveDonut } from 'bento-components';
-import GridWithFooter from '../../components/GridWithFooter/GridView';
 import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import icon from '../../assets/icons/Arms.Icon.svg';
 import fileCountIcon from '../../assets/icons/Program_Detail.FileCount.svg';
 import {
+  filesTable,
   header,
   subsections,
-  table,
-  tooltipContent,
 } from '../../bento/armDetailData';
-import {
-  singleCheckBox, setSideBarToLoading, setDashboardTableLoading,
-} from '../dashboardTab/store/dashboardReducer';
-import Widget from '../../components/Widgets/WidgetView';
 import PropertySubsection from '../../components/PropertySubsection/armDetailSubsection';
 import NumberOfThings from '../../components/NumberOfThings';
 import Snackbar from '../../components/Snackbar';
 import colors from '../../utils/colors';
+import { WidgetGenerator } from '@bento-core/widgets';
+import { TableContextProvider } from '@bento-core/paginated-table';
+import FilesTableView from './FilesView/FilesTableView';
+import { onClearAllAndSelectFacetValue } from '../dashTemplate/sideBar/BentoFilterUtils';
 
 // Main case detail component
 const ArmDetail = ({ data, classes }) => {
-  // const dispatch = useDispatch();
 
   const [snackbarState, setsnackbarState] = React.useState({
     open: false,
     value: 0,
   });
-  function openSnack(value1) {
-    setsnackbarState({ open: true, value: value1 });
-  }
+  
   function closeSnack() {
     setsnackbarState({ open: false });
   }
 
-  const redirectTo = () => {
-    setSideBarToLoading();
-    setDashboardTableLoading();
-    singleCheckBox([{
-      datafield: 'studies',
-      groupName: 'Arm',
-      isChecked: true,
-      name: data.study_info,
-      section: 'Filter By Cases',
-    }]);
+  const widgetGeneratorConfig = {
+    DonutConfig: {
+      colors,
+      styles: {
+        cellPadding: 0,
+        textOverflowLength: 20,
+      },
+    },
   };
+
+  const { Widget } = WidgetGenerator(widgetGeneratorConfig);
 
   const stat = {
     numberOfPrograms: 1,
@@ -105,8 +98,11 @@ const ArmDetail = ({ data, classes }) => {
                 <span className={classes.headerButtonLinkText}>Number of cases:</span>
                 <Link
                   className={classes.headerButtonLink}
-                  to={(location) => ({ ...location, pathname: '/cases' })}
-                  onClick={() => redirectTo()}
+                  to={(location) => ({
+                    ...location,
+                    pathname: `/explore`
+                  })}
+                  onClick={()=>onClearAllAndSelectFacetValue('studies', data.study_info)}
                 >
                   <span className={classes.headerButtonLinkNumber} id="arm_detail_header_file_count">
                     {data.num_subjects}
@@ -134,28 +130,28 @@ const ArmDetail = ({ data, classes }) => {
                 {/* Diagnosis donut */}
                 <div className={classes.widgetContainer}>
                   <Widget
-                    title="Diagnosis"
-                    color="#0296C9"
+                    header={(
+                      <Typography
+                        colorBrightness="main"
+                        size="md"
+                        weight="normal"
+                        family="Nunito"
+                        color="#0296C9"
+                        className={classes.widgetTitle}
+                      >
+                        Diagnosis
+                      </Typography>
+                    )}
                     bodyClass={classes.fullHeightBody}
                     className={classes.card}
-                    titleClass={classes.widgetTitle}
+                    bottomDivider
+                    customBackGround
                     noPaddedTitle
-                  >
-                    <CustomActiveDonut
-                      data={data.diagnoses}
-                      width={208}
-                      height={210}
-                      innerRadius={50}
-                      outerRadius={75}
-                      cx="50%"
-                      cy="50%"
-                      fontSize="12px"
-                      colors={colors}
-                      titleLocation="bottom"
-                      titleAlignment="center"
-                      showTotalCount
-                    />
-                  </Widget>
+                    data={data.diagnoses}
+                    chartType="donut"
+                    chartTitleLocation="bottom"
+                    chartTitleAlignment="center"
+                  />
                 </div>
                 {/* File count */}
                 <NumberOfThings classes={classes} number={data.num_files} icon={fileCountIcon} title="NUMBER OF FILES" alt="Bento file count icon" />
@@ -165,39 +161,12 @@ const ArmDetail = ({ data, classes }) => {
           </Grid>
           <div id="arm_detail_table" className={classes.tableContainer}>
             <div className={classes.tableDiv}>
-              { table.display
-                ? (
-                  <>
-                    <div className={classes.tableTitle} id="arm_detail_table_title">
-                      <span className={classes.tableHeader}>{table.title}</span>
-                    </div>
-                    <Grid item xs={12}>
-                      <Grid container spacing={4}>
-                        <Grid item xs={12}>
-                          <GridWithFooter
-                            tableConfig={table}
-                            data={data[table.filesField]}
-                            columns={getColumns(table, classes, data)}
-                            options={getOptions(table, classes)}
-                            customOnRowsSelect={table.customOnRowsSelect}
-                            openSnack={openSnack}
-                            closeSnack={closeSnack}
-                            disableRowSelection={table.disableRowSelection}
-                            buttonText={table.buttonText}
-                            saveButtonDefaultStyle={table.saveButtonDefaultStyle}
-                            ActiveSaveButtonDefaultStyle={table.ActiveSaveButtonDefaultStyle}
-                            DeactiveSaveButtonDefaultStyle={table.DeactiveSaveButtonDefaultStyle}
-                            tooltipMessage={table.tooltipMessage}
-                            tooltipContent={tooltipContent}
-                          />
-                        </Grid>
-                        <Grid item xs={8}>
-                          <Typography />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </>
-                ) : null}
+              <TableContextProvider>
+                <FilesTableView
+                  subjectId={filesTable.dataKey}
+                  data={data[filesTable.filesField]}
+                />
+              </TableContextProvider>
             </div>
           </div>
         </div>
@@ -276,7 +245,7 @@ const styles = (theme) => ({
   },
   headerButtonLinkText: {
     fontFamily: theme.custom.fontFamily,
-    color: '#7747FF',
+    color: theme.palette.text.link,
     fontSize: '10px',
     textTransform: 'uppercase',
     paddingRight: '2px',

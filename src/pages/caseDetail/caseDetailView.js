@@ -3,108 +3,76 @@ import {
   Grid,
   withStyles,
 } from '@material-ui/core';
-// import { useDispatch } from 'react-redux';
-import { getOptions, getColumns } from 'bento-components';
+import { TableContextProvider } from '@bento-core/paginated-table';
 import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
-import GridWithFooter from '../../components/GridWithFooter/GridView';
 import icon from '../../assets/icons/Cases.Icon.svg';
 import Subsection from '../../components/PropertySubsection/caseDetailSubsection';
 import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
-import TabThemeProvider from './components/tabThemeConfig';
 import {
   caseHeader,
   leftPanel,
   rightPanel,
-  table1,
-  table2,
-  table3,
-  table4,
-  tooltipContent,
-  tab,
+  sampleTable,
+  filesTable,
 } from '../../bento/caseDetailData';
 import Snackbar from '../../components/Snackbar';
-import Tab from './components/Tab';
-import TabPanel from './components/TabPanel';
+import SampleTableView from './SampleView/SampleTableView';
+import FilesTableView from './FilesView/FilesTableView';
 
 // Main case detail component
-const CaseDetail = ({ data, classes }) => {
+const CaseDetail = ({
+  data,
+  filesOfSamples,
+  classes,
+  subjectId,
+}) => {
   const [snackbarState, setsnackbarState] = React.useState({
     open: false,
     value: 0,
+    action: 'added',
   });
-  const [currentTab, setCurrentTab] = React.useState(0);
-  const handleTabChange = (event, value) => {
-    setCurrentTab(value);
-  };
-
-  function openSnack(value1) {
-    setsnackbarState({ open: true, value: value1 });
-  }
   function closeSnack() {
     setsnackbarState({ open: false });
   }
 
-  function getBorderStyle() {
-    const style = '3px solid #42779a';
-    return `${style}`;
-  }
-
-  function getTableColor() {
-    return `${tab.items[currentTab].primaryColor}`;
-  }
-
-  // make sure dashboard data has been loaded first for stats bar to work
-  React.useEffect(() => {
-    // dispatch(fetchDataForDashboardDataTable());
-  }, []);
 
   const stat = {
-    numberOfTrials: 1,
+    numberOfPrograms: 1,
+    numberOfStudies: 1,
     numberOfSubjects: 1,
+    numberOfSamples: data.num_samples,
+    numberOfLabProcedures: data.num_lab_procedures,
     numberOfFiles: data.files.length,
   };
 
   const breadCrumbJson = [{
     name: 'ALL CASES /',
-    to: '/cases',
+    to: '/explore',
     isALink: true,
   }];
 
-  function tableGenerator(tableData) {
-    return (
-      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
-        <div className={classes.tableDiv}>
-          <Grid item xs={12}>
-            <Grid container spacing={4}>
-              <Grid item xs={12}>
-                <GridWithFooter
-                  data={data[tableData.subjectDetailField]}
-                  title={(
-                    <div className={classes.tableTitle}>
-                      <span className={classes.tableHeader}>{tableData.tableTitle}</span>
-                    </div>
-                      )}
-                  columns={getColumns(tableData, classes, data)}
-                  options={getOptions(tableData, classes)}
-                  customOnRowsSelect={tableData.customOnRowsSelect}
-                  openSnack={openSnack}
-                  closeSnack={closeSnack}
-                  disableRowSelection={tableData.disableRowSelection}
-                  buttonText={tableData.buttonText}
-                  saveButtonDefaultStyle={tableData.saveButtonDefaultStyle}
-                  ActiveSaveButtonDefaultStyle={tableData.ActiveSaveButtonDefaultStyle}
-                  DeactiveSaveButtonDefaultStyle={tableData.DeactiveSaveButtonDefaultStyle}
-                  tooltipMessage={tableData.tooltipMessage}
-                  tooltipContent={tooltipContent}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-    );
-  }
+  // those are questioning codes for ICDC only, need to remove from here.
+  const filesOfSamplesObj = filesOfSamples.reduce(
+    (obj, item) => ({ ...obj, [item.sample_id]: item.files }), {},
+  );
+
+  // NOTE: Needs improvement.
+  const datFieldsFromRoot = [];
+  sampleTable.columns.forEach((e) => (e.dataFromRoot ? datFieldsFromRoot.push(e.dataField) : null));
+
+  const samplesData = data.samples.map((s) => {
+    const files = filesOfSamplesObj[s.sample_id];
+    //reverted back to prevent undefined (s) value
+    const sample = { ...s };
+    sample.files = files;
+    if (datFieldsFromRoot.length > 0) {
+      datFieldsFromRoot.forEach((e) => {
+        sample[e] = data[e];
+      });
+    }
+    return sample;
+  });
 
   return (
     <>
@@ -151,12 +119,7 @@ const CaseDetail = ({ data, classes }) => {
 
           <Grid container spacing={1} className={classes.detailContainer}>
             {/* Left panel */}
-            <Grid
-              item
-              sm={rightPanel.length > 0 ? 6 : 12}
-              xs={12}
-              className={[classes.detailPanel, classes.leftPanel]}
-            >
+            <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.leftPanel]}>
               <div className={classes.innerPanel}>
                 <Grid container spacing={2}>
                   {leftPanel.slice(0, 3).map((section) => (
@@ -171,57 +134,45 @@ const CaseDetail = ({ data, classes }) => {
             </Grid>
             {/* Left panel end */}
             {/* Right panel */}
-            {rightPanel.length > 0 ? (
-              <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.rightPanel]}>
-                <div style={{ paddingLeft: '7px' }} className={classes.innerPanel}>
-                  <Grid container spacing={2}>
-                    {rightPanel.slice(0, 3).map((section) => (
-                      <Subsection
-                        key={section.sectionHeader}
-                        config={section}
-                        data={data}
-                      />
-                    ))}
-                  </Grid>
-                </div>
-              </Grid>
-            ) : ''}
+            <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.rightPanel]}>
+              <div style={{ paddingLeft: '7px' }} className={classes.innerPanel}>
+                <Grid container spacing={2}>
+                  {rightPanel.slice(0, 3).map((section) => (
+                    <Subsection
+                      key={section.sectionHeader}
+                      config={section}
+                      data={data}
+                    />
+                  ))}
+                </Grid>
+              </div>
+            </Grid>
             {/* Right panel end */}
           </Grid>
         </div>
       </div>
-      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
+
+      <div id="case_detail_table_associated_samples" className={classes.tableContainer}>
         <div className={classes.tableDiv}>
-          <Grid container>
-            <Grid item xs={12}>
-              <TabThemeProvider tableBorder={getBorderStyle()} tablecolor={getTableColor()}>
-                <Tab
-                  styleClasses={classes}
-                  tabItems={tab.items}
-                  currentTab={currentTab}
-                  handleTabChange={handleTabChange}
-                />
-              </TabThemeProvider>
-            </Grid>
-          </Grid>
+          <TableContextProvider>
+            <SampleTableView
+              subjectId={subjectId}
+              data={samplesData}
+            />
+          </TableContextProvider>
         </div>
       </div>
-      <TabPanel value={currentTab} index={0}>
-        {table1.display
-          ? (tableGenerator(table1)) : ''}
-      </TabPanel>
-      <TabPanel value={currentTab} index={1}>
-        {table2.display
-          ? (tableGenerator(table2)) : ''}
-      </TabPanel>
-      <TabPanel value={currentTab} index={2}>
-        {table3.display
-          ? (tableGenerator(table3)) : ''}
-      </TabPanel>
-      <TabPanel value={currentTab} index={3}>
-        {table4.display
-          ? (tableGenerator(table4)) : ''}
-      </TabPanel>
+
+      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
+        <div className={classes.tableDiv}>
+          <TableContextProvider>
+            <FilesTableView
+              subjectId={subjectId}
+              data={data[filesTable.subjectDetailField]}
+            />
+          </TableContextProvider>
+        </div>
+      </div>
       <div className={classes.blankSpace} />
     </>
   );
