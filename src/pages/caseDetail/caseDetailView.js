@@ -17,7 +17,8 @@ import {
   filesTable,
 } from '../../bento/caseDetailData';
 import Snackbar from '../../components/Snackbar';
-import SampleTableView from './SampleView/SampleTableView';
+//NOTE: UNUSED COMPONENT
+//import SampleTableView from './SampleView/SampleTableView';
 import FilesTableView from './FilesView/FilesTableView';
 
 // Main case detail component
@@ -151,7 +152,8 @@ const CaseDetail = ({
           </Grid>
         </div>
       </div>
-
+{/*
+NOTE: UNUSED COMPONENT
       <div id="case_detail_table_associated_samples" className={classes.tableContainer}>
         <div className={classes.tableDiv}>
           <TableContextProvider>
@@ -162,7 +164,7 @@ const CaseDetail = ({
           </TableContextProvider>
         </div>
       </div>
-
+                  */}
       <div id="case_detail_table_associated_files" className={classes.tableContainer}>
         <div className={classes.tableDiv}>
           <TableContextProvider>

@@ -1,7 +1,8 @@
 import { sortType, InputTypes } from '@bento-core/facet-filter';
 
 const CASES = 'Cases';
-const SAMPLES = 'Samples';
+//NOTE: UNUSED TAB
+//const SAMPLES = 'Samples';
 const FILES = 'Files';
 const GROUP = 'group';
 
@@ -19,9 +20,10 @@ export const facetSectionVariables = {
     isExpanded: true,
     hasSearch: true,
   },
+  /*NOTE: UNUSED TAB
   Samples: {
     isExpanded: true,
-  },
+  },*/
   Files: {
     isExpanded: true,
   },
@@ -30,10 +32,10 @@ export const facetSectionVariables = {
 export const facetsConfig = [
   {
     section: CASES,
-    label: 'Program',
-    apiPath: 'subjectCountByProgram',
-    apiForFiltering: 'filterSubjectCountByProgram',
-    datafield: 'programs',
+    label: 'Trial ID',
+    apiPath: 'subjectCountByClinicalTrialId',
+    apiForFiltering: 'filterSubjectCountByClinicalTrialId',
+    datafield: 'clinical_trial_id',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -41,10 +43,10 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'Arm',
-    apiPath: 'subjectCountByStudy',
-    apiForFiltering: 'filterSubjectCountByStudy',
-    datafield: 'studies',
+    label: 'Race',
+    apiPath: 'subjectCountByRace',
+    apiForFiltering: 'filterSubjectCountByRace',
+    datafield: 'race',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -52,10 +54,10 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'Diagnosis',
-    apiPath: 'subjectCountByDiagnoses',
-    apiForFiltering: 'filterSubjectCountByDiagnoses',
-    datafield: 'diagnoses',
+    label: 'Disease Term',
+    apiPath: 'subjectCountByDiseaseTerm',
+    apiForFiltering: 'filterSubjectCountByDiseaseTerm',
+    datafield: 'disease_term',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -63,32 +65,10 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'Recurrence Score',
-    apiPath: 'subjectCountByRecurrenceScore',
-    apiForFiltering: 'filterSubjectCountByRecurrenceScore',
-    datafield: 'rc_scores',
-    field: GROUP,
-    type: InputTypes.CHECKBOX,
-    sort_type: sortType.RANGE,
-    show: true,
-  },
-  {
-    section: CASES,
-    label: 'Tumor Size',
-    apiPath: 'subjectCountByTumorSize',
-    apiForFiltering: 'filterSubjectCountByTumorSize',
-    datafield: 'tumor_sizes',
-    field: GROUP,
-    type: InputTypes.CHECKBOX,
-    sort_type: sortType.CUSTOM_NUMBER,
-    show: true,
-  },
-  {
-    section: CASES,
-    label: 'Chemotherapy',
-    apiPath: 'subjectCountByChemotherapyRegimen',
-    apiForFiltering: 'filterSubjectCountByChemotherapyRegimen',
-    datafield: 'chemo_regimen',
+    label: 'Registering Institution',
+    apiPath: 'subjectCountByRegisteringInstitution',
+    apiForFiltering: 'filterSubjectCountByRegisteringInstitution',
+    datafield: 'registering_institution',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -96,10 +76,10 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'Tumor Grade',
-    apiPath: 'subjectCountByTumorGrade',
-    apiForFiltering: 'filterSubjectCountByTumorGrade',
-    datafield: 'tumor_grades',
+    label: 'Patient Subgroup',
+    apiPath: 'subjectCountByPatientSubgroup',
+    apiForFiltering: 'filterSubjectCountByPatientSubgroup',
+    datafield: 'patient_subgroup',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -107,10 +87,10 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'ER Status',
-    apiPath: 'subjectCountByErStatus',
-    apiForFiltering: 'filterSubjectCountByErStatus',
-    datafield: 'er_status',
+    label: 'Disease Stage at Entry',
+    apiPath: 'subjectCountByStageAtEntry',
+    apiForFiltering: 'filterSubjectCountByStageAtEntry',
+    datafield: 'stage_at_entry',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -118,10 +98,10 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'PR Status',
-    apiPath: 'subjectCountByPrStatus',
-    apiForFiltering: 'filterSubjectCountByPrStatus',
-    datafield: 'pr_status',
+    label: 'Cause of Death',
+    apiPath: 'subjectCountByCauseOfDeath',
+    apiForFiltering: 'filterSubjectCountByCauseOfDeath',
+    datafield: 'cause_of_death',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -129,10 +109,10 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'Endocrine Therapy',
-    apiPath: 'subjectCountByEndocrineTherapy',
-    apiForFiltering: 'filterSubjectCountByEndocrineTherapy',
-    datafield: 'endo_therapies',
+    label: 'Sites of Disease at Autopsy',
+    apiPath: 'subjectCountBySitesOfDiseaseAtAutopsy',
+    apiForFiltering: 'filterSubjectCountBySitesOfDiseaseAtAutopsy',
+    datafield: 'sites_of_disease_at_autopsy',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -140,15 +120,82 @@ export const facetsConfig = [
   },
   {
     section: CASES,
-    label: 'Menopause Status',
-    apiPath: 'subjectCountByMenopauseStatus',
-    apiForFiltering: 'filterSubjectCountByMenopauseStatus',
-    datafield: 'meno_status',
+    label: 'Source of the Lab Data',
+    apiPath: 'subjectCountBySourceOfTheLabData',
+    apiForFiltering: 'filterSubjectCountBySourceOfTheLabData',
+    datafield: 'source_of_the_lab_data',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
   },
+  {
+    section: CASES,
+    label: 'Lab Test',
+    apiPath: 'subjectCountByLabTest',
+    apiForFiltering: 'filterSubjectCountByLabTest',
+    datafield: 'lab_test',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: CASES,
+    label: 'System Organ Class',
+    apiPath: 'subjectCountBySystemOrganClass',
+    apiForFiltering: 'filterSubjectCountBySystemOrganClass',
+    datafield: 'system_organ_class',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: CASES,
+    label: 'Serious',
+    apiPath: 'subjectCountBySerious',
+    apiForFiltering: 'filterSubjectCountBySerious',
+    datafield: 'serious',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: CASES,
+    label: 'Outcome',
+    apiPath: 'subjectCountByOutcome',
+    apiForFiltering: 'filterSubjectCountByOutcome',
+    datafield: 'outcome',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: CASES,
+    label: 'Somatic Pathogenicity',
+    apiPath: 'subjectCountBySomaticPathogenicity',
+    apiForFiltering: 'filterSubjectCountBySomaticPathogenicity',
+    datafield: 'somatic_pathogenicity',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: CASES,
+    label: 'Germline Pathogenicity',
+    apiPath: 'subjectCountByGermlinePathogenicity',
+    apiForFiltering: 'filterSubjectCountByGermlinePathogenicity',
+    datafield: 'germline_pathogenicity',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  /* NOTE: UNUSED VALUES + TAB
   {
     section: CASES,
     label: 'Age',
@@ -165,6 +212,7 @@ export const facetsConfig = [
     maxUpperBound: 100,
     quantifier: 'Years',
   },
+  /*
   {
     section: SAMPLES,
     label: 'Tissue Type',
@@ -186,7 +234,8 @@ export const facetsConfig = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-  },
+  },*/
+  /*
   {
     section: FILES,
     label: 'File Association',
@@ -197,7 +246,7 @@ export const facetsConfig = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-  },
+  },*/
   {
     section: FILES,
     label: 'File Type',
@@ -243,37 +292,33 @@ export const SUNBURST_COLORS_LEVEL_2 = [
 // sliceTitle: string (optional)
 export const widgetConfig = [
   {
-    type: 'sunburst',
-    title: 'Programs and Arms',
-    dataName: 'armsByPrograms',
-    datatable_level1_field: 'program',
-    datatable_level1_colors: SUNBURST_COLORS_LEVEL_1,
-    datatable_level2_field: 'arm',
-    datatable_level2_colors: SUNBURST_COLORS_LEVEL_2,
+    type: 'donut',
+    title: 'Germline Pathogenicity',
+    dataName: 'subjectCountByGermlinePathogenicity',
   },
   {
     type: 'donut',
-    title: 'Diagnosis',
-    dataName: 'subjectCountByDiagnoses',
+    title: 'Somatic Pathogenicity',
+    dataName: 'subjectCountBySomaticPathogenicity',
   },
   {
     type: 'donut',
-    title: 'Recurrence Score',
-    dataName: 'subjectCountByRecurrenceScore',
+    title: 'Registering Institution',
+    dataName: 'subjectCountByRegisteringInstitution',
   },
   {
     type: 'donut',
-    title: 'Tumor Size',
-    dataName: 'subjectCountByTumorSize',
+    title: 'Race',
+    dataName: 'subjectCountByRace',
   },
   {
     type: 'donut',
-    title: 'Chemotherapy',
-    dataName: 'subjectCountByChemotherapyRegimen',
+    title: 'Disease Stage at Entry',
+    dataName: 'subjectCountByStageAtEntry',
   },
   {
     type: 'donut',
-    title: 'Endocrine Therapy',
-    dataName: 'subjectCountByEndocrineTherapy',
+    title: 'Serious',
+    dataName: 'subjectCountBySerious', //subjectCountBySerious
   },
 ];
