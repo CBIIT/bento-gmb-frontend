@@ -680,9 +680,9 @@ query fileOverview(
       file_name
       subject_id
       description
-      fileFormat
+      file_format
       size
-      fileType
+      file_type
       file_id
       md5sum
   }
