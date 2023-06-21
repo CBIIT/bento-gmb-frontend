@@ -45,28 +45,35 @@ export const statsStyling = {
 };
 
 /**
- * @property {statAPI} numberOfPrograms Used to index a stat value
+ * @property {statAPI} numberOfTrials Used to index a stat value
  */
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Programs',
+    statTitle: 'Trials',
     type: 'field',
-    statAPI: 'numberOfPrograms',
+    statAPI: 'numberOfTrials',
     statIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Programs.svg',
     statIconAlt: 'Data Volume Stats Bar Icon',
-  },
-  {
-    statTitle: 'Arms',
-    type: 'field',
-    statAPI: 'numberOfStudies',
-    statIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Arms.svg',
   },
   {
     statTitle: 'Cases',
     type: 'field',
     statAPI: 'numberOfSubjects',
     statIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/master/icdc/images/svgs/Cases_.svg',
+  },
+  {
+    statTitle: 'Files',
+    type: 'field',
+    statAPI: 'numberOfFiles',
+    statIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Files.svg',
+  },
+  /* NOTE: UNUSED STATS
+  {
+    statTitle: 'Arms',
+    type: 'field',
+    statAPI: 'numberOfStudies',
+    statIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Arms.svg',
   },
   {
     statTitle: 'Samples',
@@ -80,21 +87,20 @@ export const globalStatsData = [
     statAPI: 'numberOfLabProcedures',
     statIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Assays.svg',
   },
-  {
-    statTitle: 'Files',
-    type: 'field',
-    statAPI: 'numberOfFiles',
-    statIconSrc: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Files.svg',
-  },
+  */
 ];
 
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
-  numberOfPrograms
-  numberOfStudies
+  numberOfTrials
   numberOfSubjects
-  numberOfSamples
-  numberOfLabProcedures
   numberOfFiles
   }
   `;
+
+  /* NOTE: UNUSED STATS
+  numberOfPrograms
+  numberOfStudies
+  numberOfSamples
+  numberOfLabProcedures
+  */

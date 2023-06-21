@@ -41,23 +41,25 @@ export const customTheme = {
       '&.add_selected_button': {
         marginRight: '10px',
       },
-      '&.add_selected_button_Cases': {
+      '&.add_selected_button_Subjects': {
         backgroundColor: '#10A075',
       },
+      /* NOTE: UNUSED TAB
       '&.add_selected_button_Samples': {
         backgroundColor: '#0DAFEC',
-      },
+      },*/
       '&.add_selected_button_Files': {
         backgroundColor: '#C92EC7',
       },
       '&.Mui-disabled': {
         color: '#fff',
-        '&.add_selected_button_Cases': {
+        '&.add_selected_button_Subjects': {
           backgroundColor: '#D6F2EA',
         },
+        /* NOTE: UNUSED TAB
         '&.add_selected_button_Samples': {
           backgroundColor: '#CFEDF9',
-        },
+        },*/
         '&.add_selected_button_Files': {
           backgroundColor: '#F7D7F7',
         },

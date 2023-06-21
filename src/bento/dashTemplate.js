@@ -1,6 +1,6 @@
 import { sortType, InputTypes } from '@bento-core/facet-filter';
 
-const CASES = 'Cases';
+const SUBJECTS = 'Subjects';
 //NOTE: UNUSED TAB
 //const SAMPLES = 'Samples';
 const FILES = 'Files';
@@ -16,7 +16,7 @@ export const resetIcon = {
 
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
-  Cases: {
+  Subjects: {
     isExpanded: true,
     hasSearch: true,
   },
@@ -31,7 +31,7 @@ export const facetSectionVariables = {
 
 export const facetsConfig = [
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Trial ID',
     apiPath: 'subjectCountByClinicalTrialId',
     apiForFiltering: 'filterSubjectCountByClinicalTrialId',
@@ -42,7 +42,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Race',
     apiPath: 'subjectCountByRace',
     apiForFiltering: 'filterSubjectCountByRace',
@@ -53,7 +53,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Disease Term',
     apiPath: 'subjectCountByDiseaseTerm',
     apiForFiltering: 'filterSubjectCountByDiseaseTerm',
@@ -64,7 +64,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Registering Institution',
     apiPath: 'subjectCountByRegisteringInstitution',
     apiForFiltering: 'filterSubjectCountByRegisteringInstitution',
@@ -75,7 +75,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Patient Subgroup',
     apiPath: 'subjectCountByPatientSubgroup',
     apiForFiltering: 'filterSubjectCountByPatientSubgroup',
@@ -86,7 +86,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Disease Stage at Entry',
     apiPath: 'subjectCountByStageAtEntry',
     apiForFiltering: 'filterSubjectCountByStageAtEntry',
@@ -97,7 +97,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Cause of Death',
     apiPath: 'subjectCountByCauseOfDeath',
     apiForFiltering: 'filterSubjectCountByCauseOfDeath',
@@ -108,7 +108,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Sites of Disease at Autopsy',
     apiPath: 'subjectCountBySitesOfDiseaseAtAutopsy',
     apiForFiltering: 'filterSubjectCountBySitesOfDiseaseAtAutopsy',
@@ -119,7 +119,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Source of the Lab Data',
     apiPath: 'subjectCountBySourceOfTheLabData',
     apiForFiltering: 'filterSubjectCountBySourceOfTheLabData',
@@ -130,7 +130,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Lab Test',
     apiPath: 'subjectCountByLabTest',
     apiForFiltering: 'filterSubjectCountByLabTest',
@@ -141,7 +141,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'System Organ Class',
     apiPath: 'subjectCountBySystemOrganClass',
     apiForFiltering: 'filterSubjectCountBySystemOrganClass',
@@ -152,7 +152,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Serious',
     apiPath: 'subjectCountBySerious',
     apiForFiltering: 'filterSubjectCountBySerious',
@@ -163,7 +163,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Outcome',
     apiPath: 'subjectCountByOutcome',
     apiForFiltering: 'filterSubjectCountByOutcome',
@@ -174,7 +174,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Somatic Pathogenicity',
     apiPath: 'subjectCountBySomaticPathogenicity',
     apiForFiltering: 'filterSubjectCountBySomaticPathogenicity',
@@ -185,7 +185,7 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Germline Pathogenicity',
     apiPath: 'subjectCountByGermlinePathogenicity',
     apiForFiltering: 'filterSubjectCountByGermlinePathogenicity',
@@ -197,7 +197,7 @@ export const facetsConfig = [
   },
   /* NOTE: UNUSED VALUES + TAB
   {
-    section: CASES,
+    section: SUBJECTS,
     label: 'Age',
     apiPath: 'filterSubjectCountByAge',
     apiForFiltering: 'filterSubjectCountByAge',

@@ -43,10 +43,10 @@ const theme = {
     },
     MuiListItem: {
       root: {
-        '&.casesCheckedEven': {
+        '&.subjectsCheckedEven': {
           backgroundColor: '#e8f7dc',
         },
-        '&.casesCheckedOdd': {
+        '&.subjectsCheckedOdd': {
           backgroundColor: '#f5FDEE',
         },
         /*NOTE: UNUSED TAB
@@ -66,7 +66,7 @@ const theme = {
     },
     MuiSvgIcon: {
       root: {
-        '&.casesCheckedIcon': {
+        '&.subjectsCheckedIcon': {
           color: '#10a075',
         },
         /*NOTE: UNUSED TAB
@@ -80,7 +80,7 @@ const theme = {
     },
     MuiTypography: {
       root: {
-        '&.casesSubjects': {
+        '&.subjectsSubjects': {
           color: '#10a075',
           fontSize: '12px',
           fontFamily: 'Nunito',

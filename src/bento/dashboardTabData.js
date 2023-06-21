@@ -32,7 +32,7 @@ export const externalLinkIcon = {
 export const tabs = [
   {
     id: 'case_tab',
-    title: 'Cases',
+    title: 'Subjects',
     dataField: 'dataCase',
     count: 'numberOfSubjects',
   },
@@ -54,7 +54,7 @@ export const tabs = [
 // --------------- Tabs Header Style configuration --------------
 export const tabIndex = [
   {
-    title: 'Cases',
+    title: 'Subjects',
     primaryColor: '#D6F2EA',
     secondaryColor: '#FFDFB8',
     selectedColor: '#10A075',
@@ -753,7 +753,7 @@ query sampleOverview(
 }
 `;*/
 
-export const GET_CASES_OVERVIEW_QUERY = gql`
+export const GET_SUBJECTS_OVERVIEW_QUERY = gql`
 query subjectOverview(
   $subject_ids: [String],
   $race: [String],
@@ -816,7 +816,7 @@ query subjectOverview(
 }
 `;
 
-export const GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL = gql`
+export const GET_ALL_FILEIDS_SUBJECTSTAB_FOR_SELECT_ALL = gql`
 query search (          
   $subject_ids: [String],
 ){
@@ -846,7 +846,7 @@ query search (
 }
   `;
 
-export const GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART = gql`
+export const GET_ALL_FILEIDS_FROM_SUBJECTSTAB_FOR_ADD_ALL_CART = gql`
 query subjectsAddAllToCart(
   $subject_ids: [String],
   $race: [String],
@@ -1038,9 +1038,9 @@ export const GET_FILE_IDS_FROM_FILE_NAME = gql`
 // --------------- Tabs Table configuration --------------
 export const tabContainers = [
   {
-    name: 'Cases',
+    name: 'Subjects',
     dataField: 'dataCase',
-    api: GET_CASES_OVERVIEW_QUERY,
+    api: GET_SUBJECTS_OVERVIEW_QUERY,
     paginationAPIField: 'subjectOverview',
     count: 'numberOfSubjects',
     dataKey: 'subject_id',
@@ -1233,8 +1233,8 @@ export const tabContainers = [
     addFilesRequestVariableKey: 'subject_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['subjectOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_CASESTAB_FOR_ADD_ALL_CART,
-    addSelectedFilesQuery: GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL,
+    addAllFileQuery: GET_ALL_FILEIDS_FROM_SUBJECTSTAB_FOR_ADD_ALL_CART,
+    addSelectedFilesQuery: GET_ALL_FILEIDS_SUBJECTSTAB_FOR_SELECT_ALL,
   },
   /* NOTE: UNUSED TAB
   {
