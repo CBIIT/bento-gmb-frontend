@@ -13,7 +13,8 @@ import {
   caseHeader,
   leftPanel,
   rightPanel,
-  sampleTable,
+  //Note: UNUSED COMPONENT
+  //sampleTable,
   filesTable,
 } from '../../bento/caseDetailData';
 import Snackbar from '../../components/Snackbar';
@@ -42,7 +43,8 @@ const CaseDetail = ({
     numberOfPrograms: 1,
     numberOfStudies: 1,
     numberOfSubjects: 1,
-    numberOfSamples: data.num_samples,
+    //NOTE: UNUSED STATS
+    //numberOfSamples: data.num_samples,
     numberOfLabProcedures: data.num_lab_procedures,
     numberOfFiles: data.files.length,
   };
@@ -54,12 +56,14 @@ const CaseDetail = ({
   }];
 
   // those are questioning codes for ICDC only, need to remove from here.
+  /* NOTE: UNUSED COMPONENT
   const filesOfSamplesObj = filesOfSamples.reduce(
     (obj, item) => ({ ...obj, [item.sample_id]: item.files }), {},
   );
 
   // NOTE: Needs improvement.
   const datFieldsFromRoot = [];
+  /* NOTE: UNUSED COMPONENT
   sampleTable.columns.forEach((e) => (e.dataFromRoot ? datFieldsFromRoot.push(e.dataField) : null));
 
   const samplesData = data.samples.map((s) => {
@@ -73,7 +77,7 @@ const CaseDetail = ({
       });
     }
     return sample;
-  });
+  });*/
 
   return (
     <>
