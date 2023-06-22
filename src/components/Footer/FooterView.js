@@ -47,7 +47,7 @@ const ICDCFooter = () => {
 
   return (
     <CustomThemeProvider>
-      <Footer data={footerUpdatedData} />
+      <Footer data={footerUpdatedData} background = {"#0F253A"}/>
     </CustomThemeProvider>
   );
 };
