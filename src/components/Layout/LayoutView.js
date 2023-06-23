@@ -74,11 +74,11 @@ const Layout = ({ classes, isSidebarOpened }) => {
             <PrivateRoute path="/programs" access={['admin', 'member']} component={Programs} />
             <PrivateRoute path="/fileCentricCart" access={['admin', 'member']} component={CarView} />
             <PrivateRoute path="/program/:id" access={['admin', 'member']} component={ProgramDetail} />
-            <PrivateRoute path="/case/:id" access={['admin', 'member']} component={CaseDetail} />
+            <PrivateRoute path="/subject/:id" access={['admin', 'member']} component={CaseDetail} />
             <PrivateRoute path="/arm/:id" access={['admin', 'member']} component={ArmDetail} />
             <PrivateRoute path="/fileViewer/:id" requiuredSignIn access={['admin', 'member']} component={JBrowseDetail} />
             {/* bento 4.0 template */}
-            <PrivateRoute path="/explore" access={['admin', 'member']} component={DashTemplate} />
+            <PrivateRoute path="/subjects" access={['admin', 'member']} component={DashTemplate} />
             {/* END SECTION */}
 
             {/* SECTION: Admin only Path */}
@@ -135,7 +135,7 @@ const styles = (theme) => ({
     // width: `calc(100vw - 240px)`,   // Ajay need to add this on addung side bar
     width: 'calc(100%)', // Remove this on adding sidebar
     background: theme.custom.bodyBackGround,
-    marginTop: '194px',
+    marginTop: '206px', //NOTE: MESSES WITH THE HOME PAGE BUT FIXES EXPLORE PAGE
   },
   '@global': {
     '*::-webkit-scrollbar': {

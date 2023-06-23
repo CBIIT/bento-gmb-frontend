@@ -24,14 +24,15 @@ export const customTheme = {
       fontFamily: 'Lato',
       '&.Mui-selected': {
         fontWeight: 'bolder',
-        '&.cases': {
+        '&.subjects': {
           background: '#d6f2ea',
           color: '#10a075',
         },
+        /* NOTE: UNUSED TAB
         '&.samples': {
           background: '#cfedf9',
           color: '#0dafec',
-        },
+        },*/
         '&.files': {
           background: '#f7d7f7',
           color: '#c92ec7',
@@ -40,14 +41,15 @@ export const customTheme = {
           color: 'red',
         },
       },
-      '& span.cases_count': {
+      '& span.subjects_count': {
         marginLeft: '5px',
         fontSize: '17px',
       },
+      /* NOTE: UNUSED TAB
       '& span.samples_count': {
         marginLeft: '5px',
         fontSize: '17px',
-      },
+      },*/
       '& span.files_count': {
         marginLeft: '5px',
         fontSize: '17px',

@@ -13,11 +13,13 @@ import {
   caseHeader,
   leftPanel,
   rightPanel,
-  sampleTable,
+  //Note: UNUSED COMPONENT
+  //sampleTable,
   filesTable,
 } from '../../bento/caseDetailData';
 import Snackbar from '../../components/Snackbar';
-import SampleTableView from './SampleView/SampleTableView';
+//NOTE: UNUSED COMPONENT
+//import SampleTableView from './SampleView/SampleTableView';
 import FilesTableView from './FilesView/FilesTableView';
 
 // Main case detail component
@@ -41,7 +43,8 @@ const CaseDetail = ({
     numberOfPrograms: 1,
     numberOfStudies: 1,
     numberOfSubjects: 1,
-    numberOfSamples: data.num_samples,
+    //NOTE: UNUSED STATS
+    //numberOfSamples: data.num_samples,
     numberOfLabProcedures: data.num_lab_procedures,
     numberOfFiles: data.files.length,
   };
@@ -53,12 +56,14 @@ const CaseDetail = ({
   }];
 
   // those are questioning codes for ICDC only, need to remove from here.
+  /* NOTE: UNUSED COMPONENT
   const filesOfSamplesObj = filesOfSamples.reduce(
     (obj, item) => ({ ...obj, [item.sample_id]: item.files }), {},
   );
 
   // NOTE: Needs improvement.
   const datFieldsFromRoot = [];
+  /* NOTE: UNUSED COMPONENT
   sampleTable.columns.forEach((e) => (e.dataFromRoot ? datFieldsFromRoot.push(e.dataField) : null));
 
   const samplesData = data.samples.map((s) => {
@@ -72,7 +77,7 @@ const CaseDetail = ({
       });
     }
     return sample;
-  });
+  });*/
 
   return (
     <>
@@ -151,7 +156,8 @@ const CaseDetail = ({
           </Grid>
         </div>
       </div>
-
+{/*
+NOTE: UNUSED COMPONENT
       <div id="case_detail_table_associated_samples" className={classes.tableContainer}>
         <div className={classes.tableDiv}>
           <TableContextProvider>
@@ -162,7 +168,7 @@ const CaseDetail = ({
           </TableContextProvider>
         </div>
       </div>
-
+                  */}
       <div id="case_detail_table_associated_files" className={classes.tableContainer}>
         <div className={classes.tableDiv}>
           <TableContextProvider>

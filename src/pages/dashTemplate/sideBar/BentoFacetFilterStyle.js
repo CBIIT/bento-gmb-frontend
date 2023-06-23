@@ -41,11 +41,12 @@ export default () => ({
     margin: '0px',
     backgroundColor: '#0d8461',
   },
+  /*NOTE: UNUSED TAB
   Samples: {
     height: '5px',
     margin: '0px',
     backgroundColor: '#10beff',
-  },
+  },*/
   Files: {
     height: '5px',
     margin: '0px',
@@ -105,9 +106,10 @@ export default () => ({
   activeFacetCases: {
     color: '#10a075',
   },
+  /*NOTE: UNUSED TAB
   activeFacetSamples: {
     color: '#10beff',
-  },
+  },*/
   activeFacetFiles: {
     color: '#e636e4',
   },
