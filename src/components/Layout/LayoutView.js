@@ -75,7 +75,7 @@ const Layout = ({ classes, isSidebarOpened }) => {
             <PrivateRoute path="/programs" access={['admin', 'member']} component={Programs} />
             <PrivateRoute path="/trials" access={['admin', 'member']} component={Trials} />
             <PrivateRoute path="/fileCentricCart" access={['admin', 'member']} component={CarView} />
-            <PrivateRoute path="/trial/:id" access={['admin', 'member']} component={ProgramDetail} />
+            <PrivateRoute path="/program/:id" access={['admin', 'member']} component={ProgramDetail} />
             <PrivateRoute path="/subject/:id" access={['admin', 'member']} component={CaseDetail} />
             <PrivateRoute path="/arm/:id" access={['admin', 'member']} component={ArmDetail} />
             <PrivateRoute path="/fileViewer/:id" requiuredSignIn access={['admin', 'member']} component={JBrowseDetail} />
