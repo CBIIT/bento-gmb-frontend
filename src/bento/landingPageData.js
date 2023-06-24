@@ -45,7 +45,7 @@ export const landingPageData = {
     titleText: 'Trials',
     descriptionText: 'View summaries of clinical trials within GMB.',
     callToActionText: 'Read More',
-    callToActionLink: '/trials', // This links to the Programs Listing Page.
+    callToActionLink: '/trials', // This links to the Trials Listing Page.
   },
   tile3: {
     alt: '',
