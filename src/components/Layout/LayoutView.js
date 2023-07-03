@@ -12,8 +12,6 @@ import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
-import Programs from '../../pages/programs/programsController';
-import ProgramDetail from '../../pages/programDetail/programDetailController';
 import Trials from '../../pages/trials/trialsController';
 import TrialDetail from '../../pages/trialDetail/trialDetailController';
 import Sites from '../../pages/sites/sitesController';
@@ -74,11 +72,9 @@ const Layout = ({ classes, isSidebarOpened }) => {
             {/* END SECTION */}
 
             {/* SECTION: Member & Admin only Path */}
-            <PrivateRoute path="/programs" access={['admin', 'member']} component={Programs} />
             <PrivateRoute path="/trials" access={['admin', 'member']} component={Trials} />
             <PrivateRoute path="/sites" access={['admin', 'member']} component={Sites} />
             <PrivateRoute path="/fileCentricCart" access={['admin', 'member']} component={CarView} />
-            <PrivateRoute path="/program/:id" access={['admin', 'member']} component={ProgramDetail} />
             <PrivateRoute path="/trial/:id" access={['admin', 'member']} component={TrialDetail} />
             <PrivateRoute path="/subject/:id" access={['admin', 'member']} component={CaseDetail} />
             <PrivateRoute path="/arm/:id" access={['admin', 'member']} component={ArmDetail} />
