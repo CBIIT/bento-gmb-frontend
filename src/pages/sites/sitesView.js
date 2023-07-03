@@ -10,13 +10,13 @@ import { getOptions, getColumns } from '@bento-core/util';
 import globalData from '../../bento/siteWideConfig';
 import {
   table, programListingIcon, externalLinkIcon,
-} from '../../bento/programData';
+} from '../../bento/siteData';
 import Stats from '../../components/Stats/AllStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { onClearAllAndSelectFacetValue } from '../dashTemplate/sideBar/BentoFilterUtils';
 
-const Programs = ({ classes, data }) => {
-  const redirectTo = (program) => onClearAllAndSelectFacetValue('programs', program.rowData[0]);
+const Sites = ({ classes, data }) => {
+  const redirectTo = (site) => onClearAllAndSelectFacetValue('registering_institution', site.rowData[1]);
 
   return (
     <>
@@ -43,12 +43,12 @@ const Programs = ({ classes, data }) => {
           </div>
 
           { table.display ? (
-            <div id="table_programs" className={classes.tableDiv}>
+            <div id="table_sites" className={classes.tableDiv}>
               <Grid container>
                 <Grid item xs={12}>
                   <CustomDataTable
                     data={data[table.dataField]}
-                    columns={getColumns(table, classes, data, externalLinkIcon, '/explore', redirectTo, '', globalData.replaceEmptyValueWith)}
+                    columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectTo, '', globalData.replaceEmptyValueWith)}
                     options={getOptions(table, classes)}
                   />
                 </Grid>
@@ -149,4 +149,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(Programs);
+export default withStyles(styles, { withTheme: true })(Sites);

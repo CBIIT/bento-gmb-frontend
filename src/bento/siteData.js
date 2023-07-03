@@ -18,11 +18,11 @@ const table = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'Programs',
+  title: 'Sites',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'programInfo',
+  dataField: 'sitesInfo',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'program_acronym',
+  defaultSortField: 'site_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -30,55 +30,39 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'program_acronym',
-      header: 'Program Code',
-      link: '/program/{program_id}',
+      dataField: 'site_id',
+      header: 'Site ID',
+      link: '/site/{site_id}',
       display: true
     },
     {
-      dataField: 'program_id',
-      header: 'Program ID',
+      dataField: 'site_name',
+      header: 'Site Name',
     },
     {
-      dataField: 'program_name',
-      header: 'Program Name',
+      dataField: 'site_address',
+      header: 'Address',
     },
     {
-      dataField: 'start_date',
-      header: 'Start Date',
-    },
-    {
-      dataField: 'end_date',
-      header: 'End Date',
-    },
-    {
-      dataField: 'pubmed_id',
-      header: 'PubMed ID',
-      link: 'https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}',
-    },
-    {
-      dataField: 'num_studies',
-      header: 'Number of Arms',
+      dataField: 'site_status',
+      header: 'Status',
     },
     {
       dataField: 'num_subjects',
-      header: 'Associated Cases',
+      header: 'Associated Subjects',
     },
   ],
 };
 
-// --------------- GraphQL query - Retrieve program info --------------
-const GET_PROGRAMS_DATA_QUERY = gql`{
-  programInfo {
- program_acronym
- program_id
- program_name
- start_date
- end_date
- pubmed_id
- num_studies
- num_subjects
- }
+// --------------- GraphQL query - Retrieve site info --------------
+const GET_SITES_DATA_QUERY = gql`{
+  sitesInfo{
+    site_id
+    site_name
+    site_address
+    site_status
+    num_subjects
+}
 }
  `;
 
@@ -86,5 +70,5 @@ export {
   programListingIcon,
   externalLinkIcon,
   table,
-  GET_PROGRAMS_DATA_QUERY,
+  GET_SITES_DATA_QUERY,
 };

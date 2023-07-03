@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
 // --------------- Icons configuration --------------
-// Ideal size for programListingIcon is 100x100 px
+// Ideal size for trialListingIcon is 100x100 px
 // Ideal size for externalLinkIcon is 16x16 px
-const programListingIcon = {
+const trialListingIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'Bento program logo',
+  alt: 'Bento trial logo',
 };
 
 const externalLinkIcon = {
@@ -63,7 +63,7 @@ const GET_TRIALS_DATA_QUERY = gql`{
  `;
 
 export {
-  programListingIcon,
+  trialListingIcon,
   externalLinkIcon,
   table,
   GET_TRIALS_DATA_QUERY,

@@ -9,7 +9,7 @@ import {
 import { getOptions, getColumns } from '@bento-core/util';
 import globalData from '../../bento/siteWideConfig';
 import {
-  table, programListingIcon, externalLinkIcon,
+  table, trialListingIcon, externalLinkIcon,
 } from '../../bento/trialData';
 import Stats from '../../components/Stats/AllStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
@@ -26,8 +26,8 @@ const Trials = ({ classes, data }) => {
           <div className={classes.header}>
             <div className={classes.logo}>
               <img
-                src={programListingIcon.src}
-                alt={programListingIcon.alt}
+                src={trialListingIcon.src}
+                alt={trialListingIcon.alt}
               />
 
             </div>
