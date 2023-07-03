@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
 // --------------- Icons configuration --------------
-// Ideal size for programListingIcon is 100x100 px
+// Ideal size for trialListingIcon is 100x100 px
 // Ideal size for externalLinkIcon is 16x16 px
-const programListingIcon = {
+const trialListingIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'Bento program logo',
+  alt: 'Bento trial logo',
 };
 
 const externalLinkIcon = {
@@ -18,11 +18,11 @@ const table = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  title: 'Programs',
+  title: 'Trials',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'programInfo',
+  dataField: 'trialsInfo',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'program_acronym',
+  defaultSortField: 'trial_id',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -30,61 +30,41 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'program_acronym',
-      header: 'Program Code',
-      link: '/program/{program_id}',
+      dataField: 'trial_id',
+      header: 'Trial ID',
+      link: '/trial/{trial_id}',
       display: true
     },
     {
-      dataField: 'program_id',
-      header: 'Program ID',
+      dataField: 'trial_name',
+      header: 'Trial Name',
     },
     {
-      dataField: 'program_name',
-      header: 'Program Name',
-    },
-    {
-      dataField: 'start_date',
-      header: 'Start Date',
-    },
-    {
-      dataField: 'end_date',
-      header: 'End Date',
-    },
-    {
-      dataField: 'pubmed_id',
-      header: 'PubMed ID',
-      link: 'https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}',
-    },
-    {
-      dataField: 'num_studies',
-      header: 'Number of Arms',
+      dataField: 'trial_type',
+      header: 'Trial Type',
     },
     {
       dataField: 'num_subjects',
-      header: 'Associated Cases',
+      header: 'Associated Subjects',
     },
   ],
 };
 
-// --------------- GraphQL query - Retrieve program info --------------
-const GET_PROGRAMS_DATA_QUERY = gql`{
-  programInfo {
- program_acronym
- program_id
- program_name
- start_date
- end_date
- pubmed_id
- num_studies
- num_subjects
+// --------------- GraphQL query - Retrieve trial info --------------
+const GET_TRIALS_DATA_QUERY = gql`{
+  trialsInfo {
+    trial_name
+    trial_id
+    trial_description
+    trial_type
+    num_subjects
  }
 }
  `;
 
 export {
-  programListingIcon,
+  trialListingIcon,
   externalLinkIcon,
   table,
-  GET_PROGRAMS_DATA_QUERY,
+  GET_TRIALS_DATA_QUERY,
 };

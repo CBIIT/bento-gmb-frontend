@@ -9,14 +9,14 @@ import {
 import { getOptions, getColumns } from '@bento-core/util';
 import globalData from '../../bento/siteWideConfig';
 import {
-  table, programListingIcon, externalLinkIcon,
-} from '../../bento/programData';
+  table, trialListingIcon, externalLinkIcon,
+} from '../../bento/trialData';
 import Stats from '../../components/Stats/AllStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { onClearAllAndSelectFacetValue } from '../dashTemplate/sideBar/BentoFilterUtils';
 
-const Programs = ({ classes, data }) => {
-  const redirectTo = (program) => onClearAllAndSelectFacetValue('programs', program.rowData[0]);
+const Trials = ({ classes, data }) => {
+  const redirectTo = (trial) => onClearAllAndSelectFacetValue('clinical_trial_id', trial.rowData[0]);
 
   return (
     <>
@@ -26,8 +26,8 @@ const Programs = ({ classes, data }) => {
           <div className={classes.header}>
             <div className={classes.logo}>
               <img
-                src={programListingIcon.src}
-                alt={programListingIcon.alt}
+                src={trialListingIcon.src}
+                alt={trialListingIcon.alt}
               />
 
             </div>
@@ -43,12 +43,12 @@ const Programs = ({ classes, data }) => {
           </div>
 
           { table.display ? (
-            <div id="table_programs" className={classes.tableDiv}>
+            <div id="table_trials" className={classes.tableDiv}>
               <Grid container>
                 <Grid item xs={12}>
                   <CustomDataTable
                     data={data[table.dataField]}
-                    columns={getColumns(table, classes, data, externalLinkIcon, '/explore', redirectTo, '', globalData.replaceEmptyValueWith)}
+                    columns={getColumns(table, classes, data, externalLinkIcon, '/subjects', redirectTo, '', globalData.replaceEmptyValueWith)}
                     options={getOptions(table, classes)}
                   />
                 </Grid>
@@ -149,4 +149,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(Programs);
+export default withStyles(styles, { withTheme: true })(Trials);
