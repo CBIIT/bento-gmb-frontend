@@ -118,6 +118,7 @@ export const SEARCH_PAGE_RESULT_SUBJECTS = gql`
             offset: $offset
         ) {
             subjects {
+                type
                 subject_id
                 registering_institution
                 disease_term
@@ -135,6 +136,7 @@ export const SEARCH_PAGE_RESULT_FILES = gql`
             offset: $offset
         ) {
             files {
+                type
                 file_id
                 file_name
                 file_description
@@ -154,6 +156,7 @@ export const SEARCH_PAGE_RESULT_TRIALS = gql`
             offset: $offset
         ) {
             trials {
+                type
                 clinical_trial_id
                 clinical_trial_short_name
                 clinical_trial_long_name
@@ -172,6 +175,7 @@ export const SEARCH_PAGE_RESULT_SITES = gql`
             offset: $offset
         ) {
             sites {
+                type
                 site_id
                 site_name
                 site_address
