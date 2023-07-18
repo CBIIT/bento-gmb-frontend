@@ -9,6 +9,10 @@ import {
   SEARCH_PAGE_DATAFIELDS, SEARCH_PAGE_KEYS,
   queryCountAPI, queryResultAPI, queryAutocompleteAPI,
 } from '../../bento/search';
+import SubjectCard from './cards/SubjectCard';
+import FileCard from './cards/FileCard';
+import TrialCard from './cards/TrialCard';
+import SiteCard from './cards/SiteCard';
 
 /**
  * Determine the correct datafield and offset for the All tab based
@@ -23,12 +27,11 @@ async function getAllQueryField(searchText, calcOffset, pageSize, isPublic) {
   const searchResp = await queryCountAPI(searchText, isPublic);
   const custodianConfigForTabData = isPublic ? [{ countField: 'about_count', nameField: 'about_page' }]
     : [{ countField: 'subject_count', nameField: 'subjects' },
-      { countField: 'sample_count', nameField: 'samples' },
-      { countField: 'file_count', nameField: 'files' },
-      { countField: 'program_count', nameField: 'programs' },
-      { countField: 'study_count', nameField: 'studies' },
-      { countField: 'model_count', nameField: 'model' },
-      { countField: 'about_count', nameField: 'about_page' }];
+    { countField: 'file_count', nameField: 'files' },
+    { countField: 'trial_count', nameField: 'trials' },
+    { countField: 'site_count', nameField: 'sites' },
+    { countField: 'model_count', nameField: 'model' },
+    { countField: 'about_count', nameField: 'about_page' }];
 
   let acc = 0;
   const mapCountAndName = custodianConfigForTabData.map((obj) => {
@@ -216,6 +219,13 @@ function searchView(props) {
     },
   });
 
+  const customCardMap = {
+    subject: SubjectCard,
+    file: FileCard,
+    trial: TrialCard,
+    site: SiteCard,
+  }
+
   const { SearchResults } = SearchResultsGenerator({
     classes,
     functions: {
@@ -233,7 +243,7 @@ function searchView(props) {
       value: '1',
     },
     {
-      name: 'Cases',
+      name: 'Subjects',
       field: 'subjects',
       classes: {
         root: classes.buttonRoot,
@@ -243,16 +253,6 @@ function searchView(props) {
       value: `${!authCheck() ? 'inactive-' : ''}2`,
     },
     {
-      name: 'Samples',
-      field: 'samples',
-      classes: {
-        root: classes.buttonRoot,
-        wrapper: classes.tabColor,
-      },
-      count: searchCounts.sample_count || 0,
-      value: `${!authCheck() ? 'inactive-' : ''}3`,
-    },
-    {
       name: 'Files',
       field: 'files',
       classes: {
@@ -260,27 +260,27 @@ function searchView(props) {
         wrapper: classes.tabColor,
       },
       count: searchCounts.file_count || 0,
+      value: `${!authCheck() ? 'inactive-' : ''}3`,
+    },
+    {
+      name: 'Trials',
+      field: 'trials',
+      classes: {
+        root: classes.buttonRoot,
+        wrapper: classes.tabColor,
+      },
+      count: searchCounts.trial_count || 0,
       value: `${!authCheck() ? 'inactive-' : ''}4`,
     },
     {
-      name: 'Programs',
-      field: 'programs',
+      name: 'Sites',
+      field: 'sites',
       classes: {
         root: classes.buttonRoot,
         wrapper: classes.tabColor,
       },
-      count: searchCounts.program_count || 0,
+      count: searchCounts.site_count || 0,
       value: `${!authCheck() ? 'inactive-' : ''}5`,
-    },
-    {
-      name: 'Studies',
-      field: 'studies',
-      classes: {
-        root: classes.buttonRoot,
-        wrapper: classes.tabColor,
-      },
-      count: searchCounts.study_count || 0,
-      value: `${!authCheck() ? 'inactive-' : ''}6`,
     },
     {
       name: 'Data Model',
@@ -290,7 +290,7 @@ function searchView(props) {
         wrapper: classes.tabColor,
       },
       count: searchCounts.model_count || 0,
-      value: `${!authCheck() ? 'inactive-' : ''}7`,
+      value: `${!authCheck() ? 'inactive-' : ''}6`,
     },
     {
       name: 'About',
@@ -300,8 +300,11 @@ function searchView(props) {
         wrapper: classes.tabColor,
       },
       count: searchCounts.about_count || 0,
-      value: '8',
+      value: `7`,
     }],
+    config: {
+      resultCardMap: customCardMap,
+    }
   });
 
   useEffect(() => {

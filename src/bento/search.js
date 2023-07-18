@@ -13,12 +13,12 @@ export const programListingIcon = {
 /** used by the Global Search header autocomplete */
 export const SEARCH_KEYS = {
   public: [],
-  private: ['programs', 'studies', 'subjects', 'samples', 'files'],
+  private: ['subjects', 'files', 'trials', 'sites'],
 };
 
 export const SEARCH_DATAFIELDS = {
   public: [],
-  private: ['program_id', 'study_id', 'subject_id', 'sample_id', 'file_id'],
+  private: ['subject_id', 'file_id', 'clinical_trial_id', 'site_id'],
 };
 
 /** used by the Global Search page results */
@@ -36,34 +36,17 @@ export const SEARCH_PAGE_DATAFIELDS = {
 export const SEARCH_PUBLIC = gql`
     query publicGlobalSearchQuery($input: String) {
         publicGlobalSearch(input: $input) {
+            subject_count
+            file_count
+            trial_count
+            site_count
             model_count
             about_count
-            program_count
-            study_count
-            subject_count
-            sample_count
-            file_count
             about_page{
                 page
                 title
                 type
                 text
-            }
-        }
-    }
-`;
-
-export const SEARCH_PAGE_RESULT_PROGRAM_PUBLIC = gql`
-    query publicGlobalSearchQuery($input: String, $first: Int, $offset: Int) {
-        publicGlobalSearchQuery(
-            input: $input
-            first: $first
-            offset: $offset) {
-            programs{
-                type
-                program_id
-                program_name
-                program_code
             }
         }
     }
@@ -83,7 +66,8 @@ export const SEARCH_PAGE_RESULT_ABOUT_PUBLIC = gql`
                 title
             }
         }
-    }`;
+    }
+`;
 
 export const SEARCH_PAGE_RESULTS_PUBLIC = gql`
     query publicGlobalSearch($input: String, $first: Int, $offset: Int){
@@ -92,34 +76,12 @@ export const SEARCH_PAGE_RESULTS_PUBLIC = gql`
             first: $first
             offset: $offset
         ) {
-            program_count
+            subject_count
+            file_count
+            trial_count
+            site_count
             model_count
             about_count
-            study_count
-            subject_count
-            sample_count
-            file_count
-        }
-    }
-`;
-
-export const SEARCH_PAGE_RESULT_MODEL_PUBLIC = gql`
-    query publicGlobalSearch($input: String, $first: Int, $offset: Int){
-        publicGlobalSearch(
-            input: $input
-            first: $first
-            offset: $offset
-        ) {
-            model {
-                type
-                node_name
-                property_name
-                property_description
-                property_required
-                property_type
-                value
-                highlight
-            }
         }
     }
 `;
@@ -129,59 +91,20 @@ export const SEARCH_PAGE_RESULT_MODEL_PUBLIC = gql`
 export const SEARCH = gql`
     query globalSearch($input: String){
         globalSearch(input: $input) {
-            programs {
-                program_id
-            }
-            studies {
-                study_id
-            }
             subjects {
                 subject_id
-            }
-            samples {
-                sample_id
             }
             files {
                 file_id
             }
+            trials {
+                clinical_trial_id
+            }
+            sites {
+                site_id
+            }
             model {
                 node_name
-            }
-        }
-    }
-`;
-
-export const SEARCH_PAGE_RESULT_PROGRAM = gql`
-    query globalSearch($input: String, $first: Int, $offset: Int){
-        globalSearch(
-            input: $input
-            first: $first
-            offset: $offset
-        ) {
-            programs {
-                type
-                program_id
-                program_name
-                program_code
-            }
-        }
-    }
-`;
-
-export const SEARCH_PAGE_RESULT_STUDIES = gql`
-    query globalSearch($input: String, $first: Int, $offset: Int){
-        globalSearch(
-            input: $input
-            first: $first
-            offset: $offset
-        ) {
-            studies {
-                type
-                study_id
-                program_id
-                study_name
-                study_type
-                study_code
             }
         }
     }
@@ -197,29 +120,9 @@ export const SEARCH_PAGE_RESULT_SUBJECTS = gql`
             subjects {
                 type
                 subject_id
-                program_id
-                diagnosis
-                age
-            }
-        }
-    }
-`;
-
-export const SEARCH_PAGE_RESULT_SAMPLES = gql`
-    query globalSearch($input: String, $first: Int, $offset: Int){
-        globalSearch(
-            input: $input
-            first: $first
-            offset: $offset
-        ) {
-            samples {
-                type
-                sample_id
-                program_id
-                subject_id
-                diagnosis
-                sample_anatomic_site
-                tissue_type
+                registering_institution
+                disease_term
+                clinical_trial_id
             }
         }
     }
@@ -236,10 +139,48 @@ export const SEARCH_PAGE_RESULT_FILES = gql`
                 type
                 file_id
                 file_name
-                file_format
-                program_id
+                file_description
+                clinical_trial_id
                 subject_id
-                sample_id
+                file_format
+            }
+        }
+    }
+`;
+
+export const SEARCH_PAGE_RESULT_TRIALS = gql`
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            trials {
+                type
+                clinical_trial_id
+                clinical_trial_short_name
+                clinical_trial_long_name
+                clinical_trial_description
+                clinical_trial_type
+            }
+        }
+    }
+`;
+
+export const SEARCH_PAGE_RESULT_SITES = gql`
+    query globalSearch($input: String, $first: Int, $offset: Int){
+        globalSearch(
+            input: $input
+            first: $first
+            offset: $offset
+        ) {
+            sites {
+                type
+                site_id
+                site_name
+                site_address
+                site_status
+                clinical_trial_id
             }
         }
     }
@@ -291,11 +232,10 @@ export const SEARCH_PAGE_RESULTS = gql`
             first: $first
             offset: $offset
         ) {
-            program_count
-            study_count
             subject_count
-            sample_count
             file_count
+            trial_count
+            site_count
             model_count
             about_count
         }
@@ -314,14 +254,12 @@ export function getResultQueryByField(field, isPublic) {
       return isPublic ? SEARCH_PUBLIC : SEARCH_PAGE_RESULT_SUBJECTS;
     case 'subjects':
       return SEARCH_PAGE_RESULT_SUBJECTS;
-    case 'samples':
-      return SEARCH_PAGE_RESULT_SAMPLES;
     case 'files':
       return SEARCH_PAGE_RESULT_FILES;
-    case 'programs':
-      return isPublic ? SEARCH_PAGE_RESULT_PROGRAM_PUBLIC : SEARCH_PAGE_RESULT_PROGRAM;
-    case 'studies':
-      return SEARCH_PAGE_RESULT_STUDIES;
+    case 'trials':
+      return SEARCH_PAGE_RESULT_TRIALS;
+    case 'sites':
+      return SEARCH_PAGE_RESULT_SITES;
     case 'model':
       return SEARCH_PAGE_RESULT_MODEL;
     case 'about_page':
