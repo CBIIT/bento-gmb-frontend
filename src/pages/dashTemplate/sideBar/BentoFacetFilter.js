@@ -63,6 +63,11 @@ const { SearchBox } = SearchBoxGenerator({
       }
     },
   },
+  config: {
+    inputPlaceholder: 'eg. 1010006, 3010004, 5010002',
+    noOptionsText: 'No matching items found',
+    searchType: 'subject_ids',
+  },
 });
 
 // Generate UploadModal Component
@@ -85,6 +90,14 @@ const { UploadModal } = UploadModalGenerator({
         return { matched: [], unmatched: [] };
       }
     },
+  },
+  config: {
+    title: 'Upload Subject Set',
+    inputPlaceholder: 'eg. 1010006, 3010004, 5010002',
+    inputTooltip: 'Add the subject indentifier.',
+    uploadTooltip: 'Upload a file of subject indentifiers.',
+    accept: '.csv,.txt',
+    maxSearchTerms: 1000,
   },
 });
 

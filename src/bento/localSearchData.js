@@ -3,10 +3,7 @@ import gql from 'graphql-tag';
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_ALL_IDS = gql`{
   idsLists{
-    subjectIds
-    sampleIds
-    fileIds
-    fileNames
+    subject_ids
 }
   }
   `;
@@ -15,7 +12,7 @@ export const GET_SUBJECT_IDS = gql`
   query search ($subject_ids: [String]){
     findSubjectIdsInList (subject_ids: $subject_ids) {
         subject_id
-        program_id
+        clinical_trial_id
     }
 }
 `;
@@ -28,100 +25,101 @@ export const GET_IDS_BY_TYPE = (type) => gql`{
 `;
 
 export const GET_SEARCH_NODES_BY_FACET = gql`
-query search (          
+query SearchSubjectsQuery(
   $subject_ids: [String],
-  $programs: [String] ,
-  $studies: [String] ,
-  $diagnoses: [String] ,
-  $rc_scores: [String] ,
-  $tumor_sizes: [String] ,
-  $chemo_regimen: [String] ,
-  $tumor_grades: [String] ,
-  $er_status: [String] ,
-  $pr_status: [String] ,
-  $endo_therapies: [String] ,
-  $meno_status: [String] ,
-  $tissue_type: [String],
-  $composition: [String],
-  $association: [String],
+  $race: [String],
+  $disease_term: [String],
+  $registering_institution: [String],
+  $patient_subgroup: [String],
+  $stage_at_entry: [String],
+  $cause_of_death: [String],
+  $sites_of_disease_at_autopsy: [String],
+  $source_of_the_lab_data: [String],
+  $lab_test: [String],
+  $system_organ_class: [String],
+  $serious: [String],
+  $outcome: [String],
+  $somatic_pathogenicity: [String],
+  $germline_pathogenicity: [String],
   $file_type: [String],
-  $age_at_index: [Float]
+  $clinical_trial_id: [String]
 ){
-  searchSubjects (          
+  searchSubjects(
       subject_ids: $subject_ids,
-      programs: $programs,
-      studies: $studies,
-      diagnoses: $diagnoses,
-      rc_scores: $rc_scores,
-      tumor_sizes: $tumor_sizes,
-      chemo_regimen: $chemo_regimen,
-      tumor_grades: $tumor_grades,
-      er_status: $er_status,
-      pr_status: $pr_status,
-      endo_therapies: $endo_therapies,
-      meno_status: $meno_status,
-      tissue_type: $tissue_type,
-      composition: $composition,
-      association: $association,       
+      race: $race,
+      disease_term: $disease_term,
+      registering_institution: $registering_institution,
+      patient_subgroup: $patient_subgroup,
+      stage_at_entry: $stage_at_entry,
+      cause_of_death: $cause_of_death,
+      sites_of_disease_at_autopsy: $sites_of_disease_at_autopsy,
+      source_of_the_lab_data: $source_of_the_lab_data,
+      lab_test: $lab_test,
+      system_organ_class: $system_organ_class,
+      serious: $serious,
+      outcome: $outcome,
+      somatic_pathogenicity: $somatic_pathogenicity,
+      germline_pathogenicity: $germline_pathogenicity,
       file_type: $file_type,
-      age_at_index: $age_at_index
-  ) {
-      numberOfPrograms
-      numberOfStudies
+      clinical_trial_id: $clinical_trial_id
+  ){
+      numberOfTrials
       numberOfSubjects
-      numberOfSamples
-      numberOfLabProcedures
       numberOfFiles
-      armsByPrograms {
-          program
-          caseSize
-          children {
-              arm
-              caseSize
-              size
-          }
-      }
-  subjectCountByProgram {
+
+      subjectCountByRace {
           group
           subjects
       }
-      subjectCountByStudy {
+      subjectCountByDiseaseTerm {
           group
           subjects
       }
-      subjectCountByDiagnoses {
+      subjectCountByRegisteringInstitution {
           group
           subjects
       }
-      subjectCountByRecurrenceScore {
+      subjectCountByPatientSubgroup {
           group
           subjects
       }
-      subjectCountByTumorSize {
+      subjectCountByStageAtEntry {
           group
           subjects
       }
-      subjectCountByChemotherapyRegimen {
+      subjectCountByCauseOfDeath {
           group
           subjects
       }
-      subjectCountByEndocrineTherapy {
+      subjectCountBySitesOfDiseaseAtAutopsy {
           group
           subjects
       }
-      subjectCountByTumorGrade{
+      subjectCountBySourceOfTheLabData {
           group
           subjects
       }
-      subjectCountByErStatus{
+      subjectCountByLabTest {
           group
           subjects
       }
-      subjectCountByPrStatus{
+      subjectCountBySystemOrganClass {
           group
           subjects
       }
-      subjectCountByMenopauseStatus{
+      subjectCountBySerious {
+          group
+          subjects
+      }
+      subjectCountByOutcome {
+          group
+          subjects
+      }
+      subjectCountBySomaticPathogenicity {
+          group
+          subjects
+      }
+      subjectCountByGermlinePathogenicity {
           group
           subjects
       }
@@ -129,83 +127,76 @@ query search (
           group
           subjects
       }
-      subjectCountByFileAssociation {
+      subjectCountByClinicalTrialId {
           group
           subjects
       }
-      subjectCountByTissueComposition {
+
+      filterSubjectCountByRace {
           group
           subjects
       }
-      subjectCountByTissueType {
+      filterSubjectCountByDiseaseTerm {
           group
           subjects
       }
-      filterSubjectCountByProgram {
+      filterSubjectCountByRegisteringInstitution {
           group
           subjects
       }
-      filterSubjectCountByStudy{
+      filterSubjectCountByPatientSubgroup {
           group
           subjects
       }
-      filterSubjectCountByDiagnoses{
+      filterSubjectCountByStageAtEntry {
           group
           subjects
       }
-      filterSubjectCountByRecurrenceScore{
+      filterSubjectCountByCauseOfDeath {
           group
           subjects
       }
-      filterSubjectCountByTumorSize{
+      filterSubjectCountBySitesOfDiseaseAtAutopsy {
           group
           subjects
       }
-      filterSubjectCountByTumorGrade{
+      filterSubjectCountBySourceOfTheLabData {
           group
           subjects
       }
-      filterSubjectCountByErStatus{
+      filterSubjectCountByLabTest {
           group
           subjects
       }
-      filterSubjectCountByPrStatus{
+      filterSubjectCountBySystemOrganClass {
           group
           subjects
       }
-      filterSubjectCountByChemotherapyRegimen{
+      filterSubjectCountBySerious {
           group
           subjects
       }
-      filterSubjectCountByEndocrineTherapy{
+      filterSubjectCountByOutcome {
           group
           subjects
       }
-      filterSubjectCountByMenopauseStatus{
+      filterSubjectCountBySomaticPathogenicity {
           group
           subjects
       }
-      filterSubjectCountByTissueType{
+      filterSubjectCountByGermlinePathogenicity {
           group
           subjects
       }
-      filterSubjectCountByTissueComposition{
+      filterSubjectCountByFileType {
           group
           subjects
       }
-      filterSubjectCountByFileAssociation{
+      filterSubjectCountByClinicalTrialId {
           group
           subjects
       }
-      filterSubjectCountByFileType{
-          group
-          subjects
-      }
-      filterSubjectCountByAge{
-          lowerBound
-          upperBound
-          subjects
-      }
+      
   }
 }
 `;
@@ -269,129 +260,130 @@ findIdsFromLists(subject_ids: $subject_ids, sample_ids: $sample_ids, file_ids: $
   `;
 
 export const CASES_FILE_QUERY = gql`
-query fileOverview(
-    $subject_ids: [String],
-    $file_ids: [String],
-    $programs: [String],
-    $studies: [String],
-    $diagnoses: [String],
-    $rc_scores: [String],
-    $tumor_sizes: [String],
-    $chemo_regimen: [String],
-    $tumor_grades: [String],
-    $er_status: [String],
-    $pr_status: [String],
-    $endo_therapies: [String],
-    $meno_status: [String],
-    $tissue_type: [String],
-    $composition: [String],
-    $association: [String],
-    $file_type: [String],
-    $age_at_index: [Float],
-    $first: Int, 
-    $offset: Int, 
-    $order_by:  String
-    $sort_direction: String ){
-    fileOverview(
-        subject_ids: $subject_ids,
-        file_ids: $file_ids,
-        programs: $programs,
-        studies: $studies,
-        diagnoses: $diagnoses,
-        rc_scores: $rc_scores,
-        tumor_sizes: $tumor_sizes,
-        chemo_regimen: $chemo_regimen,
-        tumor_grades: $tumor_grades,
-        er_status: $er_status,
-        pr_status: $pr_status,
-        endo_therapies: $endo_therapies,
-        meno_status: $meno_status,
-        tissue_type: $tissue_type,
-        composition: $composition,
-        association: $association,       
-        file_type: $file_type,
-        age_at_index: $age_at_index,
-        first: $first, 
-        offset: $offset, 
-        order_by: $order_by,
-        sort_direction: $sort_direction
-    ){
-        file_id,
-        file_name,
-        association,
-        file_description,
-        file_format,
-        file_size,
-        program,
-        arm,
-        subject_id,
-        sample_id,
-        diagnosis,
-    }
+query FileOverviewQuery(
+  $file_ids: [String],
+  $file_name: [String],
+  $subject_ids: [String],
+  $race: [String],
+  $disease_term: [String],
+  $registering_institution: [String],
+  $patient_subgroup: [String],
+  $stage_at_entry: [String],
+  $cause_of_death: [String],
+  $sites_of_disease_at_autopsy: [String],
+  $source_of_the_lab_data: [String],
+  $lab_test: [String],
+  $system_organ_class: [String],
+  $serious: [String],
+  $outcome: [String],
+  $somatic_pathogenicity: [String],
+  $germline_pathogenicity: [String],
+  $clinical_trial_id: [String],
+  $file_type: [String]
+  $order_by: String,
+  $sort_direction: String,
+  $first: Int,
+  $offset: Int
+){
+  fileOverview(
+      file_ids: $file_ids,
+      file_name: $file_name,
+      subject_ids: $subject_ids,
+      race: $race,
+      disease_term: $disease_term,
+      registering_institution: $registering_institution,
+      patient_subgroup: $patient_subgroup,
+      stage_at_entry: $stage_at_entry,
+      cause_of_death: $cause_of_death,
+      sites_of_disease_at_autopsy: $sites_of_disease_at_autopsy,
+      source_of_the_lab_data: $source_of_the_lab_data,
+      lab_test: $lab_test,
+      system_organ_class: $system_organ_class,
+      serious: $serious,
+      outcome: $outcome,
+      somatic_pathogenicity: $somatic_pathogenicity,
+      germline_pathogenicity: $germline_pathogenicity,
+      clinical_trial_id: $clinical_trial_id,
+      file_type: $file_type,
+      order_by: $order_by,
+      sort_direction: $sort_direction,
+      first: $first,
+      offset: $offset
+){
+      file_name
+      subject_id
+      description
+      file_format
+      size
+      file_type
+      file_id
+      md5sum
+  }
 }
 `;
 
 export const CASES_SAMPLE_QUERY = gql`
-query sampleOverview(
-    $subject_ids: [String],
-    $sample_ids: [String],
-    $programs: [String] ,
-    $studies: [String] ,
-    $diagnoses: [String] ,
-    $rc_scores: [String] ,
-    $tumor_sizes: [String] ,
-    $chemo_regimen: [String] ,
-    $tumor_grades: [String] ,
-    $er_status: [String] ,
-    $pr_status: [String] ,
-    $endo_therapies: [String] ,
-    $meno_status: [String] ,
-    $tissue_type: [String],
-    $composition: [String],
-    $association: [String],
-    $file_type: [String],
-    $age_at_index: [Float],
-    $first: Int, 
-    $offset: Int, 
-    $order_by:  String
-    $sort_direction: String ){
-    sampleOverview(
-        subject_ids: $subject_ids,
-        sample_ids: $sample_ids,
-        programs: $programs,
-        studies: $studies,
-        diagnoses: $diagnoses,
-        rc_scores: $rc_scores,
-        tumor_sizes: $tumor_sizes,
-        chemo_regimen: $chemo_regimen,
-        tumor_grades: $tumor_grades,
-        er_status: $er_status,
-        pr_status: $pr_status,
-        endo_therapies: $endo_therapies,
-        meno_status: $meno_status,
-        tissue_type: $tissue_type,
-        composition: $composition,
-        association: $association,       
-        file_type: $file_type,
-        age_at_index: $age_at_index,
-        first: $first, 
-        offset: $offset, 
-        order_by: $order_by,
-        sort_direction: $sort_direction
-    ){
-        sample_id,
-        subject_id,
-        program,
-        arm,
-        diagnosis,
-        tissue_type,
-        tissue_composition,
-        sample_anatomic_site,
-        sample_procurement_method,
-        platform,
-        files 
-    }
-}`;
+query SubjectOverviewQuery(
+  $subject_ids: [String],
+  $race: [String],
+  $disease_term: [String],
+  $registering_institution: [String],
+  $patient_subgroup: [String],
+  $stage_at_entry: [String],
+  $cause_of_death: [String],
+  $sites_of_disease_at_autopsy: [String],
+  $source_of_the_lab_data: [String],
+  $lab_test: [String],
+  $system_organ_class: [String],
+  $serious: [String],
+  $outcome: [String],
+  $somatic_pathogenicity: [String],
+  $germline_pathogenicity: [String],
+  $clinical_trial_id: [String],
+  $file_type: [String],
+  $order_by: String,
+  $sort_direction: String,
+  $first: Int,
+  $offset: Int
+){
+  subjectOverview(
+      subject_ids: $subject_ids,
+      race: $race,
+      disease_term: $disease_term,
+      registering_institution: $registering_institution,
+      patient_subgroup: $patient_subgroup,
+      stage_at_entry: $stage_at_entry,
+      cause_of_death: $cause_of_death,
+      sites_of_disease_at_autopsy: $sites_of_disease_at_autopsy,
+      source_of_the_lab_data: $source_of_the_lab_data,
+      lab_test: $lab_test,
+      system_organ_class: $system_organ_class,
+      serious: $serious,
+      outcome: $outcome,
+      somatic_pathogenicity: $somatic_pathogenicity,
+      germline_pathogenicity: $germline_pathogenicity,
+      clinical_trial_id: $clinical_trial_id,
+      file_type: $file_type,
+      order_by: $order_by,
+      sort_direction: $sort_direction,
+      first: $first,
+      offset: $offset
+){
+      subject_id
+      race
+      disease_term
+      stage_at_entry
+      cause_of_death
+      sites_of_disease_at_autopsy
+      source_of_the_lab_data
+      lab_test
+      system_organ_class
+      serious
+      outcome
+      files
+  }
+}
+`;
 
 export const SUBJECT_OVERVIEW_QUERY = gql`
 query subjectOverview(
@@ -473,42 +465,58 @@ query subjectOverview(
 // sliceTitle: string (optional)
 export const widgetsSearchData = [
   {
-    type: 'sunburst',
-    title: 'Programs and Arms',
-    dataName: 'armsByPrograms',
-    mapWithDashboardWidget: 'armsByPrograms',
-    datatable_level1_field: 'program',
-    datatable_level2_field: 'arm',
+    type: 'donut',
+    label: 'Germline Pathogenicity',
+    dataName: 'subjectCountByGermlinePathogenicity',
+    datatable_field: 'germline_pathogenicity',
+    mapWithDashboardWidget: 'subjectCountByGermlinePathogenicity',
+    titleText: 'Subjects',
+    show: true,
   },
   {
     type: 'donut',
-    title: 'Diagnosis',
-    dataName: 'subjectCountByDiagnosesFromLists',
-    mapWithDashboardWidget: 'subjectCountByDiagnoses',
+    label: 'Somatic Pathogenicity',
+    dataName: 'subjectCountBySomaticPathogenicity',
+    datatable_field: 'somatic_pathogenicity',
+    mapWithDashboardWidget: 'subjectCountBySomaticPathogenicity',
+    titleText: 'Subjects',
+    show: true,
   },
   {
     type: 'donut',
-    title: 'Recurrence Score',
-    dataName: 'subjectCountByRecurrenceScoreFromLists',
-    mapWithDashboardWidget: 'subjectCountByRecurrenceScore',
+    label: 'Registering Institution',
+    dataName: 'subjectCountByRegisteringInstitution',
+    datatable_field: 'registering_institution',
+    mapWithDashboardWidget: 'subjectCountByRegisteringInstitution',
+    titleText: 'Subjects',
+    show: true,
   },
   {
     type: 'donut',
-    title: 'Tumor Size',
-    dataName: 'subjectCountByTumorSizeFromLists',
-    mapWithDashboardWidget: 'subjectCountByTumorSize',
+    label: 'Race',
+    dataName: 'subjectCountByRace',
+    datatable_field: 'race',
+    mapWithDashboardWidget: 'subjectCountByRace',
+    titleText: 'Subjects',
+    show: true,
   },
   {
     type: 'donut',
-    title: 'Chemotherapy',
-    dataName: 'subjectCountByChemotherapyRegimenFromLists',
-    mapWithDashboardWidget: 'subjectCountByChemotherapyRegimen',
+    label: 'Disease Stage at Entry',
+    dataName: 'subjectCountByStageAtEntry',
+    datatable_field: 'stage_at_entry',
+    mapWithDashboardWidget: 'subjectCountByStageAtEntry',
+    titleText: 'Subjects',
+    show: true,
   },
   {
     type: 'donut',
-    title: 'Endocrine Therapy',
-    dataName: 'subjectCountByEndocrineTherapyFromLists',
-    mapWithDashboardWidget: 'subjectCountByEndocrineTherapy',
+    label: 'Serious',
+    dataName: 'subjectCountBySerious',
+    datatable_field: 'serious',
+    mapWithDashboardWidget: 'subjectCountBySerious',
+    titleText: 'Subjects',
+    show: true,
   },
 ];
 
