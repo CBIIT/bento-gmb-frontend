@@ -4,7 +4,7 @@ import { GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL } from '../../../bento/dashboar
 import {
   filesTable,
   tooltipContent,
-} from '../../../bento/caseDetailData';
+} from '../../../bento/subjectDetailData';
 
 export const footerConfig = [{
   container: 'buttons',

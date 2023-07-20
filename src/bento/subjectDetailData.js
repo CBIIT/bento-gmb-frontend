@@ -12,7 +12,7 @@ export const tooltipContent = {
 };
 
 // -------------- Case ID area configurations --------------
-const caseHeader = {
+const subjectHeader = {
   label: 'Subject ID',
   dataField: 'subject_id',
 };
@@ -63,10 +63,10 @@ export const externalLinkIcon = {
 
 // query name, also used as root of returned data
 const dataRoot = 'subjectDetail';
-// Primary ID field used to query a case
-const caseIDField = 'subject_id';
+// Primary ID field used to query a subject
+const subjectIDField = 'subject_id';
 
-// GraphQL query to retrieve detailed info for a case
+// GraphQL query to retrieve detailed info for a subject
 const GET_CASE_DETAIL_DATA_QUERY = gql`
   query subjectDetail($subject_id: String!) {
     subjectDetail(subject_id: $subject_id) {
@@ -136,9 +136,9 @@ const GET_CASE_DETAIL_DATA_QUERY = gql`
 `;
 
 export {
-  caseHeader,
+  subjectHeader,
   dataRoot,
-  caseIDField,
+  subjectIDField,
   leftPanel,
   rightPanel,
   GET_CASE_DETAIL_DATA_QUERY,

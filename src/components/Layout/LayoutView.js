@@ -6,7 +6,7 @@ import Header from '../Header/HeaderView';
 import NavBar from '../NavBar/NavBarContainer';
 import Footer from '../Footer/FooterView';
 import Error from '../../pages/error/Error';
-import CaseDetail from '../../pages/caseDetail/caseDetailController';
+import SubjectDetail from '../../pages/subjectDetail/subjectDetailController';
 import ArmDetail from '../../pages/armDetail/armDetailController';
 import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
@@ -76,7 +76,7 @@ const Layout = ({ classes, isSidebarOpened }) => {
             <PrivateRoute path="/sites" access={['admin', 'member']} component={Sites} />
             <PrivateRoute path="/fileCentricCart" access={['admin', 'member']} component={CarView} />
             <PrivateRoute path="/trial/:id" access={['admin', 'member']} component={TrialDetail} />
-            <PrivateRoute path="/subject/:id" access={['admin', 'member']} component={CaseDetail} />
+            <PrivateRoute path="/subject/:id" access={['admin', 'member']} component={SubjectDetail} />
             <PrivateRoute path="/arm/:id" access={['admin', 'member']} component={ArmDetail} />
             <PrivateRoute path="/fileViewer/:id" requiuredSignIn access={['admin', 'member']} component={JBrowseDetail} />
             {/* bento 4.0 template */}

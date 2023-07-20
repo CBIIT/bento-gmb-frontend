@@ -7,18 +7,18 @@ import { TableContextProvider } from '@bento-core/paginated-table';
 import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import icon from '../../assets/icons/Cases.Icon.svg';
-import Subsection from '../../components/PropertySubsection/caseDetailSubsection';
+import Subsection from '../../components/PropertySubsection/subjectDetailSubsection';
 import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import {
-  caseHeader,
+  subjectHeader,
   leftPanel,
   rightPanel,
-} from '../../bento/caseDetailData';
+} from '../../bento/subjectDetailData';
 import Snackbar from '../../components/Snackbar';
 import TabsView from './tabs/TabsView';
 
 // Main case detail component
-const CaseDetail = ({
+const SubjectDetail = ({
   data,
   classes,
   subjectId,
@@ -67,17 +67,17 @@ const CaseDetail = ({
             </div>
             <div className={classes.headerTitle}>
               <div className={classes.headerMainTitle}>
-                {`${caseHeader.label} :`}
-                { data[caseHeader.dataField]
+                {`${subjectHeader.label} :`}
+                { data[subjectHeader.dataField]
                   ? (
                     <span className={classes.headerMainTitleTwo}>
                       {' '}
-                      {data[caseHeader.dataField]}
+                      {data[subjectHeader.dataField]}
                     </span>
                   )
                   : (
                     <Typography variant="h5" color="error" size="sm">
-                      {`"${caseHeader.dataField}" is not a valid property name`}
+                      {`"${subjectHeader.dataField}" is not a valid property name`}
                     </Typography>
                   )}
               </div>
@@ -268,4 +268,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(CaseDetail);
+export default withStyles(styles, { withTheme: true })(SubjectDetail);

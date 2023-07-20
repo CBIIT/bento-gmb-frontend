@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TabPanel from './TabPanel';
-import { tables } from '../../../bento/caseDetailData';
+import { tables } from '../../../bento/subjectDetailData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 
