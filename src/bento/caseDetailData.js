@@ -176,14 +176,9 @@ export const tables = [
     // downloaded File Name
     downloadFileName: 'GMB_adverse_events_files_download',
     // Set 'select' to true to show a checkbox for each row
-    selectableRows: true,
+    selectableRows: false,
     // A maximum of 10 columns are allowed
     columns: [
-      {
-        cellType: cellTypes.CHECKBOX,
-        role: cellTypes.CHECKBOX,
-        display: true,
-      },
       {
         dataField: 'organ_class',
         header: 'Organ Class',
@@ -238,14 +233,9 @@ export const tables = [
     // downloaded File Name
     downloadFileName: 'GMB_germline_variant_files_download',
     // Set 'select' to true to show a checkbox for each row
-    selectableRows: true,
+    selectableRows: false,
     // A maximum of 10 columns are allowed
     columns: [
-      {
-        cellType: cellTypes.CHECKBOX,
-        role: cellTypes.CHECKBOX,
-        display: true,
-      },
       {
         dataField: 'panel_code',
         header: 'Panel Code',
@@ -300,14 +290,9 @@ export const tables = [
     // downloaded File Name
     downloadFileName: 'GMB_somatic_variant_files_download',
     // Set 'select' to true to show a checkbox for each row
-    selectableRows: true,
+    selectableRows: false,
     // A maximum of 10 columns are allowed
     columns: [
-      {
-        cellType: cellTypes.CHECKBOX,
-        role: cellTypes.CHECKBOX,
-        display: true,
-      },
       {
         dataField: 'gene_panel_500',
         header: 'Panel Code',
@@ -409,187 +394,10 @@ export const tables = [
         cellType: cellTypes.FORMAT_DATA,
       },
     ],
-
+    addFilesRequestVariableKey: 'file_names',
+    addFilesResponseKeys: ['fileIDsFromList'],
+    addAllFilesResponseKeys: ['fileOverview', 'files'],
   }
 ];
 
-// --------------- Case Table configuration --------------
-export const sampleTable = {
-  // Set 'display' to false to hide the table entirely
-  name: 'sample',
-  display: true,
-  dataKey: 'sample_id',
-  // Table title
-  tableTitle: 'ASSOCIATED SAMPLES',
-  // Field name for files data, need to be updated only when using a different GraphQL query
-  subjectDetailField: 'samples',
-  // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'sample_id',
-  // 'asc' or 'desc'
-  defaultSortDirection: 'asc',
-  // Text to appear on Add to cart button
-  buttonText: 'Add Selected Files',
-  // Help Icon Message
-  tooltipMessage: 'Click button to add selected files associated with the selected sample(s).',
-  helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
-  // download csv
-  download: false,
-  // downloaded File Name
-  downloadFileName: 'Bento_case_files_download',
-  // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
-  // A maximum of 10 columns are allowed
-  columns: [
-    {
-      cellType: cellTypes.CHECKBOX,
-      display: true,
-    },
-    {
-      dataField: 'sample_id',
-      header: 'Sample ID',
-      sort: 'asc',
-      primary: true,
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'disease_subtype',
-      header: 'Diagnosis',
-      dataFromRoot: true,
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'tissue_type',
-      header: 'Tissue Type',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'composition',
-      header: 'Tissue Composition',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'sample_anatomic_site',
-      header: 'Sample Anatomic Site',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'method_of_sample_procurement',
-      header: 'Sample Procurement Method',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'test_name',
-      header: 'Platform',
-      display: true,
-      tooltipText: 'sort',
-      dataFromRoot: true,
-      role: cellTypes.DISPLAY,
-    },
-  ],
-  addFilesRequestVariableKey: 'sample_ids',
-  addFilesResponseKeys: ['fileIDsFromList'],
-  addAllFilesResponseKeys: ['sampleOverview', 'files'],
-  tableMsg: {
-    noMatch: 'No Matching Records Found',
-  },
-};
-
-// --------------- Files Table configuration --------------
-export const filesTable = {
-  // Table title
-  name: 'files',
-  tableTitle: 'ASSOCIATED FILES',
-  dataKey: 'file_name',
-  // Field name for files data, need to be updated only when using a different GraphQL query
-  subjectDetailField: 'files',
-  // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'file_name',
-  // 'asc' or 'desc'
-  defaultSortDirection: 'asc',
-  // Text to appear on Add to cart button
-  buttonText: 'Add Selected Files',
-  // Help Icon Message
-  tooltipMessage: 'Click button to add selected files.',
-  helpMessage: 'Here help message',
-  // showHideColumns 'true' or 'false'
-  showHideColumns: true,
-  // download csv 'true' or 'false'
-  download: false,
-  // downloaded File Name
-  downloadFileName: 'Bento_case_samples_download',
-  // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
-  // A maximum of 10 columns are allowed
-  columns: [
-    {
-      cellType: cellTypes.CHECKBOX,
-      role: cellTypes.CHECKBOX,
-      display: true,
-    },
-    {
-      dataField: 'file_name',
-      header: 'File Name',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'file_type',
-      header: 'File Type',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'association',
-      header: 'Association',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'file_description',
-      header: 'Description',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'file_format',
-      header: 'Format',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'file_size',
-      header: 'Size',
-      // set formatBytes to true to display file size (in bytes) in a more human readable format
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-      dataFormatType: dataFormatTypes.FORMAT_BYTES,
-      cellType: cellTypes.FORMAT_DATA,
-    },
-  ],
-  tableMsg: {
-    noMatch: 'No Matching Records Found',
-  },
-  addFilesRequestVariableKey: 'file_names',
-  addFilesResponseKeys: ['fileIDsFromList'],
-  addAllFilesResponseKeys: ['fileOverview', 'files'],
-};
+export const filesTable = tables.find(table => table.name === 'associated_files');

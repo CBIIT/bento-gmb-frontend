@@ -58,11 +58,7 @@ const TabView = (props) => {
     rowsPerPage: 10,
     page: 0,
   });
-
-  console.log('findme-conf-data', config, dataQuery);
-  console.log('findme-dataQuery', dataQuery);
-  console.log('findme-tblRows', dataQuery[config.dataField]);
-
+  
   const { context } = useContext(TableContext);
   const { selectedRows = [] } = context;
 
@@ -83,13 +79,16 @@ const TabView = (props) => {
                 tblRows={dataQuery[config.dataField]}
                 totalRowCount={dataQuery[config.dataField].length}
                 activeTab={activeTab}
-            />{/*
+            />
+
+            { config.name === 'associated_files' &&
+            
             <Wrapper
                 wrapConfig={footerConfig}
                 customTheme={wrapperThemConfig}
                 classes={classes}
                 section={config.clsName}
-            />*/}
+            />}
         </Grid>
     </Grid>
   );
