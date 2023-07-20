@@ -1,19 +1,19 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import CaseDetailView from './caseDetailView';
+import SubjectDetailView from './subjectDetailView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
-  GET_CASE_DETAIL_DATA_QUERY, dataRoot, caseIDField, filesOfSamples,
-} from '../../bento/caseDetailData';
+  GET_CASE_DETAIL_DATA_QUERY, dataRoot, subjectIDField,
+} from '../../bento/subjectDetailData';
 
-const CaseDetailContainer = ({ match }) => {
+const SubjectDetailContainer = ({ match }) => {
   const { loading, error, data } = useQuery(GET_CASE_DETAIL_DATA_QUERY, {
-    variables: { [caseIDField]: match.params.id },
+    variables: { [subjectIDField]: match.params.id },
   });
 
   if (loading) return <CircularProgress />;
-  if (error || !data || data[dataRoot][caseIDField] !== match.params.id) {
+  if (error || !data || data[dataRoot][subjectIDField] !== match.params.id) {
     return (
       <Typography variant="h5" color="error" size="sm">
         {error ? `An error has occurred in loading stats component: ${error}` : 'Recieved wrong data'}
@@ -22,12 +22,11 @@ const CaseDetailContainer = ({ match }) => {
   }
 
   return (
-    <CaseDetailView
+    <SubjectDetailView
       data={data[dataRoot]}
-      filesOfSamples={data[filesOfSamples]}
       subjectId={match.params.id}
     />
   );
 };
 
-export default CaseDetailContainer;
+export default SubjectDetailContainer;

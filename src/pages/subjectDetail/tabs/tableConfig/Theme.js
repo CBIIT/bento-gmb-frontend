@@ -11,6 +11,52 @@ export const tblHeader = {
       '&:hover': {
         color: '#13344A',
       },
+      '&:hover $svg': {
+      },
+    },
+  },
+  MuiTableRow: {
+    head: {
+      height: '40px',
+      borderBottom: '3px solid #42779a',
+    },
+  },
+};
+
+const tblBody = {
+  MuiTableCell: {
+    root: {
+      minHeight: '45px',
+      padding: '0px 5px 0px 20px',
+      color: '#004C73',
+      borderBottom: 'none',
+    },
+    paddingCheckbox: {
+      width: '48px',
+      padding: '0 0 0 5px',
+    },
+    body: {
+      color: '#13344A',
+      '&.file_name': {
+        maxWidth: '300px',
+        '& p': {
+          lineBreak: 'anywhere',
+        },
+      },
+      '&.acl': {
+        textAlign: 'center',
+      },
+    },
+  },
+}
+
+export const extendedView = {
+  tblTopPgn: {
+    MuiTablePagination: {
+      root: {
+        paddingRight: '50px',
+        borderTop: '3px solid #42779a',
+      },
     },
   },
 };
@@ -21,12 +67,12 @@ export const tblPgn = {
       paddingRight: '50px',
       borderTop: '5px solid #e7e5e5',
       borderBottom: '3px solid #e7e5e5',
+      '&:last-child': {
+        paddingRight: '50px',
+      }
     },
     toolbar: {
       minHeight: '45px',
-    },
-    input: {
-      background: '#fff',
     },
   },
 };
@@ -48,49 +94,15 @@ export const tblContainer = {
       display: 'table',
       borderSpacing: '0',
       borderCollapse: 'collapse',
+      borderTop: '3px solid #42779a',
     },
   },
 };
 
 export const themeConfig = {
   tblHeader,
-  tblPgn,
+  tblBody,
   tblContainer,
-};
-
-/**
-* wrapper theme config
-*/
-export const wrapperThemConfig = {
-  MuiContainer: {
-    root: {
-      textAlign: 'right',
-      paddingTop: '14px',
-    },
-  },
-  MuiButton: {
-    root: {
-      width: '156px',
-      lineHeight: '30px',
-      fontSize: '12px',
-      marginTop: '6px',
-      marginBottom: '10px',
-      marginRight: '4px',
-      marginLeft: '5px',
-      color: '#fff',
-      fontFamily: 'Lato',
-      borderRadius: '10px',
-      textTransform: 'uppercase',
-      '&.add_selected_button': {
-        backgroundColor: '#10a075',
-      },
-      '&.Mui-disabled': {
-        color: '#fff',
-        '&.add_selected_button': {
-          backgroundColor: '#10a075',
-          opacity: '0.3',
-        },
-      },
-    },
-  },
+  tblPgn,
+  extendedView,
 };
