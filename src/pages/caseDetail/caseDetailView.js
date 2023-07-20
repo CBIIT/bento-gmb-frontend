@@ -13,19 +13,13 @@ import {
   caseHeader,
   leftPanel,
   rightPanel,
-  //Note: UNUSED COMPONENT
-  //sampleTable,
-  filesTable,
 } from '../../bento/caseDetailData';
 import Snackbar from '../../components/Snackbar';
-//NOTE: UNUSED COMPONENT
-//import SampleTableView from './SampleView/SampleTableView';
-import FilesTableView from './FilesView/FilesTableView';
+import TabsView from './tabs/TabsView';
 
 // Main case detail component
 const CaseDetail = ({
   data,
-  filesOfSamples,
   classes,
   subjectId,
 }) => {
@@ -38,46 +32,18 @@ const CaseDetail = ({
     setsnackbarState({ open: false });
   }
 
-
+  
   const stat = {
-    numberOfPrograms: 1,
-    numberOfStudies: 1,
+    numberOfTrials: 1,
     numberOfSubjects: 1,
-    //NOTE: UNUSED STATS
-    //numberOfSamples: data.num_samples,
-    numberOfLabProcedures: data.num_lab_procedures,
     numberOfFiles: data.files.length,
   };
 
   const breadCrumbJson = [{
-    name: 'ALL CASES /',
-    to: '/explore',
+    name: 'ALL SUBJECTS /',
+    to: '/subjects',
     isALink: true,
   }];
-
-  // those are questioning codes for ICDC only, need to remove from here.
-  /* NOTE: UNUSED COMPONENT
-  const filesOfSamplesObj = filesOfSamples.reduce(
-    (obj, item) => ({ ...obj, [item.sample_id]: item.files }), {},
-  );
-
-  // NOTE: Needs improvement.
-  const datFieldsFromRoot = [];
-  /* NOTE: UNUSED COMPONENT
-  sampleTable.columns.forEach((e) => (e.dataFromRoot ? datFieldsFromRoot.push(e.dataField) : null));
-
-  const samplesData = data.samples.map((s) => {
-    const files = filesOfSamplesObj[s.sample_id];
-    //reverted back to prevent undefined (s) value
-    const sample = { ...s };
-    sample.files = files;
-    if (datFieldsFromRoot.length > 0) {
-      datFieldsFromRoot.forEach((e) => {
-        sample[e] = data[e];
-      });
-    }
-    return sample;
-  });*/
 
   return (
     <>
@@ -95,7 +61,7 @@ const CaseDetail = ({
               <img
                 className={classes.caseIcon}
                 src={icon}
-                alt="Bento case detail header logo"
+                alt="GMB subject detail header logo"
               />
 
             </div>
@@ -124,7 +90,7 @@ const CaseDetail = ({
 
           <Grid container spacing={1} className={classes.detailContainer}>
             {/* Left panel */}
-            <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.leftPanel]}>
+            <Grid item sm={rightPanel.length > 0 ? 6 : 12} xs={12} className={[classes.detailPanel, classes.leftPanel]}>
               <div className={classes.innerPanel}>
                 <Grid container spacing={2}>
                   {leftPanel.slice(0, 3).map((section) => (
@@ -139,42 +105,31 @@ const CaseDetail = ({
             </Grid>
             {/* Left panel end */}
             {/* Right panel */}
-            <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.rightPanel]}>
-              <div style={{ paddingLeft: '7px' }} className={classes.innerPanel}>
-                <Grid container spacing={2}>
-                  {rightPanel.slice(0, 3).map((section) => (
-                    <Subsection
-                      key={section.sectionHeader}
-                      config={section}
-                      data={data}
-                    />
-                  ))}
-                </Grid>
-              </div>
-            </Grid>
+            {rightPanel.length > 0 ? (
+              <Grid item sm={6} xs={12} className={[classes.detailPanel, classes.rightPanel]}>
+                <div style={{ paddingLeft: '7px' }} className={classes.innerPanel}>
+                  <Grid container spacing={2}>
+                    {rightPanel.slice(0, 3).map((section) => (
+                      <Subsection
+                        key={section.sectionHeader}
+                        config={section}
+                        data={data}
+                      />
+                    ))}
+                  </Grid>
+                </div>
+              </Grid>
+            ) : ''}
             {/* Right panel end */}
           </Grid>
         </div>
       </div>
-{/*
-NOTE: UNUSED COMPONENT
-      <div id="case_detail_table_associated_samples" className={classes.tableContainer}>
+
+      <div id="case_detail_tables" className={classes.tableContainer}>
         <div className={classes.tableDiv}>
           <TableContextProvider>
-            <SampleTableView
-              subjectId={subjectId}
-              data={samplesData}
-            />
-          </TableContextProvider>
-        </div>
-      </div>
-                  */}
-      <div id="case_detail_table_associated_files" className={classes.tableContainer}>
-        <div className={classes.tableDiv}>
-          <TableContextProvider>
-            <FilesTableView
-              subjectId={subjectId}
-              data={data[filesTable.subjectDetailField]}
+            <TabsView 
+            dataQuery={data}
             />
           </TableContextProvider>
         </div>
@@ -280,6 +235,7 @@ const styles = (theme) => ({
   },
   tableContainer: {
     background: '#f3f3f3',
+    margin: 'auto',
   },
   tableDiv: {
     maxWidth: '1340px',
