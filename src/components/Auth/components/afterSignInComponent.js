@@ -103,7 +103,7 @@ const styles = () => ({
     fontWeight: '600',
     letterSpacing: '1px',
     lineHeight: '13px',
-    textTransform: 'capitalize',
+    textTransform: 'lowercase',
     // [theme.breakpoints.down('xs')]: {
     //   display: 'none',
     // },
