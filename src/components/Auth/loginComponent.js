@@ -39,7 +39,7 @@ const IndexPage = ({ classes }) => {
   const history = useHistory();
   const redirectAfterSignOut = REDIRECT_AFTER_SIGN_OUT;
 
-  const userName = firstName || (email && email.substring(0, email.lastIndexOf('@')));
+  const userName = firstName || (email && email.substring(0, email.lastIndexOf('@')).toLowerCase());
 
   const redirectToLogin = () => window.location.replace(`/#${loginPath}`);
 
