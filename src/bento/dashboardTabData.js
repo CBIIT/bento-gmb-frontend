@@ -75,7 +75,7 @@ export const tabIndex = [
 ];
 
 export const DASHBOARD_QUERY_NEW = gql`
-query search (
+query search1 (
   $subject_ids: [String],
   $race: [String],
   $disease_term: [String],
@@ -454,7 +454,7 @@ export const FILTER_GROUP_QUERY = gql`
  `;
 
 export const FILTER_QUERY = gql`
-query search (
+query search2 (
   $race: [String],
   $disease_term: [String],
   $registering_institution: [String],
@@ -677,14 +677,14 @@ query fileOverview(
       first: $first,
       offset: $offset
 ){
-      file_name
-      subject_id
-      description
-      file_format
-      size
-      file_type
-      file_id
-      md5sum
+    file_name
+    subject_id
+    file_description
+    file_format
+    file_size
+    file_type
+    file_id
+    md5sum    
   }
 }
 `;
@@ -817,11 +817,13 @@ query subjectOverview(
 `;
 
 export const GET_ALL_FILEIDS_SUBJECTSTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $subject_ids: [String],
+query search3 (          
+  $subject_ids: [String] = [],
+  $file_names: [String] = [],
 ){
   fileIDsFromList (          
       subject_ids: $subject_ids,
+      file_names: $file_names
   ) 
 }
   `;
@@ -837,11 +839,13 @@ query search (
   `;
 */
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $file_names: [String] 
+query search4 (          
+  $file_names: [String] =[],
+  $subject_ids: [String] =[]
 ){
   fileIDsFromList (          
-      file_names: $file_names
+      file_names: $file_names,
+      subject_ids: $subject_ids
   ) 
 }
   `;
