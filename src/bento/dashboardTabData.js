@@ -75,7 +75,7 @@ export const tabIndex = [
 ];
 
 export const DASHBOARD_QUERY_NEW = gql`
-query search1 (
+query search (
   $subject_ids: [String],
   $race: [String],
   $disease_term: [String],
@@ -454,7 +454,7 @@ export const FILTER_GROUP_QUERY = gql`
  `;
 
 export const FILTER_QUERY = gql`
-query search2 (
+query search (
   $race: [String],
   $disease_term: [String],
   $registering_institution: [String],
@@ -817,7 +817,7 @@ query subjectOverview(
 `;
 
 export const GET_ALL_FILEIDS_SUBJECTSTAB_FOR_SELECT_ALL = gql`
-query search3 (          
+query search (          
   $subject_ids: [String] = [],
   $file_names: [String] = [],
 ){
@@ -839,7 +839,7 @@ query search (
   `;
 */
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
-query search4 (          
+query search (          
   $file_names: [String] =[],
   $subject_ids: [String] =[]
 ){
