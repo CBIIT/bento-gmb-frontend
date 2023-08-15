@@ -322,7 +322,7 @@ export const tables = [
     // Set 'display' to false to hide the table entirely
     name: 'associated_files',
     display: true,
-    dataKey: 'file_id',
+    dataKey: 'file_name',
     tableID: 'file_tab_table',
     // Table title
     tableTitle: 'ASSOCIATED FILES',

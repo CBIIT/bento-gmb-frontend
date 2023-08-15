@@ -98,16 +98,14 @@ export const manifestData = {
 export const GET_MY_CART_DATA_QUERY = gql`
 query filesInList($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name", $sort_direction:String="asc") {
     filesInList(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by, sort_direction: $sort_direction) {
-        study_code
-        subject_id
-        file_name
-        file_type
-        association
-        file_description
-        file_format
-        file_size
-        file_id
-        md5sum
+      file_name
+      subject_id
+      file_description
+      file_format
+      file_size
+      file_type
+      file_id
+      md5sum
     }
 }`;
 
@@ -136,12 +134,6 @@ export const table = {
       tooltipText: 'sort',
     },
     {
-      dataField: 'association',
-      header: 'Association',
-      display: true,
-      tooltipText: 'sort',
-    },
-    {
       dataField: 'file_description',
       header: 'Description',
       display: true,
@@ -164,13 +156,7 @@ export const table = {
     },
     {
       dataField: 'subject_id',
-      header: 'Case ID',
-      display: true,
-      tooltipText: 'sort',
-    },
-    {
-      dataField: 'study_code',
-      header: 'Study Code',
+      header: 'Subject ID',
       display: true,
       tooltipText: 'sort',
     },

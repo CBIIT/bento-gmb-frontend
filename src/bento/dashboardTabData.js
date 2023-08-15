@@ -677,14 +677,14 @@ query fileOverview(
       first: $first,
       offset: $offset
 ){
-      file_name
-      subject_id
-      description
-      file_format
-      size
-      file_type
-      file_id
-      md5sum
+    file_name
+    subject_id
+    file_description
+    file_format
+    file_size
+    file_type
+    file_id
+    md5sum    
   }
 }
 `;
@@ -818,10 +818,12 @@ query subjectOverview(
 
 export const GET_ALL_FILEIDS_SUBJECTSTAB_FOR_SELECT_ALL = gql`
 query search (          
-  $subject_ids: [String],
+  $subject_ids: [String] = [],
+  $file_names: [String] = [],
 ){
   fileIDsFromList (          
       subject_ids: $subject_ids,
+      file_names: $file_names
   ) 
 }
   `;
@@ -838,10 +840,12 @@ query search (
 */
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
 query search (          
-  $file_names: [String] 
+  $file_names: [String] =[],
+  $subject_ids: [String] =[]
 ){
   fileIDsFromList (          
-      file_names: $file_names
+      file_names: $file_names,
+      subject_ids: $subject_ids
   ) 
 }
   `;
