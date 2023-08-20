@@ -15,6 +15,7 @@ import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
 import Trials from '../../pages/trials/trialsController';
 import TrialDetail from '../../pages/trialDetail/trialDetailController';
 import Sites from '../../pages/sites/sitesController';
+import SiteDetail from '../../pages/siteDetail/siteDetailController';
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 // import JBrowse from '../JBrowse/JBrowseView';
 import JBrowseDetail from '../../pages/jbrowseDetail/jbrowseDetailController';
@@ -76,6 +77,7 @@ const Layout = ({ classes, isSidebarOpened }) => {
             <PrivateRoute path="/sites" access={['admin', 'member']} component={Sites} />
             <PrivateRoute path="/fileCentricCart" access={['admin', 'member']} component={CarView} />
             <PrivateRoute path="/trial/:id" access={['admin', 'member']} component={TrialDetail} />
+            <PrivateRoute path="/site/:id" access={['admin', 'member']} component={SiteDetail} />
             <PrivateRoute path="/subject/:id" access={['admin', 'member']} component={SubjectDetail} />
             <PrivateRoute path="/arm/:id" access={['admin', 'member']} component={ArmDetail} />
             <PrivateRoute path="/fileViewer/:id" requiuredSignIn access={['admin', 'member']} component={JBrowseDetail} />
