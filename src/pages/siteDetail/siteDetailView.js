@@ -5,17 +5,10 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import {
-  getOptions,
-  getColumns,
   manipulateLinks
 } from '@bento-core/util';
-import {
-  CustomDataTable
-} from '@bento-core/data-table';
-import clsx from 'clsx';
-import globalData from '../../bento/siteWideConfig';
-import {
-  pageTitle, table, externalLinkIcon,
+import clsx from 'clsx';import {
+  pageTitle, tables, externalLinkIcon,
   siteDetailIcon, breadCrumb, aggregateCount,
   pageSubTitle, leftPanel, rightPanel,
 } from '../../bento/siteDetailData';
@@ -25,6 +18,7 @@ import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import colors from '../../utils/colors';
 import { WidgetGenerator } from '@bento-core/widgets';
 import { onClearAllAndSelectFacetValue } from '../dashTemplate/sideBar/BentoFilterUtils';
+import TabsView from './tabs/TabsView';
 
 const SiteView = ({ classes, data, theme }) => {
   const siteData = data.siteDetail;
@@ -44,7 +38,6 @@ const SiteView = ({ classes, data, theme }) => {
 
   const { Widget } = WidgetGenerator(widgetGeneratorConfig);
 
-  const redirectToArm = (siteArm) => onClearAllAndSelectFacetValue('studies', `${siteArm.rowData[0]}: ${siteArm.rowData[1]}`);
 
   const stat = {
     numberOfTrials: 1,
@@ -288,29 +281,33 @@ const SiteView = ({ classes, data, theme }) => {
           </Grid>
         </div>
       </div>
-      { table.display ? (
+      { tables[0].display ? (
         <div id="table_site_detail" className={classes.tableContainer}>
 
           <div className={classes.tableDiv}>
+          <TabsView
+            dataQuery={data}
+            //NOTE: REQUIRES CLEAN-UP
+            />{/*}
             <div className={classes.tableTitle}>
               <span className={classes.tableHeader}>{table.title}</span>
             </div>
             <Grid item xs={12}>
               <Grid container spacing={8}>
                 <Grid item xs={12}>
-                  <Typography>
-                    <CustomDataTable
-                      data={data.siteDetail[table.dataField]}
-                      columns={getColumns(table, classes, data, externalLinkIcon, '/explore', redirectToArm, '', globalData.replaceEmptyValueWith)}
-                      options={getOptions(table, classes)}
-                    />
+                  <Typography>{
+                  <TableView
+                    initState={initTblState}
+                    server={false}
+                    tblRows={data[tables[0].queryField][tables[0].dataField]}
+                    totalRowCount={data[tables[0].queryField][tables[0].dataField].length}/>}
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
                   <Typography />
                 </Grid>
               </Grid>
-            </Grid>
+            </Grid>*/}
           </div>
         </div>
       ) : ''}

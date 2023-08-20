@@ -1,4 +1,15 @@
 import gql from 'graphql-tag';
+import { cellTypes, dataFormatTypes } from '@bento-core/table';
+
+// --------------- Tooltip configuration --------------
+export const tooltipContent = {
+  src: 'https://raw.githubusercontent.com/google/material-design-icons/master/src/action/help/materialicons/24px.svg',
+  alt: 'tooltipIcon',
+  arrow: true,
+  placement: 'top-end',
+  sample: 'Click button to add selected files associated with the selected sample(s).',
+  files: 'Click button to add selected files.',
+};
 
 // --------------- Page title configuration --------------
 const pageTitle = {
@@ -88,108 +99,147 @@ const rightPanel = {
   ],
 };
 
-// --------------- Table 1: ASSOCIATED SUBJECTS --------------
-const table = {
-  // Set 'display' to false to hide the table entirely
-  display: true,
-  // Table title
-  title: 'ASSOCIATED SUBJECTS',
-  // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'subjects',
-  // Value must be one of the 'field' in columns
-  defaultSortField: 'subject_id',
-  // 'asc' or 'desc'
-  defaultSortDirection: 'asc',
-  // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
-  // A maximum of 10 columns are allowed
-  columns: [
-    {
-      dataField: 'subject_id',
-      header: 'Subject ID',
-      link: '/subject/{subject_id}'
-    },
-    {
-      dataField: 'race',
-      header: 'Race',
-    },
-    {
-      dataField: 'disease_term',
-      header: 'DiseaseTerm',
-    },  
-  ],
-};
-
-// --------------- Table 2: ASSOCIATED FILES --------------
-const table2 = {
-  // Set 'display' to false to hide the table entirely
-  display: true,
-  // Table title
-  tableTitle: 'ASSOCIATED FILES',
-  // Field name for files data, need to be updated only when using a different GraphQL query
-  dataField: 'files',
-  // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'file_name',
-  // 'asc' or 'desc'
-  defaultSortDirection: 'asc',
-  // Text to appear on Add to cart button
-  buttonText: 'Add Selected Files',
-  saveButtonDefaultStyle: {
-    color: '#fff',
-    backgroundColor: '#09A175',
-    opacity: '1',
-    border: '0px',
-    cursor: 'pointer',
+// --------------- Tables: ASSOCIATED SUBJECTS & ASSOCIATED FILES --------------
+const tables = [
+  {
+    // Set 'display' to false to hide the table entirely
+    name: 'subjects',
+    display: true,
+    dataKey: 'subject_id',
+    tableID: 'subjects_tab_table',
+    // Table title
+    tableTitle: 'ASSOCIATED SUBJECTS',
+    // For extracting data from graphql response
+    queryField: 'siteDetail',
+    dataField: 'subjects',
+    // Value must be one of the 'field' in columns
+    defaultSortField: 'subject_id',
+    // 'asc' or 'desc'
+    defaultSortDirection: 'asc',
+    // Text to appear on Add to cart button
+    buttonText: 'Add Selected Files',
+    // Help Icon Message
+    tooltipMessage: 'Click button to add selected files associated with the selected subject(s).',
+    helpMessage: 'Here help message',
+    //show view columns button
+    viewColumns: true,
+    //show download csv button
+    download: true,
+    //downloaded File Name
+    downloadFileName: 'GMB_subjects_files_download',
+    // Set 'selectableRows' to true to show the row selection
+    selectableRows: true,
+    // A maximum of 10 columns are allowed
+    columns: [
+      {
+        cellType: cellTypes.CHECKBOX,
+        role: cellTypes.CHECKBOX,
+        display: true,
+      },
+      {
+        dataField: 'subject_id',
+        header: 'Subject ID',
+        sort: 'asc',
+        primary: true, //what this
+        display: true,
+        tooltipText: 'sort',
+        cellType: cellTypes.LINK,
+        linkAttr : {
+          rootPath: '/subject',
+          pathParams: ['subject_id'],
+        },
+      },
+      {
+        dataField: 'race',
+        header: 'Race',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'disease_term',
+        header: 'Disease Term',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+    ],
   },
-  ActiveSaveButtonDefaultStyle: {
-    disabled: 'true',
-    opacity: '0.3',
-    cursor: 'auto',
+  {
+    // Set 'display' to false to hide the table entirely
+    name: 'files',
+    display: true,
+    dataKey: 'subject_id',
+    tableID: 'files_tab_table',
+    // Table title
+    tableTitle: 'ASSOCIATED FILES',
+    // For extracting data from graphql response
+    queryField: 'siteDetail',
+    dataField: 'files',
+    // Value must be one of the 'field' in columns
+    defaultSortField: 'file_name',
+    // 'asc' or 'desc'
+    defaultSortDirection: 'asc',
+    // Text to appear on Add to cart button
+    buttonText: 'Add Selected Files',
+    // Help Icon Message
+    tooltipMessage: 'Click button to add selected files.',
+    helpMessage: 'Here help message',
+    //show view columns button
+    viewColumns: true,
+    //show download csv button
+    download: true,
+    //downloaded File Name
+    downloadFileName: 'GMB_files_download',
+    // Set 'selectableRows' to true to show the row selection
+    selectableRows: true,
+    // A maximum of 10 columns are allowed
+    columns: [
+      {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+      },
+      {
+        dataField: 'file_name',
+        header: 'File Name',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'file_type',
+        header: 'File Type',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'file_description',
+        header: 'Description',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'file_format',
+        header: 'Format',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'file_size',
+        header: 'Size',
+        // set formatBytes to true to display file size (in bytes) in a more human readable format
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        dataFormatType: dataFormatTypes.FORMAT_BYTES,
+        cellType: cellTypes.FORMAT_DATA,
+      },
+    ],
   },
-  DeactiveSaveButtonDefaultStyle: {
-    cursor: 'pointer',
-    opacity: 'unset',
-    border: 'unset',
-  },
-  // Help Icon Message
-  tooltipMessage: 'Click button to add selected files.',
-  helpMessage: 'Here help message',
-  // viewColumns 'true' or 'false'
-  viewColumns: true,
-  // download csv 'true' or 'false'
-  download: true,
-  // downloaded File Name
-  downloadFileName: 'Files_CSV_download',
-  // Set 'selectableRows' to true to show the row selection
-  selectableRows: true,
-  // A maximum of 10 columns are allowed
-  columns: [
-    {
-      dataField: 'file_name',
-      header: 'File Name',
-    },
-    {
-      dataField: 'file_type',
-      header: 'File Type',
-    },
-    {
-      dataField: 'file_description',
-      header: 'Description',
-    },
-    {
-      dataField: 'file_format',
-      header: 'Format',
-    },
-    {
-      dataField: 'file_size',
-      header: 'Size',
-      // set formatBytes to true to display file size (in bytes) in a more human readable format
-      formatBytes: true,
-    },
-  ],
-  // Util Functions
-  // Custom function on selct checkbox is selected.
-};
+];
 
 // --------------- GraphQL query - Retrieve site details --------------
 const GET_SITE_DETAIL_DATA_QUERY = gql`
@@ -242,7 +292,5 @@ export {
   externalLinkIcon,
   breadCrumb,
   GET_SITE_DETAIL_DATA_QUERY,
-  table,
-  //table1,
-  table2,
+  tables
 };
