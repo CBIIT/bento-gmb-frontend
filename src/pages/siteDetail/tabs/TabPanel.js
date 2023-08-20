@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Grid, withStyles, Container } from '@material-ui/core';
+import React from 'react';
+import { withStyles } from '@material-ui/core';
 import { 
   TableContextProvider,
   TableView,
@@ -8,7 +8,7 @@ import {
 import styles from './TabStyle';
 import { themeConfig } from './tableConfig/Theme';
 import { wrapperThemConfig } from './Theme';
-import { footerConfig } from './Wrapper';
+import { subjectWrapperConfig, fileWrapperConfig } from './Wrapper';
 
 const TabView = (props) => {
   /**
@@ -73,7 +73,7 @@ const TabView = (props) => {
               activeTab={activeTab}
             />
             <Wrapper
-              wrapConfig={footerConfig} //wrapConfig={index == 1 ? otherWrapper} 
+              wrapConfig={config.name === 'subjects' ? subjectWrapperConfig : fileWrapperConfig}
               customTheme={wrapperThemConfig}
               classes={classes}
               section={config.name}

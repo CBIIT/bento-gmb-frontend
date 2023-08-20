@@ -7,7 +7,7 @@ export const tooltipContent = {
   alt: 'tooltipIcon',
   arrow: true,
   placement: 'top-end',
-  sample: 'Click button to add selected files associated with the selected sample(s).',
+  subjects: 'Click button to add selected files associated with the selected subject(s).',
   files: 'Click button to add selected files.',
 };
 
@@ -118,8 +118,6 @@ const tables = [
     defaultSortDirection: 'asc',
     // Text to appear on Add to cart button
     buttonText: 'Add Selected Files',
-    // Help Icon Message
-    tooltipMessage: 'Click button to add selected files associated with the selected subject(s).',
     helpMessage: 'Here help message',
     //show view columns button
     viewColumns: true,
@@ -178,7 +176,7 @@ const tables = [
     // Set 'display' to false to hide the table entirely
     name: 'files',
     display: true,
-    dataKey: 'file_id',
+    dataKey: 'file_name',
     tableID: 'files_tab_table',
     // Table title
     tableTitle: 'ASSOCIATED FILES',
@@ -191,8 +189,6 @@ const tables = [
     defaultSortDirection: 'asc',
     // Text to appear on Add to cart button
     buttonText: 'Add Selected Files',
-    // Help Icon Message
-    tooltipMessage: 'Click button to add selected files.',
     helpMessage: 'Here help message',
     //show view columns button
     viewColumns: true,

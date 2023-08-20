@@ -283,31 +283,8 @@ const SiteView = ({ classes, data, theme }) => {
       </div>
       { tables[0].display ? (
         <div id="table_site_detail" className={classes.tableContainer}>
-
           <div className={classes.tableDiv}>
-          <TabsView
-            dataQuery={data}
-            //NOTE: REQUIRES CLEAN-UP
-            />{/*}
-            <div className={classes.tableTitle}>
-              <span className={classes.tableHeader}>{table.title}</span>
-            </div>
-            <Grid item xs={12}>
-              <Grid container spacing={8}>
-                <Grid item xs={12}>
-                  <Typography>{
-                  <TableView
-                    initState={initTblState}
-                    server={false}
-                    tblRows={data[tables[0].queryField][tables[0].dataField]}
-                    totalRowCount={data[tables[0].queryField][tables[0].dataField].length}/>}
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography />
-                </Grid>
-              </Grid>
-            </Grid>*/}
+            <TabsView dataQuery={data}/>
           </div>
         </div>
       ) : ''}
@@ -615,14 +592,19 @@ const styles = (theme) => ({
     borderRadius: '50%',
     height: '162px',
     width: '162px',
-    paddingLeft: '48px',
+    //paddingLeft: '48px',
     marginLeft: '36%',
     marginTop: '25px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   fileIcon: {
     '& img': {
-      width: '163%',
-      padding: '21px 120px 0px 0px',
+      width: '60%',
+      padding: '0px 0px 0px 0px',
+      margin: '0px 0px 0px 34px',
     },
   },
   fileCount: {
@@ -633,7 +615,6 @@ const styles = (theme) => ({
     borderBottom: '#7A297D solid 5px',
     fontFamily: 'Oswald',
     width: 'max-content',
-    padding: '15px 0px 12px 0px',
   },
   paddingTop32: {
     paddingTop: '36px !important',
