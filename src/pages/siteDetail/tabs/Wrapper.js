@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { btnTypes, types } from '@bento-core/paginated-table';
-//import { GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL } from '../../../bento/dashboardTabData';
+import { GET_ALL_FILEIDS_SUBJECTSTAB_FOR_SELECT_ALL } from '../../../bento/dashboardTabData';
 
 import { tables, tooltipContent } from '../../../bento/siteDetailData';
 
@@ -18,8 +18,8 @@ export const footerConfig = [{
       btnType: btnTypes.ADD_SELECTED_FILES,
       tooltipCofig: tooltipContent,
       conditional: true,
-      //addFileQuery: GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
-      dataKey: tables[0].addFilesRequestVariableKey,
-      responseKeys: tables[0].addFilesResponseKeys,
+      addFileQuery: GET_ALL_FILEIDS_SUBJECTSTAB_FOR_SELECT_ALL,
+      dataKey: 'subject_ids',
+      responseKeys: ['fileIDsFromList'],
     }],
 }];

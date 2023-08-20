@@ -130,6 +130,15 @@ const tables = [
     // Set 'selectableRows' to true to show the row selection
     selectableRows: true,
     // A maximum of 10 columns are allowed
+    extendedViewConfig: {
+      download: {
+        downloadFileName: 'GMB_Subject_Files_download',
+        downloadCsv: 'Download Table Contents As CSV',
+      },
+      manageViewColumns: {
+        title: 'View Columns',
+      },
+    },
     columns: [
       {
         cellType: cellTypes.CHECKBOX,
@@ -169,7 +178,7 @@ const tables = [
     // Set 'display' to false to hide the table entirely
     name: 'files',
     display: true,
-    dataKey: 'subject_id',
+    dataKey: 'file_id',
     tableID: 'files_tab_table',
     // Table title
     tableTitle: 'ASSOCIATED FILES',
@@ -194,6 +203,15 @@ const tables = [
     // Set 'selectableRows' to true to show the row selection
     selectableRows: true,
     // A maximum of 10 columns are allowed
+    extendedViewConfig: {
+      download: {
+        downloadFileName: 'GMB_Subject_Files_download',
+        downloadCsv: 'Download Table Contents As CSV',
+      },
+      manageViewColumns: {
+        title: 'View Columns',
+      },
+    },    
     columns: [
       {
         cellType: cellTypes.CHECKBOX,
