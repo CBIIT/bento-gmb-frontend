@@ -59,8 +59,6 @@ const TabView = (props) => {
     page: 0,
     extendedViewConfig: config.extendedViewConfig,
   })
-  //const { context } = useContext(TableContext);
-  //const { selectedRows = [] } = context;
 
   return (
     <TableContextProvider>
