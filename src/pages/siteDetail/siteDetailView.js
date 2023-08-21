@@ -592,7 +592,6 @@ const styles = (theme) => ({
     borderRadius: '50%',
     height: '162px',
     width: '162px',
-    //paddingLeft: '48px',
     marginLeft: '36%',
     marginTop: '25px',
     display: 'flex',

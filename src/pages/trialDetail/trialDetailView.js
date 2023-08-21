@@ -617,14 +617,18 @@ const styles = (theme) => ({
     borderRadius: '50%',
     height: '162px',
     width: '162px',
-    paddingLeft: '48px',
     marginLeft: '36%',
     marginTop: '25px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   fileIcon: {
     '& img': {
-      width: '163%',
-      padding: '21px 120px 0px 0px',
+      width: '60%',
+      padding: '0px 0px 0px 0px',
+      margin: '0px 0px 0px 34px',
     },
   },
   fileCount: {
@@ -635,7 +639,6 @@ const styles = (theme) => ({
     borderBottom: '#7A297D solid 5px',
     fontFamily: 'Oswald',
     width: 'max-content',
-    padding: '15px 0px 12px 0px',
   },
   paddingTop32: {
     paddingTop: '36px !important',
