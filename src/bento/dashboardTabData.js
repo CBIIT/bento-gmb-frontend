@@ -684,7 +684,8 @@ query fileOverview(
     file_size
     file_type
     file_id
-    md5sum    
+    md5sum
+    acl    
   }
 }
 `;

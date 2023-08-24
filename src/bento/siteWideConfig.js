@@ -20,7 +20,7 @@ export const enableAuthentication = getEnvBoolean(env.REACT_APP_AUTH, true);
 
 // List of enabled identity providers. This is an array of enabled identity providers,
 // where each element corresponds to a key from loginProvidersData.
-export const enabledAuthProviders = ['google', 'nih', 'loginGov'];
+export const enabledAuthProviders = ['nih', 'loginGov'];
 
 // Public Level Access
 export const PUBLIC_ACCESS = env.PUBLIC_ACCESS || 'Metadata Only';

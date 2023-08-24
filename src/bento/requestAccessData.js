@@ -51,21 +51,9 @@ export const formFields = [
     optionsAPIField: aclAPIOptionsField,
     options: [
       {
-        id: 'a',
-        name: 'A: RS 0-10, assigned endocrine therapy alone',
-      },
-      {
-        id: 'b',
-        name: 'B: RS 11-25, randomized to endocrine therapy alone',
-      },
-      {
-        id: 'c',
-        name: 'C: RS 11-25, randomized to chemo + endocrine therapy',
-      },
-      {
-        id: 'd',
-        name: 'D: RS > 25, assigned to chemo +',
-      },
+        id: '70d6a94f-7348-5c0a-ace4-7890d1292210',
+        name: 'Prostate Cancer Natural History',
+      }
     ],
   },
 ];
