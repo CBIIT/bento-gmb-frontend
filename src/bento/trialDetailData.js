@@ -26,7 +26,7 @@ const aggregateCount = {
 // --------------- Icons configuration --------------
 // Ideal size for trialDetailIcon is 107x107 px
 // Ideal size for externalLinkIcon is 16x16 px
-const programDetailIcon = {
+const trialDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
   alt: 'GMB Trial logo',
 };
@@ -175,7 +175,7 @@ export {
   pageTitle,
   pageSubTitle,
   aggregateCount,
-  programDetailIcon,
+  trialDetailIcon,
   leftPanel,
   rightPanel,
   externalLinkIcon,
