@@ -53,7 +53,7 @@ export default () => ({
     backgroundColor: '#e636e4',
   },
   sectionSummaryText: {
-    fontSize: '14px',
+    fontSize: '13px',
     flexShrink: '0',
     fontFamily: 'Open Sans',
     fontWeight: '600',
